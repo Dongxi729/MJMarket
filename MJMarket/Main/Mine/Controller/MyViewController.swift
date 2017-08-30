@@ -10,7 +10,7 @@
 
 import UIKit
 
-class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate {
+class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCellTwoDelegate {
 
 
     lazy var myTbV: UITableView = {
@@ -44,6 +44,9 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate {
         
     }
     
+    var myViewController_CellThreeTitles : [String] = ["收货地址","优惠券","我的评价","我的收藏","登录密码"]
+    var redIcom : [String] = ["0","1","0","1","1"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -69,10 +72,14 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate {
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "two") as! MyCellTwo
+            cell.xxx(dss: redIcom)
+            cell.myCellTwoDelegate = self
             return cell
             
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyCellThree") as! MyCellThree
+            cell.myCellThree_descLabel.text = myViewController_CellThreeTitles[indexPath.row]
+
             return cell
         default:
             break
@@ -101,7 +108,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate {
         case 1:
             return 60
         case 2:
-            return 50
+            return 60 * SCREEN_SCALE
         case 3:
             return 45
         default:
@@ -120,102 +127,37 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate {
             return 1
         }
     }
-}
-
-
-
-class MyCellOneV: UIView {
     
-    /// 金额
-    lazy var myCellMoneyLabel: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: self.Width, height: self.Height * 0.5))
-        d.text = "￥" + "0"
-        d.font = UIFont.systemFont(ofSize: 15)
-        d.textColor = COMMON_COLOR
-        d.textAlignment = .center
-        return d
-    }()
-    
-    lazy var descLabel: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: 0, y: self.Height * 0.5, width: self.Width, height: self.Height * 0.5))
-    
-        d.font = UIFont.systemFont(ofSize: 15)
-        d.textColor = FONT_COLOR
-        d.textAlignment = .center
-        return d
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubview(myCellMoneyLabel)
-        addSubview(descLabel)
+    // MARK: - MyCellTwoDelegate
+    func btnCli(sender: UIButton) {
+        if sender.titleLabel?.text == "全部订单" {
+            CCog()
+        }
+        
+        if sender.titleLabel?.text == "待收货" {
+            CCog()
+        }
+        
+        if sender.titleLabel?.text == "待评价" {
+            CCog()
+        }
+        
+        if sender.titleLabel?.text == "代付款" {
+            CCog()
+        }
+        
+        if sender.titleLabel?.text == "退款/售后" {
+            CCog()
+        }
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-}
-
-class MyCellOne: CommonTableViewCell {
-    
-    lazy var leftV: MyCellOneV = {
-        let d: MyCellOneV = MyCellOneV.init(frame: CGRect.init(x: 0, y: 8, width: SCREEN_WIDTH * 0.5, height: self.Height))
-        d.myCellMoneyLabel.text = "￥" + "0"
-        d.descLabel.text = "金额"
-        return d
-    }()
-    
-    /// 分割线
-    private lazy var seperateLine: UIView = {
-        let d: UIView = UIView.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.5 - 1, y: 8, width: 2, height: self.Height))
-        d.backgroundColor = UIColor.colorWithHexString("EBEAEB")
-        return d
-    }()
-    
-    lazy var rightV: MyCellOneV = {
-        let d: MyCellOneV = MyCellOneV.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.5, y: 8, width: SCREEN_WIDTH * 0.5, height: self.Height))
-        d.myCellMoneyLabel.text = "1000"
-        d.descLabel.text = "积分"
-        return d
-    }()
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(leftV)
-        contentView.addSubview(rightV)
-        contentView.addSubview(seperateLine)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class MyCellTwo: CommonTableViewCell {
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
 
 }
 
-class MyCellThree: CommonTableViewCell {
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-}
+
+
+
+
+
+
 
 

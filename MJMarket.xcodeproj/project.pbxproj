@@ -103,6 +103,9 @@
 		26F691B71F566E6000CB6034 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691B61F566E6000CB6034 /* MyViewController.swift */; };
 		26F691BE1F56A68000CB6034 /* SlideToSignV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691BD1F56A68000CB6034 /* SlideToSignV.swift */; };
 		26F691C01F56C36C00CB6034 /* MyVHeaderV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */; };
+		26F691C21F56CE9900CB6034 /* MyCellOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691C11F56CE9900CB6034 /* MyCellOne.swift */; };
+		26F691C41F56D43800CB6034 /* MyCellTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691C31F56D43800CB6034 /* MyCellTwo.swift */; };
+		26F691C61F56D64000CB6034 /* MyCellThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691C51F56D64000CB6034 /* MyCellThree.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -281,6 +284,9 @@
 		26F691B61F566E6000CB6034 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		26F691BD1F56A68000CB6034 /* SlideToSignV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideToSignV.swift; sourceTree = "<group>"; };
 		26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyVHeaderV.swift; sourceTree = "<group>"; };
+		26F691C11F56CE9900CB6034 /* MyCellOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCellOne.swift; sourceTree = "<group>"; };
+		26F691C31F56D43800CB6034 /* MyCellTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCellTwo.swift; sourceTree = "<group>"; };
+		26F691C51F56D64000CB6034 /* MyCellThree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCellThree.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -753,6 +759,9 @@
 				26AE2B4F1F5504C400AAA36C /* LoginInputV.swift */,
 				26F691BD1F56A68000CB6034 /* SlideToSignV.swift */,
 				26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */,
+				26F691C11F56CE9900CB6034 /* MyCellOne.swift */,
+				26F691C31F56D43800CB6034 /* MyCellTwo.swift */,
+				26F691C51F56D64000CB6034 /* MyCellThree.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -839,6 +848,7 @@
 				264FA7021F54149C00CE405B /* NetWorkTool.swift in Sources */,
 				264FA7061F54150900CE405B /* UploadHeadTool.swift in Sources */,
 				264FA7771F54229E00CE405B /* IQUIWindow+Hierarchy.m in Sources */,
+				26F691C21F56CE9900CB6034 /* MyCellOne.swift in Sources */,
 				26F691B71F566E6000CB6034 /* MyViewController.swift in Sources */,
 				26AE2B311F55014000AAA36C /* Device+extension.swift in Sources */,
 				264FA6E21F54144400CE405B /* POPMath.mm in Sources */,
@@ -861,6 +871,7 @@
 				26AE2B501F5504C400AAA36C /* LoginInputV.swift in Sources */,
 				26AE2B341F55014000AAA36C /* UIImageExtension.swift in Sources */,
 				264FA6E91F54144400CE405B /* YYKVStorage.m in Sources */,
+				26F691C41F56D43800CB6034 /* MyCellTwo.swift in Sources */,
 				264FA77A1F54229E00CE405B /* IQTextView.m in Sources */,
 				26AE2B361F55014000AAA36C /* UILabel + Extension.swift in Sources */,
 				264FA6D51F54144400CE405B /* POPAnimatableProperty.mm in Sources */,
@@ -917,6 +928,7 @@
 				264FA7181F54151700CE405B /* FTToastIndicator.m in Sources */,
 				26AE2B2F1F55014000AAA36C /* UnderLineLabel.swift in Sources */,
 				26AE2B2E1F55014000AAA36C /* JFNavigationController.swift in Sources */,
+				26F691C61F56D64000CB6034 /* MyCellThree.swift in Sources */,
 				26AE2B4C1F5503B000AAA36C /* ClickBtn.swift in Sources */,
 				264FA77D1F54229E00CE405B /* IQTitleBarButtonItem.m in Sources */,
 				264FA7001F54149700CE405B /* Reachability.m in Sources */,
