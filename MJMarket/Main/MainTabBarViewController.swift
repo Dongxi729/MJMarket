@@ -34,7 +34,7 @@ class MainTabBarViewController: UITabBarController {
         let friendVc = JFNavigationController.init(rootViewController: PayPassVC())
         
         //我的模块
-        let meVC = JFNavigationController.init(rootViewController: UIViewController())
+        let meVC = JFNavigationController.init(rootViewController: MyViewController())
         
         
         self.setupChildVC(mainPageVC, title: "钱包", imageName: "icon1", selectImageName: "icon1_on")

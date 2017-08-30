@@ -28,4 +28,26 @@ extension UILabel {
         // set the attributed string to the UILabel object
         tolabel.attributedText = amountText
     }
+    
+    /// 设置富文本并且可以改变字体大小
+    ///
+    /// - Parameters:
+    ///   - ttext: 内容
+    ///   - tolabel: 添加到的控件（UIlabel）
+    ///   - withSuffixStr: 添加文本
+    ///   - lenght: 长度
+    ///   - fontSize: 字体大小
+    func setColorFultext(ttext : String,tolabel : UILabel,withSuffixStr : String,lenght : Int,fontSize : CGFloat) -> Void {
+        let ddd = ttext
+        let amountText = NSMutableAttributedString.init(string: ddd + withSuffixStr)
+        
+        // set the custom font and color for the 0,1 range in string
+        amountText.setAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: fontSize * SCREEN_SCALE),
+                                  NSForegroundColorAttributeName: UIColor.colorWithHexString("447FD4")],
+                                 range: NSMakeRange(ddd.characters.count, lenght))
+        // if you want, you can add more attributes for different ranges calling .setAttributes many times
+        
+        // set the attributed string to the UILabel object
+        tolabel.attributedText = amountText
+    }
 }

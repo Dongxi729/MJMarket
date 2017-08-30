@@ -8,13 +8,30 @@
 
 import UIKit
 
-class PayPassVC: UIViewController,UITextFieldDelegate {
+class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
     lazy var passInputV: PassV = {
-        let d :PassV = PassV.init(frame: CGRect.init(x: 0, y: 64, width: SCREEN_WIDTH * 0.8, height: 64))
+        let d :PassV = PassV.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.1, y: 64, width: SCREEN_WIDTH * 0.8, height: 35 * SCREEN_SCALE))
+        d.passDelegate = self
         return d
     }()
 
+    /// 描述文本
+    private lazy var payPassDesc: UILabel = {
+        let d : UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: COMMON_MARGIN, width: SCREEN_WIDTH - 2 * COMMON_MARGIN, height: 40 * SCREEN_SCALE))
+        d.text = "为了账户安全请设置支付密码"
+        d.textAlignment = .center
+        d.textColor = UIColor.colorWithHexString("333333")
+        d.font = UIFont.systemFont(ofSize: 16 * SCREEN_SCALE)
+        return d
+    }()
 
+    private lazy var payPassBottomDescLabel: UILabel = {
+        let d : UILabel = UILabel.init(frame: CGRect.init(x: self.passInputV.LeftX, y: self.passInputV.BottomY + COMMON_MARGIN, width: self.passInputV.Width, height: 15))
+        d.textColor = UIColor.colorWithHexString("969696")
+        d.text = "该密码可同步与闽集商城会员卡线上支付"
+        d.font = UIFont.systemFont(ofSize: 10)
+        return d
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,15 +39,48 @@ class PayPassVC: UIViewController,UITextFieldDelegate {
         // Do any additional setup after loading the view.
         view.addSubview(passInputV)
         
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.colorWithHexString("F8F8F8")
+        view.addSubview(payPassDesc)
+        view.addSubview(payPassBottomDescLabel)
+        
+        title = "支付密码"
         
     }
+    
+    /// 右侧重置按钮
+    private lazy var payPassRightItem: UIBarButtonItem = {
+        let d: UIBarButtonItem = UIBarButtonItem.init(title: "重置", style: .plain, target: self, action: #selector(clearPayPasstext))
+        d.tintColor = UIColor.colorWithHexString("333333")
+        return d
+    }()
 
+    func clearPayPasstext() {
+        self.passInputV.ttt.text = ""
+    }
+    
+    // MARK: - PassVDelegate
+    func passStr(passString str: String) {
+        CCog(message: str)
+        
+        if str.characters.count == 6 {
+            self.payPassDesc.text = "再次确认支付密码"
+            self.navigationItem.rightBarButtonItem = payPassRightItem
+        }
+    }
 
 
 }
 
+protocol PassVDelegate {
+    /// 传出输入的密码
+    ///
+    /// - Parameter str: 密码
+    func passStr(passString str : String)
+}
+
 class PassV: UIView,UITextFieldDelegate {
+    
+    var passDelegate : PassVDelegate?
     
     var textFielText : String? {
         didSet {
@@ -49,20 +99,15 @@ class PassV: UIView,UITextFieldDelegate {
         return d
     }()
     
+    /// 输入框界面
     lazy var inputV: UIView = {
         let d: UIView = UIView()
-        d.layer.borderWidth = 1
+        
         return d
     }()
     
-    lazy var dotV: UIView = {
-        let d : UIView = UIView.init()
-        d.backgroundColor = UIColor.black
-        d.clipsToBounds = true
-
-        return d
-    }()
     
+    /// 替换字符字符串
     var replae : [String] = [""]
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -135,6 +180,9 @@ class PassV: UIView,UITextFieldDelegate {
         let maxLength = 6
         let currentString: NSString = textField.text! as NSString
         let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+        
+        self.passDelegate?.passStr(passString: newString as String)
+        
         return newString.length <= maxLength
     }
     
@@ -142,12 +190,13 @@ class PassV: UIView,UITextFieldDelegate {
         super.init(frame: frame)
         
         for index in 0..<6 {
-            self.inputV = UIView.init(frame: CGRect.init(x: (6 * SCREEN_SCALE + self.Width / 6.6) * CGFloat(index) , y: 0, width: (self.Width / 6.6 - 6 * SCREEN_SCALE), height: (self.Width / 6.6 - 6 * SCREEN_SCALE)))
-            self.inputV.backgroundColor = UIColor.randomColor()
+//            self.inputV = UIView.init(frame: CGRect.init(x: (6 * SCREEN_SCALE + self.Width / 6.6) * CGFloat(index) , y: 0, width: (self.Width / 6.6 - 6 * SCREEN_SCALE), height: (self.Width / 6.6 - 6 * SCREEN_SCALE)))
+            self.inputV = UIView.init(frame: CGRect.init(x: (6 * SCREEN_SCALE + self.Width / 6.6) * CGFloat(index) , y: 0, width: (self.Width / 6.6 - 6 * SCREEN_SCALE), height: self.Height))
+            self.inputV.backgroundColor = UIColor.white
+            self.inputV.layer.borderColor = UIColor.colorWithHexString("CECECE").cgColor
+            self.inputV.layer.borderWidth = 1
             addSubview(self.inputV)
         }
-        
-        self.layer.borderWidth = 1
         
         addSubview(ttt)
 

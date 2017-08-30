@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		263D8E801F551B1B000B0F60 /* PayPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D8E7F1F551B1B000B0F60 /* PayPassVC.swift */; };
-		263D8E821F555A0A000B0F60 /* XXXXX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D8E811F555A0A000B0F60 /* XXXXX.swift */; };
 		264FA6471F54142D00CE405B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 264FA6451F54142D00CE405B /* Main.storyboard */; };
 		264FA6491F54142D00CE405B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 264FA6481F54142D00CE405B /* Assets.xcassets */; };
 		264FA64C1F54142D00CE405B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 264FA64A1F54142D00CE405B /* LaunchScreen.storyboard */; };
@@ -101,11 +100,13 @@
 		26AE2B521F55056300AAA36C /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B511F55056300AAA36C /* MainTabBarViewController.swift */; };
 		26AE2B541F550E1700AAA36C /* RigisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B531F550E1700AAA36C /* RigisterVC.swift */; };
 		26AE2B561F5513FD00AAA36C /* ZDXBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B551F5513FD00AAA36C /* ZDXBaseVC.swift */; };
+		26F691B71F566E6000CB6034 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691B61F566E6000CB6034 /* MyViewController.swift */; };
+		26F691BE1F56A68000CB6034 /* SlideToSignV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691BD1F56A68000CB6034 /* SlideToSignV.swift */; };
+		26F691C01F56C36C00CB6034 /* MyVHeaderV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		263D8E7F1F551B1B000B0F60 /* PayPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayPassVC.swift; sourceTree = "<group>"; };
-		263D8E811F555A0A000B0F60 /* XXXXX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XXXXX.swift; sourceTree = "<group>"; };
 		264FA63E1F54142D00CE405B /* MJMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MJMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		264FA6461F54142D00CE405B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		264FA6481F54142D00CE405B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -277,6 +278,9 @@
 		26AE2B511F55056300AAA36C /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		26AE2B531F550E1700AAA36C /* RigisterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RigisterVC.swift; sourceTree = "<group>"; };
 		26AE2B551F5513FD00AAA36C /* ZDXBaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZDXBaseVC.swift; sourceTree = "<group>"; };
+		26F691B61F566E6000CB6034 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
+		26F691BD1F56A68000CB6034 /* SlideToSignV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideToSignV.swift; sourceTree = "<group>"; };
+		26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyVHeaderV.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -727,6 +731,7 @@
 				26AE2B451F55029100AAA36C /* LoginVC.swift */,
 				26AE2B531F550E1700AAA36C /* RigisterVC.swift */,
 				263D8E7F1F551B1B000B0F60 /* PayPassVC.swift */,
+				26F691B61F566E6000CB6034 /* MyViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -746,7 +751,8 @@
 				26AE2B4B1F5503B000AAA36C /* ClickBtn.swift */,
 				26AE2B4D1F5503FD00AAA36C /* LoginClickV.swift */,
 				26AE2B4F1F5504C400AAA36C /* LoginInputV.swift */,
-				263D8E811F555A0A000B0F60 /* XXXXX.swift */,
+				26F691BD1F56A68000CB6034 /* SlideToSignV.swift */,
+				26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -833,6 +839,7 @@
 				264FA7021F54149C00CE405B /* NetWorkTool.swift in Sources */,
 				264FA7061F54150900CE405B /* UploadHeadTool.swift in Sources */,
 				264FA7771F54229E00CE405B /* IQUIWindow+Hierarchy.m in Sources */,
+				26F691B71F566E6000CB6034 /* MyViewController.swift in Sources */,
 				26AE2B311F55014000AAA36C /* Device+extension.swift in Sources */,
 				264FA6E21F54144400CE405B /* POPMath.mm in Sources */,
 				264FA6F81F54144400CE405B /* YYWebImageOperation.m in Sources */,
@@ -859,6 +866,7 @@
 				264FA6D51F54144400CE405B /* POPAnimatableProperty.mm in Sources */,
 				264FA6E11F54144400CE405B /* POPLayerExtras.mm in Sources */,
 				264FA6FA1F54144400CE405B /* NSDictionary+ZXPUnicode.m in Sources */,
+				26F691C01F56C36C00CB6034 /* MyVHeaderV.swift in Sources */,
 				264FA7721F54229E00CE405B /* IQNSArray+Sort.m in Sources */,
 				264FA6D61F54144400CE405B /* POPAnimation.mm in Sources */,
 				264FA77C1F54229E00CE405B /* IQPreviousNextView.m in Sources */,
@@ -866,6 +874,7 @@
 				264FA6EE1F54144400CE405B /* UIButton+YYWebImage.m in Sources */,
 				264FA6D91F54144400CE405B /* POPAnimationRuntime.mm in Sources */,
 				264FA7741F54229E00CE405B /* IQUITextFieldView+Additions.m in Sources */,
+				26F691BE1F56A68000CB6034 /* SlideToSignV.swift in Sources */,
 				26AE2B481F55037300AAA36C /* SeparateBtn.swift in Sources */,
 				264FA77E1F54229E00CE405B /* IQToolbar.m in Sources */,
 				264FA6E31F54144400CE405B /* POPPropertyAnimation.mm in Sources */,
@@ -886,7 +895,6 @@
 				264FA6EC1F54144400CE405B /* CALayer+YYWebImage.m in Sources */,
 				264FA6E01F54144400CE405B /* POPGeometry.mm in Sources */,
 				263D8E801F551B1B000B0F60 /* PayPassVC.swift in Sources */,
-				263D8E821F555A0A000B0F60 /* XXXXX.swift in Sources */,
 				264FA77F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				264FA6F11F54144400CE405B /* YYAnimatedImageView.m in Sources */,
 				264FA6E81F54144400CE405B /* YYDiskCache.m in Sources */,
