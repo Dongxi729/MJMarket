@@ -30,6 +30,11 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         self.navigationController?.navigationBar.isHidden = false
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
     
     /// 右上角按钮
     private lazy var myView_RightBtn: UIButton = {
@@ -41,6 +46,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     func myView_RightBtnSEl() {
         self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.pushViewController(SettingVC(), animated: true)
         
     }
     
