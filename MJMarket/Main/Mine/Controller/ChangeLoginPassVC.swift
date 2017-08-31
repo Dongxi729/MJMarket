@@ -45,7 +45,7 @@ class ChangeLoginPassVC: UIViewController,UITableViewDelegate,UITableViewDataSou
         cell.bindIndex = indexPath
         cell.bindCellDelegate = self
         
-        cell.bindPhoneCell_Btn.isHidden = false
+        cell.bindPhoneCell_Btn.isHidden = true
         
         return cell
     }
