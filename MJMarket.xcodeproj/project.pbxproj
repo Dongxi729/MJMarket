@@ -105,6 +105,8 @@
 		26ED02F81F57A658007C2EEC /* SetVCellOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02F71F57A658007C2EEC /* SetVCellOne.swift */; };
 		26ED02FA1F57B7AD007C2EEC /* CustomCollectV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02F91F57B7AD007C2EEC /* CustomCollectV.swift */; };
 		26ED02FE1F57E6AA007C2EEC /* BindPhoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02FD1F57E6AA007C2EEC /* BindPhoneVC.swift */; };
+		26ED03021F5824C0007C2EEC /* ChangePayPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED03011F5824C0007C2EEC /* ChangePayPassVC.swift */; };
+		26ED03041F582B90007C2EEC /* ChangeLoginPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED03031F582B90007C2EEC /* ChangeLoginPassVC.swift */; };
 		26F691B71F566E6000CB6034 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691B61F566E6000CB6034 /* MyViewController.swift */; };
 		26F691BE1F56A68000CB6034 /* SlideToSignV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691BD1F56A68000CB6034 /* SlideToSignV.swift */; };
 		26F691C01F56C36C00CB6034 /* MyVHeaderV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */; };
@@ -291,6 +293,8 @@
 		26ED02F71F57A658007C2EEC /* SetVCellOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetVCellOne.swift; sourceTree = "<group>"; };
 		26ED02F91F57B7AD007C2EEC /* CustomCollectV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectV.swift; sourceTree = "<group>"; };
 		26ED02FD1F57E6AA007C2EEC /* BindPhoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindPhoneVC.swift; sourceTree = "<group>"; };
+		26ED03011F5824C0007C2EEC /* ChangePayPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePayPassVC.swift; sourceTree = "<group>"; };
+		26ED03031F582B90007C2EEC /* ChangeLoginPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeLoginPassVC.swift; sourceTree = "<group>"; };
 		26F691B61F566E6000CB6034 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		26F691BD1F56A68000CB6034 /* SlideToSignV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideToSignV.swift; sourceTree = "<group>"; };
 		26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyVHeaderV.swift; sourceTree = "<group>"; };
@@ -751,6 +755,8 @@
 				26ED02F31F5798BE007C2EEC /* SettingVC.swift */,
 				26ED02F51F57A124007C2EEC /* PersonInfoVC.swift */,
 				26ED02FD1F57E6AA007C2EEC /* BindPhoneVC.swift */,
+				26ED03011F5824C0007C2EEC /* ChangePayPassVC.swift */,
+				26ED03031F582B90007C2EEC /* ChangeLoginPassVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -860,6 +866,7 @@
 				264FA71A1F5415D600CE405B /* ZDXCommon.swift in Sources */,
 				26AE2B301F55014000AAA36C /* Color+Extension.swift in Sources */,
 				264FA7731F54229E00CE405B /* IQUIScrollView+Additions.m in Sources */,
+				26ED03041F582B90007C2EEC /* ChangeLoginPassVC.swift in Sources */,
 				264FA7021F54149C00CE405B /* NetWorkTool.swift in Sources */,
 				264FA7061F54150900CE405B /* UploadHeadTool.swift in Sources */,
 				264FA7771F54229E00CE405B /* IQUIWindow+Hierarchy.m in Sources */,
@@ -901,6 +908,7 @@
 				264FA7761F54229E00CE405B /* IQUIViewController+Additions.m in Sources */,
 				264FA6EE1F54144400CE405B /* UIButton+YYWebImage.m in Sources */,
 				264FA6D91F54144400CE405B /* POPAnimationRuntime.mm in Sources */,
+				26ED03021F5824C0007C2EEC /* ChangePayPassVC.swift in Sources */,
 				264FA7741F54229E00CE405B /* IQUITextFieldView+Additions.m in Sources */,
 				26F691BE1F56A68000CB6034 /* SlideToSignV.swift in Sources */,
 				26AE2B481F55037300AAA36C /* SeparateBtn.swift in Sources */,

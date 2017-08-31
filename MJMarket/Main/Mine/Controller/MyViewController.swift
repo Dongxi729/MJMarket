@@ -156,6 +156,12 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             CCog()
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 3 && indexPath.row == 4 {
+            self.navigationController?.pushViewController(ChangeLoginPassVC(), animated: true)
+        }
+    }
 
 }
 

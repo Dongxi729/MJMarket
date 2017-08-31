@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,BindPhoneCellDelegate {
     
     lazy var bindPhone_TBV: UITableView = {
         let d : UITableView = UITableView.init(frame: self.view.bounds, style: .grouped)
@@ -20,6 +20,7 @@ class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     lazy var bindPhone_FoV: PersonFooV = {
         let d: PersonFooV = PersonFooV.init(frame:CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 45))
+        d.personFooVDelegate = self
         return d
     }()
 
@@ -27,30 +28,31 @@ class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        title = "绑定手机"
         view.addSubview(bindPhone_TBV)
         bindPhone_TBV.tableFooterView = bindPhone_FoV
         
     }
     
+    private var cellTitles : [String] = ["请输入您的手机号码","请输入验证码"]
     
     // MARK: - 表格代理
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BindPhoneCell") as! BindPhoneCell
+        cell.bindPhoneCellDescLanbel.placeholder = cellTitles[indexPath.row]
+        cell.bindPhoneCell_Btn.isHidden = true
+        cell.bindCellDelegate = self
+        
+        cell.bindIndex = indexPath
         if indexPath.section == 0 && indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "BindPhoneCell") as! BindPhoneCell
-            cell.bindPhoneCellDescLanbel.placeholder = "请输入您的手机号码"
-            cell.bindPhoneCell_Btn.isHidden = true
-            return cell
-        }
-        
-        
-        if indexPath.section == 0 && indexPath.row == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "BindPhoneCell") as! BindPhoneCell
-            cell.bindPhoneCellDescLanbel.placeholder = "请输入验证码"
             cell.bindPhoneCell_Btn.isHidden = false
-            return cell
+        } else {
+            cell.bindPhoneCell_Btn.isHidden = true
         }
         
-        return UITableViewCell.init()
+        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -61,16 +63,34 @@ class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return 10
     }
+    
+    // MARK: - PersonFooVDelegate
+    func personBtnSEL() {
+        CCog()
+    }
+    
+    // MARK: - BindPhoneCellDelegate
+    func cellStr(index: IndexPath, str: String) {
+        CCog(message: index.row)
+        CCog(message: str)
+    }
+
 }
 
 
-
-class BindPhoneCell: CommonTableViewCell {
+protocol BindPhoneCellDelegate {
+    func cellStr(index : IndexPath,str : String)
+}
+class BindPhoneCell: CommonTableViewCell,UITextFieldDelegate {
+    var bindIndex : IndexPath?
+    
+    var bindCellDelegate : BindPhoneCellDelegate?
     
     lazy var bindPhoneCellDescLanbel: UITextField = {
         let d: UITextField = UITextField.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.8, height: 20))
         d.placeholder = "请输入您的手机号码"
         d.font = UIFont.systemFont(ofSize: 14)
+        d.delegate = self
         return d
     }()
     
@@ -87,6 +107,12 @@ class BindPhoneCell: CommonTableViewCell {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(bindPhoneCellDescLanbel)
         contentView.addSubview(bindPhoneCell_Btn)
+        
+        
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.bindCellDelegate?.cellStr(index: bindIndex!, str: textField.text!)
     }
     
     required init?(coder aDecoder: NSCoder) {

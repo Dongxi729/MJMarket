@@ -9,10 +9,11 @@
 import UIKit
 
 
-class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate {
     
     lazy var personHeadV: PersonFooV = {
         let d: PersonFooV = PersonFooV.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 35 * SCREEN_SCALE))
+        d.personFooVDelegate = self
         return d
     }()
     
@@ -143,20 +144,40 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         if indexPath.section == 1 && indexPath.row == 0 {
             self.navigationController?.pushViewController(BindPhoneVC(), animated: true)
         }
+        
+        if indexPath.section == 2 && indexPath.row == 0 {
+            self.navigationController?.pushViewController(ChangePayPassVC(), animated: true)
+        }
     }
 
+    //  PersonFooVDelegate
+    func personBtnSEL() {
+        CCog()
+    }
+    
 }
 
+
+protocol PersonFooVDelegate {
+    func personBtnSEL()
+}
 // MARK: - 表格尾部
 class PersonFooV : UIView {
+    
+    var personFooVDelegate : PersonFooVDelegate?
     
     lazy var personInfo_footerV: UIButton = {
         let d : UIButton = UIButton.init(frame: CGRect.init(x: COMMON_MARGIN, y: 0, width: SCREEN_WIDTH - 2 * COMMON_MARGIN, height: 35 * SCREEN_SCALE))
         d.backgroundColor = COMMON_COLOR
         d.setTitle("保存", for: .normal)
+        d.addTarget(self, action: #selector(personSaveSEL), for: .touchUpInside)
         d.layer.cornerRadius = 17.5
         return d
     }()
+    
+    @objc private func personSaveSEL() {
+        self.personFooVDelegate?.personBtnSEL()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
