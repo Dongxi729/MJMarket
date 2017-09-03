@@ -23,7 +23,7 @@ class MainTabBarViewController: UITabBarController {
     fileprivate func setUpSubViews() -> Void {
         
         //首页
-        let mainPageVC = JFNavigationController.init(rootViewController: LoginVC())
+        let mainPageVC = JFNavigationController.init(rootViewController: TestVC())
         
         let view = UIViewController()
         view.view.backgroundColor = UIColor.white

@@ -79,6 +79,9 @@
 		264FA77E1F54229E00CE405B /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 264FA76D1F54229E00CE405B /* IQToolbar.m */; };
 		264FA77F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 264FA76F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m */; };
 		264FA7801F54229E00CE405B /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 264FA7711F54229E00CE405B /* IQKeyboardManager.bundle */; };
+		265A7D6D1F5972A100F0503C /* ChagrgeV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6C1F5972A100F0503C /* ChagrgeV.swift */; };
+		265A7D6F1F59740F00F0503C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6E1F59740F00F0503C /* TestVC.swift */; };
+		266ECC121F5BCFFC00D033D0 /* TTT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266ECC111F5BCFFC00D033D0 /* TTT.swift */; };
 		26AE2B2D1F55014000AAA36C /* CommonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */; };
 		26AE2B2E1F55014000AAA36C /* JFNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B211F55014000AAA36C /* JFNavigationController.swift */; };
 		26AE2B2F1F55014000AAA36C /* UnderLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B221F55014000AAA36C /* UnderLineLabel.swift */; };
@@ -267,6 +270,9 @@
 		264FA76E1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
 		264FA76F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		264FA7711F54229E00CE405B /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
+		265A7D6C1F5972A100F0503C /* ChagrgeV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChagrgeV.swift; sourceTree = "<group>"; };
+		265A7D6E1F59740F00F0503C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
+		266ECC111F5BCFFC00D033D0 /* TTT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTT.swift; sourceTree = "<group>"; };
 		26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTableViewCell.swift; sourceTree = "<group>"; };
 		26AE2B211F55014000AAA36C /* JFNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFNavigationController.swift; sourceTree = "<group>"; };
 		26AE2B221F55014000AAA36C /* UnderLineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnderLineLabel.swift; sourceTree = "<group>"; };
@@ -651,9 +657,19 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		265A7D6B1F58EA7500F0503C /* commonV */ = {
+			isa = PBXGroup;
+			children = (
+				265A7D6C1F5972A100F0503C /* ChagrgeV.swift */,
+				265A7D6E1F59740F00F0503C /* TestVC.swift */,
+			);
+			path = commonV;
+			sourceTree = "<group>";
+		};
 		26AE2B1E1F55014000AAA36C /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				265A7D6B1F58EA7500F0503C /* commonV */,
 				26AE2B1F1F55014000AAA36C /* Category */,
 				26AE2B231F55014000AAA36C /* Extension */,
 			);
@@ -700,6 +716,7 @@
 				26AE2B511F55056300AAA36C /* MainTabBarViewController.swift */,
 				26AE2B3D1F55025500AAA36C /* Home */,
 				26AE2B411F55025500AAA36C /* Mine */,
+				266ECC111F5BCFFC00D033D0 /* TTT.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -863,6 +880,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				265A7D6F1F59740F00F0503C /* TestVC.swift in Sources */,
 				264FA71A1F5415D600CE405B /* ZDXCommon.swift in Sources */,
 				26AE2B301F55014000AAA36C /* Color+Extension.swift in Sources */,
 				264FA7731F54229E00CE405B /* IQUIScrollView+Additions.m in Sources */,
@@ -872,6 +890,7 @@
 				264FA7771F54229E00CE405B /* IQUIWindow+Hierarchy.m in Sources */,
 				26F691C21F56CE9900CB6034 /* MyCellOne.swift in Sources */,
 				26F691B71F566E6000CB6034 /* MyViewController.swift in Sources */,
+				266ECC121F5BCFFC00D033D0 /* TTT.swift in Sources */,
 				26ED02FE1F57E6AA007C2EEC /* BindPhoneVC.swift in Sources */,
 				26AE2B311F55014000AAA36C /* Device+extension.swift in Sources */,
 				264FA6E21F54144400CE405B /* POPMath.mm in Sources */,
@@ -959,6 +978,7 @@
 				26F691C61F56D64000CB6034 /* MyCellThree.swift in Sources */,
 				26AE2B4C1F5503B000AAA36C /* ClickBtn.swift in Sources */,
 				264FA77D1F54229E00CE405B /* IQTitleBarButtonItem.m in Sources */,
+				265A7D6D1F5972A100F0503C /* ChagrgeV.swift in Sources */,
 				264FA7001F54149700CE405B /* Reachability.m in Sources */,
 				264FA6DD1F54144400CE405B /* POPCGUtils.mm in Sources */,
 				264FA6F41F54144400CE405B /* YYImageCoder.m in Sources */,
