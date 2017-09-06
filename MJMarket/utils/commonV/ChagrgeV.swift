@@ -26,13 +26,13 @@ class ChagrgeV: UIView {
     }()
     
     lazy var secOne: ChagrgeOneV = {
-        let d: ChagrgeOneV = ChagrgeOneV.init(frame: CGRect.init(x: 0, y: self.chargeTitleV.BottomY, width: self.Width, height: self.Height * 3))
+        let d: ChagrgeOneV = ChagrgeOneV.init(frame: CGRect.init(x: 0, y: self.chargeTitleV.BottomY, width: self.Width, height: self.Height * 0.3))
         return d
     }()
     
     
-    lazy var secTwoV: SecTwoV = {
-        let d : SecTwoV = SecTwoV.init(frame: CGRect.init(x: 0, y: self.secOne.BottomY, width: self.Width, height: self.Height * 0.35))
+    lazy var secTwoV: CYDetailSelectV = {
+        let d : CYDetailSelectV = CYDetailSelectV.init(["微信支付","支付宝支付"], ["list_icon_wechat","list_icon_alipay"], CGRect.init(x: 0, y: self.secOne.BottomY, width: self.Width, height: self.Height * 0.35))
         return d
     }()
     
@@ -47,6 +47,7 @@ class ChagrgeV: UIView {
         
         addSubview(secOne)
         addSubview(secTwoV)
+        secTwoV.reloadTbv()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -102,41 +103,58 @@ class ChagrgeOneV: UIView {
     }
 }
 
-class SecTwoV: UIView,UITableViewDelegate,UITableViewDataSource {
+class CYDetailSelectV: UIView,UITableViewDelegate,UITableViewDataSource {
     
-    lazy var secTBV: UITableView = {
-        let d : UITableView = UITableView.init(frame: self.bounds)
-        d.dataSource = self
-        d.delegate = self
+    private lazy var cy_selectTbV: UITableView = {
+        let d : UITableView = UITableView.init(frame: self.bounds, style: .grouped)
         d.register(ZDXCheckDeskCellDown.self, forCellReuseIdentifier: "ZDXCheckDeskCellDown")
+        d.delegate = self
+        d.dataSource = self
         return d
     }()
     
-    override init(frame: CGRect) {
+    /// 标题
+    private var titles = [String]()
+    
+    /// 图片名字
+    private var imgsTitles = [String]()
+    
+    func reloadTbv() {
+        self.cy_selectTbV.reloadData()
+        addSubview(cy_selectTbV)
+    }
+    
+    init(_ titles: [String],_ imgsName : [String],_ frame : CGRect) {
         super.init(frame: frame)
-        
-        addSubview(secTBV)
-        
-        /// 默认选中第一行
-        let indexPath = IndexPath.init(row: 0, section: 1)
-        self.secTBV.selectRow(at: indexPath, animated:false, scrollPosition: .none)
+        self.titles = titles
+        self.imgsTitles = imgsName
     }
     
+    // MARK: - UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return titles.count
     }
     
-    var titles : [String] = ["微信支付","支付宝支付"]
-    var titlesImgName : [String] = ["list_icon_alipay","list_icon_wechat"]
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ZDXCheckDeskCellDown") as! ZDXCheckDeskCellDown
-        cell.zdxCheckDeskCellDownHeadImg.image = UIImage.init(named: titlesImgName[indexPath.row])
+        cell.zdxCheckDeskCellDownHeadImg.image = UIImage.init(named: titles[indexPath.row])
         cell.zdxCheckDescCellDescLabel.text = titles[indexPath.row]
         return cell
     }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
+    func updateCellStatus(_ cell: ZDXCheckDeskCellDown, selected: Bool) {
+        
+        cell.zdxCDCheckImg.image = selected ? #imageLiteral(resourceName: "radio_white_s") : #imageLiteral(resourceName: "icon_big_gray")
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
         let cell = tableView.cellForRow(at: indexPath) as! ZDXCheckDeskCellDown
         updateCellStatus(cell, selected: true)
     }
@@ -144,17 +162,16 @@ class SecTwoV: UIView,UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! ZDXCheckDeskCellDown
         updateCellStatus(cell, selected: false)
-    }
-    
-    
-    func updateCellStatus(_ cell: ZDXCheckDeskCellDown, selected: Bool) {
         
-        cell.zdxCDCheckImg.image = selected ? #imageLiteral(resourceName: "radio_white_s") : #imageLiteral(resourceName: "icon_big_gray")
+        if indexPath.row == 0 {
+            updateCellStatus(cell, selected: false)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 
@@ -167,14 +184,14 @@ class ZDXCheckDeskCellDown: CommonTableViewCell {
     }()
     
     lazy var zdxCheckDescCellDescLabel: UILabel = {
-        let d: UILabel = UILabel.init(frame: CGRect.init(x: self.zdxCheckDeskCellDownHeadImg.RightX + COMMON_MARGIN, y: 10, width: SCREEN_WIDTH - 2 * COMMON_MARGIN - 25, height: 25))
+        let d: UILabel = UILabel.init(frame: CGRect.init(x: self.zdxCheckDeskCellDownHeadImg.RightX + COMMON_MARGIN, y: 10, width: self.Width - 2 * COMMON_MARGIN - 25, height: 25))
         d.textColor = UIColor.colorWithHexString("333333")
         d.font = UIFont.systemFont(ofSize: 13)
         return d
     }()
     
     lazy var zdxCDCheckImg: UIImageView = {
-        let d : UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 2 * COMMON_MARGIN, y: 15, width: 15, height: 15))
+        let d : UIImageView = UIImageView.init(frame: CGRect.init(x: 0.65 * (self.Width - 2 * COMMON_MARGIN), y: 15, width: 15, height: 15))
         d.layer.borderWidth = 0.5
         d.layer.borderColor = UIColor.gray.cgColor
         d.layer.cornerRadius = 7.5

@@ -9,11 +9,12 @@
 import UIKit
 
 class TestVC: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+
         view.backgroundColor = UIColor.white
     }
     
@@ -26,4 +27,11 @@ class TestVC: UIViewController {
         UIApplication.shared.keyWindow?.addSubview(payV)
         payV.center = (UIApplication.shared.keyWindow?.center)!
     }
+
+    lazy var xxx: CYDetailSelectV = {
+        let d : CYDetailSelectV = CYDetailSelectV.init(["sss","xxx","嘻嘻嘻"], ["","",""], self.view.bounds)
+        return d
+    }()
 }
+
+
