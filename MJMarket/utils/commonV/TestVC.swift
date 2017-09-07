@@ -15,11 +15,11 @@ class TestVC: UIViewController {
 
         // Do any additional setup after loading the view.
 
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.gray
     }
     
     lazy var payV: ChagrgeV = {
-        let d: ChagrgeV = ChagrgeV.init(frame: CGRect.init(x: 0, y: 0, width: 250 * SCREEN_SCALE, height: (250 * SCREEN_SCALE) * 1.15))
+        let d: ChagrgeV = ChagrgeV.init(frame: CGRect.init(x: 0, y: 0, width: 250, height: (250) * 1.15))
         return d
     }()
     

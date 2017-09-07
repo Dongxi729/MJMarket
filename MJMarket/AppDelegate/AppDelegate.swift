@@ -19,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.frame = UIScreen.main.bounds
         self.window?.makeKeyAndVisible()
         self.window?.rootViewController = TestVC()
+        
+        
+    
+        
         return true
     }
 }

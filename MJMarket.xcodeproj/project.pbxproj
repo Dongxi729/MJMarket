@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26342E641F6136CE00850676 /* CommonRequestConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26342E631F6136CE00850676 /* CommonRequestConst.swift */; };
 		263D8E801F551B1B000B0F60 /* PayPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D8E7F1F551B1B000B0F60 /* PayPassVC.swift */; };
 		264FA6471F54142D00CE405B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 264FA6451F54142D00CE405B /* Main.storyboard */; };
 		264FA6491F54142D00CE405B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 264FA6481F54142D00CE405B /* Assets.xcassets */; };
@@ -119,6 +120,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		26342E631F6136CE00850676 /* CommonRequestConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonRequestConst.swift; sourceTree = "<group>"; };
 		263D8E7F1F551B1B000B0F60 /* PayPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayPassVC.swift; sourceTree = "<group>"; };
 		264FA63E1F54142D00CE405B /* MJMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MJMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		264FA6461F54142D00CE405B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -322,6 +324,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26342E621F6136BB00850676 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				26342E631F6136CE00850676 /* CommonRequestConst.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		264FA6351F54142C00CE405B = {
 			isa = PBXGroup;
 			children = (
@@ -669,6 +679,7 @@
 		26AE2B1E1F55014000AAA36C /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				26342E621F6136BB00850676 /* Common */,
 				265A7D6B1F58EA7500F0503C /* commonV */,
 				26AE2B1F1F55014000AAA36C /* Category */,
 				26AE2B231F55014000AAA36C /* Extension */,
@@ -912,6 +923,7 @@
 				264FA6ED1F54144400CE405B /* MKAnnotationView+YYWebImage.m in Sources */,
 				26AE2B501F5504C400AAA36C /* LoginInputV.swift in Sources */,
 				26AE2B341F55014000AAA36C /* UIImageExtension.swift in Sources */,
+				26342E641F6136CE00850676 /* CommonRequestConst.swift in Sources */,
 				26ED02F41F5798BE007C2EEC /* SettingVC.swift in Sources */,
 				264FA6E91F54144400CE405B /* YYKVStorage.m in Sources */,
 				26F691C41F56D43800CB6034 /* MyCellTwo.swift in Sources */,
