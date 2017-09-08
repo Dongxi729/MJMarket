@@ -105,6 +105,7 @@
 		26AE2B521F55056300AAA36C /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B511F55056300AAA36C /* MainTabBarViewController.swift */; };
 		26AE2B541F550E1700AAA36C /* RigisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B531F550E1700AAA36C /* RigisterVC.swift */; };
 		26AE2B561F5513FD00AAA36C /* ZDXBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B551F5513FD00AAA36C /* ZDXBaseVC.swift */; };
+		26EBF51D1F6297E50019DB87 /* UITextFiledForMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EBF51C1F6297E50019DB87 /* UITextFiledForMoney.swift */; };
 		26ED02F41F5798BE007C2EEC /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02F31F5798BE007C2EEC /* SettingVC.swift */; };
 		26ED02F61F57A124007C2EEC /* PersonInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02F51F57A124007C2EEC /* PersonInfoVC.swift */; };
 		26ED02F81F57A658007C2EEC /* SetVCellOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02F71F57A658007C2EEC /* SetVCellOne.swift */; };
@@ -298,6 +299,7 @@
 		26AE2B511F55056300AAA36C /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		26AE2B531F550E1700AAA36C /* RigisterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RigisterVC.swift; sourceTree = "<group>"; };
 		26AE2B551F5513FD00AAA36C /* ZDXBaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZDXBaseVC.swift; sourceTree = "<group>"; };
+		26EBF51C1F6297E50019DB87 /* UITextFiledForMoney.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFiledForMoney.swift; sourceTree = "<group>"; };
 		26ED02F31F5798BE007C2EEC /* SettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		26ED02F51F57A124007C2EEC /* PersonInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonInfoVC.swift; sourceTree = "<group>"; };
 		26ED02F71F57A658007C2EEC /* SetVCellOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetVCellOne.swift; sourceTree = "<group>"; };
@@ -696,6 +698,7 @@
 				26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */,
 				26AE2B211F55014000AAA36C /* JFNavigationController.swift */,
 				26AE2B221F55014000AAA36C /* UnderLineLabel.swift */,
+				26EBF51C1F6297E50019DB87 /* UITextFiledForMoney.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -950,6 +953,7 @@
 				26ED02F61F57A124007C2EEC /* PersonInfoVC.swift in Sources */,
 				264FA6E31F54144400CE405B /* POPPropertyAnimation.mm in Sources */,
 				264FA6EA1F54144400CE405B /* YYMemoryCache.m in Sources */,
+				26EBF51D1F6297E50019DB87 /* UITextFiledForMoney.swift in Sources */,
 				2680AB051F627211008D51AB /* ShareV.swift in Sources */,
 				264FA6D71F54144400CE405B /* POPAnimationEvent.mm in Sources */,
 				264FA6F71F54144400CE405B /* YYWebImageManager.m in Sources */,

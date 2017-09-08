@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         self.window?.frame = UIScreen.main.bounds
         self.window?.makeKeyAndVisible()
-        self.window?.rootViewController = TestVC()
+        self.window?.rootViewController = MainTabBarViewController()
         
         
     

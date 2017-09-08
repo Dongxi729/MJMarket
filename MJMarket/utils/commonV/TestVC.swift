@@ -15,12 +15,24 @@ class TestVC: UIViewController,ChagrgeVDelegate {
         return d
     }()
     
+    lazy var texttf: UITextFiledForMoney = {
+        let d : UITextFiledForMoney = UITextFiledForMoney.init(2, CGRect.init(x: 0, y: 300, width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.3))
+        d.layer.borderWidth = 1
+        return d
+    }()
+    
+    lazy var shareC: ShareV = {
+        let d : ShareV = ShareV.init(frame: self.texttf.frame)
+        return d
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
-        view.addSubview(shareVVV)
+//        view.addSubview(shareVVV)
+        view.addSubview(shareC)
     }
     
     
