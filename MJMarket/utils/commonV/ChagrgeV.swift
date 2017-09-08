@@ -5,10 +5,21 @@
 //  Created by 郑东喜 on 2017/9/1.
 //  Copyright © 2017年 郑东喜. All rights reserved.
 //  余额充值
+//lazy var payV: ChagrgeV = {
+//    let d : ChagrgeV = ChagrgeV.init(CGRect.init(x: 0, y: 0, width: 250, height: (250) * 1.15))
+//    return d
+//}()
 
 import UIKit
 
-class ChagrgeV: UIView {
+protocol ChagrgeVDelegate {
+    func selectChargeApp(_ selectType : Int)
+    func selectChargeAppWithMoney(_ selectType : Int)
+}
+
+class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
+    
+    var chagrgeVDelegate : ChagrgeVDelegate?
     
     lazy var chargeTitleV: UIView = {
         
@@ -28,6 +39,7 @@ class ChagrgeV: UIView {
     lazy var secOne: ChagrgeOneV = {
         let d: ChagrgeOneV = ChagrgeOneV.init(frame: CGRect.init(x: 0, y: self.chargeTitleV.BottomY, width: self.Width, height: self.Height *
             0.3))
+        d.chagrgeOneVDelegate = self
         return d
     }()
     
@@ -43,7 +55,7 @@ class ChagrgeV: UIView {
     /// 表格视图
     lazy var secTwoV: CYDetailSelectV = {
         let d : CYDetailSelectV = CYDetailSelectV.init(["微信支付","支付宝支付"], ["list_icon_wechat","list_icon_alipay"], CGRect.init(x: 1 * COMMON_MARGIN, y: self.chargeChooseLabel.BottomY, width: self.Width - 2 * COMMON_MARGIN, height: self.Height * 0.2))
-        
+        d.cYDetailSelectVDelegate = self
         return d
     }()
     
@@ -62,6 +74,7 @@ class ChagrgeV: UIView {
         d.layer.cornerRadius = 3
         d.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         d.clipsToBounds = true
+        d.addTarget(self, action: #selector(dismissV), for: .touchUpInside)
         d.setTitle("取消", for: .normal)
         return d
     }()
@@ -73,13 +86,54 @@ class ChagrgeV: UIView {
         d.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         d.clipsToBounds = true
         d.setTitle("充值", for: .normal)
+        d.addTarget(self, action: #selector(chargeSEL), for: .touchUpInside)
         return d
     }()
     
+    func dismissV() {
+        UIView.animate(withDuration: 0.25) {
+            UIApplication.shared.keyWindow?.isHidden = true
+        }
+    }
     
+    /// 充值
+    func chargeSEL() {
+        if chaegeCount.characters.count == 0 {
+            FTIndicator.showToastMessage("请输入大于1的操作金额")
+            return
+        }
+        
+        if isAutoSuccess == false {
+            FTIndicator.showToastMessage("请输入验证码")
+            return
+        }
+        
+        CCog(message: chaegeCount)
+        CCog(message: isAutoSuccess)
+    }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    lazy var topWindown: UIWindow = {
+        let d : UIWindow = UIWindow.init(frame: (UIApplication.shared.keyWindow?.frame)!)
+        d.makeKeyAndVisible()
+        d.backgroundColor = COMMON_COLOR
+        return d
+    }()
+    
+    lazy var maskV: UIView = {
+        let d : UIView = UIView.init(frame: (UIApplication.shared.keyWindow?.frame)!)
+        d.backgroundColor = COMMON_COLOR
+        d.alpha = 0
+        return d
+    }()
+    
+    init(_ rect : CGRect) {
+        super.init(frame: rect)
+        
+        UIView.animate(withDuration: 0.25) {
+            UIApplication.shared.keyWindow?.addSubview(self.topWindown)
+            self.topWindown.addSubview(self.maskV)
+            self.topWindown.alpha = 1
+        }
         
         self.layer.cornerRadius = 5
         self.clipsToBounds = true
@@ -98,13 +152,45 @@ class ChagrgeV: UIView {
         
     }
     
+    /// 充值金额
+    private var chaegeCount : String = ""
+    
+    /// 是否严验证成功
+    private var isAutoSuccess = false
+    
+    /// 支付类型
+    private var paytype : Int = 0
+    
+    func chargeMoneyStr(str: String) {
+        CCog(message: str)
+        chaegeCount = str
+    }
+    
+    func autoSuccess(isSuccess: Bool) {
+        CCog(message: isSuccess)
+        isAutoSuccess = isSuccess
+    }
+    
+    func selectChargeType(chargeType: Int) {
+        CCog(message: chargeType)
+        self.chagrgeVDelegate?.selectChargeApp(chargeType)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
+protocol ChagrgeOneVDelegate {
+    func chargeMoneyStr(str : String)
+    func autoSuccess(isSuccess : Bool)
+}
+
 class ChagrgeOneV: UIView,UITextFieldDelegate {
     
+    var chagrgeOneVDelegate : ChagrgeOneVDelegate?
+    
+    /// 充值金额
     lazy var chagrgeTF: UITextField = {
         let d: UITextField = UITextField.init(frame: CGRect.init(x: COMMON_MARGIN * 2, y: COMMON_MARGIN * 0.5, width: self.Width - 4 * COMMON_MARGIN, height: 30))
         d.layer.borderWidth = 1
@@ -113,10 +199,13 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
         d.font = UIFont.systemFont(ofSize: 14)
         d.clipsToBounds = true
         d.keyboardType = .numberPad
+        d.tag = 111
+        d.delegate = self
         d.placeholder = "  请输入充值金额"
         return d
     }()
     
+    /// 验证码
     lazy var autoTF: UITextField = {
         let d: UITextField = UITextField.init(frame: CGRect.init(x: self.chagrgeTF.LeftX, y: self.chagrgeTF.BottomY + COMMON_MARGIN, width: self.chagrgeTF.Width * 0.6, height: self.chagrgeTF.Height))
         d.layer.borderWidth = 1
@@ -143,21 +232,30 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
     }()
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        let text1 = textField.text
         
-        let text2 = autoImgV.carMutableStr
-        //caseInsensitive 不区分大小写
-        let result = text1?.range(of: text2!, options: .caseInsensitive)
-        if result == nil {
-            let alert = UIAlertView(title: nil, message: "验证码错误", delegate: self, cancelButtonTitle: "确定")
-            alert.show()
-        } else {
-            let alert = UIAlertView(title: nil, message: "验证码正确", delegate: self, cancelButtonTitle: "确定")
-            alert.show()
+        if textField.tag == 111 {
+            self.chagrgeOneVDelegate?.chargeMoneyStr(str: textField.text!)
         }
+        
+        if textField.tag == 666 {
+            
+            let text1 = textField.text
+            
+            let text2 = autoImgV.carMutableStr
+            //caseInsensitive 不区分大小写
+            let result = text1?.range(of: text2!, options: .caseInsensitive)
+            if result == nil {
+                let alert = UIAlertView(title: nil, message: "验证码错误", delegate: self, cancelButtonTitle: "确定")
+                alert.show()
+                self.chagrgeOneVDelegate?.autoSuccess(isSuccess: false)
+            } else {
+                self.chagrgeOneVDelegate?.autoSuccess(isSuccess: true)
+                let alert = UIAlertView(title: nil, message: "验证码正确", delegate: self, cancelButtonTitle: "确定")
+                alert.show()
+            }
+        }
+        
     }
-    
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -172,7 +270,13 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
     }
 }
 
+protocol CYDetailSelectVDelegate {
+    func selectChargeType(chargeType : Int)
+}
+
 class CYDetailSelectV: UIView,UITableViewDelegate,UITableViewDataSource {
+    
+    var cYDetailSelectVDelegate : CYDetailSelectVDelegate?
     
     private lazy var cy_selectTbV: UITableView = {
         let d : UITableView = UITableView.init(frame: self.bounds, style: .plain)
@@ -213,11 +317,15 @@ class CYDetailSelectV: UIView,UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ZDXCheckDeskCellDown") as! ZDXCheckDeskCellDown
-        CCog(message: titles[indexPath.row])
+        
         cell.zdxCheckDeskCellDownHeadImg.image = UIImage.init(named: imgsTitles[indexPath.row])
         cell.zdxCheckDescCellDescLabel.text = titles[indexPath.row]
+        
         if indexPath.row == 0 {
+            /// 默认选中微信支付
+            self.cYDetailSelectVDelegate?.selectChargeType(chargeType: 0)
             updateCellStatus(cell, selected: true)
         } else {
             updateCellStatus(cell, selected: false)
@@ -238,6 +346,16 @@ class CYDetailSelectV: UIView,UITableViewDelegate,UITableViewDataSource {
         
         let cell = tableView.cellForRow(at: indexPath) as! ZDXCheckDeskCellDown
         updateCellStatus(cell, selected: true)
+        
+        /// 支付类型
+        if indexPath.row == 0 {
+            self.cYDetailSelectVDelegate?.selectChargeType(chargeType: 0)
+        }
+        
+        /// 支付类型
+        if indexPath.row == 1 {
+            self.cYDetailSelectVDelegate?.selectChargeType(chargeType: 1)
+        }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

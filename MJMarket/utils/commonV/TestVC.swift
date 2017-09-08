@@ -8,26 +8,42 @@
 
 import UIKit
 
-class TestVC: UIViewController {
+class TestVC: UIViewController,ChagrgeVDelegate {
+    
+    lazy var shareVVV: ShareV = {
+        let d : ShareV = ShareV.init(frame: CGRect.init(origin: CGPoint.init(x: 100, y: 100), size: CGSize.init(width: SCREEN_WIDTH * 0.6, height: 80)))
+        return d
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-
-        view.backgroundColor = UIColor.gray
+        view.backgroundColor = .white
+        view.addSubview(shareVVV)
     }
     
-    lazy var payV: ChagrgeV = {
-        let d: ChagrgeV = ChagrgeV.init(frame: CGRect.init(x: 0, y: 0, width: 250, height: (250) * 1.15))
-        return d
-    }()
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+        let payV = ChagrgeV.init(CGRect.init(x: 0, y: 0, width: 250, height: (250) * 1.15))
+        payV.chagrgeVDelegate = self
+        
         UIApplication.shared.keyWindow?.addSubview(payV)
         payV.center = (UIApplication.shared.keyWindow?.center)!
     }
 
+    // MARK: - ChagrgeVDelegate
+    func selectChargeApp(_ selectType: Int) {
+        CCog(message: selectType)
+    }
+    
+    func selectChargeAppWithMoney(_ selectType: Int) {
+        CCog(message: selectType)
+    }
+    
+    
     lazy var xxx: CYDetailSelectV = {
         let d : CYDetailSelectV = CYDetailSelectV.init(["sss","xxx","嘻嘻嘻"], ["","",""], self.view.bounds)
         return d

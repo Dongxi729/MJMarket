@@ -83,6 +83,7 @@
 		265A7D6D1F5972A100F0503C /* ChagrgeV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6C1F5972A100F0503C /* ChagrgeV.swift */; };
 		265A7D6F1F59740F00F0503C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6E1F59740F00F0503C /* TestVC.swift */; };
 		266ECC121F5BCFFC00D033D0 /* TTT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266ECC111F5BCFFC00D033D0 /* TTT.swift */; };
+		2680AB051F627211008D51AB /* ShareV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2680AB041F627211008D51AB /* ShareV.swift */; };
 		26AE2B2D1F55014000AAA36C /* CommonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */; };
 		26AE2B2E1F55014000AAA36C /* JFNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B211F55014000AAA36C /* JFNavigationController.swift */; };
 		26AE2B2F1F55014000AAA36C /* UnderLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B221F55014000AAA36C /* UnderLineLabel.swift */; };
@@ -275,6 +276,7 @@
 		265A7D6C1F5972A100F0503C /* ChagrgeV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChagrgeV.swift; sourceTree = "<group>"; };
 		265A7D6E1F59740F00F0503C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		266ECC111F5BCFFC00D033D0 /* TTT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTT.swift; sourceTree = "<group>"; };
+		2680AB041F627211008D51AB /* ShareV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareV.swift; sourceTree = "<group>"; };
 		26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTableViewCell.swift; sourceTree = "<group>"; };
 		26AE2B211F55014000AAA36C /* JFNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFNavigationController.swift; sourceTree = "<group>"; };
 		26AE2B221F55014000AAA36C /* UnderLineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnderLineLabel.swift; sourceTree = "<group>"; };
@@ -672,6 +674,7 @@
 			children = (
 				265A7D6C1F5972A100F0503C /* ChagrgeV.swift */,
 				265A7D6E1F59740F00F0503C /* TestVC.swift */,
+				2680AB041F627211008D51AB /* ShareV.swift */,
 			);
 			path = commonV;
 			sourceTree = "<group>";
@@ -947,6 +950,7 @@
 				26ED02F61F57A124007C2EEC /* PersonInfoVC.swift in Sources */,
 				264FA6E31F54144400CE405B /* POPPropertyAnimation.mm in Sources */,
 				264FA6EA1F54144400CE405B /* YYMemoryCache.m in Sources */,
+				2680AB051F627211008D51AB /* ShareV.swift in Sources */,
 				264FA6D71F54144400CE405B /* POPAnimationEvent.mm in Sources */,
 				264FA6F71F54144400CE405B /* YYWebImageManager.m in Sources */,
 				26AE2B4E1F5503FD00AAA36C /* LoginClickV.swift in Sources */,

@@ -23,9 +23,23 @@ var SENDSMS_URL = COMMON_PREFIX + "/sendsms"
 /// 找回密码
 var FINDPWD_URL = COMMON_PREFIX + "/findpwd"
 
-/// 
-var UPDLOGINGPWD_URL = COMMON_PREFIX + "/info"
+/// 修改登录密码 oldpwd pwd1 pwd2
+var UPDLOGINGPWD_URL = COMMON_PREFIX + "/updloiginpwd"
 
+/// 首页链接
+var MIAN_URL = "http://mj.ie1e.com/weixin/index"
+
+/// 修改个人信息 nickname sex province city province
+var UPDINFO_URL = COMMON_PREFIX + "/updinfo"
+
+/// 修改支付密码  uid pwd pwd1 icon yzm
+var UPDPAYPWD_URL = COMMON_PREFIX + "/updpaypwd"
+
+/// 绑定手机号 icon tel yzm----icon 验证码返回值
+var BINDPHONE_URL = COMMON_PREFIX + "/bindphone"
+
+/// 头像上传
+var UPLOADHEADINMG_URL = COMMON_PREFIX + "/updheadimg"
 
 //        /// 发送验证码
 //        let param2 : [String : Any] = ["mobile" : "18905036476"]
