@@ -21,7 +21,10 @@ class MyCellTwo: CommonTableViewCell {
     var redBtn = UIButton()
     
     
-    var myCellTwoTitls : [String] = ["全部订单","待收货","待评价","代付款","退款/售后"]
+    private var myCellTwoTitls : [String] = ["全部订单","待收货","待评价","代付款","退款/售后"]
+    
+    /// 图片名字
+    private var imgsName : [String] = ["full_order","wait_payment","wait_receiver","wait_evaluate","refund_after"]
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -32,6 +35,8 @@ class MyCellTwo: CommonTableViewCell {
             btnWithRed.myInfoBtn.setTitle(myCellTwoTitls[value], for: .normal)
             btnWithRed.myInfoBtn.addTarget(self, action: #selector(btnSEl(sender:)), for: .touchUpInside)
             btnWithRed.myInfoBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12 * SCREEN_SCALE)
+
+            btnWithRed.myInfoBtn.setImage(UIImage.init(named: imgsName[value]), for: .normal)
             contentView.addSubview(btnWithRed)
             
         }

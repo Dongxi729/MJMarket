@@ -23,28 +23,30 @@ class MainTabBarViewController: UITabBarController {
     fileprivate func setUpSubViews() -> Void {
         
         //首页
-        let mainPageVC = JFNavigationController.init(rootViewController: TestVC())
+        let mainPageVC = JFNavigationController.init(rootViewController: TestWKV())
         
-        let view = UIViewController()
-        view.view.backgroundColor = UIColor.white
-        //商户
-        let shopVc = JFNavigationController.init(rootViewController: RigisterVC())
+        /// 发现
+        let findVC = JFNavigationController.init(rootViewController: UIViewController())
         
-        //朋友
-        let friendVc = JFNavigationController.init(rootViewController: PayPassVC())
+        //玩转
+        let playVC = JFNavigationController.init(rootViewController: UIViewController())
         
-        //我的模块
+        //购物车
+        let shopVC = JFNavigationController.init(rootViewController: UIViewController())
+        
+        //我的
         let meVC = JFNavigationController.init(rootViewController: MyViewController())
         
         
-        self.setupChildVC(mainPageVC, title: "钱包", imageName: "icon1", selectImageName: "icon1_on")
+        self.setupChildVC(mainPageVC, title: "首页", imageName: "home", selectImageName: "home_on")
         
-        self.setupChildVC(shopVc, title: "商户", imageName: "icon2", selectImageName: "icon2_on")
+        self.setupChildVC(findVC, title: "发现", imageName: "find", selectImageName: "find_on")
         
-        self.setupChildVC(friendVc, title: "朋友", imageName: "icon3", selectImageName: "icon3_on")
+        self.setupChildVC(playVC, title: "玩转", imageName: "play", selectImageName: "play_on")
         
-        self.setupChildVC(meVC, title: "我的", imageName: "icon4", selectImageName: "icon4_on")
-
+        self.setupChildVC(shopVC, title: "购物车", imageName: "cart", selectImageName: "cart_on")
+        
+        self.setupChildVC(meVC, title: "我的", imageName: "my", selectImageName: "my_on")
     }
     
         

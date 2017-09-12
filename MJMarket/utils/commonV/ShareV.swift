@@ -24,13 +24,14 @@ class ShareV: UIView,ShareCellDelegate {
     
     lazy var shareToDesc: UILabel = {
         let d : UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.5 - 52 / 2, y: COMMON_MARGIN, width: 52.0, height: 20 * SCREEN_SCALE))
+        d.font = UIFont.systemFont(ofSize: 14)
         d.text = "分享到"
         return d
     }()
     
     
     lazy var shareIcons: ShareCell = {
-        let d : ShareCell = ShareCell.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.2, y: self.shareToDesc.BottomY + COMMON_MARGIN * SCREEN_SCALE, width: SCREEN_WIDTH * 0.6, height: self.Height * 0.25))
+        let d : ShareCell = ShareCell.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.2, y: self.shareToDesc.BottomY + COMMON_MARGIN * SCREEN_SCALE, width: SCREEN_WIDTH * 0.6, height: self.Height * 0.3))
         d.shareCellDelegate = self
         return d
     }()
@@ -38,12 +39,39 @@ class ShareV: UIView,ShareCellDelegate {
     lazy var cancelBtn: UIButton = {
         let d : UIButton = UIButton.init(frame: CGRect.init(x: 0, y: self.Height - 20 * SCREEN_SCALE - COMMON_MARGIN, width: SCREEN_WIDTH, height: 20 * SCREEN_SCALE))
         d.setTitleColor(UIColor.black, for: .normal)
+        d.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        d.addTarget(self, action: #selector(dismissShare), for: .touchUpInside)
         d.setTitle("取消", for: .normal)
         return d
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    @objc private func dismissShare() {
+        UIView.animate(withDuration: 0.25) {
+            self.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT, width: SCREEN_WIDTH, height: 150)
+        }
+    }
+    
+    private lazy var topWindown: UIWindow = {
+        let d : UIWindow = UIWindow.init(frame: (UIApplication.shared.keyWindow?.frame)!)
+        d.makeKeyAndVisible()
+        return d
+    }()
+    
+    private lazy var maskV: UIView = {
+        let d : UIView = UIView.init(frame: (UIApplication.shared.keyWindow?.frame)!)
+        d.backgroundColor = UIColor.white
+        d.alpha = 0
+        return d
+    }()
+    
+    init(_ rect : CGRect) {
+        super.init(frame: rect)
+        
+        
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 5
+        self.clipsToBounds = true
+        self.backgroundColor = UIColor.white
         
         addSubview(shareToDesc)
         addSubview(shareIcons)
@@ -51,8 +79,6 @@ class ShareV: UIView,ShareCellDelegate {
         addSubview(leftLine)
         addSubview(rightLine)
         addSubview(cancelBtn)
-        
-        self.layer.borderWidth = 1
     }
     
     func shareClickBtn(sender: UIButton) {
@@ -119,13 +145,16 @@ class ShareBtn : UIButton {
     
     override init(frame: CGRect) {
         
-    
+        
         super.init(frame: frame)
-        self.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        
+        
+        self.layer.borderWidth = 1
+        
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 10)
         self.titleLabel?.textAlignment = .center
         self.titleLabel?.textColor = FONT_COLOR
         self.imageView?.contentMode = .scaleAspectFit
-        self.layer.borderWidth = 1
     }
     
     override func imageRect(forContentRect contentRect: CGRect) -> CGRect {

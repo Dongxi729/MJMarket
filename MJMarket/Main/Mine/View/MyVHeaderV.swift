@@ -21,6 +21,8 @@ class MyVHeaderV: CommonTableViewCell {
         d.layer.cornerRadius = SCREEN_WIDTH * 0.2 * 0.5
         d.backgroundColor = UIColor.white
         d.layer.borderWidth = 1
+        d.image = #imageLiteral(resourceName: "default_thumb")
+        d.contentMode = .scaleAspectFit
         
         var layer: CALayer? = d.layer
         
@@ -38,6 +40,7 @@ class MyVHeaderV: CommonTableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = COMMON_COLOR
         contentView.addSubview(nameInfoV)
         contentView.addSubview(headerIconImg)
     }
@@ -73,7 +76,7 @@ class MyHeaderInfoV: UIView,SlideToSignVDelegate {
     
     //// 滑动签到
     lazy var unlockToSign: SlideToSignV = {
-        let d: SlideToSignV = SlideToSignV.init(rect: CGRect.init(x: SCREEN_WIDTH * 0.3 + COMMON_MARGIN * 0.75, y: self.Height * 0.75, width: SCREEN_WIDTH * 0.3, height: 15 * SCREEN_SCALE), sliderThumImgName: "correct", bgImgName: "silderBgImg")
+        let d: SlideToSignV = SlideToSignV.init(rect: CGRect.init(x: SCREEN_WIDTH * 0.15, y: self.Height * 0.75, width: SCREEN_WIDTH * 0.45, height: 20 * SCREEN_SCALE), sliderThumImgName: "youhua", bgImgName: "")
         d.slideToSignVDelegate = self
         return d
     }()

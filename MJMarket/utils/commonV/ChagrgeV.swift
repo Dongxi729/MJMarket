@@ -112,16 +112,16 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
         CCog(message: isAutoSuccess)
     }
     
-    lazy var topWindown: UIWindow = {
+    private lazy var topWindown: UIWindow = {
         let d : UIWindow = UIWindow.init(frame: (UIApplication.shared.keyWindow?.frame)!)
         d.makeKeyAndVisible()
-        d.backgroundColor = COMMON_COLOR
+        d.backgroundColor = UIColor.colorWithHexString("4C4C4A", alpha: 0.25)
         return d
     }()
     
-    lazy var maskV: UIView = {
+    private lazy var maskV: UIView = {
         let d : UIView = UIView.init(frame: (UIApplication.shared.keyWindow?.frame)!)
-        d.backgroundColor = COMMON_COLOR
+        d.backgroundColor = UIColor.white
         d.alpha = 0
         return d
     }()

@@ -5,6 +5,12 @@
 //  Created by 郑东喜 on 2017/9/7.
 //  Copyright © 2017年 郑东喜. All rights reserved.
 //  通用请求链接前缀
+/// 微信版 http://mj.ie1e.com/weixin/index
+
+/// 薛世中  10:25:40
+//JS调Native：toLoginApp()登录、getUidApp()获取Uid、shareApp()分享、shareSuccessApp()分享成功、outLoginApp()
+//薛世中  10:25:57
+//然后界面已http://mj.ie1e.com/wx_user/mysetting这个为准
 
 import Foundation
 

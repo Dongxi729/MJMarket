@@ -41,6 +41,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         let d : UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - (25 * SCREEN_SCALE) - COMMON_MARGIN, y: 20 + COMMON_MARGIN, width: 25 * SCREEN_SCALE, height: 25 * SCREEN_SCALE))
         d.addTarget(self, action: #selector(myView_RightBtnSEl), for: .touchUpInside)
         d.backgroundColor = UIColor.randomColor()
+        d.setBackgroundImage(#imageLiteral(resourceName: "setting"), for: .normal)
         return d
     }()
     

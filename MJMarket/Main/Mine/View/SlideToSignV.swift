@@ -22,6 +22,9 @@ class SlideToSignV: UIView {
         d.text = "少时诵诗书所所"
         d.font = UIFont.systemFont(ofSize: 10 * SCREEN_SCALE)
         d.textColor = UIColor.colorWithHexString("333333")
+        d.backgroundColor = UIColor.colorWithHexString("F99441")
+        d.layer.cornerRadius = 10
+        d.clipsToBounds = true
         d.textAlignment = .right
         return d
     }()
@@ -57,14 +60,26 @@ class SlideToSignV: UIView {
         addSubview(lineImg)
         
         slider.setThumbImage(UIImage.init(named: sliderThumImgName), for: .normal)
+        slider.maximumValueImageRect(forBounds: CGRect.init(x: 100, y: 100, width: 100, height: 100))
         addSubview(totalLabel)
         addSubview(slider)
-        
         
     }
     
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+extension UIImage {
+    
+    func scaleToSize(newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext();
+        return newImage
     }
 }

@@ -22,10 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         self.window?.frame = UIScreen.main.bounds
         self.window?.makeKeyAndVisible()
+        
+        
         self.window?.rootViewController = MainTabBarViewController()
         
-        
-    
+        // 设置全局颜色
+        UITabBar.appearance().tintColor = COMMON_COLOR
         
         return true
     }
