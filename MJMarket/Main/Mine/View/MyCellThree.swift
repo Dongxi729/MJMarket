@@ -11,7 +11,7 @@ import UIKit
 class MyCellThree: CommonTableViewCell {
     
     lazy var myCellThree_FronIcon: UIImageView = {
-        let d: UIImageView = UIImageView.init(frame: CGRect.init(x: 10, y: 10, width: 25, height: 25))
+        let d: UIImageView = UIImageView.init(frame: CGRect.init(x: 12.5, y: 12.5, width: 20, height: 20))
         d.contentMode = .scaleAspectFit
         d.image = #imageLiteral(resourceName: "correct")
         return d
@@ -25,7 +25,7 @@ class MyCellThree: CommonTableViewCell {
     }()
     
     lazy var myCellThree_DisImg: UIImageView = {
-        let d : UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 25 - COMMON_MARGIN, y: COMMON_MARGIN, width: 20 * SCREEN_SCALE, height: 20 * SCREEN_SCALE))
+        let d : UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 15 - COMMON_MARGIN, y: 12.5, width: 15, height: 15))
         d.image = #imageLiteral(resourceName: "correct")
         d.contentMode = .scaleAspectFit
         return d

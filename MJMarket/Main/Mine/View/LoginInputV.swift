@@ -8,18 +8,25 @@
 
 import UIKit
 
+protocol LoginInputVDelegate {
+    func loginInputTfNum(tfNum : String)
+    func loginInputPass(pass : String)
+}
+
 class LoginInputV: UIView,UITextFieldDelegate {
+    
+    var loginInputDelegate : LoginInputVDelegate?
     
     /// 手机
     private lazy var loginFrontIconImgOne: CommonImg = {
-        let d : CommonImg = CommonImg.init(frame: CGRect.init(x: COMMON_MARGIN, y: COMMON_MARGIN, width: 25 * SCREEN_SCALE, height: 25 * SCREEN_SCALE))
+        let d : CommonImg = CommonImg.init(frame: CGRect.init(x: COMMON_MARGIN, y: COMMON_MARGIN, width: 15 * SCREEN_SCALE, height: 15 * SCREEN_SCALE))
         
         return d
     }()
     
     /// 密码
     private lazy var loginFrontIconImgTwo: CommonImg = {
-        let d : CommonImg = CommonImg.init(frame: CGRect.init(x: COMMON_MARGIN, y: self.Height * 0.5 + COMMON_MARGIN, width: 25 * SCREEN_SCALE, height: 25 * SCREEN_SCALE))
+        let d : CommonImg = CommonImg.init(frame: CGRect.init(x: COMMON_MARGIN, y: self.Height * 0.65 + COMMON_MARGIN, width: 15 * SCREEN_SCALE, height: 15 * SCREEN_SCALE))
         
         return d
     }()
@@ -30,6 +37,7 @@ class LoginInputV: UIView,UITextFieldDelegate {
         d.placeholder = "请输入您的手机号码"
         d.delegate = self
         d.clearButtonMode = .whileEditing
+        d.keyboardType = .namePhonePad
         
         let attributes = [
             NSForegroundColorAttributeName: FONT_COLOR,
@@ -42,10 +50,11 @@ class LoginInputV: UIView,UITextFieldDelegate {
     
     /// 手机tf
     lazy var passTf: UITextField = {
-        let d : UITextField = UITextField.init(frame: CGRect.init(x: self.loginFrontIconImgOne.RightX + COMMON_MARGIN, y: self.Height * 0.5 + COMMON_MARGIN / 2, width: self.Width - 2 * COMMON_MARGIN - 32, height: self.Height * 0.45))
+        let d : UITextField = UITextField.init(frame: CGRect.init(x: self.loginFrontIconImgOne.RightX + COMMON_MARGIN, y: self.Height * 0.65 + COMMON_MARGIN / 2, width: self.Width - 2 * COMMON_MARGIN - 32, height: self.Height * 0.45))
         d.placeholder = "请输入密码"
         d.delegate = self
         d.clearButtonMode = .whileEditing
+        d.isSecureTextEntry = true
         
         let attributes = [
             NSForegroundColorAttributeName: FONT_COLOR,
@@ -101,6 +110,38 @@ class LoginInputV: UIView,UITextFieldDelegate {
         d.backgroundColor = UIColor.colorWithHexString("F3F3F3")
         return d
     }()
+    
+    
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.placeholder == "请输入您的手机号码" {
+            self.loginInputDelegate?.loginInputTfNum(tfNum: textField.text!)
+        }
+        
+        if textField.placeholder == "请输入密码" {
+            self.loginInputDelegate?.loginInputPass(pass: textField.text!)
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField.placeholder?.description == "请输入您的手机号码" {
+            
+            let str = (textField.text!)
+            if str.characters.count <= 11 {
+                return true
+            }
+            textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
+        } else if textField.placeholder?.description == "请输入密码" {
+            let maxLength = 6
+            let currentString: NSString = (textField.text as NSString?)!
+            let newString: NSString =
+                currentString.replacingCharacters(in: range, with: string) as NSString
+            return newString.length <= maxLength
+        }
+        
+        return false
+
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

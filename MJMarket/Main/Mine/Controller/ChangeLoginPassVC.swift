@@ -59,6 +59,14 @@ class ChangeLoginPassVC: UIViewController,UITableViewDelegate,UITableViewDataSou
         return 10
     }
     
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView.init()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView.init()
+    }
+    
     // MARK: - BindPhoneCellDelegate
     func cellStr(index: IndexPath, str: String) {
         CCog(message: index.row)

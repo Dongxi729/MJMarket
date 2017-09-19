@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		26342E641F6136CE00850676 /* CommonRequestConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26342E631F6136CE00850676 /* CommonRequestConst.swift */; };
+		2637438F1F6BAAD500382FF4 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2637438E1F6BAAD500382FF4 /* HomeVC.swift */; };
+		2637439D1F6BAC7B00382FF4 /* DiscoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2637439C1F6BAC7B00382FF4 /* DiscoverVC.swift */; };
+		2637439F1F6BACCE00382FF4 /* PlayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2637439E1F6BACCE00382FF4 /* PlayVC.swift */; };
+		263743A11F6BAD0A00382FF4 /* ShopCarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263743A01F6BAD0A00382FF4 /* ShopCarVC.swift */; };
+		2637E07B1F695E090072E611 /* WKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2637E07A1F695E090072E611 /* WKViewController.swift */; };
 		263D8E801F551B1B000B0F60 /* PayPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D8E7F1F551B1B000B0F60 /* PayPassVC.swift */; };
 		264FA6471F54142D00CE405B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 264FA6451F54142D00CE405B /* Main.storyboard */; };
 		264FA6491F54142D00CE405B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 264FA6481F54142D00CE405B /* Assets.xcassets */; };
@@ -82,8 +87,10 @@
 		264FA7801F54229E00CE405B /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 264FA7711F54229E00CE405B /* IQKeyboardManager.bundle */; };
 		265A7D6D1F5972A100F0503C /* ChagrgeV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6C1F5972A100F0503C /* ChagrgeV.swift */; };
 		265A7D6F1F59740F00F0503C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6E1F59740F00F0503C /* TestVC.swift */; };
+		265AFD851F6A26040025F3DE /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265AFD841F6A26040025F3DE /* AccountModel.swift */; };
 		266ECC121F5BCFFC00D033D0 /* TTT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266ECC111F5BCFFC00D033D0 /* TTT.swift */; };
 		2680AB051F627211008D51AB /* ShareV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2680AB041F627211008D51AB /* ShareV.swift */; };
+		26AB3CFB1F6A54E50013398F /* ZDXRequestTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AB3CFA1F6A54E50013398F /* ZDXRequestTool.swift */; };
 		26AE2B2D1F55014000AAA36C /* CommonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */; };
 		26AE2B2E1F55014000AAA36C /* JFNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B211F55014000AAA36C /* JFNavigationController.swift */; };
 		26AE2B2F1F55014000AAA36C /* UnderLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B221F55014000AAA36C /* UnderLineLabel.swift */; };
@@ -114,6 +121,7 @@
 		26ED02FE1F57E6AA007C2EEC /* BindPhoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02FD1F57E6AA007C2EEC /* BindPhoneVC.swift */; };
 		26ED03021F5824C0007C2EEC /* ChangePayPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED03011F5824C0007C2EEC /* ChangePayPassVC.swift */; };
 		26ED03041F582B90007C2EEC /* ChangeLoginPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED03031F582B90007C2EEC /* ChangeLoginPassVC.swift */; };
+		26EE87041F70DBEC001AE2EF /* ForgetPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EE87031F70DBEC001AE2EF /* ForgetPassVC.swift */; };
 		26F691B71F566E6000CB6034 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691B61F566E6000CB6034 /* MyViewController.swift */; };
 		26F691BE1F56A68000CB6034 /* SlideToSignV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691BD1F56A68000CB6034 /* SlideToSignV.swift */; };
 		26F691C01F56C36C00CB6034 /* MyVHeaderV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */; };
@@ -124,6 +132,11 @@
 
 /* Begin PBXFileReference section */
 		26342E631F6136CE00850676 /* CommonRequestConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonRequestConst.swift; sourceTree = "<group>"; };
+		2637438E1F6BAAD500382FF4 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		2637439C1F6BAC7B00382FF4 /* DiscoverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverVC.swift; sourceTree = "<group>"; };
+		2637439E1F6BACCE00382FF4 /* PlayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVC.swift; sourceTree = "<group>"; };
+		263743A01F6BAD0A00382FF4 /* ShopCarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopCarVC.swift; sourceTree = "<group>"; };
+		2637E07A1F695E090072E611 /* WKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKViewController.swift; sourceTree = "<group>"; };
 		263D8E7F1F551B1B000B0F60 /* PayPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayPassVC.swift; sourceTree = "<group>"; };
 		264FA63E1F54142D00CE405B /* MJMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MJMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		264FA6461F54142D00CE405B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -277,8 +290,10 @@
 		264FA7711F54229E00CE405B /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
 		265A7D6C1F5972A100F0503C /* ChagrgeV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChagrgeV.swift; sourceTree = "<group>"; };
 		265A7D6E1F59740F00F0503C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
+		265AFD841F6A26040025F3DE /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		266ECC111F5BCFFC00D033D0 /* TTT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTT.swift; sourceTree = "<group>"; };
 		2680AB041F627211008D51AB /* ShareV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareV.swift; sourceTree = "<group>"; };
+		26AB3CFA1F6A54E50013398F /* ZDXRequestTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZDXRequestTool.swift; sourceTree = "<group>"; };
 		26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTableViewCell.swift; sourceTree = "<group>"; };
 		26AE2B211F55014000AAA36C /* JFNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFNavigationController.swift; sourceTree = "<group>"; };
 		26AE2B221F55014000AAA36C /* UnderLineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnderLineLabel.swift; sourceTree = "<group>"; };
@@ -309,6 +324,7 @@
 		26ED02FD1F57E6AA007C2EEC /* BindPhoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindPhoneVC.swift; sourceTree = "<group>"; };
 		26ED03011F5824C0007C2EEC /* ChangePayPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePayPassVC.swift; sourceTree = "<group>"; };
 		26ED03031F582B90007C2EEC /* ChangeLoginPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeLoginPassVC.swift; sourceTree = "<group>"; };
+		26EE87031F70DBEC001AE2EF /* ForgetPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPassVC.swift; sourceTree = "<group>"; };
 		26F691B61F566E6000CB6034 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		26F691BD1F56A68000CB6034 /* SlideToSignV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideToSignV.swift; sourceTree = "<group>"; };
 		26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyVHeaderV.swift; sourceTree = "<group>"; };
@@ -334,8 +350,106 @@
 			isa = PBXGroup;
 			children = (
 				26342E631F6136CE00850676 /* CommonRequestConst.swift */,
+				265AFD841F6A26040025F3DE /* AccountModel.swift */,
+				26AB3CFA1F6A54E50013398F /* ZDXRequestTool.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		263743901F6BAB8200382FF4 /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				263743911F6BAB8200382FF4 /* Controller */,
+				263743921F6BAB8200382FF4 /* Model */,
+				263743931F6BAB8200382FF4 /* View */,
+			);
+			path = Discover;
+			sourceTree = "<group>";
+		};
+		263743911F6BAB8200382FF4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2637439C1F6BAC7B00382FF4 /* DiscoverVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		263743921F6BAB8200382FF4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		263743931F6BAB8200382FF4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		263743941F6BAB8200382FF4 /* Play */ = {
+			isa = PBXGroup;
+			children = (
+				263743951F6BAB8200382FF4 /* Controller */,
+				263743961F6BAB8200382FF4 /* Model */,
+				263743971F6BAB8200382FF4 /* View */,
+			);
+			path = Play;
+			sourceTree = "<group>";
+		};
+		263743951F6BAB8200382FF4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2637439E1F6BACCE00382FF4 /* PlayVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		263743961F6BAB8200382FF4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		263743971F6BAB8200382FF4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		263743981F6BAB8200382FF4 /* ShopCar */ = {
+			isa = PBXGroup;
+			children = (
+				263743991F6BAB8200382FF4 /* Controller */,
+				2637439A1F6BAB8200382FF4 /* Model */,
+				2637439B1F6BAB8200382FF4 /* View */,
+			);
+			path = ShopCar;
+			sourceTree = "<group>";
+		};
+		263743991F6BAB8200382FF4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				263743A01F6BAD0A00382FF4 /* ShopCarVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2637439A1F6BAB8200382FF4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2637439B1F6BAB8200382FF4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		264FA6351F54142C00CE405B = {
@@ -679,6 +793,7 @@
 				265A7D6C1F5972A100F0503C /* ChagrgeV.swift */,
 				265A7D6E1F59740F00F0503C /* TestVC.swift */,
 				2680AB041F627211008D51AB /* ShareV.swift */,
+				2637E07A1F695E090072E611 /* WKViewController.swift */,
 			);
 			path = commonV;
 			sourceTree = "<group>";
@@ -731,6 +846,9 @@
 		26AE2B3C1F55025500AAA36C /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				263743901F6BAB8200382FF4 /* Discover */,
+				263743941F6BAB8200382FF4 /* Play */,
+				263743981F6BAB8200382FF4 /* ShopCar */,
 				26AE2B551F5513FD00AAA36C /* ZDXBaseVC.swift */,
 				26AE2B511F55056300AAA36C /* MainTabBarViewController.swift */,
 				26AE2B3D1F55025500AAA36C /* Home */,
@@ -753,6 +871,7 @@
 		26AE2B3E1F55025500AAA36C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2637438E1F6BAAD500382FF4 /* HomeVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -794,6 +913,7 @@
 				26ED03011F5824C0007C2EEC /* ChangePayPassVC.swift */,
 				26ED03031F582B90007C2EEC /* ChangeLoginPassVC.swift */,
 				26BB3D321F682BBC00FFFD89 /* TestWKV.swift */,
+				26EE87031F70DBEC001AE2EF /* ForgetPassVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -904,6 +1024,7 @@
 				264FA71A1F5415D600CE405B /* ZDXCommon.swift in Sources */,
 				26BB3D331F682BBC00FFFD89 /* TestWKV.swift in Sources */,
 				26AE2B301F55014000AAA36C /* Color+Extension.swift in Sources */,
+				263743A11F6BAD0A00382FF4 /* ShopCarVC.swift in Sources */,
 				264FA7731F54229E00CE405B /* IQUIScrollView+Additions.m in Sources */,
 				26ED03041F582B90007C2EEC /* ChangeLoginPassVC.swift in Sources */,
 				264FA7021F54149C00CE405B /* NetWorkTool.swift in Sources */,
@@ -919,9 +1040,11 @@
 				264FA6EF1F54144400CE405B /* UIImage+YYWebImage.m in Sources */,
 				264FA6DA1F54144400CE405B /* POPAnimationTracer.mm in Sources */,
 				264FA6D81F54144400CE405B /* POPAnimationExtras.mm in Sources */,
+				265AFD851F6A26040025F3DE /* AccountModel.swift in Sources */,
 				264FA6DC1F54144400CE405B /* POPBasicAnimation.mm in Sources */,
 				264FA7141F54151700CE405B /* FTIndicator.m in Sources */,
 				264FA7791F54229E00CE405B /* IQKeyboardReturnKeyHandler.m in Sources */,
+				2637E07B1F695E090072E611 /* WKViewController.swift in Sources */,
 				264FA7171F54151700CE405B /* FTProgressIndicator.m in Sources */,
 				264FA6E51F54144400CE405B /* POPVector.mm in Sources */,
 				264FA6FF1F54149700CE405B /* NetCheck.swift in Sources */,
@@ -929,6 +1052,7 @@
 				26AE2B2D1F55014000AAA36C /* CommonTableViewCell.swift in Sources */,
 				264FA6F61F54144400CE405B /* YYImageCache.m in Sources */,
 				26AE2B561F5513FD00AAA36C /* ZDXBaseVC.swift in Sources */,
+				2637438F1F6BAAD500382FF4 /* HomeVC.swift in Sources */,
 				264FA6E71F54144400CE405B /* YYCache.m in Sources */,
 				264FA6ED1F54144400CE405B /* MKAnnotationView+YYWebImage.m in Sources */,
 				26AE2B501F5504C400AAA36C /* LoginInputV.swift in Sources */,
@@ -962,6 +1086,7 @@
 				264FA6D71F54144400CE405B /* POPAnimationEvent.mm in Sources */,
 				264FA6F71F54144400CE405B /* YYWebImageManager.m in Sources */,
 				26AE2B4E1F5503FD00AAA36C /* LoginClickV.swift in Sources */,
+				26EE87041F70DBEC001AE2EF /* ForgetPassVC.swift in Sources */,
 				26AE2B521F55056300AAA36C /* MainTabBarViewController.swift in Sources */,
 				264FA6DF1F54144400CE405B /* POPDecayAnimation.mm in Sources */,
 				264FA6EB1F54144400CE405B /* _YYWebImageSetter.m in Sources */,
@@ -974,6 +1099,7 @@
 				264FA7151F54151700CE405B /* FTNotificationIndicator.m in Sources */,
 				264FA6EC1F54144400CE405B /* CALayer+YYWebImage.m in Sources */,
 				264FA6E01F54144400CE405B /* POPGeometry.mm in Sources */,
+				2637439D1F6BAC7B00382FF4 /* DiscoverVC.swift in Sources */,
 				263D8E801F551B1B000B0F60 /* PayPassVC.swift in Sources */,
 				264FA77F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				264FA6F11F54144400CE405B /* YYAnimatedImageView.m in Sources */,
@@ -993,10 +1119,12 @@
 				26AE2B381F55014000AAA36C /* UIView+Extension.swift in Sources */,
 				264FA6DE1F54144400CE405B /* POPCustomAnimation.mm in Sources */,
 				264FA7751F54229E00CE405B /* IQUIView+Hierarchy.m in Sources */,
+				26AB3CFB1F6A54E50013398F /* ZDXRequestTool.swift in Sources */,
 				264FA6F21F54144400CE405B /* YYFrameImage.m in Sources */,
 				26ED02F81F57A658007C2EEC /* SetVCellOne.swift in Sources */,
 				264FA7041F5414A600CE405B /* AutoSigned.swift in Sources */,
 				264FA7181F54151700CE405B /* FTToastIndicator.m in Sources */,
+				2637439F1F6BACCE00382FF4 /* PlayVC.swift in Sources */,
 				26AE2B2F1F55014000AAA36C /* UnderLineLabel.swift in Sources */,
 				26AE2B2E1F55014000AAA36C /* JFNavigationController.swift in Sources */,
 				26F691C61F56D64000CB6034 /* MyCellThree.swift in Sources */,

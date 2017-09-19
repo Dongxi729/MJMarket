@@ -26,24 +26,22 @@ class LoginClickV: UIView {
     var loginClickDelegate : loginClickVDelegate?
     
     lazy var loginBtn: ClickBtn = {
-        let d : ClickBtn = ClickBtn.init(frame: CGRect.init(x: 0, y: 0, width: self.Width, height: self.Height * 0.6 * SCREEN_SCALE))
+        let d : ClickBtn = ClickBtn.init(frame: CGRect.init(x: 0, y: 0, width: self.Width, height: 50))
         d.setTitle( "登    录", for: .normal)
         d.addTarget(self, action: #selector(clickSEL(sender:)), for: .touchUpInside)
         return d
     }()
     
     /// 立即注册按钮
-    lazy var loginRigLabel: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: self.loginBtn.LeftX, y: self.loginBtn.BottomY + COMMON_MARGIN * SCREEN_SCALE, width: self.Width * 0.25, height: self.Height * 0.15))
-        d.text = "立即注册"
-        
-        d.font = UIFont.systemFont(ofSize: 13 * SCREEN_SCALE)
-        
-        d.textColor = FONT_COLOR
-        
-        d.isUserInteractionEnabled = true
-        let tapGes = UITapGestureRecognizer.init(target: self, action: #selector(rigSEL))
-        d.addGestureRecognizer(tapGes)
+    lazy var loginRigLabel: UIButton = {
+        let d : UIButton = UIButton.init(frame: CGRect.init(x: self.loginBtn.LeftX, y: self.loginBtn.BottomY + COMMON_MARGIN * SCREEN_SCALE, width: self.Width * 0.25, height: self.Height * 0.3))
+
+        d.setTitle("立即注册", for: .normal)
+        d.layer.borderWidth = 1
+        d.setTitleColor(FONT_COLOR, for: .normal)
+        d.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        d.titleLabel?.textAlignment = .left
+        d.addTarget(self, action: #selector(rigSEL), for: .touchUpInside)
         return d
     }()
     
@@ -76,7 +74,7 @@ class LoginClickV: UIView {
     @objc private func forgetPassSEL() {
         self.loginClickDelegate?.forgetPass!()
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(loginBtn)
@@ -88,3 +86,4 @@ class LoginClickV: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

@@ -9,18 +9,17 @@
 import UIKit
 
 class RigisterVC: UIViewController ,loginClickVDelegate {
-
     
     /// 图片logo
     lazy var LoginlogoCenter: UIImageView = {
-        let d : UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.5 - (SCREEN_WIDTH * 0.3 * 0.5), y: SCREEN_HEIGHT * 0.25 * 0.5, width: SCREEN_WIDTH * 0.3, height: SCREEN_HEIGHT * 0.15))
-        d.layer.borderWidth = 1
+        let d : UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: SCREEN_HEIGHT * 0.25 * 0.5, width: SCREEN_WIDTH * 0.5, height: SCREEN_WIDTH * 0.5 * (117 / 319)))
+        d.image = #imageLiteral(resourceName: "mainlogo")
         return d
     }()
     
     /// 输入视图(密码、手机号)
     lazy var tfInputV: LoginInputV = {
-        let d: LoginInputV = LoginInputV.init(frame: CGRect.init(x: COMMON_MARGIN, y: self.LoginlogoCenter.BottomY + COMMON_MARGIN, width: SCREEN_WIDTH - 2 * COMMON_MARGIN, height: 80 * SCREEN_SCALE))
+        let d: LoginInputV = LoginInputV.init(frame: CGRect.init(x: COMMON_MARGIN, y: self.LoginlogoCenter.BottomY + COMMON_MARGIN, width: SCREEN_WIDTH - 2 * COMMON_MARGIN, height: 60 * SCREEN_SCALE))
         
         d.loginTf.placeholder = "请输入您的手机号码"
         

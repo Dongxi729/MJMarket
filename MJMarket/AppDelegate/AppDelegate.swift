@@ -20,16 +20,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        self.window?.frame = UIScreen.main.bounds
-        self.window?.makeKeyAndVisible()
         
-        
-        self.window?.rootViewController = MainTabBarViewController()
-        
-        // 设置全局颜色
-        UITabBar.appearance().tintColor = COMMON_COLOR
+        // 检查用户是否登录
+        checkLogin()
         
         return true
+    }
+    
+    func checkLogin() {
+        if AccountModel.isLogin() {
+            self.window?.frame = UIScreen.main.bounds
+            self.window?.makeKeyAndVisible()
+            self.window?.rootViewController = MainTabBarViewController()
+            
+            // 设置全局颜色
+            UITabBar.appearance().tintColor = COMMON_COLOR
+        } else {
+            let nav = UINavigationController.init(rootViewController: LoginVC())
+            
+            /// 跳登录界面
+            self.window?.frame = UIScreen.main.bounds
+            self.window?.makeKeyAndVisible()
+            self.window?.rootViewController = nav
+        }
     }
 }
 

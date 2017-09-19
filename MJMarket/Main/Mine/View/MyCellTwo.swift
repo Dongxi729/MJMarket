@@ -31,7 +31,6 @@ class MyCellTwo: CommonTableViewCell {
         
         for value in 0..<myCellTwoTitls.count {
             btnWithRed = BtnWithRedMark.init(frame: CGRect.init(x: CGFloat(value) * (SCREEN_WIDTH / 5), y: 0, width: SCREEN_WIDTH / 5, height: SCREEN_WIDTH / 5 * 0.8))
-            btnWithRed.layer.borderWidth = 1
             btnWithRed.myInfoBtn.setTitle(myCellTwoTitls[value], for: .normal)
             btnWithRed.myInfoBtn.addTarget(self, action: #selector(btnSEl(sender:)), for: .touchUpInside)
             btnWithRed.myInfoBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12 * SCREEN_SCALE)
@@ -48,11 +47,11 @@ class MyCellTwo: CommonTableViewCell {
             
             let str : Int = Int(dss[value])!
             
-            redBtn = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.1 + (CGFloat(value) * (SCREEN_WIDTH / 5)), y: 0, width: SCREEN_WIDTH / 16, height: SCREEN_WIDTH / 16))
+            redBtn = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.1 + (CGFloat(value) * (SCREEN_WIDTH / 5)), y: 0, width: SCREEN_WIDTH / 19, height: SCREEN_WIDTH / 19))
             redBtn.backgroundColor = COMMON_COLOR
             redBtn.layer.cornerRadius = redBtn.Width / 2
             redBtn.clipsToBounds = true
-            
+            redBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
             redBtn.setTitle(String(str), for: .normal)
             
             contentView.addSubview(redBtn)

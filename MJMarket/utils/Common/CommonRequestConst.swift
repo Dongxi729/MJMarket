@@ -29,11 +29,8 @@ var SENDSMS_URL = COMMON_PREFIX + "/sendsms"
 /// 找回密码
 var FINDPWD_URL = COMMON_PREFIX + "/findpwd"
 
-/// 修改登录密码 oldpwd pwd1 pwd2
-var UPDLOGINGPWD_URL = COMMON_PREFIX + "/updloiginpwd"
-
-/// 首页链接
-var MIAN_URL = "http://mj.ie1e.com/weixin/index"
+/// 修改登录密码 oldpwd pwd1 pwd2 uid
+var UPDLOGINGPWD_URL = COMMON_PREFIX + "/updloginpwd"
 
 /// 修改个人信息 nickname sex province city province
 var UPDINFO_URL = COMMON_PREFIX + "/updinfo"
@@ -47,59 +44,42 @@ var BINDPHONE_URL = COMMON_PREFIX + "/bindphone"
 /// 头像上传
 var UPLOADHEADINMG_URL = COMMON_PREFIX + "/updheadimg"
 
-//        /// 发送验证码
-//        let param2 : [String : Any] = ["mobile" : "18905036476"]
-//
-//        NetWorkTool.shared.postWithPath(path: SENDSMS_URL, paras: param2, success: { (result) in
-//            CCog(message: result)
-//
-//            if let dic = result as? NSDictionary {
-//
-//                if let singKey = (dic["data"] as? NSDictionary)?["icon"] as? String {
-//                    /// 注册操作
-//                    let param2 : [String : Any] = ["icon" : singKey,
-//                                                   "tel": "18905036476",
-//                                                   "yzm" : "1234",
-//                                                   "password1" : "123",
-//                                                   "password2" : "123"]
-//                    NetWorkTool.shared.postWithPath(path: REG_URL, paras: param2, success: { (result) in
-//                        CCog(message: result)
-//                    }) { (error) in
-//                        CCog(message: error.localizedDescription)
-//                    }
-//                }
-//            }
-//        }) { (error) in
-//            CCog(message: error.localizedDescription)
-//        }
 
-//        /// 登录操作
-//        let loginParam : [String : Any] = ["tel" : "18905036476",
-//                                           "password" : "123"]
-//        NetWorkTool.shared.postWithPath(path: LOGIN_URL, paras: loginParam, success: { (result) in
-//            CCog(message: result)
-//
-//                        if let dic = result as? NSDictionary {
-//
-//                            if let singKey = (dic["data"] as? NSDictionary)?["uid"] as? String {
-//                                GetUserUid.userUID = singKey
-//
-//                                // 获取用户信息
-//                                let getUserInfo : [String : Any] = ["uid" : GetUserUid.userUID!]
-//                                NetWorkTool.shared.postWithPath(path:UPDLOGINGPWD_URL , paras:getUserInfo , success: { (result) in
-//                                    CCog(message: result)
-//                                }, failure: { (error) in
-//                                    CCog(message: error)
-//                                })
-//
-//                            }
-//                        }
-//        }, failure: { (error) in
-//            CCog(message: error.localizedDescription)
-//        })
-//
-//
+//首页
+var WEB_VIEW_HOME_URL = "http://mj.ie1e.com/weixin/index";
 
-class GetUserUid: NSObject {
-    static var userUID : String?
-}
+//发现
+var WEB_VIEW_FIND_URL = "http://mj.ie1e.com/wx_find/article";
+
+//玩乐
+var WEB_VIEW_PLAY_URL = "http://mj.ie1e.com/wx_fun/fun";
+
+//反馈
+var WEB_VIEW_MY_FEEDBACK = "http://mj.ie1e.com/wx_user/myfeedback";
+
+//收藏
+var WEB_VIEW_MY_COLLECT = "http://mj.ie1e.com/wx_user/mycollect";
+
+//评论
+var WEB_VIEW_MY_COMMENT = "http://mj.ie1e.com/wx_user/mycomment";
+
+//优惠券
+var WEB_VIEW_MY_COUPON = "http://mj.ie1e.com/wx_user/mycoupon";
+
+//地址
+var WEB_VIEW_MY_ADDRESS = "http://mj.ie1e.com/wx_user/myaddress";
+
+//全部订单
+var WEB_VIEW_ORDER_LIST = "http://mj.ie1e.com/wx_order/product_orderlist";
+
+//待付款订单
+var WEB_VIEW_ORDER_LIST_WAIT_PAYMENT = "http://mj.ie1e.com/wx_order/product_orderlist?show_type=1";
+
+//待收货订单
+var WEB_VIEW_ORDER_LIST_WAIT_RECEIVER = "http://mj.ie1e.com/wx_order/product_orderlist?show_type=2";
+
+//带评论订单
+var WEB_VIEW_ORDER_LIST_WAIT_COMMENT = "http://mj.ie1e.com/wx_order/product_orderlist?show_type=3";
+
+//退款订单
+var WEB_VIEW_ORDER_REFUNE = "http://mj.ie1e.com/wx_order/product_refund";

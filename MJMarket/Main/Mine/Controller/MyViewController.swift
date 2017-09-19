@@ -22,6 +22,12 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         d.register(MyCellOne.self, forCellReuseIdentifier: "one")
         d.register(MyCellTwo.self, forCellReuseIdentifier: "two")
         d.register(MyCellThree.self, forCellReuseIdentifier: "MyCellThree")
+        
+        
+        
+        /// cell的分割线颜色
+        d.separatorColor = UIColor.colorWithHexString("F3F3F3")
+
         return d
     }()
     
@@ -34,6 +40,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
     }
+    
     
     
     /// 右上角按钮
@@ -52,6 +59,8 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     }
     
     var myViewController_CellThreeTitles : [String] = ["收货地址","优惠券","我的评价","我的收藏","登录密码"]
+    var myViewController_CellIcon : [String] = ["location","coupon","my_evaluate","my_collect","login_psd"]
+    
     var redIcom : [String] = ["0","1","0","1","1"]
     
     override func viewDidLoad() {
@@ -65,7 +74,15 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         self.navigationController?.navigationBar.isHidden = true
         
         view.addSubview(myView_RightBtn)
+        
+        view.backgroundColor = UIColor.colorWithHexString("F8F8F8")
+        
+
+        if #available(iOS 11.0, *) {
+//            self.myTbV.contentInsetAdjustmentBehavior = .never
+        }
     }
+    
     
     // MARK: - 表格代理
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -86,12 +103,21 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyCellThree") as! MyCellThree
             cell.myCellThree_descLabel.text = myViewController_CellThreeTitles[indexPath.row]
-
+            cell.myCellThree_FronIcon.image = UIImage.init(named: myViewController_CellIcon[indexPath.row])
+            cell.myCellThree_DisImg.image = UIImage.init(named: "right")
             return cell
         default:
             break
         }
         return UITableViewCell.init()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView.init()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView.init()
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

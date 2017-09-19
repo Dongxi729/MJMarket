@@ -23,16 +23,16 @@ class MainTabBarViewController: UITabBarController {
     fileprivate func setUpSubViews() -> Void {
         
         //首页
-        let mainPageVC = JFNavigationController.init(rootViewController: TestWKV())
+        let mainPageVC = JFNavigationController.init(rootViewController: HomeVC())
         
         /// 发现
-        let findVC = JFNavigationController.init(rootViewController: UIViewController())
+        let findVC = JFNavigationController.init(rootViewController: DiscoverVC())
         
         //玩转
-        let playVC = JFNavigationController.init(rootViewController: UIViewController())
+        let playVC = JFNavigationController.init(rootViewController: PlayVC())
         
         //购物车
-        let shopVC = JFNavigationController.init(rootViewController: UIViewController())
+        let shopVC = JFNavigationController.init(rootViewController: ShopCarVC())
         
         //我的
         let meVC = JFNavigationController.init(rootViewController: MyViewController())
