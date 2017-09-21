@@ -50,7 +50,7 @@ class HomeVC: WKViewController {
         CCog(message: navigationAction.request.url?.absoluteString as Any)
         
         self.urlStr = (navigationAction.request.url?.absoluteString)!
-        
+
         
         if navigationAction.navigationType == WKNavigationType.linkActivated {
             

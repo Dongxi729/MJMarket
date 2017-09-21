@@ -19,6 +19,9 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         var configuration = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
         
+        
+        configuration.processPool = self.precessPool
+        
         // 禁止选择CSS
         let css = "body{-webkit-user-select:none;-webkit-user-drag:none;}"
         
@@ -73,16 +76,14 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
 //            //配置webview
 //            userContentController.addUserScript(cookieScript)
 //        }
-        
-        //配置webview
-//        userContentController.addUserScript(cookieScript)
+//        
         
         
         //        //配置webview
         
         configuration.userContentController = userContentController
         
-        
+       
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "toLoginApp")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "getCookieValue")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "backApp")
@@ -93,8 +94,10 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
     
     
     
-    
-
+    lazy var precessPool: WKProcessPool = {
+        let d : WKProcessPool = WKProcessPool.init()
+        return d
+    }()
     
     func setCookie2(setCookie : String) {
         
@@ -239,20 +242,22 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
     // MARK: - 网页代理---完成
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.navigationItem.title = webView.title
+        webView.evaluateJavaScript("pushCookieToIos", completionHandler: nil)
+        if (Model.shopDetail != nil) {
+            CCog(message: "1")
+//            webView.evaluateJavaScript("document.cookie = '\(String(describing: (Model.shopDetail)!))';", completionHandler: nil)
+            webView.evaluateJavaScript("document.cookie = '\(String(describing: (Model.shopDetail)!))';", completionHandler: { (data, error) in
+                DispatchQueue.once(token: "d", block: {
+                    self.webView.reload()
+                })
+            })
+        }
     }
     
     /// 开始加载
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         
-        webView.evaluateJavaScript("pushCookieToIos", completionHandler: nil)
-        if (Model.shopDetail != nil) {
-            webView.evaluateJavaScript("document.cookie = '\(String(describing: (Model.shopDetail)!))';", completionHandler: nil)
-        }
-        
-        
-        if !webView.isLoading {
-            self.webView.reload()
-        }
+
     }
 }
 
@@ -278,4 +283,31 @@ class Model: NSObject {
     static var key1 : [String : String] = [:]
     
 
+}
+
+
+
+public extension DispatchQueue {
+    
+    private static var _onceTracker = [String]()
+    
+    /**
+     Executes a block of code, associated with a unique token, only once.  The code is thread safe and will
+     only execute the code once even in the presence of multithreaded calls.
+     
+     - parameter token: A unique reverse DNS style name such as com.vectorform. or a GUID
+     - parameter block: Block to execute once
+     */
+    public class func once(token: String, block:()->Void) {
+        objc_sync_enter(self)
+        defer { objc_sync_exit(self) }
+        
+        if _onceTracker.contains(token) {
+            return
+        }
+        
+        _onceTracker.append(token)
+        block()
+    }
+    
 }
