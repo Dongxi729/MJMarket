@@ -59,13 +59,12 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         
         wkV.scrollView.addSubview(self.edgesFor)
 
-//        let cookieScript = WKUserScript.init(source: "document.cookie = 'shop80=shop_userid=\(String(describing: (AccountModel.shareAccount()?.uid)!))'", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
-        
-
-        
 //        if (Model.shopDetail != nil) {
 //            CCog(message: "1空")
-//            let cookieScript2 = WKUserScript.init(source: "document.cookie = 'aaa= 12312321ggg22g222';document.cookie = 'ordersure=[{\"productid\":\"P1504509074696\",\"product_type\":\"1\",\"specificationid\":\"c4304355c5574bf383a9dc1cdb1e159a\",\"num\":\"1\",\"shareuid\":\"\"}]';", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
+//            
+//            /// ordersure=[{\"productid\":\"P1504509074696\",\"product_type\":\"1\",\"specificationid\":\"c4304355c5574bf383a9dc1cdb1e159a\",\"num\":\"1\",\"shareuid\":\"\"}]
+//            
+//            let cookieScript2 = WKUserScript.init(source: "document.cookie = '\(String(describing: (Model.shopDetail)!))';", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
 //            userContentController.addUserScript(cookieScript2)
 //            CCog(message: Model.shopDetail!)
 //        } else {
@@ -74,7 +73,7 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
 //            //配置webview
 //            userContentController.addUserScript(cookieScript)
 //        }
-//        
+        
         //配置webview
 //        userContentController.addUserScript(cookieScript)
         
@@ -92,21 +91,9 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         
     }()
     
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        if (Model.shopDetail != nil) {
-//            self.setCookie2(setCookie: Model.shopDetail!)
-            CCog(message: Model.shopDetail!)
-            
     
-            
-            /// aaa=123123; ordersure=[{"productid":"P1504509074696","product_type":"1","specificationid":"c4304355c5574bf383a9dc1cdb1e159a","num":"1","shareuid":""}]; MEIQIA_EXTRA_TRACK_ID=0tspigaFA6yFUrNO5XiypRVJtlc; shop80=shop_userid=U1505358699870
-            
-            let array = Model.shopDetail?.characters.split{$0 == ";"}.map(String.init)
-            CCog(message: array)
-        } else {
-            CCog(message: "2空")
-        }
-    }
+    
+    
 
     
     func setCookie2(setCookie : String) {
@@ -147,6 +134,24 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         if msg == "getCookieValue" {
 
             Model.shopDetail = message.body as? String
+            CCog(message: message.body)
+            
+            let array = (message.body as! String).characters.split{$0 == ";"}.map(String.init)
+            
+            for value in array {
+                CCog(message: value)
+                /// ordersure=[{"productid":"P1504509074696","product_type":"1","specificationid":"c4304355c5574bf383a9dc1cdb1e159a","num":"1","shareuid":""}]
+                
+                /// https://www.google.co.jp/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&cad=rja&uact=8&ved=0ahUKEwj6taOvobbWAhXLNo8KHUjTBp0QFggrMAE&url=%68%74%74%70%3a%2f%2f%77%77%77%2e%6a%69%61%6e%73%68%75%2e%63%6f%6d%2f%70%2f%61%61%32%38%33%37%36%62%63%31%63%36&usg=AFQjCNFDt8RbJ_cBP0ogKy4wq5lMeA9Pew
+                var ss = value
+                if value.contains("ordersure") {
+                    
+                    ss = ss.replacingOccurrences(of: "\"", with: "\\\"")
+                    Model.shopDetail = ss
+                    CCog(message: ss)
+                    
+                }
+            }
         }
         
         if msg == "backApp" {
@@ -189,19 +194,14 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         
     }
     
+    
+    
     /// 页面跳转
     ///
     /// - Parameter str: 跳转的链接
     func aaa(jumpVC : Any,str : String) -> Void {
-     
-        if (Model.shopDetail != nil) {
 
-            webView.evaluateJavaScript("document.cookie = 'aaa= 12312321ggg22g222';document.cookie = 'ordersure=[{\"productid\":\"P1504509074696\",\"product_type\":\"1\",\"specificationid\":\"c4304355c5574bf383a9dc1cdb1e159a\",\"num\":\"1\",\"shareuid\":\"\"}]';", completionHandler: nil)
-       
-        } else {
-            webView.evaluateJavaScript("document.cookie = 'shop80=shop_userid=\(String(describing: (AccountModel.shareAccount()?.uid)!));path:/'", completionHandler: nil)
-            CCog(message: "3空")
-        }
+        
         
         // 首页
         if NSStringFromClass(self.classForCoder).contains("HomeVC") {
@@ -239,12 +239,20 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
     // MARK: - 网页代理---完成
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.navigationItem.title = webView.title
-        
-        webView.evaluateJavaScript("alert(document.cookie);", completionHandler: nil)
-        
+    }
+    
+    /// 开始加载
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         
         webView.evaluateJavaScript("pushCookieToIos", completionHandler: nil)
-
+        if (Model.shopDetail != nil) {
+            webView.evaluateJavaScript("document.cookie = '\(String(describing: (Model.shopDetail)!))';", completionHandler: nil)
+        }
+        
+        
+        if !webView.isLoading {
+            self.webView.reload()
+        }
     }
 }
 
