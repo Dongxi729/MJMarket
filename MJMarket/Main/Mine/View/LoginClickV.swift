@@ -33,15 +33,17 @@ class LoginClickV: UIView {
     }()
     
     /// 立即注册按钮
-    lazy var loginRigLabel: UIButton = {
-        let d : UIButton = UIButton.init(frame: CGRect.init(x: self.loginBtn.LeftX, y: self.loginBtn.BottomY + COMMON_MARGIN * SCREEN_SCALE, width: self.Width * 0.25, height: self.Height * 0.3))
-
-        d.setTitle("立即注册", for: .normal)
-        d.layer.borderWidth = 1
-        d.setTitleColor(FONT_COLOR, for: .normal)
-        d.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        d.titleLabel?.textAlignment = .left
-        d.addTarget(self, action: #selector(rigSEL), for: .touchUpInside)
+    lazy var loginRigLabel: UILabel = {
+        let d : UILabel = UILabel.init(frame: CGRect.init(x: self.loginBtn.LeftX, y: self.loginBtn.BottomY + COMMON_MARGIN * SCREEN_SCALE, width: self.Width * 0.25, height: self.Height * 0.15))
+        d.text = "立即注册"
+        
+        d.font = UIFont.systemFont(ofSize: 13 * SCREEN_SCALE)
+        
+        d.textColor = FONT_COLOR
+        
+        d.isUserInteractionEnabled = true
+        let tapGes = UITapGestureRecognizer.init(target: self, action: #selector(rigSEL))
+        d.addGestureRecognizer(tapGes)
         return d
     }()
     

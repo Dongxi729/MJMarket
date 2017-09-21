@@ -43,9 +43,9 @@ class MainTabBarViewController: UITabBarController {
         self.setupChildVC(findVC, title: "发现", imageName: "find", selectImageName: "find_on")
         
         self.setupChildVC(playVC, title: "玩转", imageName: "play", selectImageName: "play_on")
-        
+//
         self.setupChildVC(shopVC, title: "购物车", imageName: "cart", selectImageName: "cart_on")
-        
+//
         self.setupChildVC(meVC, title: "我的", imageName: "my", selectImageName: "my_on")
     }
     

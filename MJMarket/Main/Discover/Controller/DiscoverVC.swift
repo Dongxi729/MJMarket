@@ -21,8 +21,11 @@ class DiscoverVC: WKViewController {
         
         if (self.navigationController?.viewControllers.count)! >= 2 {
             self.webView.load(URLRequest.init(url: URL.init(string: urlStr)!))
+            
+            CCog()
         } else {
             urlStr = WEB_VIEW_FIND_URL
+//            urlStr = "https://www.baidu.com"
             if urlStr.contains("?") {
                 urlStr = urlStr + "&isapp=1"
             } else {
@@ -42,14 +45,16 @@ class DiscoverVC: WKViewController {
         self.urlStr = (navigationAction.request.url?.absoluteString)!
 
         
-        if navigationAction.navigationType == WKNavigationType.linkActivated && !self.urlStr.contains("#") && self.urlStr != "http://mj.ie1e.com/wx_find/article" {
+        if navigationAction.navigationType == WKNavigationType.linkActivated {
             
             aaa(jumpVC: DiscoverVC(), str: urlStr)
             
             decisionHandler(.cancel)
+        } else {
+            
+            decisionHandler(.allow)
         }
         
-        decisionHandler(.allow)
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {

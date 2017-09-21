@@ -23,7 +23,7 @@ class ShopCarVC: WKViewController {
         if (self.navigationController?.viewControllers.count)! >= 2 {
             self.webView.load(URLRequest.init(url: URL.init(string: urlStr)!))
         } else {
-            urlStr = WEB_VIEW_ORDER_LIST
+            urlStr = WEB_VIEW_SHOPCAR_URL
             if urlStr.contains("?") {
                 urlStr = urlStr + "&isapp=1"
             } else {
@@ -48,9 +48,10 @@ class ShopCarVC: WKViewController {
             aaa(jumpVC: ShopCarVC(), str: urlStr)
             
             decisionHandler(.cancel)
-        }
+        } else {
         
-        decisionHandler(.allow)
+            decisionHandler(.allow)
+        }
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {

@@ -54,6 +54,9 @@ var WEB_VIEW_FIND_URL = "http://mj.ie1e.com/wx_find/article";
 //玩乐
 var WEB_VIEW_PLAY_URL = "http://mj.ie1e.com/wx_fun/fun";
 
+// 购物车
+var WEB_VIEW_SHOPCAR_URL = "http://mj.ie1e.com/wx_cart/cart"
+
 //反馈
 var WEB_VIEW_MY_FEEDBACK = "http://mj.ie1e.com/wx_user/myfeedback";
 
@@ -83,3 +86,6 @@ var WEB_VIEW_ORDER_LIST_WAIT_COMMENT = "http://mj.ie1e.com/wx_order/product_orde
 
 //退款订单
 var WEB_VIEW_ORDER_REFUNE = "http://mj.ie1e.com/wx_order/product_refund";
+
+/// 充值下单接口  money  paytype(0,微信 1,支付宝)   pwd
+var WEB_VIEW_CHARGE = COMMON_PREFIX + "/recharge"

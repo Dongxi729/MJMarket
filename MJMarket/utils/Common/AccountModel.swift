@@ -73,7 +73,7 @@ class AccountModel: NSObject,NSCoding {
     /**
      是否已经登录
      */
-    class func isLogin() -> Bool {
+    class func isLo() -> Bool {
         return AccountModel.shareAccount() != nil
     }
     

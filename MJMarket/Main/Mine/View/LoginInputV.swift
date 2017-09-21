@@ -105,6 +105,7 @@ class LoginInputV: UIView,UITextFieldDelegate {
         return d
     }()
     
+    /// 第二条分割线
     lazy var loginLineTwo : UIView = {
         let d:UIView = UIView.init(frame: CGRect.init(x: 0, y: self.passTf.BottomY, width: self.Width, height: 1.0))
         d.backgroundColor = UIColor.colorWithHexString("F3F3F3")

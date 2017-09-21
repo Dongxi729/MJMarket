@@ -28,7 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func checkLogin() {
-        if AccountModel.isLogin() {
+        CCog(message: AccountModel.isLo())
+        
+        if AccountModel.isLo() {
             self.window?.frame = UIScreen.main.bounds
             self.window?.makeKeyAndVisible()
             self.window?.rootViewController = MainTabBarViewController()

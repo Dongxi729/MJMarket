@@ -14,12 +14,7 @@ class LoginVC: UIViewController,loginClickVDelegate,LoginInputVDelegate {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        self.navigationController?.navigationBar.isHidden = false
-    }
+
     
     /// 图片logo
     lazy var LoginlogoCenter: UIImageView = {
@@ -97,17 +92,25 @@ class LoginVC: UIViewController,loginClickVDelegate,LoginInputVDelegate {
         }
         
         if self.loginPhone.characters.count > 0 && self.loginPassStr.characters.count > 0 {
-            ZDXRequestTool.login(phoneNumber: self.loginPhone, passwor: self.loginPassStr)
+            ZDXRequestTool.login(phoneNumber: self.loginPhone, passwor: self.loginPassStr, finished: { (result) in
+                if result {
+                    UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
+                }
+            })
         }
     }
     
     func rigClick() {
-        CCog()
-        self.navigationController?.pushViewController(RigisterVC(), animated: true)
+        let rigVC = ForgetPassVC()
+        rigVC.isRigster = true
+        self.navigationController?.pushViewController(rigVC, animated: true)
     }
 
     func forgetPass() {
-        CCog()
+        let rigVC = ForgetPassVC()
+        rigVC.isRigster = false
+        self.navigationController?.pushViewController(rigVC, animated: true)
+        
     }
     
     /// 手机号码

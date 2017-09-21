@@ -47,9 +47,11 @@ class PlayVC: WKViewController {
             aaa(jumpVC: DiscoverVC(), str: urlStr)
             
             decisionHandler(.cancel)
-        }
+        } else {
         
-        decisionHandler(.allow)
+            decisionHandler(.allow)
+            
+        }
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {

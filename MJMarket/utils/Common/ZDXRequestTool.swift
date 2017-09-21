@@ -9,6 +9,7 @@
 import UIKit
 
 class ZDXRequestTool: NSObject {
+    // MARK: - 发生验证码
     /// 发生验证码
     ///
     /// - Parameters:
@@ -18,12 +19,12 @@ class ZDXRequestTool: NSObject {
         
         /// 发送验证码
         let param2 : [String : Any] = ["mobile" : num]
-
+        
         NetWorkTool.shared.postWithPath(path: SENDSMS_URL, paras: param2, success: { (result) in
             CCog(message: result)
-
+            
             if let dic = result as? NSDictionary {
-
+                
                 if let singKey = (dic["data"] as? NSDictionary)?["icon"] as? String {
                     
                     /// singKey写在静态全局变量
@@ -35,7 +36,7 @@ class ZDXRequestTool: NSObject {
         }
     }
     
-    
+    // MARK: - 注册操作
     /// 注册操作
     ///
     /// - Parameters:
@@ -56,14 +57,15 @@ class ZDXRequestTool: NSObject {
         }
     }
     
+    // MARK: - 登录
     /// 登录
     ///
     /// - Parameters:
     ///   - phoNum: 手机号码
     ///   - pas: 密码
-    class func login(phoneNumber phoNum : String,passwor pas : String) {
+    class func login(phoneNumber phoNum : String,passwor pas : String,finished: @escaping (_ isloginSuccess : Bool) -> ()) {
         
-
+        
         let loginParam : [String : Any] = ["tel" : phoNum,
                                            "password" : pas]
         
@@ -71,22 +73,32 @@ class ZDXRequestTool: NSObject {
         
         NetWorkTool.shared.postWithPath(path: LOGIN_URL, paras: loginParam, success: { (result) in
             CCog(message: result)
-
-                        if let dic = result as? NSDictionary {
-
-                            if let singKey = (dic["data"] as? NSDictionary)?["uid"] as? String {
-                                GetUserUid.userUID = singKey
-
-
-                            }
-                        }
+            
+            
+            if let dic = result as? NSDictionary {
+                
+                if let dicData = dic["data"] as? NSDictionary {
+                    let account = AccountModel.init(dict: dicData as! [String : Any])
+                    account.updateUserInfo()
+                    
+                }
+                
+                if let singKey = (dic["data"] as? NSDictionary)?["uid"] as? String {
+                    GetUserUid.userUID = singKey
+                }
+                
+                if let msgAlert = dic["message"] as? String {
+                    if msgAlert == "登录成功" {
+                        finished(true)
+                    }
+                }
+            }
         }, failure: { (error) in
             CCog(message: error.localizedDescription)
         })
     }
     
-    
-    /// 获取用户信息
+    // MARK: - 获取用户信息
     class func getUserInfo() {
         // 获取用户信息
         let getUserInfo : [String : Any] = ["uid" : GetUserUid.userUID!]
@@ -109,6 +121,29 @@ class ZDXRequestTool: NSObject {
             CCog(message: result)
         }) { (error) in
             CCog(message: error)
+        }
+    }
+    
+    // MARK: - 找回密码
+    /// 找回密码
+    ///
+    /// - Parameters:
+    ///   - phoneNum: 电话号码
+    ///   - autoNum: 验证码
+    ///   - pas: 密码
+    class func findPass(findNum phoneNum : String,autoNumber autoNum : String,password pas : String) {
+        /// 注册操作
+        let param2 : [String : Any] = ["icon" : GetUserUid.registerKeyIcon!,
+                                       "tel": phoneNum,
+                                       "yzm" : autoNum,
+                                       "password1" : pas,
+                                       "password2" : pas]
+        
+        CCog(message: param2)
+        NetWorkTool.shared.postWithPath(path: FINDPWD_URL, paras: param2, success: { (result) in
+            CCog(message: result)
+        }) { (error) in
+            CCog(message: error.localizedDescription)
         }
     }
 }
