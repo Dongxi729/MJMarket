@@ -98,24 +98,25 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
     
     /// 充值
     func chargeSEL() {
-        if chaegeCount.characters.count == 0 {
-            return
-        }
-        
-       
      
         if chaegeCount.validateMoney() {
             if isAutoSuccess == false {
                 FTIndicator.showToastMessage("请输入验证码")
                 
+                
+            } else {
                 if payPassStr.characters.count == 0 {
                     FTIndicator.showToastMessage("请输入支付密码")
                     
                 } else {
-                    
-                    ZDXRequestTool.payTypeWithSelect(payType: paytype, passStr: payPassStr)
+                    CCog(message: paytype)
+
+                    ZDXRequestTool.payTypeWithSelect(payType: paytype, passStr: payPassStr, moneyStr: chaegeCount, finished: { (aliPay) in
+                        PaymenyModel.shared.alipay(orderString: aliPay, comfun: { (result) in
+                            CCog(message: result)
+                        })
+                    })
                 }
-                
             }
             
         } else {
@@ -174,7 +175,7 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
     private var chaegeCount : String = ""
     
     /// 是否严验证成功
-    private var isAutoSuccess = false
+    fileprivate var isAutoSuccess = false
     
     
     /// 支付密码
@@ -300,10 +301,12 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
             if result == nil {
                 let alert = UIAlertView(title: nil, message: "验证码错误", delegate: self, cancelButtonTitle: "确定")
                 alert.show()
+                
                 self.chagrgeOneVDelegate?.autoSuccess(isSuccess: false)
             } else {
                 self.chagrgeOneVDelegate?.autoSuccess(isSuccess: true)
                 let alert = UIAlertView(title: nil, message: "验证码正确", delegate: self, cancelButtonTitle: "确定")
+                
                 alert.show()
             }
         }

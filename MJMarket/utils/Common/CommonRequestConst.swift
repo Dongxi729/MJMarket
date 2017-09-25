@@ -92,3 +92,11 @@ var WEB_VIEW_ORDER_REFUNE = "http://mj.ie1e.com/wx_order/product_refund";
 
 /// 充值下单接口  money  paytype(0,微信 1,支付宝)   pwd
 var WEB_VIEW_CHARGE = COMMON_PREFIX + "/recharge"
+
+
+/// 数字接口
+var CARTCOUNT_URL = COMMON_PREFIX + "/cartcount"
+
+
+/// 订单数字
+var ORDERCOUNT_URL = COMMON_PREFIX + "/ordercount"

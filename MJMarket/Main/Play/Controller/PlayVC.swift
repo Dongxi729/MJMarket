@@ -47,7 +47,7 @@ class PlayVC: WKViewController {
         
         if navigationAction.navigationType == WKNavigationType.linkActivated && !self.urlStr.contains("#") && self.urlStr != "http://mj.ie1e.com/wx_find/article" {
             
-            aaa(jumpVC: DiscoverVC(), str: urlStr)
+            aaa(jumpVC: DiscoverVC(), str: subWebViewContactURL(urlStr: self.urlStr))
             
             decisionHandler(.cancel)
         } else {

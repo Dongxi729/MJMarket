@@ -79,8 +79,6 @@ class ZDXRequestTool: NSObject {
                 
                 if let dicData = dicccc["data"] as? NSDictionary {
 
-                    CCog(message: dicData["id"])
-                    
                     
                     if let userInfoStr = dicData["uid"] as? String {
                         // 获取用户信息
@@ -98,7 +96,9 @@ class ZDXRequestTool: NSObject {
                                     
                                     if let msgAlert = dicccc["message"] as? String {
                                         if msgAlert == "登录成功" {
-                                            
+                                            Model.boolSwotvh = false
+                                            let vc = WKViewController()
+                                            vc.clearCookie()
                                             finished(true)
                                         }
                                     }
@@ -212,14 +212,70 @@ class ZDXRequestTool: NSObject {
     
 //    money  paytype(0,微信 1,支付宝)   pwd
 //    var WEB_VIEW_CHARGE = COMMON_PREFIX + "/recharge"
-    class func payTypeWithSelect(payType : Int,passStr : String) {
+    class func payTypeWithSelect(payType : Int,passStr : String,moneyStr : String,finished: @escaping (_ chargeSignedStr : String) -> ()) {
         let param : [String : Any] = ["pwd" : passStr,
-                                      "payType" : payType]
+                                      "payType" : payType,
+                                      "uid" : AccountModel.shareAccount()?.id as! String,
+                                      "money" : moneyStr]
         
         NetWorkTool.shared.postWithPath(path: WEB_VIEW_CHARGE, paras: param, success: { (result) in
             CCog(message: result)
+            if let chargeSignStr = (result as? NSDictionary)?.object(forKey: "data") as? String {
+                finished(chargeSignStr)
+            }
         }) { (error) in
             CCog(message: error.localizedDescription)
+        }
+    }
+    
+    /// 数字获取
+    class func cartCount(finished: @escaping (_ redStr : String)-> ()){
+        
+        if let userToken = AccountModel.shareAccount()?.id {
+            
+            let param : [String : Any] = ["uid" : userToken]
+            
+            NetWorkTool.shared.postWithPath(path: CARTCOUNT_URL, paras: param, success: { (result) in
+                CCog(message: result)
+                if let chargeSignStr = (result as? NSDictionary)?.object(forKey: "data") as? NSNumber {
+                    CCog(message: chargeSignStr)
+                    finished(chargeSignStr.stringValue)
+                }
+            }, failure: { (error) in
+                
+            })
+        }
+        
+    }
+    
+    /// 订单数量
+    class func orderCount(finished: @escaping (_ redStr : [String])-> ()){
+        if let userToken = AccountModel.shareAccount()?.id {
+            
+            let param : [String : Any] = ["uid" : userToken]
+            
+            NetWorkTool.shared.postWithPath(path: ORDERCOUNT_URL, paras: param, success: { (result) in
+                CCog(message: result)
+                
+                var badge : [String] = []
+                if let chargeSignStr = (result as? NSDictionary)?.object(forKey: "data") as? NSDictionary {
+                    CCog(message: chargeSignStr)
+
+                    badge.append("0")
+                    badge.append((chargeSignStr.object(forKey: "nocomment") as! NSNumber).stringValue)
+                    badge.append((chargeSignStr.object(forKey: "nopay") as! NSNumber).stringValue)
+                    badge.append((chargeSignStr.object(forKey: "payed") as! NSNumber).stringValue)
+                    badge.append("0")
+                    
+                    if badge.count == 5 {
+                        finished(badge)
+                        
+                        CCog(message: badge)
+                    }
+                }
+            }, failure: { (error) in
+                
+            })
         }
     }
 }

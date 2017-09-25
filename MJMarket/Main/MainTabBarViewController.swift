@@ -16,7 +16,17 @@ class MainTabBarViewController: UITabBarController {
         // Do any additional setup after loading the view.
         
         self.setUpSubViews()
+    }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+
+        super.tabBarController?.viewControllers?[2].tabBarItem.badgeValue = "1"
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
     }
 
@@ -36,6 +46,7 @@ class MainTabBarViewController: UITabBarController {
         
         //我的
         let meVC = JFNavigationController.init(rootViewController: MyViewController())
+        
         
         
         self.setupChildVC(mainPageVC, title: "首页", imageName: "home", selectImageName: "home_on")

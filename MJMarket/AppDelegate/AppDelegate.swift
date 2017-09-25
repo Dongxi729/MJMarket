@@ -6,7 +6,7 @@
 //  Copyright © 2017年 郑东喜. All rights reserved.
 //
 //薛世中  10:25:40
-//JS调Native：toLoginApp()登录、getUidApp()获取Uid、shareApp()分享、shareSuccessApp()分享成功、outLoginApp()
+//JS调Native：toLoginApp()登录、getUidApp()获取Uid、shareApp()分享、outLoginApp(),afterShareApp(分享成功)
 //薛世中  10:25:57
 //然后界面已http://mj.ie1e.com/wx_user/mysetting这个为准
 
@@ -33,21 +33,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func checkLogin() {
         CCog(message: AccountModel.isLo())
         
-        if AccountModel.isLo() {
-            self.window?.frame = UIScreen.main.bounds
-            self.window?.makeKeyAndVisible()
-            self.window?.rootViewController = MainTabBarViewController()
-            
-            // 设置全局颜色
+//        if AccountModel.isLo() {
+//            self.window?.frame = UIScreen.main.bounds
+//            self.window?.makeKeyAndVisible()
+//            self.window?.rootViewController = MainTabBarViewController()
+//
+//            // 设置全局颜色
             UITabBar.appearance().tintColor = COMMON_COLOR
-        } else {
-            let nav = UINavigationController.init(rootViewController: LoginVC())
-            
+//        } else {
+//            let nav = UINavigationController.init(rootViewController: MainTabBarViewController())
+        
             /// 跳登录界面
             self.window?.frame = UIScreen.main.bounds
             self.window?.makeKeyAndVisible()
-            self.window?.rootViewController = nav
-        }
+            self.window?.rootViewController = MainTabBarViewController()
+//        }
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {

@@ -36,11 +36,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         self.navigationController?.navigationBar.isHidden = false
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isHidden = true
-    }
-    
+
     
     
     
@@ -64,8 +60,34 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     var redIcom : [String] = ["0","1","0","1","1"]
     
+    var recArray: [String] = [] {
+        didSet {
+            self.myTbV.reloadData()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+        
+        if AccountModel.shareAccount()?.token == nil {
+            FTIndicator.showToastMessage("未登录")
+        } else {
+            FTIndicator.showToastMessage("登录")
+        }
+        
+        ZDXRequestTool.orderCount(finished: { (str) in
+            
+            self.recArray = str
+        })
+        
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
         // Do any additional setup after loading the view.
 
@@ -80,7 +102,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
 
         if #available(iOS 11.0, *) {
-//            self.myTbV.contentInsetAdjustmentBehavior = .never
+            self.myTbV.contentInsetAdjustmentBehavior = .never
         }
     }
     
@@ -98,7 +120,9 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "two") as! MyCellTwo
-            cell.xxx(dss: redIcom)
+            
+            
+            cell.xxx(dss: recArray)
             cell.myCellTwoDelegate = self
             return cell
             

@@ -20,9 +20,7 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         //配置webview
         var configuration = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
-        
-        
-        //        configuration.processPool = self.precessPool
+
         
         // 禁止选择CSS
         let css = "body{-webkit-user-select:none;-webkit-user-drag:none;}"
@@ -98,15 +96,6 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         
     }()
     
-    
-    
-    lazy var precessPool: WKProcessPool = {
-        let d : WKProcessPool = WKProcessPool.init()
-        return d
-    }()
-    
-    
-    
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         let alert = UIAlertController.init(title: "提示", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "确定", style: .default, handler: { (action) in
@@ -120,7 +109,8 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         let msg = message.name
         if msg == "toLoginApp" {
-            UIApplication.shared.keyWindow?.rootViewController = LoginVC()
+
+            self.navigationController?.pushViewController(LoginVC(), animated: true)
         }
         
         if msg == "getCookieValue" {
@@ -202,10 +192,7 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
             NotificationCenter.default.addObserver(self, selector: #selector(self.info(notification:)), name: NSNotification.Name(rawValue: "123"), object: nil)
         }
     }
-    
-    
-    
-    
+
     
     /// url全局变量
     var urlStr = ""
@@ -232,12 +219,57 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         
         view.addSubview(self.webView)
         view.backgroundColor = UIColor.white
+       
+    }
+    
+    /// 清除cookie
+    @objc func clearCookie() {
+        self.webView.evaluateJavaScript("afterLoginOut", completionHandler: nil)
+    }
+    
+    @objc func subWebViewContactURL(urlStr : String) -> String {
+        var tempUrl = urlStr
         
+        var bool = false
         
+        if ((AccountModel.shareAccount()?.token) != nil) {
+            bool = true
+        } else {
+            
+            bool = false
+        }
+        
+        if tempUrl.contains("?") {
+            
+            let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
+            
+            if !tempUrl.contains("token") {
+                tempUrl = tempUrl + "&isapp=1&token=" + contactStr
+                CCog(message: tempUrl)
+            } else {
+                CCog(message: tempUrl)
+            }
+            
+        } else {
+            
+            let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
+            
+            if !tempUrl.contains("token") {
+                
+                tempUrl = tempUrl + "?isapp=1&token=" + contactStr
+                CCog(message: tempUrl)
+            } else {
+                
+                CCog(message: tempUrl)
+            }
+        }
+        
+        return tempUrl
     }
     
     
-    func loadURL(urlStr : String) {
+    /// 加载URL
+    @objc func loadURL(urlStr : String) {
         
         CCog(message: urlStr)
         
@@ -248,11 +280,17 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         if ((AccountModel.shareAccount()?.token) != nil) {
             bool = true
         } else {
+            
             bool = false
         }
         
         
         if (self.navigationController?.viewControllers.count)! >= 2 {
+            
+            if SCREEN_HEIGHT == 812 {
+                self.webView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH , height: SCREEN_HEIGHT - (navigationController?.navigationBar.Height)! - (tabBarController?.tabBar.Height)!)
+            }
+            
             tempUrl = self.urlStr
             
             if tempUrl.contains("?") {
@@ -284,10 +322,18 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
                     self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
                 }
             }
-            
-            
-            
         } else {
+            
+            if NSStringFromClass(self.classForCoder).contains("ShopCarVC") {
+                
+                if SCREEN_HEIGHT == 812 {
+                    self.webView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH , height: SCREEN_HEIGHT - (navigationController?.navigationBar.Height)! - (tabBarController?.tabBar.Height)!)
+                    
+                }
+                
+
+            }
+            
             tempUrl = urlStr
             if tempUrl.contains("?") {
                 
@@ -369,16 +415,16 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
     // MARK: - 网页代理---完成
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.navigationItem.title = webView.title
-        
-        CCog(message: AccountModel.shareAccount()?.id as Any)
-        
-        //        webView.evaluateJavaScript("alert(document.cookie);", completionHandler: nil)
-        
-        if Model.boolSwotvh == false {
-            CCog()
-            self.webView.reload()
-            Model.boolSwotvh = true
+
+        if NSStringFromClass(self.classForCoder).contains("HomeVC") {
+            
+            if Model.boolSwotvh == false {
+                CCog()
+                self.webView.reload()
+                Model.boolSwotvh = true
+            }
         }
+        
     }
     
     /// 开始加载

@@ -22,7 +22,15 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var setCellTwoTitles : [String] = ["意见反馈"]
     
     private lazy var settingVC_ExitBtn: UIButton = {
-        let d: UIButton = UIButton.init(frame: CGRect.init(x: 0, y: SCREEN_HEIGHT - 45 * SCREEN_SCALE - 64, width: SCREEN_WIDTH, height: 45 * SCREEN_SCALE))
+
+        var d : UIButton = UIButton.init()
+        if SCREEN_HEIGHT == 812 {
+            d.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT - (self.navigationController?.navigationBar.Height)! - (self.tabBarController?.tabBar.Height)! - 45 * SCREEN_SCALE, width: SCREEN_WIDTH, height: 45 * SCREEN_SCALE)
+        } else {
+            d = UIButton.init(frame: CGRect.init(x: 0, y: SCREEN_HEIGHT - 45 * SCREEN_SCALE - 64, width: SCREEN_WIDTH, height: 45 * SCREEN_SCALE))
+            
+        }
+        
         d.backgroundColor = COMMON_COLOR
         d.setTitle("退出当前账号", for: .normal)
         d.addTarget(self, action: #selector(exitLocalCount), for: .touchUpInside)
@@ -108,7 +116,7 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     // MARK: - 退出当前账号
     @objc private func exitLocalCount() {
-//        RemoveCookieTool.removeCookie()
+        RemoveCookieTool.removeCookie()
         AccountModel.logout()
         UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
     }

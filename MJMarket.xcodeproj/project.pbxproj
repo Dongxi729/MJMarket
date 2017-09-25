@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26314CBD1F7912E400E4FF72 /* WaitToPayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26314CBC1F7912E400E4FF72 /* WaitToPayVC.swift */; };
 		26342E641F6136CE00850676 /* CommonRequestConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26342E631F6136CE00850676 /* CommonRequestConst.swift */; };
 		2637438F1F6BAAD500382FF4 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2637438E1F6BAAD500382FF4 /* HomeVC.swift */; };
 		2637439D1F6BAC7B00382FF4 /* DiscoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2637439C1F6BAC7B00382FF4 /* DiscoverVC.swift */; };
@@ -167,6 +168,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		26314CBC1F7912E400E4FF72 /* WaitToPayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitToPayVC.swift; sourceTree = "<group>"; };
 		26342E631F6136CE00850676 /* CommonRequestConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonRequestConst.swift; sourceTree = "<group>"; };
 		2637438E1F6BAAD500382FF4 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		2637439C1F6BAC7B00382FF4 /* DiscoverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverVC.swift; sourceTree = "<group>"; };
@@ -1102,6 +1104,7 @@
 				26BB3D321F682BBC00FFFD89 /* TestWKV.swift */,
 				26EE87031F70DBEC001AE2EF /* ForgetPassVC.swift */,
 				26E65E111F7500A00070D765 /* FeedBackVC.swift */,
+				26314CBC1F7912E400E4FF72 /* WaitToPayVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1480,6 +1483,7 @@
 				26AE2B461F55029100AAA36C /* LoginVC.swift in Sources */,
 				26AE2B541F550E1700AAA36C /* RigisterVC.swift in Sources */,
 				264FA77B1F54229E00CE405B /* IQBarButtonItem.m in Sources */,
+				26314CBD1F7912E400E4FF72 /* WaitToPayVC.swift in Sources */,
 				26E65E121F7500A00070D765 /* FeedBackVC.swift in Sources */,
 				26AE2B381F55014000AAA36C /* UIView+Extension.swift in Sources */,
 				264FA6DE1F54144400CE405B /* POPCustomAnimation.mm in Sources */,

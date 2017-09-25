@@ -11,32 +11,22 @@ import WebKit
 
 class ShopCarVC: WKViewController {
     
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         // Do any additional setup after loading the view.
         
         CCog(message: self.navigationController?.viewControllers.count as Any)
-        
-//        if (self.navigationController?.viewControllers.count)! >= 2 {
-//            self.webView.load(URLRequest.init(url: URL.init(string: urlStr)!))
-//        } else {
-//            urlStr = WEB_VIEW_SHOPCAR_URL
-//            if urlStr.contains("?") {
-//                urlStr = urlStr + "&isapp=1"
-//            } else {
-//                urlStr = urlStr + "?isapp=1"
-//            }
-//
-//            let request = URLRequest.init(url: URL.init(string: urlStr)!)
-//            self.webView.load(request)
-//        }
-        
-        loadURL(urlStr: WEB_VIEW_SHOPCAR_URL)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadURL(urlStr: WEB_VIEW_SHOPCAR_URL)
+        
+        ZDXRequestTool.cartCount { (redCount) in
+            super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
+        }
+    }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
@@ -44,17 +34,15 @@ class ShopCarVC: WKViewController {
         
         self.urlStr = (navigationAction.request.url?.absoluteString)!
         
+        if self.urlStr.contains("http://mj.ie1e.com/wx_cart/cart?isapp=1&token")  {
+            ZDXRequestTool.cartCount { (redCount) in
+                super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
+            }
+        }
         
         if navigationAction.navigationType == WKNavigationType.linkActivated && !self.urlStr.contains("#") || self.urlStr == ("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("isapp") {
-            
-            
-            if urlStr.contains("?") {
-                urlStr = urlStr + "&isapp=1"
-            } else {
-                urlStr = urlStr + "?isapp=1"
-            }
-            
-            aaa(jumpVC: ShopCarVC(), str: urlStr)
+  
+            aaa(jumpVC: ShopCarVC(), str: subWebViewContactURL(urlStr: self.urlStr))
             
             CCog(message: self.urlStr)
             

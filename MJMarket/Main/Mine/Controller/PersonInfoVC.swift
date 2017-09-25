@@ -40,19 +40,8 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         view.addSubview(person_TBV)
         
         person_TBV.tableFooterView = personHeadV
-        
-        dump(person_TBV)
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 0.0001
-        } else if section == 1 || section == 2 {
-            return COMMON_MARGIN * 0.5
-        } else {
-            return 0.001
-        }
-    }
     
     // MARK: - 表格代理方法
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -67,13 +56,28 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         if section == 1 {
             return 2
         }
-        
+    
         if section == 2 {
             return 1
         }
         
         return 0
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView.init()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0.001
+        } else if section == 1 || section == 2 {
+            return COMMON_MARGIN * 0.5
+        } else {
+            return 0.001
+        }
+    }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 0 {
