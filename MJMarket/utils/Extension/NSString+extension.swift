@@ -126,7 +126,7 @@ extension String {
     
     // 校验金额
     func validateMoney() -> Bool {
-        let emailRegex: String = "^[0-9]+(\\.[0-9]{1,8})?$"
+        let emailRegex: String = "^[0-9]+(\\.[0-9]{1,6})?$"
         let emailTest: NSPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
         return emailTest.evaluate(with: self)
     }

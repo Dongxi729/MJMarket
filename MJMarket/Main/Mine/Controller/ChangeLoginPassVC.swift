@@ -9,6 +9,10 @@
 import UIKit
 
 class ChangeLoginPassVC: UIViewController,UITableViewDelegate,UITableViewDataSource,BindPhoneCellDelegate,PersonFooVDelegate {
+    func getAutoDelegate() {
+        
+    }
+
     
     lazy var bindPhone_TBV: UITableView = {
         let d : UITableView = UITableView.init(frame: self.view.bounds, style: .grouped)

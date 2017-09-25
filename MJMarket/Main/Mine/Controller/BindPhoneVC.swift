@@ -9,6 +9,10 @@
 import UIKit
 
 class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,BindPhoneCellDelegate {
+    func getAutoDelegate() {
+        
+    }
+
     
     lazy var bindPhone_TBV: UITableView = {
         let d : UITableView = UITableView.init(frame: self.view.bounds, style: .grouped)
@@ -80,6 +84,7 @@ class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Pe
 
 protocol BindPhoneCellDelegate {
     func cellStr(index : IndexPath,str : String)
+    func getAutoDelegate()
 }
 class BindPhoneCell: CommonTableViewCell,UITextFieldDelegate {
     var bindIndex : IndexPath?
@@ -100,8 +105,13 @@ class BindPhoneCell: CommonTableViewCell,UITextFieldDelegate {
         d.backgroundColor = COMMON_COLOR
         d.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         d.setTitle("获取验证码", for: .normal)
+        d.addTarget(self, action: #selector(getAuth), for: .touchUpInside)
         return d
     }()
+    
+    func getAuth() {
+        self.bindCellDelegate?.getAutoDelegate()
+    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)

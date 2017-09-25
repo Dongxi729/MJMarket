@@ -24,9 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 检查用户是否登录
         checkLogin()
         
+//        self.window?.rootViewController = TTT()
+        
         return true
     }
     
+    /// 检查登录
     func checkLogin() {
         CCog(message: AccountModel.isLo())
         
@@ -45,6 +48,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.makeKeyAndVisible()
             self.window?.rootViewController = nav
         }
+    }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        
+    if url.host == "safepay" {
+            // 支付跳转支付宝钱包进行支付，处理支付结果
+            
+            AlipaySDK.defaultService().processOrder(withPaymentResult: url, standbyCallback: {[weak self] (resultDic) in
+                
+                var data = NSDictionary()
+                
+                if let resultStatus = resultDic?["resultStatus"] as? String {
+                    
+                    if resultStatus == "9000"{
+                        data = ["re" : "支付成功"]
+                        
+                    }else if resultStatus == "8000"{
+                        data = ["re" : "正在处理中"]
+                        
+                    }else if resultStatus == "4000"{
+                        data = ["re" : "订单支付失败"]
+                        
+                    }else if resultStatus == "6001" {
+                        data = ["re" : "用户中途取消"]
+                        
+                    } else if resultStatus == "6002" {
+                        data = ["re" : "网络连接出错"]
+                    }
+                }
+                
+                //发出网页调用支付宝的结果
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "123"), object: self, userInfo: data as? [AnyHashable : Any])
+                
+                return
+            })
+        }
+        
+        return true
     }
 }
 

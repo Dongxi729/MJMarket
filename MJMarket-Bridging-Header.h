@@ -17,3 +17,10 @@
 #import "Reachability.h"
 
 #import "IQKeyboardManager.h"
+
+
+///支付宝
+#import <AlipaySDK/AlipaySDK.h>
+#import "DataSigner.h"
+
+#import "TZImagePickerController.h"

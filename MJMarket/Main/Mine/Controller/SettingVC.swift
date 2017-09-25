@@ -19,12 +19,13 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         return d
     }()
     
-    var setCellTwoTitles : [String] = ["意见反馈","客服中心"]
+    var setCellTwoTitles : [String] = ["意见反馈"]
     
     private lazy var settingVC_ExitBtn: UIButton = {
         let d: UIButton = UIButton.init(frame: CGRect.init(x: 0, y: SCREEN_HEIGHT - 45 * SCREEN_SCALE - 64, width: SCREEN_WIDTH, height: 45 * SCREEN_SCALE))
         d.backgroundColor = COMMON_COLOR
         d.setTitle("退出当前账号", for: .normal)
+        d.addTarget(self, action: #selector(exitLocalCount), for: .touchUpInside)
         return d
     }()
     
@@ -42,7 +43,7 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         if section == 0 {
             return 1
         } else {
-            return 2
+            return setCellTwoTitles.count
         }
     }
     
@@ -99,7 +100,19 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         if indexPath.section == 0 && indexPath.row == 0 {
             self.navigationController?.pushViewController(PersonInfoVC(), animated: true)
         }
+        
+        if indexPath.section == 1 && indexPath.row == 0 {
+            self.navigationController?.pushViewController(FeedBackVC(), animated: true)
+        }
     }
+    
+    // MARK: - 退出当前账号
+    @objc private func exitLocalCount() {
+//        RemoveCookieTool.removeCookie()
+        AccountModel.logout()
+        UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
+    }
+
 
 }
 

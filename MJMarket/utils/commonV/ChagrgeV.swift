@@ -38,14 +38,14 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
     
     lazy var secOne: ChagrgeOneV = {
         let d: ChagrgeOneV = ChagrgeOneV.init(frame: CGRect.init(x: 0, y: self.chargeTitleV.BottomY, width: self.Width, height: self.Height *
-            0.3))
+            0.35))
         d.chagrgeOneVDelegate = self
         return d
     }()
     
     /// 请选择充值方式
     lazy var chargeChooseLabel: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: self.Width * 0.05, y: self.secOne.BottomY + COMMON_MARGIN * 0.5, width: self.Width - 6, height: 20))
+        let d : UILabel = UILabel.init(frame: CGRect.init(x: self.Width * 0.05, y: self.secOne.BottomY + COMMON_MARGIN * 1.5, width: self.Width - 6, height: 20))
         d.text = "请选择充值方式"
         d.font = UIFont.systemFont(ofSize: 13)
         return d
@@ -62,7 +62,7 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
     
     /// 表格底部分割线
     lazy var secTwoLine: UIView = {
-        let d: UIView = UIView.init(frame: CGRect.init(x: 0, y: self.secTwoV.BottomY + COMMON_MARGIN, width: self.Width, height: 1))
+        let d: UIView = UIView.init(frame: CGRect.init(x: 0, y: self.secTwoV.BottomY, width: self.Width, height: 1))
         d.backgroundColor = UIColor.gray
         return d
     }()
@@ -99,17 +99,35 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
     /// 充值
     func chargeSEL() {
         if chaegeCount.characters.count == 0 {
-            FTIndicator.showToastMessage("请输入大于1的操作金额")
             return
         }
         
-        if isAutoSuccess == false {
-            FTIndicator.showToastMessage("请输入验证码")
+       
+     
+        if chaegeCount.validateMoney() {
+            if isAutoSuccess == false {
+                FTIndicator.showToastMessage("请输入验证码")
+                
+                if payPassStr.characters.count == 0 {
+                    FTIndicator.showToastMessage("请输入支付密码")
+                    
+                } else {
+                    
+                    ZDXRequestTool.payTypeWithSelect(payType: paytype, passStr: payPassStr)
+                }
+                
+            }
+            
+        } else {
+            FTIndicator.showToastMessage("请输入的金额")
             return
         }
         
+        CCog(message: payPassStr)
         CCog(message: chaegeCount)
         CCog(message: isAutoSuccess)
+        
+        
     }
     
     private lazy var topWindown: UIWindow = {
@@ -158,6 +176,10 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
     /// 是否严验证成功
     private var isAutoSuccess = false
     
+    
+    /// 支付密码
+    private var payPassStr : String = ""
+    
     /// 支付类型
     private var paytype : Int = 0
     
@@ -171,8 +193,15 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
         isAutoSuccess = isSuccess
     }
     
+    func payStr(str: String) {
+        CCog(message: str)
+        payPassStr = str
+    }
+    
     func selectChargeType(chargeType: Int) {
         CCog(message: chargeType)
+        
+        paytype = chargeType
         self.chagrgeVDelegate?.selectChargeApp(chargeType)
     }
     
@@ -183,6 +212,7 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
 
 protocol ChagrgeOneVDelegate {
     func chargeMoneyStr(str : String)
+    func payStr(str : String)
     func autoSuccess(isSuccess : Bool)
 }
 
@@ -198,7 +228,7 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
         d.layer.cornerRadius = 5
         d.font = UIFont.systemFont(ofSize: 14)
         d.clipsToBounds = true
-        d.keyboardType = .numberPad
+        d.keyboardType = .default
         d.tag = 111
         d.delegate = self
         d.placeholder = "  请输入充值金额"
@@ -219,14 +249,31 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
         return d
     }()
     
+    /// 充值金额
+    lazy var payTF: UITextField = {
+        let d: UITextField = UITextField.init(frame: CGRect.init(x: COMMON_MARGIN * 2, y: self.autoTF.BottomY + COMMON_MARGIN, width: self.Width - 4 * COMMON_MARGIN, height: 30))
+        d.layer.borderWidth = 1
+        d.layer.borderColor = UIColor.colorWithHexString("F3F3F3").cgColor
+        d.layer.cornerRadius = 5
+        d.font = UIFont.systemFont(ofSize: 14)
+        d.clipsToBounds = true
+        d.keyboardType = .numberPad
+        d.tag = 112
+        d.delegate = self
+        d.placeholder = "  请输入支付密码"
+        return d
+    }()
+    
+    
+    
     /// 验证码视图
-    lazy var autoImgV: RandomCaptchaV = {
-        let d : RandomCaptchaV = RandomCaptchaV.init(frame: CGRect.init(x: self.autoTF.RightX + 5, y: self.autoTF.TopY, width: self.chagrgeTF.Width - self.autoTF.Width -  COMMON_MARGIN * 0.5 , height: self.autoTF.Height))
+    lazy var autoImgV: RandomCaptchaView = {
+        let d : RandomCaptchaView = RandomCaptchaView.init(frame: CGRect.init(x: self.autoTF.RightX + 5, y: self.autoTF.TopY, width: self.chagrgeTF.Width - self.autoTF.Width -  COMMON_MARGIN * 0.5 , height: self.autoTF.Height))
         return d
     }()
     
     lazy var seprLine: UIView = {
-        let d: UIView = UIView.init(frame: CGRect.init(x: 5, y: self.autoTF.BottomY + COMMON_MARGIN, width: self.Width - 10, height: 1))
+        let d: UIView = UIView.init(frame: CGRect.init(x: 5, y: self.payTF.BottomY + COMMON_MARGIN, width: self.Width - 10, height: 1))
         d.backgroundColor = UIColor.gray
         return d
     }()
@@ -237,11 +284,17 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
             self.chagrgeOneVDelegate?.chargeMoneyStr(str: textField.text!)
         }
         
+        if textField.tag == 112 {
+            self.chagrgeOneVDelegate?.payStr(str: textField.text!)
+        }
+        
         if textField.tag == 666 {
             
             let text1 = textField.text
             
-            let text2 = autoImgV.carMutableStr
+            let text2 = autoImgV.changeString
+            
+            
             //caseInsensitive 不区分大小写
             let result = text1?.range(of: text2!, options: .caseInsensitive)
             if result == nil {
@@ -261,6 +314,7 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
         super.init(frame: frame)
         addSubview(chagrgeTF)
         addSubview(autoTF)
+        addSubview(payTF)
         addSubview(autoImgV)
         addSubview(seprLine)
     }

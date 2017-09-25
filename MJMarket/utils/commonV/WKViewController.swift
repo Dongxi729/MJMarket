@@ -9,6 +9,8 @@
 import UIKit
 import WebKit
 
+
+
 class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler {
     
     ///网页模板
@@ -20,7 +22,7 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         let userContentController = WKUserContentController()
         
         
-        configuration.processPool = self.precessPool
+        //        configuration.processPool = self.precessPool
         
         // 禁止选择CSS
         let css = "body{-webkit-user-select:none;-webkit-user-drag:none;}"
@@ -45,9 +47,9 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         
         let rect = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64)
         wkV = WKWebView.init(frame: rect, configuration: configuration)
-
+        
         wkV.navigationDelegate = self;
-
+        
         
         
         // 默认认为YES
@@ -61,32 +63,36 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         wkV.scrollView.showsHorizontalScrollIndicator = false
         
         wkV.scrollView.addSubview(self.edgesFor)
-
-//        if (Model.shopDetail != nil) {
-//            CCog(message: "1空")
-//            
-//            /// ordersure=[{\"productid\":\"P1504509074696\",\"product_type\":\"1\",\"specificationid\":\"c4304355c5574bf383a9dc1cdb1e159a\",\"num\":\"1\",\"shareuid\":\"\"}]
-//            
-//            let cookieScript2 = WKUserScript.init(source: "document.cookie = '\(String(describing: (Model.shopDetail)!))';", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
-//            userContentController.addUserScript(cookieScript2)
-//            CCog(message: Model.shopDetail!)
-//        } else {
-//            CCog(message: "2空")
-//            let cookieScript = WKUserScript.init(source: "document.cookie = 'shop80=shop_userid=\(String(describing: (AccountModel.shareAccount()?.uid)!))';path:/", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
-//            //配置webview
-//            userContentController.addUserScript(cookieScript)
-//        }
-//        
+        
+        if (Model.shopDetail != nil) {
+            
+            
+            /// ordersure=[{\"productid\":\"P1504509074696\",\"product_type\":\"1\",\"specificationid\":\"c4304355c5574bf383a9dc1cdb1e159a\",\"num\":\"1\",\"shareuid\":\"\"}]
+            
+            let cookieScript2 = WKUserScript.init(source: "document.cookie = '\(String(describing: (Model.shopDetail)!))';", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
+            userContentController.addUserScript(cookieScript2)
+            
+        } else {
+            
+            if ((AccountModel.shareAccount()?.id) != nil) {
+                let cookieScript = WKUserScript.init(source: "document.cookie = 'shop80=shop_userid=\(String(describing: (AccountModel.shareAccount()?.id)!))';", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
+                //配置webview
+                userContentController.addUserScript(cookieScript)
+            }
+            
+        }
+        
         
         
         //        //配置webview
         
         configuration.userContentController = userContentController
         
-       
+        
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "toLoginApp")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "getCookieValue")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "backApp")
+        userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "aliPay")
         
         return wkV
         
@@ -99,31 +105,14 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         return d
     }()
     
-    func setCookie2(setCookie : String) {
-        
-        let cookieScript = WKUserScript.init(source: "document.cookie = " + setCookie, injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
-        
-        let rect = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64)
-        
-        
-        //配置webview
-        let userContentController = WKUserContentController()
-        userContentController.addUserScript(cookieScript)
-        
-        //        //配置webview
-        let configuration = WKWebViewConfiguration()
-        configuration.userContentController = userContentController
-        
-        self.webView = WKWebView.init(frame: rect, configuration: configuration)
-    }
-
+    
     
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         let alert = UIAlertController.init(title: "提示", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "确定", style: .default, handler: { (action) in
             completionHandler()
         }))
-
+        
         
         self.present(alert, animated: true, completion: nil)
     }
@@ -135,14 +124,14 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         }
         
         if msg == "getCookieValue" {
-
+            
             Model.shopDetail = message.body as? String
-            CCog(message: message.body)
+            
             
             let array = (message.body as! String).characters.split{$0 == ";"}.map(String.init)
             
             for value in array {
-                CCog(message: value)
+                
                 /// ordersure=[{"productid":"P1504509074696","product_type":"1","specificationid":"c4304355c5574bf383a9dc1cdb1e159a","num":"1","shareuid":""}]
                 
                 /// https://www.google.co.jp/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&cad=rja&uact=8&ved=0ahUKEwj6taOvobbWAhXLNo8KHUjTBp0QFggrMAE&url=%68%74%74%70%3a%2f%2f%77%77%77%2e%6a%69%61%6e%73%68%75%2e%63%6f%6d%2f%70%2f%61%61%32%38%33%37%36%62%63%31%63%36&usg=AFQjCNFDt8RbJ_cBP0ogKy4wq5lMeA9Pew
@@ -151,18 +140,66 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
                     
                     ss = ss.replacingOccurrences(of: "\"", with: "\\\"")
                     Model.shopDetail = ss
-                    CCog(message: ss)
+                    
                     
                 }
             }
         }
         
         if msg == "backApp" {
-            CCog()
+            
             
             if webView.canGoBack {
                 webView.goBack()
             }
+        }
+        
+        if msg == "aliPay" {
+            
+            
+            let dic = message.body as! NSDictionary
+            
+            var signStr = ""
+            
+            if ((dic["content"] as? String) != nil) {
+                signStr = dic["content"] as! String
+            } else {
+                //回调返回值处理
+                return
+            }
+            
+            CCog(message: signStr)
+            
+            PaymenyModel.shared.alipay(orderString: signStr, comfun: { (result) in
+                switch result {
+                case "用户中途取消":
+                    CCog(message: "用户中途取消")
+                    
+                    break
+                    
+                case "网页支付成功":
+                    CCog(message: "网页支付成功")
+                    break
+                    
+                case "正在处理中":
+                    CCog(message: "正在处理中")
+                    break
+                    
+                case "网络连接出错":
+                    CCog(message: "网络连接出错")
+                    break
+                    
+                case "订单支付失败":
+                    CCog(message: "订单支付失败")
+                    break
+                default:
+                    break
+                }
+            })
+            
+            
+            ///接收appdelegate代理传回的值
+            NotificationCenter.default.addObserver(self, selector: #selector(self.info(notification:)), name: NSNotification.Name(rawValue: "123"), object: nil)
         }
     }
     
@@ -178,7 +215,7 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         d.addTarget(self, action: #selector(valueChanged(sender:)), for: .valueChanged)
         return d
     }()
-
+    
     
     func valueChanged(sender : UIRefreshControl) {
         self.webView.reload()
@@ -192,18 +229,100 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
         view.addSubview(self.webView)
         view.backgroundColor = UIColor.white
+        
         
     }
     
     
+    func loadURL(urlStr : String) {
+        
+        CCog(message: urlStr)
+        
+        var tempUrl = ""
+        
+        var bool = false
+        
+        if ((AccountModel.shareAccount()?.token) != nil) {
+            bool = true
+        } else {
+            bool = false
+        }
+        
+        
+        if (self.navigationController?.viewControllers.count)! >= 2 {
+            tempUrl = self.urlStr
+            
+            if tempUrl.contains("?") {
+                
+                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
+                
+                if !tempUrl.contains("token") {
+                    tempUrl = tempUrl + "&isapp=1&token=" + contactStr
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                    CCog(message: tempUrl)
+                } else {
+                    CCog(message: tempUrl)
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                }
+                
+            } else {
+                tempUrl = urlStr
+                
+                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
+                
+                if !tempUrl.contains("token") {
+                    
+                    tempUrl = tempUrl + "?isapp=1&token=" + contactStr
+                    CCog(message: tempUrl)
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                } else {
+                    
+                    CCog(message: tempUrl)
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                }
+            }
+            
+            
+            
+        } else {
+            tempUrl = urlStr
+            if tempUrl.contains("?") {
+                
+                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
+                
+                if !urlStr.contains("token") {
+                    tempUrl = urlStr + "&isapp=1&token=" + contactStr
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                    CCog(message: tempUrl)
+                } else {
+                    
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                    CCog(message: tempUrl)
+                }
+            } else {
+                
+                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
+                
+                if !urlStr.contains("token") {
+                    
+                    tempUrl = urlStr + "?isapp=1&token=" + contactStr
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                    CCog(message: tempUrl)
+                } else {
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                    CCog(message: tempUrl)
+                }
+            }
+        }
+    }
     
     /// 页面跳转
     ///
     /// - Parameter str: 跳转的链接
     func aaa(jumpVC : Any,str : String) -> Void {
-
         
         
         // 首页
@@ -237,27 +356,34 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
             vvv.urlStr = str
             self.navigationController?.pushViewController(vvv, animated: true)
         }
+        
+        // 反馈
+        if NSStringFromClass(self.classForCoder).contains("FeedBackVC") {
+            let vc = FeedBackVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
     }
     
     // MARK: - 网页代理---完成
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.navigationItem.title = webView.title
-        webView.evaluateJavaScript("pushCookieToIos", completionHandler: nil)
-        if (Model.shopDetail != nil) {
-            CCog(message: "1")
-//            webView.evaluateJavaScript("document.cookie = '\(String(describing: (Model.shopDetail)!))';", completionHandler: nil)
-            webView.evaluateJavaScript("document.cookie = '\(String(describing: (Model.shopDetail)!))';", completionHandler: { (data, error) in
-                DispatchQueue.once(token: "d", block: {
-                    self.webView.reload()
-                })
-            })
+        
+        CCog(message: AccountModel.shareAccount()?.id as Any)
+        
+        //        webView.evaluateJavaScript("alert(document.cookie);", completionHandler: nil)
+        
+        if Model.boolSwotvh == false {
+            CCog()
+            self.webView.reload()
+            Model.boolSwotvh = true
         }
     }
     
     /// 开始加载
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        
-
+        CCog()
     }
 }
 
@@ -282,7 +408,8 @@ class Model: NSObject {
     static var shopDetail : String?
     static var key1 : [String : String] = [:]
     
-
+    static var boolSwotvh = false
+    
 }
 
 

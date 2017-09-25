@@ -19,21 +19,24 @@ class PlayVC: WKViewController {
         
         CCog(message: self.navigationController?.viewControllers.count as Any)
         
-        if (self.navigationController?.viewControllers.count)! >= 2 {
-            self.webView.load(URLRequest.init(url: URL.init(string: urlStr)!))
-        } else {
-            urlStr = WEB_VIEW_PLAY_URL
-            if urlStr.contains("?") {
-                urlStr = urlStr + "&isapp=1"
-            } else {
-                urlStr = urlStr + "?isapp=1"
-            }
-            
-            let request = URLRequest.init(url: URL.init(string: urlStr)!)
-            self.webView.load(request)
-            
-        }
+//        if (self.navigationController?.viewControllers.count)! >= 2 {
+//            self.webView.load(URLRequest.init(url: URL.init(string: urlStr)!))
+//        } else {
+//            urlStr = WEB_VIEW_PLAY_URL
+//            if urlStr.contains("?") {
+//                urlStr = urlStr + "&isapp=1"
+//            } else {
+//                urlStr = urlStr + "?isapp=1"
+//            }
+//
+//            let request = URLRequest.init(url: URL.init(string: urlStr)!)
+//            self.webView.load(request)
+//
+//        }
+        
+        loadURL(urlStr: WEB_VIEW_PLAY_URL)
     }
+
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         

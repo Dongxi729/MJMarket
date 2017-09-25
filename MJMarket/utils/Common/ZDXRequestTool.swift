@@ -75,23 +75,44 @@ class ZDXRequestTool: NSObject {
             CCog(message: result)
             
             
-            if let dic = result as? NSDictionary {
+            if let dicccc = result as? NSDictionary {
                 
-                if let dicData = dic["data"] as? NSDictionary {
-                    let account = AccountModel.init(dict: dicData as! [String : Any])
-                    account.updateUserInfo()
+                if let dicData = dicccc["data"] as? NSDictionary {
+
+                    CCog(message: dicData["id"])
+                    
+                    
+                    if let userInfoStr = dicData["uid"] as? String {
+                        // 获取用户信息
+                        let getUserInfo : [String : Any] = ["uid" : userInfoStr]
+                        
+                        CCog(message: getUserInfo)
+                        NetWorkTool.shared.postWithPath(path:USER_INFO_URL , paras:getUserInfo , success: { (result) in
+                            CCog(message: result)
+                            
+                            if let dic = result as? NSDictionary {
+                                
+                                if let dicData = dic["data"] as? NSDictionary {
+                                    let account = AccountModel.init(dict: dicData as! [String : Any])
+                                    account.updateUserInfo()
+                                    
+                                    if let msgAlert = dicccc["message"] as? String {
+                                        if msgAlert == "登录成功" {
+                                            
+                                            finished(true)
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                        }, failure: { (error) in
+                            CCog(message: error)
+                        })
+                        
+                    }
                     
                 }
-                
-                if let singKey = (dic["data"] as? NSDictionary)?["uid"] as? String {
-                    GetUserUid.userUID = singKey
-                }
-                
-                if let msgAlert = dic["message"] as? String {
-                    if msgAlert == "登录成功" {
-                        finished(true)
-                    }
-                }
+
             }
         }, failure: { (error) in
             CCog(message: error.localizedDescription)
@@ -100,13 +121,28 @@ class ZDXRequestTool: NSObject {
     
     // MARK: - 获取用户信息
     class func getUserInfo() {
-        // 获取用户信息
-        let getUserInfo : [String : Any] = ["uid" : GetUserUid.userUID!]
-        NetWorkTool.shared.postWithPath(path:UPDINFO_URL , paras:getUserInfo , success: { (result) in
-            CCog(message: result)
-        }, failure: { (error) in
-            CCog(message: error)
-        })
+        
+        if let userInfoStr = AccountModel.shareAccount()?.id {
+            // 获取用户信息
+            let getUserInfo : [String : Any] = ["uid" : userInfoStr]
+            
+            CCog(message: getUserInfo)
+            NetWorkTool.shared.postWithPath(path:USER_INFO_URL , paras:getUserInfo , success: { (result) in
+                CCog(message: result)
+                
+                if let dic = result as? NSDictionary {
+                    
+                    if let dicData = dic["data"] as? NSDictionary {
+                        let account = AccountModel.init(dict: dicData as! [String : Any])
+                        account.updateUserInfo()
+
+                    }
+                }
+            }, failure: { (error) in
+                CCog(message: error)
+            })
+            
+        }
     }
     
     /// 修改登录密码
@@ -141,6 +177,46 @@ class ZDXRequestTool: NSObject {
         
         CCog(message: param2)
         NetWorkTool.shared.postWithPath(path: FINDPWD_URL, paras: param2, success: { (result) in
+            CCog(message: result)
+        }) { (error) in
+            CCog(message: error.localizedDescription)
+        }
+    }
+    
+    /// 设置支付密码
+    ///
+    /// - Parameters:
+    ///   - phoneNum: <#phoneNum description#>
+    ///   - autoNum: <#autoNum description#>
+    ///   - pas: <#pas description#>
+    ///   - finished: <#finished description#>
+    class func setSetPay(findNum phoneNum : String,autoNumber autoNum : String,password pas : String,finished : () -> ()) {
+        /// 注册操作
+        
+//        uid pwd pwd1 icon yzm
+        let param2 : [String : Any] = ["icon" : GetUserUid.registerKeyIcon!,
+                                       "uid": AccountModel.shareAccount()?.id as! String,
+                                       "yzm" : autoNum,
+                                       "pwd" : pas,
+                                       "pwd1" : pas]
+        
+        
+        CCog(message: param2)
+        
+        NetWorkTool.shared.postWithPath(path: UPDPAYPWD_URL, paras: param2, success: { (result) in
+            CCog(message: result)
+        }) { (error) in
+            CCog(message: error.localizedDescription)
+        }
+    }
+    
+//    money  paytype(0,微信 1,支付宝)   pwd
+//    var WEB_VIEW_CHARGE = COMMON_PREFIX + "/recharge"
+    class func payTypeWithSelect(payType : Int,passStr : String) {
+        let param : [String : Any] = ["pwd" : passStr,
+                                      "payType" : payType]
+        
+        NetWorkTool.shared.postWithPath(path: WEB_VIEW_CHARGE, paras: param, success: { (result) in
             CCog(message: result)
         }) { (error) in
             CCog(message: error.localizedDescription)

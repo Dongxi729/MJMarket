@@ -20,28 +20,30 @@ class HomeVC: WKViewController {
         
         CCog(message: self.navigationController?.viewControllers.count as Any)
         
-        if (self.navigationController?.viewControllers.count)! >= 2 {
-            
-            
-            let request = URLRequest.init(url: URL.init(string: urlStr)!)
-            
-            self.webView.load(request)
-            
-            
-        } else {
-            urlStr = WEB_VIEW_HOME_URL
-            if urlStr.contains("?") {
-                urlStr = urlStr + "&isapp=1"
-            } else {
-                urlStr = urlStr + "?isapp=1"
-            }
-            
-            let request = URLRequest.init(url: URL.init(string: urlStr)!)
-            
-            self.webView.load(request)
-            
-            
-        }
+//        if (self.navigationController?.viewControllers.count)! >= 2 {
+//
+//
+//            let request = URLRequest.init(url: URL.init(string: urlStr)!)
+//
+//            self.webView.load(request)
+//
+//
+//        } else {
+//            urlStr = WEB_VIEW_HOME_URL
+//            if urlStr.contains("?") {
+//                urlStr = urlStr + "&isapp=1"
+//            } else {
+//                urlStr = urlStr + "?isapp=1"
+//            }
+//
+//            let request = URLRequest.init(url: URL.init(string: urlStr)!)
+//
+//            self.webView.load(request)
+//
+//
+//        }
+        
+        loadURL(urlStr: WEB_VIEW_HOME_URL)
     }
     
     
@@ -52,17 +54,19 @@ class HomeVC: WKViewController {
         self.urlStr = (navigationAction.request.url?.absoluteString)!
 
         
-        if navigationAction.navigationType == WKNavigationType.linkActivated {
+        
+        
+        if navigationAction.navigationType == WKNavigationType.linkActivated && !self.urlStr.contains("token") {
             
             if urlStr.contains("?") {
-                urlStr = urlStr + "&isapp=1"
+                urlStr = urlStr + ("&isapp=1&token=" + String(describing: (AccountModel.shareAccount()?.token)!))
             } else {
-                urlStr = urlStr + "?isapp=1"
+                
+                urlStr = urlStr + ("?isapp=1&token=" + String(describing: (AccountModel.shareAccount()?.token)!))
             }
             
+            CCog(message: urlStr)
             
-
-            CCog()
             aaa(jumpVC: HomeVC(), str: urlStr)
             
             decisionHandler(.cancel)
@@ -73,19 +77,7 @@ class HomeVC: WKViewController {
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        let  cookiejar = HTTPCookieStorage.shared
-        
-        
-        
-        for i in cookiejar.cookies! {
-
-            CCog(message: i.name)
-            CCog(message: i.value)
-//            Model.key1 =
-            
-        }
-        
-        
+        _ = HTTPCookieStorage.shared
         
         
         decisionHandler(.allow)

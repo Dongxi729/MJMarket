@@ -31,13 +31,13 @@ class TestVC: UIViewController,ChagrgeVDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
-//        let payV = ChagrgeV.init(CGRect.init(x: 0, y: 0, width: 250, height: (250) * 1.15))
-//        payV.chagrgeVDelegate = self
-//        
-//        UIApplication.shared.keyWindow?.addSubview(payV)
-//        payV.center = (UIApplication.shared.keyWindow?.center)!
+        let payV = ChagrgeV.init(CGRect.init(x: 0, y: 0, width: 250, height: (250) * 1.15))
+        payV.chagrgeVDelegate = self
         
-        self.navigationController?.pushViewController(SecVC(), animated: true)
+        UIApplication.shared.keyWindow?.addSubview(payV)
+        payV.center = (UIApplication.shared.keyWindow?.center)!
+        
+//        self.navigationController?.pushViewController(SecVC(), animated: true)
     }
 
     // MARK: - ChagrgeVDelegate

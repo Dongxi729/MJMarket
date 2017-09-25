@@ -10,7 +10,7 @@
 
 import UIKit
 
-class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCellTwoDelegate {
+class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCellTwoDelegate,MyCellOneDelegate,ChagrgeVDelegate {
 
 
     lazy var myTbV: UITableView = {
@@ -40,6 +40,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
     }
+    
     
     
     
@@ -93,6 +94,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "one") as! MyCellOne
+            cell.myCellOneDelegate = self
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "two") as! MyCellTwo
@@ -190,6 +192,26 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         }
     }
 
+    
+    func chargeDelegateSEL() {
+        CCog()
+        let payV = ChagrgeV.init(CGRect.init(x: 0, y: 0, width: 265, height: (310) * 1.15))
+        payV.chagrgeVDelegate = self
+
+        UIApplication.shared.keyWindow?.addSubview(payV)
+        payV.center = (UIApplication.shared.keyWindow?.center)!
+    }
+    
+    
+    // MARK: - ChagrgeVDelegate
+    func selectChargeApp(_ selectType: Int) {
+        CCog(message: selectType)
+    }
+    
+    func selectChargeAppWithMoney(_ selectType: Int) {
+        CCog(message: selectType)
+    }
+    
 }
 
 

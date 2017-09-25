@@ -26,6 +26,9 @@ var REG_URL = COMMON_PREFIX + "/reg"
 /// 发送验证码   mobile
 var SENDSMS_URL = COMMON_PREFIX + "/sendsms"
 
+/// 获取用户信息
+var USER_INFO_URL = COMMON_PREFIX + "/info"
+
 /// 找回密码
 var FINDPWD_URL = COMMON_PREFIX + "/findpwd"
 
@@ -42,7 +45,7 @@ var UPDPAYPWD_URL = COMMON_PREFIX + "/updpaypwd"
 var BINDPHONE_URL = COMMON_PREFIX + "/bindphone"
 
 /// 头像上传
-var UPLOADHEADINMG_URL = COMMON_PREFIX + "/updheadimg"
+var UPLOADHEADINMG_URL = COMMON_PREFIX + "/uploadheadimg"
 
 
 //首页

@@ -8,24 +8,77 @@
 
 import UIKit
 
-//{
-//    data =     {
-//        token = 3b58e0c8134c4c20bf901a455f12e361;
-//        uid = U1505358699870;
-//    };
-//    message = "登录成功";
-//    success = 1;
-//    total = 0;
-//}
-
+//Commission = 0;
+//Status = 1;
+//Tel = 18905036476;
+//address = "<null>";
+//"agent_money" = 0;
+//area = "<null>";
+//birthday = "1970-01-01T00:00:00";
+//city = "<null>";
+//headimg = "<null>";
+//id = U1505358699870;
+//idcard = "<null>";
+//money = 30;
+//myword = "<null>";
+//nickname = U1505358699870;
+//openid = "<null>";
+//"pay_pwd" = "<null>";
+//province = "<null>";
+//pwd = F37B4772D34887A2C6AE8080671168A7;
+//regtime = "2017-09-14T11:11:39";
+//scores = 1000;
+//sex = "<null>";
+//token = 38d990a7ab894274af5c9f2df8ebcfb4;
+//"user_type" = 0;
 
 class AccountModel: NSObject,NSCoding {
     
+    var Commission : Any?
     
-    var token : String?
+    var Status : Any?
     
-    var uid : String?
+    var Tel : Any?
     
+    var address  : Any?
+    
+    var agent_money : Any?
+    
+    var area : Any?
+    
+    var birthday : Any?
+    
+    var city : Any?
+    
+    var headimg : Any?
+    
+    var id : Any?
+    
+    var idcard : Any?
+    
+    var money : Any?
+    
+    var myword : Any?
+    
+    var nickname : Any?
+    
+    var openid : Any?
+    
+    var pay_pwd : Any?
+    
+    var province : Any?
+    
+    var pwd : Any?
+    
+    var regtime : Any?
+    
+    var scores : Any?
+    
+    var sex : Any?
+    
+    var token : Any?
+    
+    var user_type : Any?
 
     // KVC 字典转模型
     init(dict: [String: Any]) {
@@ -94,16 +147,58 @@ class AccountModel: NSObject,NSCoding {
 
     
     override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+
     
     func encode(with aCoder: NSCoder) {
+        aCoder.encode(Commission, forKey: "Commission")
+        aCoder.encode(Status, forKey: "Status")
+        aCoder.encode(Tel, forKey: "Tel")
+        aCoder.encode(address, forKey: "address")
+        aCoder.encode(agent_money, forKey: "agent_money")
+        aCoder.encode(area, forKey: "area")
+        aCoder.encode(birthday, forKey: "birthday")
+        aCoder.encode(city, forKey: "city")
+        aCoder.encode(headimg, forKey: "headimg")
+        aCoder.encode(id, forKey: "id")
+        aCoder.encode(idcard, forKey: "idcard")
+        aCoder.encode(money, forKey: "money")
+        aCoder.encode(myword, forKey: "myword")
+        aCoder.encode(nickname, forKey: "nickname")
+        aCoder.encode(openid, forKey: "openid")
+        aCoder.encode(pay_pwd, forKey: "pay_pwd")
+        aCoder.encode(province, forKey: "province")
+        aCoder.encode(pwd, forKey: "pwd")
+        aCoder.encode(regtime, forKey: "regtime")
+        aCoder.encode(scores, forKey: "scores")
+        aCoder.encode(sex, forKey: "sex")
         aCoder.encode(token, forKey: "token")
-        aCoder.encode(uid, forKey: "uid")
-
+        aCoder.encode(user_type, forKey: "user_type")
     }
     
     
     required init?(coder aDecoder: NSCoder) {
+        Commission = aDecoder.decodeObject(forKey: "uid") as? NSNumber
+        Status = aDecoder.decodeObject(forKey: "Status") as? String
+        Tel = aDecoder.decodeObject(forKey: "Tel") as? String
+        address = aDecoder.decodeObject(forKey: "address") as? String
+        agent_money = aDecoder.decodeObject(forKey: "agent_money") as? NSNumber
+        area = aDecoder.decodeObject(forKey: "area") as? String
+        birthday = aDecoder.decodeObject(forKey: "birthday") as? String
+        city = aDecoder.decodeObject(forKey: "city") as? String
+        headimg = aDecoder.decodeObject(forKey: "headimg")
+        id = aDecoder.decodeObject(forKey: "id") as? String
+        idcard = aDecoder.decodeObject(forKey: "idcard") as? String
+        money = aDecoder.decodeObject(forKey: "money") as? NSNumber
+        myword = aDecoder.decodeObject(forKey: "myword") as? String
+        nickname = aDecoder.decodeObject(forKey: "nickname") as? String
+        openid = aDecoder.decodeObject(forKey: "openid") as? String
+        pay_pwd = aDecoder.decodeObject(forKey: "pay_pwd") as? String
+        province = aDecoder.decodeObject(forKey: "province") as? String
+        pwd = aDecoder.decodeObject(forKey: "pwd") as? String
+        regtime = aDecoder.decodeObject(forKey: "regtime") as? String
+        scores = aDecoder.decodeObject(forKey: "scores") as? NSNumber
+        sex = aDecoder.decodeObject(forKey: "sex") as? String
         token = aDecoder.decodeObject(forKey: "token") as? String
-        uid = aDecoder.decodeObject(forKey: "uid") as? String
+        user_type = aDecoder.decodeObject(forKey: "user_type") as? String
     }
 }

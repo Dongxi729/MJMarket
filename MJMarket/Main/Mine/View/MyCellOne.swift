@@ -42,14 +42,29 @@ class MyCellOneV: UIView {
     
 }
 
+
+protocol MyCellOneDelegate {
+    func chargeDelegateSEL()
+}
+
 class MyCellOne: CommonTableViewCell {
+    
+    var myCellOneDelegate : MyCellOneDelegate?
     
     lazy var leftV: MyCellOneV = {
         let d: MyCellOneV = MyCellOneV.init(frame: CGRect.init(x: 0, y: 8, width: SCREEN_WIDTH * 0.5, height: self.Height))
         d.myCellMoneyLabel.text = "￥" + "0"
-        d.descLabel.text = "金额"
+        d.descLabel.text = "余额"
+        
+        let tapGes = UITapGestureRecognizer.init(target: self, action: #selector(rechageSEL))
+        d.isUserInteractionEnabled = true
+        d.addGestureRecognizer(tapGes)
         return d
     }()
+    
+    func rechageSEL() {
+        self.myCellOneDelegate?.chargeDelegateSEL()
+    }
     
     /// 分割线
     private lazy var seperateLine: UIView = {

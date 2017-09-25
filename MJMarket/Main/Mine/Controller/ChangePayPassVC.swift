@@ -35,7 +35,9 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         
     }
     
-    private var cellDescTitles : [String] = ["请输入您的手机号码","请输入验证码","请输入新的支付密码","请重读输入支付密码"]
+    
+    
+    private var cellDescTitles : [String] = ["请输入验证码"]
     
     // MARK: - 表格代理
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -44,17 +46,14 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         cell.bindPhoneCellDescLanbel.placeholder = cellDescTitles[indexPath.row]
         cell.bindIndex = indexPath
         cell.bindCellDelegate = self
-        if indexPath.row == 1 {
-            cell.bindPhoneCell_Btn.isHidden = false
-        } else {
-            cell.bindPhoneCell_Btn.isHidden = true
-        }
+        cell.bindPhoneCell_Btn.isHidden = false
+        
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 1
     }
     
     
@@ -67,11 +66,20 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         CCog(message: index.row)
         CCog(message: str)
     }
+    
+    func getAutoDelegate() {
+        CCog()
+        ZDXRequestTool.sendAuto(sendNum: "18905036476", authNumber: "1234")
+    }
 
     
     // MARK: - PersonFooVDelegate -- 尾部代理方法
     func personBtnSEL() {
         CCog()
+        /// 模拟设置
+        ZDXRequestTool.setSetPay(findNum: AccountModel.shareAccount()?.Tel as! String, autoNumber: "1234", password: "123456") {
+            
+        }
     }
 
 }

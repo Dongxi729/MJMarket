@@ -20,21 +20,23 @@ class ShopCarVC: WKViewController {
         
         CCog(message: self.navigationController?.viewControllers.count as Any)
         
-        if (self.navigationController?.viewControllers.count)! >= 2 {
-            self.webView.load(URLRequest.init(url: URL.init(string: urlStr)!))
-        } else {
-            urlStr = WEB_VIEW_SHOPCAR_URL
-            if urlStr.contains("?") {
-                urlStr = urlStr + "&isapp=1"
-            } else {
-                urlStr = urlStr + "?isapp=1"
-            }
-            
-            let request = URLRequest.init(url: URL.init(string: urlStr)!)
-            self.webView.load(request)
-            
-        }
+//        if (self.navigationController?.viewControllers.count)! >= 2 {
+//            self.webView.load(URLRequest.init(url: URL.init(string: urlStr)!))
+//        } else {
+//            urlStr = WEB_VIEW_SHOPCAR_URL
+//            if urlStr.contains("?") {
+//                urlStr = urlStr + "&isapp=1"
+//            } else {
+//                urlStr = urlStr + "?isapp=1"
+//            }
+//
+//            let request = URLRequest.init(url: URL.init(string: urlStr)!)
+//            self.webView.load(request)
+//        }
+        
+        loadURL(urlStr: WEB_VIEW_SHOPCAR_URL)
     }
+    
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
@@ -43,13 +45,22 @@ class ShopCarVC: WKViewController {
         self.urlStr = (navigationAction.request.url?.absoluteString)!
         
         
-        if navigationAction.navigationType == WKNavigationType.linkActivated && !self.urlStr.contains("#") && self.urlStr != "http://mj.ie1e.com/wx_find/article" {
+        if navigationAction.navigationType == WKNavigationType.linkActivated && !self.urlStr.contains("#") || self.urlStr == ("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("isapp") {
+            
+            
+            if urlStr.contains("?") {
+                urlStr = urlStr + "&isapp=1"
+            } else {
+                urlStr = urlStr + "?isapp=1"
+            }
             
             aaa(jumpVC: ShopCarVC(), str: urlStr)
             
+            CCog(message: self.urlStr)
+            
             decisionHandler(.cancel)
         } else {
-        
+
             decisionHandler(.allow)
         }
     }
@@ -57,7 +68,5 @@ class ShopCarVC: WKViewController {
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         decisionHandler(.allow)
     }
-    
-    
 }
 

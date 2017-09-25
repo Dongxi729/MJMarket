@@ -94,6 +94,9 @@ class LoginVC: UIViewController,loginClickVDelegate,LoginInputVDelegate {
         if self.loginPhone.characters.count > 0 && self.loginPassStr.characters.count > 0 {
             ZDXRequestTool.login(phoneNumber: self.loginPhone, passwor: self.loginPassStr, finished: { (result) in
                 if result {
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+                    
                     UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
                 }
             })
