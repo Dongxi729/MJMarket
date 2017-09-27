@@ -311,7 +311,8 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
     
     /// 分享微信朋友圈
     func shareToWxFriend() {
-        CCog()
+        
+       _scene = Int32(WXSceneSession.rawValue)
         
         let message =  WXMediaMessage()
         
