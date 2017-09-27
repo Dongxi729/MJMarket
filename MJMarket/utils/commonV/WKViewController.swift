@@ -11,7 +11,7 @@ import WebKit
 
 
 
-class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler {
+class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler,ShareVDelegate {
     
     ///网页模板
     lazy var webView: WKWebView = {
@@ -91,9 +91,17 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "getCookieValue")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "backApp")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "aliPay")
-        
+        userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "afterShareApp")
+        userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "shareApp")
         return wkV
         
+    }()
+    
+    /// 分享视图
+    private lazy var shareC: ShareV = {
+        let d : ShareV = ShareV.init(CGRect.init(x: 0, y: SCREEN_HEIGHT, width: SCREEN_WIDTH, height: 150))
+        d.backgroundColor = COMMON_COLOR
+        return d
     }()
     
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
@@ -105,6 +113,11 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    private var shareContent : String = ""
+    private var shareImgURl : String = ""
+    private var shareLinkURL : String = ""
+    private var imgData : Data?
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         let msg = message.name
@@ -191,8 +204,152 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
             ///接收appdelegate代理传回的值
             NotificationCenter.default.addObserver(self, selector: #selector(self.info(notification:)), name: NSNotification.Name(rawValue: "123"), object: nil)
         }
+        
+        if msg == "afterShareApp" {
+            CCog(message: message.body)
+        }
+        
+        if msg == "shareApp" {
+            /// http://mj.ie1e.com
+            
+//    {"content":"【东东超市】东东超市海直购 TAKARAA 巧克力饼干\r\n【普通价】￥78.00\r\n【会员价】￥18.90\r\n【下单链接】{mj.ie1e.com/wx_product/product_detail?id=P1502760529315}","imgs":["/upload/images/20170815/20170815092346518342.jpg"],"productid":"P1502760529315","hasAfter":1}
+            CCog(message: message.body)
+            
+
+            if let jsonData = message.body as? String {
+                if let jsonStr = jsonData.data(using: String.Encoding.utf8, allowLossyConversion: false) {
+                    do {
+                        
+                        /// 内容
+                        if var contentStr = try JSON(data: jsonStr)["content"].string {
+                            CCog(message: contentStr)
+                            
+                            let startLocation = contentStr.index(of: "{")
+                            let endLocation = contentStr.index(of: "}")
+
+                            var str = contentStr.substring(with: startLocation..<endLocation)
+                            str = str.replacingOccurrences(of: "{", with: "")
+                            
+                            self.shareLinkURL = str
+                            
+                            CCog(message: str)
+                            self.shareContent = contentStr
+                        }
+                        
+                        if var imgUrl = try JSON(data: jsonStr)["imgs"][0].string {
+                            imgUrl = "http://mj.ie1e.com/" + imgUrl
+                            CCog(message: imgUrl)
+                            self.shareImgURl = imgUrl
+                            
+                            NetCheck.shared.returnNetStatus(getNetCode: { (result) in
+                                CCog(message: result)
+                            })
+                            let queue = OperationQueue()
+                            queue.addOperation({
+                                self.imgData = try! Data.init(contentsOf: URL.init(string: imgUrl)!)
+                            })
+                            
+                            
+                        }
+                        
+                        if var hasAfter = try JSON(data: jsonStr)["hasAfter"].int,let productID = try JSON(data: jsonStr)["productid"].string {
+                            CCog(message: hasAfter)
+                            CCog(message: productID)
+                            let param : [String : String] = ["productid" : productID,
+                                                             "uid" : AccountModel.shareAccount()?.id! as! String]
+                            
+                            CCog(message: param)
+                            
+                            if hasAfter == 1 {
+                                NetWorkTool.shared.postWithPath(path: shareearn_url, paras: param, success: { (result) in
+                                    CCog(message: result)
+                                }, failure: { (error) in
+                                    CCog(message: error)
+                                })
+                            }
+                        }
+                        
+                        
+                        
+                    } catch {
+                        
+                    }
+                }
+            }
+            
+            
+            self.shareC.shareVDelegate = self
+            UIView.animate(withDuration: 1.0, animations: {
+                self.shareC.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT - 150, width: SCREEN_WIDTH, height: 150)
+            })
+        }
     }
 
+    
+    // MARK: - 分享QQ
+    func shareToQQ() {
+        CCog()
+        
+        QQTool.qqShare(title: "闽集商城", desc: self.shareContent, link: self.shareLinkURL, imgUrl: self.shareImgURl, type: QQApiURLTargetTypeAudio)
+    }
+    
+    /// 分享朋友圈
+    func shareToFriend() {
+        CCog()
+         _scene = Int32(WXSceneTimeline.rawValue)
+        
+        let req = SendMessageToWXReq()
+        req.bText = true
+        req.text = self.shareContent
+        req.scene = _scene
+        WXApi.send(req)
+    }
+    
+    
+    //发送给好友还是朋友圈（默认好友）
+    var _scene = Int32(WXSceneSession.rawValue)
+    
+    /// 分享微信朋友圈
+    func shareToWxFriend() {
+        CCog()
+        
+        let message =  WXMediaMessage()
+        
+        //发送的图片
+        
+        let imageObject =  WXImageObject()
+        
+        var image = UIImage.init()
+        
+        if (self.imgData != nil) {
+            
+            image = UIImage.init(data: self.imgData!)!
+            imageObject.imageData = UIImagePNGRepresentation(UIImage.init(data: self.imgData!)!)
+            message.mediaObject = imageObject
+            
+            //图片缩略图
+            let width = 240.0 as CGFloat
+            let height = width*(image.size.height)/(image.size.width)
+            
+            UIGraphicsBeginImageContext(CGSize(width: width, height: height))
+            image.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+            message.setThumbImage(UIGraphicsGetImageFromCurrentImageContext())
+            UIGraphicsEndImageContext()
+            
+            let req =  SendMessageToWXReq()
+            req.bText = false
+            req.message = message
+            req.scene = self._scene
+            WXApi.send(req)
+        } else {
+            let req = SendMessageToWXReq()
+            req.bText = true
+            req.text = self.shareContent
+            req.scene = _scene
+            WXApi.send(req)
+        }
+        
+    }
     
     /// url全局变量
     var urlStr = ""
@@ -220,6 +377,8 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         view.addSubview(self.webView)
         view.backgroundColor = UIColor.white
        
+        UIApplication.shared.keyWindow?.addSubview(shareC)
+        
     }
     
     /// 清除cookie
@@ -431,6 +590,9 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         CCog()
     }
+    
+    
+    
 }
 
 // MARK:- 弱引用交互事件

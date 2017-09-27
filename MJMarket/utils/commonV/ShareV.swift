@@ -8,7 +8,15 @@
 
 import UIKit
 
+protocol ShareVDelegate {
+    func shareToFriend()
+    func shareToQQ()
+    func shareToWxFriend()
+}
+
 class ShareV: UIView,ShareCellDelegate {
+    
+    var shareVDelegate : ShareVDelegate?
     
     lazy var leftLine: UIView = {
         let d : UIView = UIView.init(frame: CGRect.init(x:self.shareToDesc.LeftX - COMMON_MARGIN - SCREEN_WIDTH * 0.15, y: self.shareToDesc.bounds.midX, width: SCREEN_WIDTH * 0.15, height: 1))
@@ -83,15 +91,15 @@ class ShareV: UIView,ShareCellDelegate {
     
     func shareClickBtn(sender: UIButton) {
         if sender.titleLabel?.text == "微信好友" {
-            CCog()
+            self.shareVDelegate?.shareToWxFriend()
         }
         
         if sender.titleLabel?.text == "朋友圈" {
-            CCog()
+            self.shareVDelegate?.shareToFriend()
         }
         
         if sender.titleLabel?.text == "QQ" {
-            CCog()
+            self.shareVDelegate?.shareToQQ()
         }
     }
     

@@ -100,3 +100,7 @@ var CARTCOUNT_URL = COMMON_PREFIX + "/cartcount"
 
 /// 订单数字
 var ORDERCOUNT_URL = COMMON_PREFIX + "/ordercount"
+
+
+/// 佣金接口
+var shareearn_url = COMMON_PREFIX + "/shareearn"

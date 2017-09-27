@@ -14,45 +14,42 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
-
-
+    
+    let tool = WXTool()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         // 检查用户是否登录
         checkLogin()
         
-//        self.window?.rootViewController = TTT()
+        //设置QQ
+        setQQ()
+        
+        setWX()
         
         return true
     }
+    
     
     /// 检查登录
     func checkLogin() {
         CCog(message: AccountModel.isLo())
         
-//        if AccountModel.isLo() {
-//            self.window?.frame = UIScreen.main.bounds
-//            self.window?.makeKeyAndVisible()
-//            self.window?.rootViewController = MainTabBarViewController()
-//
-//            // 设置全局颜色
-            UITabBar.appearance().tintColor = COMMON_COLOR
-//        } else {
-//            let nav = UINavigationController.init(rootViewController: MainTabBarViewController())
+        // 设置全局颜色
+        UITabBar.appearance().tintColor = COMMON_COLOR
         
-            /// 跳登录界面
-            self.window?.frame = UIScreen.main.bounds
-            self.window?.makeKeyAndVisible()
-            self.window?.rootViewController = MainTabBarViewController()
-//        }
+        /// 跳登录界面
+        self.window?.frame = UIScreen.main.bounds
+        self.window?.makeKeyAndVisible()
+        self.window?.rootViewController = MainTabBarViewController()
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         
-    if url.host == "safepay" {
+        if url.host == "safepay" {
             // 支付跳转支付宝钱包进行支付，处理支付结果
             
             AlipaySDK.defaultService().processOrder(withPaymentResult: url, standbyCallback: {[weak self] (resultDic) in
@@ -85,7 +82,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
+        let qqUrl = String(format: "tencent%@", arguments: [QQAppID])
+        
+        let wxUrl = String(format: "%@", arguments: [WXPatient_App_ID])
+        
+        if url.absoluteString.hasPrefix(qqUrl){
+            QQApiInterface.handleOpen(url, delegate: qqTool)
+            return TencentOAuth.handleOpen(url)
+        } else if url.absoluteString.hasPrefix(wxUrl) {
+            return WXApi.handleOpen(url, delegate: tool)
+        }
+        
         return true
     }
+    
+    
+    // MARK: - QQ接入
+
+    //QQ工具
+    let qqTool = QQTool()
+    
+    lazy var tencentOAuth = TencentOAuth()
+    
+    func setQQ() -> Void {
+        tencentOAuth = TencentOAuth(appId: QQAppID, andDelegate: qqTool)
+    }
+    
+    func setWX() {
+        WXApi.registerApp(WXPatient_App_ID)
+    }
+
 }
 

@@ -91,6 +91,15 @@
 		265AFD851F6A26040025F3DE /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265AFD841F6A26040025F3DE /* AccountModel.swift */; };
 		266ECC121F5BCFFC00D033D0 /* RandomCaptchaV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266ECC111F5BCFFC00D033D0 /* RandomCaptchaV.swift */; };
 		2680AB051F627211008D51AB /* ShareV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2680AB041F627211008D51AB /* ShareV.swift */; };
+		2688530B1F7B8F24008BD4DE /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2688530A1F7B8F24008BD4DE /* SwiftyJSON.swift */; };
+		268853151F7BA416008BD4DE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 268853141F7BA416008BD4DE /* Security.framework */; };
+		268853171F7BA429008BD4DE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 268853161F7BA429008BD4DE /* CoreGraphics.framework */; };
+		2688531C1F7BA656008BD4DE /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2688531B1F7BA656008BD4DE /* libiconv.tbd */; };
+		2688531E1F7BA673008BD4DE /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2688531D1F7BA673008BD4DE /* libstdc++.tbd */; };
+		268853201F7BA6FF008BD4DE /* QQTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2688531F1F7BA6FF008BD4DE /* QQTool.swift */; };
+		2688535D1F7BBDE9008BD4DE /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 268853121F7BA32E008BD4DE /* TencentOpenAPI.framework */; };
+		268853661F7BCEF2008BD4DE /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2688535F1F7BCDC4008BD4DE /* libWeChatSDK.a */; };
+		268853681F7BCF14008BD4DE /* WXTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268853671F7BCF14008BD4DE /* WXTool.swift */; };
 		26AB3CFB1F6A54E50013398F /* ZDXRequestTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AB3CFA1F6A54E50013398F /* ZDXRequestTool.swift */; };
 		26AE2B2D1F55014000AAA36C /* CommonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */; };
 		26AE2B2E1F55014000AAA36C /* JFNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B211F55014000AAA36C /* JFNavigationController.swift */; };
@@ -331,6 +340,23 @@
 		265AFD841F6A26040025F3DE /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		266ECC111F5BCFFC00D033D0 /* RandomCaptchaV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomCaptchaV.swift; sourceTree = "<group>"; };
 		2680AB041F627211008D51AB /* ShareV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareV.swift; sourceTree = "<group>"; };
+		2688530A1F7B8F24008BD4DE /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		268853121F7BA32E008BD4DE /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		268853131F7BA32E008BD4DE /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		268853141F7BA416008BD4DE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		268853161F7BA429008BD4DE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		268853191F7BA646008BD4DE /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
+		2688531B1F7BA656008BD4DE /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		2688531D1F7BA673008BD4DE /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		2688531F1F7BA6FF008BD4DE /* QQTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QQTool.swift; sourceTree = "<group>"; };
+		2688535F1F7BCDC4008BD4DE /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		268853601F7BCDC4008BD4DE /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		268853611F7BCDC4008BD4DE /* WechatAuthSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		268853621F7BCDC4008BD4DE /* WXApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		268853631F7BCDC4008BD4DE /* WXApiManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApiManager.h; sourceTree = "<group>"; };
+		268853641F7BCDC4008BD4DE /* WXApiManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
+		268853651F7BCDC4008BD4DE /* WXApiObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		268853671F7BCF14008BD4DE /* WXTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WXTool.swift; sourceTree = "<group>"; };
 		26AB3CFA1F6A54E50013398F /* ZDXRequestTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZDXRequestTool.swift; sourceTree = "<group>"; };
 		26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTableViewCell.swift; sourceTree = "<group>"; };
 		26AE2B211F55014000AAA36C /* JFNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFNavigationController.swift; sourceTree = "<group>"; };
@@ -509,10 +535,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				268853661F7BCEF2008BD4DE /* libWeChatSDK.a in Frameworks */,
+				2688535D1F7BBDE9008BD4DE /* TencentOpenAPI.framework in Frameworks */,
+				26F73AC91F74A0FC00380A03 /* CoreTelephony.framework in Frameworks */,
+				2688531E1F7BA673008BD4DE /* libstdc++.tbd in Frameworks */,
+				2688531C1F7BA656008BD4DE /* libiconv.tbd in Frameworks */,
+				268853171F7BA429008BD4DE /* CoreGraphics.framework in Frameworks */,
+				268853151F7BA416008BD4DE /* Security.framework in Frameworks */,
 				26F73ACF1F74A15500380A03 /* CoreMotion.framework in Frameworks */,
 				26F73ACD1F74A11100380A03 /* CFNetwork.framework in Frameworks */,
 				26F73ACB1F74A10400380A03 /* SystemConfiguration.framework in Frameworks */,
-				26F73AC91F74A0FC00380A03 /* CoreTelephony.framework in Frameworks */,
 				26F73ABF1F74A01600380A03 /* libssl.a in Frameworks */,
 				264FA71F1F54163600CE405B /* libz.tbd in Frameworks */,
 				264FA71D1F54161B00CE405B /* libsqlite3.tbd in Frameworks */,
@@ -527,6 +559,8 @@
 		26342E621F6136BB00850676 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				268853671F7BCF14008BD4DE /* WXTool.swift */,
+				2688531F1F7BA6FF008BD4DE /* QQTool.swift */,
 				26342E631F6136CE00850676 /* CommonRequestConst.swift */,
 				265AFD841F6A26040025F3DE /* AccountModel.swift */,
 				26AB3CFA1F6A54E50013398F /* ZDXRequestTool.swift */,
@@ -667,6 +701,8 @@
 		264FA6621F54144400CE405B /* ThirdSDK */ = {
 			isa = PBXGroup;
 			children = (
+				2688535E1F7BCDC4008BD4DE /* Weixin */,
+				268853101F7BA32E008BD4DE /* QQ */,
 				26F73ADA1F74F8FA00380A03 /* TZImagePickerController */,
 				26F73A591F74A01600380A03 /* AliPay */,
 				264FA74D1F54229E00CE405B /* IQKeyboardManager */,
@@ -828,6 +864,7 @@
 		264FA6CA1F54144400CE405B /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				2688530A1F7B8F24008BD4DE /* SwiftyJSON.swift */,
 				26F73AD01F74A2EE00380A03 /* PaymenyModel.swift */,
 				264FA7031F5414A600CE405B /* AutoSigned.swift */,
 				264FA7011F54149C00CE405B /* NetWorkTool.swift */,
@@ -885,6 +922,11 @@
 		264FA71B1F54161B00CE405B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2688531D1F7BA673008BD4DE /* libstdc++.tbd */,
+				2688531B1F7BA656008BD4DE /* libiconv.tbd */,
+				268853191F7BA646008BD4DE /* libstdc++.6.tbd */,
+				268853161F7BA429008BD4DE /* CoreGraphics.framework */,
+				268853141F7BA416008BD4DE /* Security.framework */,
 				26F73ACE1F74A15500380A03 /* CoreMotion.framework */,
 				26F73ACC1F74A11100380A03 /* CFNetwork.framework */,
 				26F73ACA1F74A10400380A03 /* SystemConfiguration.framework */,
@@ -983,6 +1025,29 @@
 				26F73AD21F74AA2900380A03 /* WKV+Extension.swift */,
 			);
 			path = commonV;
+			sourceTree = "<group>";
+		};
+		268853101F7BA32E008BD4DE /* QQ */ = {
+			isa = PBXGroup;
+			children = (
+				268853121F7BA32E008BD4DE /* TencentOpenAPI.framework */,
+				268853131F7BA32E008BD4DE /* TencentOpenApi_IOS_Bundle.bundle */,
+			);
+			path = QQ;
+			sourceTree = "<group>";
+		};
+		2688535E1F7BCDC4008BD4DE /* Weixin */ = {
+			isa = PBXGroup;
+			children = (
+				2688535F1F7BCDC4008BD4DE /* libWeChatSDK.a */,
+				268853601F7BCDC4008BD4DE /* README.txt */,
+				268853611F7BCDC4008BD4DE /* WechatAuthSDK.h */,
+				268853621F7BCDC4008BD4DE /* WXApi.h */,
+				268853631F7BCDC4008BD4DE /* WXApiManager.h */,
+				268853641F7BCDC4008BD4DE /* WXApiManager.m */,
+				268853651F7BCDC4008BD4DE /* WXApiObject.h */,
+			);
+			path = Weixin;
 			sourceTree = "<group>";
 		};
 		26AE2B1E1F55014000AAA36C /* utils */ = {
@@ -1315,7 +1380,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "郑东喜";
 				TargetAttributes = {
 					264FA63D1F54142D00CE405B = {
@@ -1453,12 +1518,14 @@
 				264FA6DF1F54144400CE405B /* POPDecayAnimation.mm in Sources */,
 				264FA6EB1F54144400CE405B /* _YYWebImageSetter.m in Sources */,
 				26AE2B371F55014000AAA36C /* UITableView+Extension.swift in Sources */,
+				268853201F7BA6FF008BD4DE /* QQTool.swift in Sources */,
 				26F73B001F74F8FA00380A03 /* TZPhotoPreviewController.m in Sources */,
 				26F73B031F74F8FA00380A03 /* UIView+Layout.m in Sources */,
 				264FA6E41F54144400CE405B /* POPSpringAnimation.mm in Sources */,
 				264FA6E61F54144400CE405B /* TransformationMatrix.cpp in Sources */,
 				264FA6F91F54144400CE405B /* NSArray+ ZXPUnicode.m in Sources */,
 				26AE2B351F55014000AAA36C /* UIImageViewWebImage.swift in Sources */,
+				268853681F7BCF14008BD4DE /* WXTool.swift in Sources */,
 				264FA6F01F54144400CE405B /* UIImageView+YYWebImage.m in Sources */,
 				264FA7151F54151700CE405B /* FTNotificationIndicator.m in Sources */,
 				264FA6EC1F54144400CE405B /* CALayer+YYWebImage.m in Sources */,
@@ -1468,6 +1535,7 @@
 				264FA77F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				264FA6F11F54144400CE405B /* YYAnimatedImageView.m in Sources */,
 				264FA6E81F54144400CE405B /* YYDiskCache.m in Sources */,
+				2688530B1F7B8F24008BD4DE /* SwiftyJSON.swift in Sources */,
 				264FA6DB1F54144400CE405B /* POPAnimator.mm in Sources */,
 				26ED02FA1F57B7AD007C2EEC /* CustomCollectV.swift in Sources */,
 				26F73AD91F74F19E00380A03 /* PaySuccessVC.swift in Sources */,
@@ -1543,7 +1611,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1551,7 +1621,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1594,7 +1668,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1602,7 +1678,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1638,6 +1718,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MJMarket/ThirdSDK/AliPay",
+					"\"$(SRCROOT)/MJMarket/ThirdSDK/QQ\"",
+					"$(PROJECT_DIR)/MJMarket/ThirdSDK/QQ",
+					"\"$(SRCROOT)/MJMarket/ThirdSDK/Weixin\"",
 				);
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/MJMarket/ThirdSDK/AliPay\"";
 				INFOPLIST_FILE = MJMarket/Info.plist;
@@ -1646,6 +1729,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MJMarket/ThirdSDK/AliPay",
+					"\"$(SRCROOT)/MJMarket/ThirdSDK/Weixin\"",
+					"$(PROJECT_DIR)/MJMarket/ThirdSDK/Weixin",
+				);
+				OTHER_LDFLAGS = (
+					"-Objc",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mjscfj.shop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1666,6 +1755,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MJMarket/ThirdSDK/AliPay",
+					"\"$(SRCROOT)/MJMarket/ThirdSDK/QQ\"",
+					"$(PROJECT_DIR)/MJMarket/ThirdSDK/QQ",
+					"\"$(SRCROOT)/MJMarket/ThirdSDK/Weixin\"",
 				);
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/MJMarket/ThirdSDK/AliPay\"";
 				INFOPLIST_FILE = MJMarket/Info.plist;
@@ -1674,6 +1766,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MJMarket/ThirdSDK/AliPay",
+					"\"$(SRCROOT)/MJMarket/ThirdSDK/Weixin\"",
+					"$(PROJECT_DIR)/MJMarket/ThirdSDK/Weixin",
+				);
+				OTHER_LDFLAGS = (
+					"-Objc",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mjscfj.shop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
