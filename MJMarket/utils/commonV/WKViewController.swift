@@ -11,7 +11,7 @@ import WebKit
 
 
 
-class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler,ShareVDelegate {
+class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler,ShareVDelegate {
     
     ///网页模板
     lazy var webView: WKWebView = {
@@ -93,6 +93,7 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "aliPay")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "afterShareApp")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "shareApp")
+        userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "weChatPay")
         return wkV
         
     }()
@@ -158,57 +159,43 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         }
         
         if msg == "aliPay" {
-            
-            
-            let dic = message.body as! NSDictionary
-            
-            var signStr = ""
-            
-            if ((dic["content"] as? String) != nil) {
-                signStr = dic["content"] as! String
-            } else {
-                //回调返回值处理
-                return
-            }
-            
-            CCog(message: signStr)
-            
-            PaymenyModel.shared.alipay(orderString: signStr, comfun: { (result) in
-                switch result {
-                case "用户中途取消":
-                    CCog(message: "用户中途取消")
-                    
-                    break
-                    
-                case "网页支付成功":
-                    CCog(message: "网页支付成功")
-                    break
-                    
-                case "正在处理中":
-                    CCog(message: "正在处理中")
-                    break
-                    
-                case "网络连接出错":
-                    CCog(message: "网络连接出错")
-                    break
-                    
-                case "订单支付失败":
-                    CCog(message: "订单支付失败")
-                    break
-                default:
-                    break
+
+            if let dic = message.body as? NSDictionary {
+                if let signStr = dic["content"] as? String {
+                    PaymenyModel.shared.alipay(orderString: signStr, comfun: { (result) in
+                        switch result {
+                        case "用户中途取消":
+                            CCog(message: "用户中途取消")
+                            
+                            break
+                            
+                        case "网页支付成功":
+                            CCog(message: "网页支付成功")
+                            break
+                            
+                        case "正在处理中":
+                            CCog(message: "正在处理中")
+                            break
+                            
+                        case "网络连接出错":
+                            CCog(message: "网络连接出错")
+                            break
+                            
+                        case "订单支付失败":
+                            CCog(message: "订单支付失败")
+                            break
+                        default:
+                            break
+                        }
+                    })
                 }
-            })
-            
+            }
             
             ///接收appdelegate代理传回的值
             NotificationCenter.default.addObserver(self, selector: #selector(self.info(notification:)), name: NSNotification.Name(rawValue: "123"), object: nil)
         }
         
-        if msg == "afterShareApp" {
-            CCog(message: message.body)
-        }
-        
+        /// 分享接口
         if msg == "shareApp" {
             /// http://mj.ie1e.com
             
@@ -283,7 +270,72 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
                 self.shareC.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT - 150, width: SCREEN_WIDTH, height: 150)
             })
         }
+        
+        if msg == "weChatPay" {
+            if let dic = message.body as? NSDictionary {
+                if let signStr = dic["content"] as? String {
+                    CCog(message: signStr)
+                }
+            }
+        
+            
+        }
     }
+    
+    // MARK: - 微信支付
+    /**
+     noncestr = 9a3dd4b8567747a5aa6b949065255d23;
+     prepayid = wx201701051710489b60009b730164476901;
+     sign = 28B633B390F29F41293EC78D2EC357BE;
+     timestamp = 1483607428;
+     */
+    @objc func weixinPay() -> Void {
+        let payDic = ["noncestr" : "9a3dd4b8567747a5aa6b949065255d23",
+                      "prepayid" : "wx201701051710489b60009b730164476901",
+                      "sign" : "28B633B390F29F41293EC78D2EC357BE",
+                      "timestamp" : "1483607428"]
+        
+        
+        if WXApi.isWXAppInstalled() == false {
+            FTIndicator.showToastMessage("未安装微信或版本不支持")
+            
+        } else {
+            
+            WXTool.shared.sendWXPay(wxDict: payDic as NSDictionary, _com: { (result) in
+                
+                /**
+                 ## 支付结果返回 result 👆
+                 
+                 -2    用户退出支付
+                 -1    支付事变
+                 0     支付成功
+                 */
+                switch result {
+                case "-2":
+                    
+                    print("用户退出支付")
+                    //..执行用户退出支付。。。
+                    break
+                    
+                case "0":
+                    //...执行支付成功。。。
+                    print("支付成功")
+                    break
+                    
+                case "-1":
+                    print("支付失败")
+                    //...执行支付失败。。。
+                    break
+                    
+                default:
+                    break
+                }
+                
+            })
+        }
+        
+    }
+
 
     
     // MARK: - 分享QQ
@@ -379,6 +431,11 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         view.backgroundColor = UIColor.white
        
         UIApplication.shared.keyWindow?.addSubview(shareC)
+        
+        let wxPayBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 100, height: 100))
+        wxPayBtn.backgroundColor = UIColor.randomColor()
+        wxPayBtn.addTarget(self, action: #selector(weixinPay), for: .touchUpInside)
+//        UIApplication.shared.keyWindow?.addSubview(wxPayBtn)
         
     }
     
@@ -566,6 +623,14 @@ class WKViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScr
         // 反馈
         if NSStringFromClass(self.classForCoder).contains("FeedBackVC") {
             let vc = FeedBackVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+        
+        /// 待评价
+        if NSStringFromClass(self.classForCoder).contains("WaitToCommementVC") {
+            let vc = WaitToCommementVC()
             let vvv = vc
             vvv.urlStr = str
             self.navigationController?.pushViewController(vvv, animated: true)

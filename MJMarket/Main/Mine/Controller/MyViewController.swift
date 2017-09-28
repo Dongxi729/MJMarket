@@ -191,6 +191,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     func btnCli(sender: UIButton) {
         if sender.titleLabel?.text == "全部订单" {
             CCog()
+            
         }
         
         if sender.titleLabel?.text == "待收货" {
@@ -199,6 +200,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         if sender.titleLabel?.text == "待评价" {
             CCog()
+            self.navigationController?.pushViewController(WaitToCommementVC(), animated: true)
         }
         
         if sender.titleLabel?.text == "代付款" {
@@ -240,6 +242,49 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
 
 
 
+// MARK: - 待评价
+class WaitToCommementVC : WKViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_LIST_WAIT_COMMENT)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
+    }
+}
+
+// MARK: - 全部订单
+class AllCommementVC : WKViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_LIST)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
+    }
+}
+
+// MARK: - 待收货
+class WaitComment : WKViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_LIST_WAIT_RECEIVER)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
+    }
+}
+
+// MARK: - 代付款
+class WaitToPay : WKViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_LIST_WAIT_PAYMENT)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
+    }
+}
+
+// MARK: - 退款订单
+class REFUNEVC : WKViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_REFUNE)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
+    }
+}
 
 
 

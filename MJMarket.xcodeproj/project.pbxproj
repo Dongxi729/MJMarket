@@ -100,6 +100,7 @@
 		2688535D1F7BBDE9008BD4DE /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 268853121F7BA32E008BD4DE /* TencentOpenAPI.framework */; };
 		268853661F7BCEF2008BD4DE /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2688535F1F7BCDC4008BD4DE /* libWeChatSDK.a */; };
 		268853681F7BCF14008BD4DE /* WXTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268853671F7BCF14008BD4DE /* WXTool.swift */; };
+		26918E211F7C879200887737 /* ZDXBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26918E201F7C879200887737 /* ZDXBaseViewController.swift */; };
 		26AB3CFB1F6A54E50013398F /* ZDXRequestTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AB3CFA1F6A54E50013398F /* ZDXRequestTool.swift */; };
 		26AE2B2D1F55014000AAA36C /* CommonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */; };
 		26AE2B2E1F55014000AAA36C /* JFNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B211F55014000AAA36C /* JFNavigationController.swift */; };
@@ -357,6 +358,7 @@
 		268853641F7BCDC4008BD4DE /* WXApiManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
 		268853651F7BCDC4008BD4DE /* WXApiObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		268853671F7BCF14008BD4DE /* WXTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WXTool.swift; sourceTree = "<group>"; };
+		26918E201F7C879200887737 /* ZDXBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDXBaseViewController.swift; sourceTree = "<group>"; };
 		26AB3CFA1F6A54E50013398F /* ZDXRequestTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZDXRequestTool.swift; sourceTree = "<group>"; };
 		26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTableViewCell.swift; sourceTree = "<group>"; };
 		26AE2B211F55014000AAA36C /* JFNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFNavigationController.swift; sourceTree = "<group>"; };
@@ -1023,6 +1025,7 @@
 				2680AB041F627211008D51AB /* ShareV.swift */,
 				2637E07A1F695E090072E611 /* WKViewController.swift */,
 				26F73AD21F74AA2900380A03 /* WKV+Extension.swift */,
+				26918E201F7C879200887737 /* ZDXBaseViewController.swift */,
 			);
 			path = commonV;
 			sourceTree = "<group>";
@@ -1455,6 +1458,7 @@
 				264FA6DC1F54144400CE405B /* POPBasicAnimation.mm in Sources */,
 				264FA7141F54151700CE405B /* FTIndicator.m in Sources */,
 				264FA7791F54229E00CE405B /* IQKeyboardReturnKeyHandler.m in Sources */,
+				26918E211F7C879200887737 /* ZDXBaseViewController.swift in Sources */,
 				2637E07B1F695E090072E611 /* WKViewController.swift in Sources */,
 				26F73AFF1F74F8FA00380A03 /* TZPhotoPreviewCell.m in Sources */,
 				264FA7171F54151700CE405B /* FTProgressIndicator.m in Sources */,
