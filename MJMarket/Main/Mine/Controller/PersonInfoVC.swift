@@ -18,7 +18,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
     }()
     
     lazy var person_TBV: UITableView = {
-        let d: UITableView = UITableView.init(frame: self.view.bounds, style: .grouped)
+        let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 20), style: .grouped)
         d.delegate = self
         d.dataSource = self
         d.register(PersonInfo_One.self, forCellReuseIdentifier: "PersonInfo_One")
@@ -50,7 +50,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 3
+            return 6
         }
         
         if section == 1 {

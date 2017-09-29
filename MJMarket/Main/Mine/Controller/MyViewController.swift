@@ -14,7 +14,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
 
 
     lazy var myTbV: UITableView = {
-        let d: UITableView = UITableView.init(frame: self.view.bounds, style: .grouped)
+        let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT ), style: .grouped)
         d.delegate = self
         d.dataSource = self
         
@@ -55,8 +55,8 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
     }
     
-    var myViewController_CellThreeTitles : [String] = ["收货地址","优惠券","我的评价","我的收藏","登录密码"]
-    var myViewController_CellIcon : [String] = ["location","coupon","my_evaluate","my_collect","login_psd"]
+    var myViewController_CellThreeTitles : [String] = ["收货地址","优惠券","我的评价","我的收藏","登录密码","购买代理商品订单"]
+    var myViewController_CellIcon : [String] = ["location","coupon","my_evaluate","my_collect","login_psd","agency_order"]
     
     var redIcom : [String] = ["0","1","0","1","1"]
     
@@ -171,7 +171,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         case 3:
             return 45
         default:
-            return 0
+            return 30
         }
     }
     
@@ -181,7 +181,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 3 {
-            return 5
+            return myViewController_CellThreeTitles.count
         } else {
             return 1
         }
@@ -191,11 +191,13 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     func btnCli(sender: UIButton) {
         if sender.titleLabel?.text == "全部订单" {
             CCog()
+            self.navigationController?.pushViewController(AllCommementVC(), animated: true)
             
         }
         
         if sender.titleLabel?.text == "待收货" {
             CCog()
+            self.navigationController?.pushViewController(WaitReceiveVC(), animated: true)
         }
         
         if sender.titleLabel?.text == "待评价" {
@@ -205,16 +207,47 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         if sender.titleLabel?.text == "代付款" {
             CCog()
+            self.navigationController?.pushViewController(WaitToPay(), animated: true)
         }
         
         if sender.titleLabel?.text == "退款/售后" {
             CCog()
+            self.navigationController?.pushViewController(RefundVC(), animated: true)
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      
+        
+        /// 收货地址
+        if indexPath.section == 3 && indexPath.row == 0 {
+            self.navigationController?.pushViewController(GetGoodVC(), animated: true)
+        }
+        
+        /// 优惠券
+        if indexPath.section == 3 && indexPath.row == 1 {
+            self.navigationController?.pushViewController(MyCoupon(), animated: true)
+
+        }
+        
+        /// 我的评价
+        if indexPath.section == 3 && indexPath.row == 2 {
+            self.navigationController?.pushViewController(Mycomment(), animated: true)
+        }
+        
+        /// 我的收藏
+        if indexPath.section == 3 && indexPath.row == 3 {
+            self.navigationController?.pushViewController(MyCollectVC(), animated: true)
+        }
+        
+        /// 登录密码
         if indexPath.section == 3 && indexPath.row == 4 {
             self.navigationController?.pushViewController(ChangeLoginPassVC(), animated: true)
+        }
+        
+        /// 购买代理商品
+        if indexPath.section == 3 && indexPath.row == 5 {
+            self.navigationController?.pushViewController(AgentOrderVC(), animated: true)
         }
     }
 
@@ -239,54 +272,6 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     }
     
 }
-
-
-
-// MARK: - 待评价
-class WaitToCommementVC : WKViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_LIST_WAIT_COMMENT)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
-    }
-}
-
-// MARK: - 全部订单
-class AllCommementVC : WKViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_LIST)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
-    }
-}
-
-// MARK: - 待收货
-class WaitComment : WKViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_LIST_WAIT_RECEIVER)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
-    }
-}
-
-// MARK: - 代付款
-class WaitToPay : WKViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_LIST_WAIT_PAYMENT)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
-    }
-}
-
-// MARK: - 退款订单
-class REFUNEVC : WKViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_REFUNE)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
-    }
-}
-
-
 
 
 

@@ -69,7 +69,7 @@ class SetVCellTwo: CommonTableViewCell {
     lazy var setTwoCell_DisImg: UIImageView = {
         let d: UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 10 - COMMON_MARGIN, y: 15, width: 15 * SCREEN_SCALE, height: 15 * SCREEN_SCALE))
         d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "correct")
+        d.image = UIImage.init(named: "right")
         return d
     }()
     

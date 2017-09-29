@@ -90,6 +90,9 @@ var WEB_VIEW_ORDER_LIST_WAIT_COMMENT = "http://mj.ie1e.com/wx_order/product_orde
 //退款订单
 var WEB_VIEW_ORDER_REFUNE = "http://mj.ie1e.com/wx_order/product_refund";
 
+// 购买代理商品
+var AGENT_ORDERLIST_URL = "http://mj.ie1e.com/wx_order/agent_orderlist"
+
 /// 充值下单接口  money  paytype(0,微信 1,支付宝)   pwd
 var WEB_VIEW_CHARGE = COMMON_PREFIX + "/recharge"
 
@@ -104,3 +107,7 @@ var ORDERCOUNT_URL = COMMON_PREFIX + "/ordercount"
 
 /// 佣金接口
 var shareearn_url = COMMON_PREFIX + "/shareearn"
+
+
+/// 关于我们
+var ABOUT_US_URL = "http://mj.ie1e.com/weixin/aboutus?id=7b05614d793c4f64958ae694a0c1a67b&title=%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC&it=1"

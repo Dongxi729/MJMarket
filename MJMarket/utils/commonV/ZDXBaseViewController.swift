@@ -15,5 +15,6 @@ class ZDXBaseViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+        view.backgroundColor = UIColor.white
     }
 }

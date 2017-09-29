@@ -19,7 +19,8 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         return d
     }()
     
-    var setCellTwoTitles : [String] = ["意见反馈"]
+    /// 数据源
+    private var setCellTwoTitles : [String] = ["意见反馈","关于我们","清除缓存","检查更新"]
     
     private lazy var settingVC_ExitBtn: UIButton = {
 
@@ -111,6 +112,10 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         if indexPath.section == 1 && indexPath.row == 0 {
             self.navigationController?.pushViewController(FeedBackVC(), animated: true)
+        }
+        
+        if indexPath.section == 1 && indexPath.row == 1 {
+            self.navigationController?.pushViewController(AboutUSVC(), animated: true)
         }
     }
     

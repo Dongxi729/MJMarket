@@ -15,8 +15,8 @@ class ZDXBaseVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.edgesForExtendedLayout = []
-        self.automaticallyAdjustsScrollViewInsets = false
+//        self.edgesForExtendedLayout = []
+//        self.automaticallyAdjustsScrollViewInsets = false
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -635,7 +635,93 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             vvv.urlStr = str
             self.navigationController?.pushViewController(vvv, animated: true)
         }
+        
+        /// 待收货
+        if NSStringFromClass(self.classForCoder).contains("WaitReceiveVC") {
+            let vc = WaitReceiveVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+        
+        
+        /// 代付款
+        if NSStringFromClass(self.classForCoder).contains("WaitToPay") {
+            let vc = WaitToPay()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+        
+        
+        /// 退款订单
+        if NSStringFromClass(self.classForCoder).contains("RefundVC") {
+            let vc = RefundVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+
+        /// 全部订单
+        if NSStringFromClass(self.classForCoder).contains("AllCommementVC") {
+            let vc = AllCommementVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+        
+        /// 收货地址
+        if NSStringFromClass(self.classForCoder).contains("GetGoodVC") {
+            let vc = GetGoodVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+        
+        
+        /// 优惠券
+        if NSStringFromClass(self.classForCoder).contains("MyCoupon") {
+            let vc = MyCoupon()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+        
+        /// 我的评价- Mycomment
+        if NSStringFromClass(self.classForCoder).contains("Mycomment") {
+            let vc = Mycomment()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+        
+        
+        /// 我的收藏MyCollectVC
+        if NSStringFromClass(self.classForCoder).contains("MyCollectVC") {
+            let vc = MyCollectVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+        
+        /// 购买代理商品AgentOrderVC
+        if NSStringFromClass(self.classForCoder).contains("AgentOrderVC") {
+            let vc = AgentOrderVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+        
+        /// 关于我们
+        if NSStringFromClass(self.classForCoder).contains("AboutUSVC") {
+            let vc = AboutUSVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+
     }
+    
     
     // MARK: - 网页代理---完成
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		26314CBD1F7912E400E4FF72 /* WaitToPayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26314CBC1F7912E400E4FF72 /* WaitToPayVC.swift */; };
+		2631D0C11F7DF05200BCF8BD /* AllCommementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631D0C01F7DF05200BCF8BD /* AllCommementVC.swift */; };
+		2631D0C31F7DF23000BCF8BD /* WaitReceiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631D0C21F7DF23000BCF8BD /* WaitReceiveVC.swift */; };
+		2631D0C51F7DF2ED00BCF8BD /* WaitToCommementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631D0C41F7DF2EC00BCF8BD /* WaitToCommementVC.swift */; };
+		2631D0C71F7DF34900BCF8BD /* WaitToPay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631D0C61F7DF34900BCF8BD /* WaitToPay.swift */; };
+		2631D0C91F7DF37A00BCF8BD /* RefundVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631D0C81F7DF37A00BCF8BD /* RefundVC.swift */; };
 		26342E641F6136CE00850676 /* CommonRequestConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26342E631F6136CE00850676 /* CommonRequestConst.swift */; };
 		2637438F1F6BAAD500382FF4 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2637438E1F6BAAD500382FF4 /* HomeVC.swift */; };
 		2637439D1F6BAC7B00382FF4 /* DiscoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2637439C1F6BAC7B00382FF4 /* DiscoverVC.swift */; };
@@ -140,6 +145,12 @@
 		26F691C21F56CE9900CB6034 /* MyCellOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691C11F56CE9900CB6034 /* MyCellOne.swift */; };
 		26F691C41F56D43800CB6034 /* MyCellTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691C31F56D43800CB6034 /* MyCellTwo.swift */; };
 		26F691C61F56D64000CB6034 /* MyCellThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691C51F56D64000CB6034 /* MyCellThree.swift */; };
+		26F6E3D81F7DF61C001563CF /* GetGoodVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6E3D71F7DF61C001563CF /* GetGoodVC.swift */; };
+		26F6E3DA1F7DF64A001563CF /* MyCoupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6E3D91F7DF64A001563CF /* MyCoupon.swift */; };
+		26F6E3DC1F7DF67E001563CF /* Mycomment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6E3DB1F7DF67E001563CF /* Mycomment.swift */; };
+		26F6E3DE1F7DF6AD001563CF /* MyCollectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6E3DD1F7DF6AD001563CF /* MyCollectVC.swift */; };
+		26F6E3E01F7DF6EB001563CF /* AgentOrderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6E3DF1F7DF6EB001563CF /* AgentOrderVC.swift */; };
+		26F6E4001F7E0A78001563CF /* AboutUSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6E3FF1F7E0A78001563CF /* AboutUSVC.swift */; };
 		26F73ABC1F74A01600380A03 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 26F73A5A1F74A01600380A03 /* AlipaySDK.bundle */; };
 		26F73ABD1F74A01600380A03 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F73A5B1F74A01600380A03 /* AlipaySDK.framework */; };
 		26F73ABE1F74A01600380A03 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F73A5C1F74A01600380A03 /* libcrypto.a */; };
@@ -179,6 +190,11 @@
 
 /* Begin PBXFileReference section */
 		26314CBC1F7912E400E4FF72 /* WaitToPayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitToPayVC.swift; sourceTree = "<group>"; };
+		2631D0C01F7DF05200BCF8BD /* AllCommementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCommementVC.swift; sourceTree = "<group>"; };
+		2631D0C21F7DF23000BCF8BD /* WaitReceiveVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitReceiveVC.swift; sourceTree = "<group>"; };
+		2631D0C41F7DF2EC00BCF8BD /* WaitToCommementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitToCommementVC.swift; sourceTree = "<group>"; };
+		2631D0C61F7DF34900BCF8BD /* WaitToPay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitToPay.swift; sourceTree = "<group>"; };
+		2631D0C81F7DF37A00BCF8BD /* RefundVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundVC.swift; sourceTree = "<group>"; };
 		26342E631F6136CE00850676 /* CommonRequestConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonRequestConst.swift; sourceTree = "<group>"; };
 		2637438E1F6BAAD500382FF4 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		2637439C1F6BAC7B00382FF4 /* DiscoverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverVC.swift; sourceTree = "<group>"; };
@@ -398,6 +414,12 @@
 		26F691C11F56CE9900CB6034 /* MyCellOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCellOne.swift; sourceTree = "<group>"; };
 		26F691C31F56D43800CB6034 /* MyCellTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCellTwo.swift; sourceTree = "<group>"; };
 		26F691C51F56D64000CB6034 /* MyCellThree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCellThree.swift; sourceTree = "<group>"; };
+		26F6E3D71F7DF61C001563CF /* GetGoodVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGoodVC.swift; sourceTree = "<group>"; };
+		26F6E3D91F7DF64A001563CF /* MyCoupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCoupon.swift; sourceTree = "<group>"; };
+		26F6E3DB1F7DF67E001563CF /* Mycomment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mycomment.swift; sourceTree = "<group>"; };
+		26F6E3DD1F7DF6AD001563CF /* MyCollectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectVC.swift; sourceTree = "<group>"; };
+		26F6E3DF1F7DF6EB001563CF /* AgentOrderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentOrderVC.swift; sourceTree = "<group>"; };
+		26F6E3FF1F7E0A78001563CF /* AboutUSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUSVC.swift; sourceTree = "<group>"; };
 		26F73A5A1F74A01600380A03 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		26F73A5B1F74A01600380A03 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		26F73A5C1F74A01600380A03 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
@@ -558,6 +580,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2631D0BF1F7DF03C00BCF8BD /* WebV */ = {
+			isa = PBXGroup;
+			children = (
+				2631D0C01F7DF05200BCF8BD /* AllCommementVC.swift */,
+				2631D0C21F7DF23000BCF8BD /* WaitReceiveVC.swift */,
+				2631D0C41F7DF2EC00BCF8BD /* WaitToCommementVC.swift */,
+				2631D0C61F7DF34900BCF8BD /* WaitToPay.swift */,
+				2631D0C81F7DF37A00BCF8BD /* RefundVC.swift */,
+				26F6E3D71F7DF61C001563CF /* GetGoodVC.swift */,
+				26F6E3D91F7DF64A001563CF /* MyCoupon.swift */,
+				26F6E3DB1F7DF67E001563CF /* Mycomment.swift */,
+				26F6E3DD1F7DF6AD001563CF /* MyCollectVC.swift */,
+				26F6E3DF1F7DF6EB001563CF /* AgentOrderVC.swift */,
+				26F6E3FF1F7E0A78001563CF /* AboutUSVC.swift */,
+			);
+			path = WebV;
+			sourceTree = "<group>";
+		};
 		26342E621F6136BB00850676 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -1160,6 +1200,7 @@
 		26AE2B421F55025500AAA36C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2631D0BF1F7DF03C00BCF8BD /* WebV */,
 				26AE2B451F55029100AAA36C /* LoginVC.swift */,
 				26AE2B531F550E1700AAA36C /* RigisterVC.swift */,
 				263D8E7F1F551B1B000B0F60 /* PayPassVC.swift */,
@@ -1435,10 +1476,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				265A7D6F1F59740F00F0503C /* TestVC.swift in Sources */,
+				26F6E3E01F7DF6EB001563CF /* AgentOrderVC.swift in Sources */,
+				2631D0C11F7DF05200BCF8BD /* AllCommementVC.swift in Sources */,
 				264FA71A1F5415D600CE405B /* ZDXCommon.swift in Sources */,
 				26BB3D331F682BBC00FFFD89 /* TestWKV.swift in Sources */,
 				26AE2B301F55014000AAA36C /* Color+Extension.swift in Sources */,
 				263743A11F6BAD0A00382FF4 /* ShopCarVC.swift in Sources */,
+				2631D0C71F7DF34900BCF8BD /* WaitToPay.swift in Sources */,
 				264FA7731F54229E00CE405B /* IQUIScrollView+Additions.m in Sources */,
 				26ED03041F582B90007C2EEC /* ChangeLoginPassVC.swift in Sources */,
 				264FA7021F54149C00CE405B /* NetWorkTool.swift in Sources */,
@@ -1454,6 +1498,7 @@
 				264FA6EF1F54144400CE405B /* UIImage+YYWebImage.m in Sources */,
 				264FA6DA1F54144400CE405B /* POPAnimationTracer.mm in Sources */,
 				264FA6D81F54144400CE405B /* POPAnimationExtras.mm in Sources */,
+				26F6E4001F7E0A78001563CF /* AboutUSVC.swift in Sources */,
 				265AFD851F6A26040025F3DE /* AccountModel.swift in Sources */,
 				264FA6DC1F54144400CE405B /* POPBasicAnimation.mm in Sources */,
 				264FA7141F54151700CE405B /* FTIndicator.m in Sources */,
@@ -1474,6 +1519,7 @@
 				2637438F1F6BAAD500382FF4 /* HomeVC.swift in Sources */,
 				264FA6E71F54144400CE405B /* YYCache.m in Sources */,
 				264FA6ED1F54144400CE405B /* MKAnnotationView+YYWebImage.m in Sources */,
+				26F6E3DA1F7DF64A001563CF /* MyCoupon.swift in Sources */,
 				26F73AC01F74A01600380A03 /* base64.m in Sources */,
 				26AE2B501F5504C400AAA36C /* LoginInputV.swift in Sources */,
 				26AE2B341F55014000AAA36C /* UIImageExtension.swift in Sources */,
@@ -1486,8 +1532,10 @@
 				264FA77A1F54229E00CE405B /* IQTextView.m in Sources */,
 				26F73AC71F74A01600380A03 /* RSADataVerifier.m in Sources */,
 				26AE2B361F55014000AAA36C /* UILabel + Extension.swift in Sources */,
+				26F6E3DC1F7DF67E001563CF /* Mycomment.swift in Sources */,
 				26F73AF71F74F8FA00380A03 /* TZAssetCell.m in Sources */,
 				264FA6D51F54144400CE405B /* POPAnimatableProperty.mm in Sources */,
+				2631D0C31F7DF23000BCF8BD /* WaitReceiveVC.swift in Sources */,
 				264FA6E11F54144400CE405B /* POPLayerExtras.mm in Sources */,
 				264FA6FA1F54144400CE405B /* NSDictionary+ZXPUnicode.m in Sources */,
 				26F691C01F56C36C00CB6034 /* MyVHeaderV.swift in Sources */,
@@ -1523,6 +1571,7 @@
 				264FA6EB1F54144400CE405B /* _YYWebImageSetter.m in Sources */,
 				26AE2B371F55014000AAA36C /* UITableView+Extension.swift in Sources */,
 				268853201F7BA6FF008BD4DE /* QQTool.swift in Sources */,
+				26F6E3D81F7DF61C001563CF /* GetGoodVC.swift in Sources */,
 				26F73B001F74F8FA00380A03 /* TZPhotoPreviewController.m in Sources */,
 				26F73B031F74F8FA00380A03 /* UIView+Layout.m in Sources */,
 				264FA6E41F54144400CE405B /* POPSpringAnimation.mm in Sources */,
@@ -1553,6 +1602,7 @@
 				26F73AFB1F74F8FA00380A03 /* TZImageManager.m in Sources */,
 				264FA7211F54177400CE405B /* CheckTimeCountTool.swift in Sources */,
 				26AE2B461F55029100AAA36C /* LoginVC.swift in Sources */,
+				26F6E3DE1F7DF6AD001563CF /* MyCollectVC.swift in Sources */,
 				26AE2B541F550E1700AAA36C /* RigisterVC.swift in Sources */,
 				264FA77B1F54229E00CE405B /* IQBarButtonItem.m in Sources */,
 				26314CBD1F7912E400E4FF72 /* WaitToPayVC.swift in Sources */,
@@ -1570,7 +1620,9 @@
 				2637439F1F6BACCE00382FF4 /* PlayVC.swift in Sources */,
 				26AE2B2F1F55014000AAA36C /* UnderLineLabel.swift in Sources */,
 				26AE2B2E1F55014000AAA36C /* JFNavigationController.swift in Sources */,
+				2631D0C91F7DF37A00BCF8BD /* RefundVC.swift in Sources */,
 				26F691C61F56D64000CB6034 /* MyCellThree.swift in Sources */,
+				2631D0C51F7DF2ED00BCF8BD /* WaitToCommementVC.swift in Sources */,
 				26F73AF81F74F8FA00380A03 /* TZAssetModel.m in Sources */,
 				26AE2B4C1F5503B000AAA36C /* ClickBtn.swift in Sources */,
 				26F73B021F74F8FA00380A03 /* TZVideoPlayerController.m in Sources */,
