@@ -10,8 +10,10 @@ class JFNavigationController: UINavigationController, UIGestureRecognizerDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let leftMenuItem = UIBarButtonItem.init(title: "返回", style: .done, target: self, action: #selector(back))
-        self.navigationItem.setLeftBarButton(leftMenuItem, animated: true)
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        self.navigationItem.backBarButtonItem = item
+        item.tintColor = UIColor.black
+        
     }
     
     override func viewDidLoad() {
@@ -20,14 +22,14 @@ class JFNavigationController: UINavigationController, UIGestureRecognizerDelegat
         let navBar = navigationBar
         
         /// 导航栏背景颜色
-        navBar.barTintColor = UIColor.gray
+        navBar.barTintColor = UIColor.white
         navBar.isTranslucent = false
         navBar.barStyle = UIBarStyle.black
         navBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navBar.shadowImage = UIImage()
         navBar.titleTextAttributes = [
             /// 全局标题颜色白色
-            NSForegroundColorAttributeName : UIColor.white,
+            NSForegroundColorAttributeName : UIColor.black,
             NSFontAttributeName : UIFont.systemFont(ofSize: 16 * SCREEN_SCALE)
         ]
         

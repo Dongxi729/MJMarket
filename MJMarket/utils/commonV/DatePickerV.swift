@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DatePickerVDelegate {
-    func chooseMonthAndYear(_ year :String,_ month : String)
+    func chooseMonthAndYear(_ year :String,_ month : String,_ day : String)
     func datePickerCancel()
 }
 
@@ -113,11 +113,14 @@ class DatePickerV: UIView {
     }
     
     /// 年
-    var dateYear :String?
+    var dateYear :String = "01"
     
     /// 月
-    var dateMonth :String?
+    var dateMonth :String = "01"
     
+    
+    /// 日
+    var day :String = "01"
     
     //日期选择器响应方法
     @objc private func dateChanged(datePicker : UIDatePicker){
@@ -130,15 +133,22 @@ class DatePickerV: UIView {
         let formatter2 = DateFormatter()
         //日期样式
         formatter2.dateFormat = "MM"
+        
+        let formatter3 = DateFormatter()
+        //日期样式
+        formatter3.dateFormat = "dd"
     
         self.dateYear = formatter.string(from: datePicker.date)
         self.dateMonth = formatter2.string(from: datePicker.date)
+        self.day = formatter3.string(from: datePicker.date)
     }
     
     /// 确定按钮
     func dateConfimrBtnSEL() {
-        self.datePickerTitle.text = self.dateYear! + "年" + self.dateMonth! + "月"
-        self.datePickerDelegate?.chooseMonthAndYear(dateYear!, dateMonth!)
+//        self.datePickerTitle.text = self.dateYear + "年"
+//        self.datePickerTitle.text = self.dateMonth + "月"
+//        self.datePickerTitle.text = self.day + "日"
+        self.datePickerDelegate?.chooseMonthAndYear(dateYear, dateMonth,day)
     }
     
     func dismissSelf() {

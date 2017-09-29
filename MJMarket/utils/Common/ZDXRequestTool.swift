@@ -240,6 +240,7 @@ class ZDXRequestTool: NSObject {
                 if let chargeSignStr = (result as? NSDictionary)?.object(forKey: "data") as? NSNumber {
                     CCog(message: chargeSignStr)
                     finished(chargeSignStr.stringValue)
+                    
                 }
             }, failure: { (error) in
                 
