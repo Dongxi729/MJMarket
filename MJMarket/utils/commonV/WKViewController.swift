@@ -271,37 +271,42 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             })
         }
         
+      
+        
         if msg == "weChatPay" {
             if let dic = message.body as? NSDictionary {
                 if let signStr = dic["content"] as? String {
-                    CCog(message: signStr)
+                    
+                    
+                    if let jsonStr = signStr.data(using: String.Encoding.utf8, allowLossyConversion: false) {
+                        
+                        if let result = try? JSONSerialization.jsonObject(with: jsonStr, options: .allowFragments) {
+                            
+                            CCog(message: result as? NSDictionary)
+                            if let dicPayDic = result as? NSDictionary {
+                                weixinPay(payDic: dicPayDic)
+                            }
+                        }
+                    }
                 }
             }
-        
-            
         }
     }
     
     // MARK: - 微信支付
-    /**
-     noncestr = 9a3dd4b8567747a5aa6b949065255d23;
-     prepayid = wx201701051710489b60009b730164476901;
-     sign = 28B633B390F29F41293EC78D2EC357BE;
-     timestamp = 1483607428;
-     */
-    @objc func weixinPay() -> Void {
-        let payDic = ["noncestr" : "9a3dd4b8567747a5aa6b949065255d23",
-                      "prepayid" : "wx201701051710489b60009b730164476901",
-                      "sign" : "28B633B390F29F41293EC78D2EC357BE",
-                      "timestamp" : "1483607428"]
-        
+    @objc func weixinPay(payDic : NSDictionary) -> Void {
+//        let payDic = ["noncestr" : "9a3dd4b8567747a5aa6b949065255d23",
+//                      "prepayid" : "wx201701051710489b60009b730164476901",
+//                      "sign" : "28B633B390F29F41293EC78D2EC357BE",
+//                      "timestamp" : "1483607428"]
+//
         
         if WXApi.isWXAppInstalled() == false {
             FTIndicator.showToastMessage("未安装微信或版本不支持")
             
         } else {
             
-            WXTool.shared.sendWXPay(wxDict: payDic as NSDictionary, _com: { (result) in
+            WXTool.shared.sendWXPay(wxDict: payDic, _com: { (result) in
                 
                 /**
                  ## 支付结果返回 result 👆

@@ -11,8 +11,8 @@ import UIKit
 //微信应用app iD
 //wxb4ba3c02aa476ea1
 //let WXPatient_App_ID = "wxb4ba3c02aa476ea1"
-let WXPatient_App_ID = "wxd6870b76bf49dd4c"
-let WXPatient_App_Secret = "8765965abd382bd6216b230b11bc3bb1"
+let WXPatient_App_ID = "wxe865b90fd1e0ca1d"
+let WXPatient_App_Secret = "b017c33e38939257b3d8468cd3e7e6cd"
 let WX_ACCESS_TOKEN = "access_token"
 let WX_OPEN_ID = "openid"
 let WX_REFRESH_TOKEN = "refresh_token"
@@ -498,9 +498,9 @@ extension WXTool {
         
         req.package = "Sign=WXPay"
         
-        req.prepayId = wxDict["prepayid"] as! String
+        req.prepayId = wxDict["prepayId"] as! String
 
-        let temp   = wxDict["timestamp"] as! NSString
+        let temp   = wxDict["timeStamp"] as! NSString
         
         let temInt : Int = Int(temp as String)!
         
@@ -508,7 +508,7 @@ extension WXTool {
 
         req.timeStamp = UInt32(temInt)
 
-        req.nonceStr = wxDict["noncestr"] as! String
+        req.nonceStr = wxDict["nonceStr"] as! String
         
         req.sign = wxDict["sign"] as! String
         

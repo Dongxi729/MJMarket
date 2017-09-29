@@ -47,6 +47,9 @@ var BINDPHONE_URL = COMMON_PREFIX + "/bindphone"
 /// 头像上传
 var UPLOADHEADINMG_URL = COMMON_PREFIX + "/uploadheadimg"
 
+/// 获取APP最新版本信息  apptype(android  ios)
+var CHECK_UPDATE_URL = COMMON_PREFIX + "/appversion"
+
 
 //首页
 var WEB_VIEW_HOME_URL = "http://mj.ie1e.com/weixin/index";

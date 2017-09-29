@@ -9,7 +9,7 @@
 import UIKit
 
 
-class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate {
+class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,PersonCityDelegate {
     
     lazy var personHeadV: PersonFooV = {
         let d: PersonFooV = PersonFooV.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 35 * SCREEN_SCALE))
@@ -18,7 +18,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
     }()
     
     lazy var person_TBV: UITableView = {
-        let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 20), style: .grouped)
+        let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: .grouped)
         d.delegate = self
         d.dataSource = self
         d.register(PersonInfo_One.self, forCellReuseIdentifier: "PersonInfo_One")
@@ -27,7 +27,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         d.register(PersonInfo_Four.self, forCellReuseIdentifier: "PersonInfo_Four")
         d.register(PersonInfo_Five.self, forCellReuseIdentifier: "PersonInfo_Five")
         d.register(PersonInfo_Six.self, forCellReuseIdentifier: "PersonInfo_Six")
-        
+        d.register(PersonCityCell.self, forCellReuseIdentifier: "PersonCityCell")
         return d
     }()
 
@@ -87,6 +87,10 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         }
     }
     
+    private var provinces : [String] = ["省份","城市"]
+    
+    private var cityData : [String] = ["北京市","北京辖区"]
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 && indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonInfo_One") as! PersonInfo_One
@@ -101,6 +105,28 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         
         if indexPath.section == 0 && indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonInfo_Three") as! PersonInfo_Three
+            return cell
+        }
+        
+        if indexPath.section == 0 || indexPath.row == 3 {
+            
+        }
+        
+        if indexPath.section == 0 && indexPath.row == 4 || indexPath.row == 5 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCityCell") as! PersonCityCell
+
+            
+            cell.personCityDelegate = self
+            if indexPath.section == 0 && indexPath.row == 4 {
+                cell.personCityCell.text = provinces[0]
+                cell.cityInfoSelect.text = cityData[0]
+            }
+            
+            if indexPath.section == 0 && indexPath.row == 5 {
+                cell.personCityCell.text = provinces[1]
+                cell.cityInfoSelect.text = cityData[1]
+            }
+            
             return cell
         }
         
@@ -140,7 +166,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
             v.addSubview(countBindLabel)
             return v
         } else {
-            return UIView.init()
+            return UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 20))
         }
     }
     
@@ -152,13 +178,23 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         if indexPath.section == 2 && indexPath.row == 0 {
             self.navigationController?.pushViewController(ChangePayPassVC(), animated: true)
         }
+        
     }
+    
 
     //  PersonFooVDelegate
     func personBtnSEL() {
         CCog()
     }
     
+    // MARK: - PersonFooVDelegate
+    func chooseCity(province: String, city: String) {
+        cityData.removeAll()
+        cityData.append(province)
+        cityData.append(city)
+        
+        self.person_TBV.reloadData()
+    }
 }
 
 
@@ -250,6 +286,8 @@ private class PersonInfo_Two: CommonTableViewCell {
         
         contentView.addSubview(personInfoTwo_NameDescLabel)
         contentView.addSubview(personInfoTwo_NameLabel)
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -262,13 +300,13 @@ private class PersonInfo_Three: CommonTableViewCell {
     lazy var personInfoThree_NameDescLabel: UILabel = {
         let d: UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.2, height: 20))
         d.textColor = FONT_COLOR
-        d.text = "用户名"
+        d.text = "性别"
         d.font = UIFont.systemFont(ofSize: 14)
         return d
     }()
     
     lazy var cc: CustomCollect = {
-        let d : CustomCollect = CustomCollect.init(["男","女"], ["correct","correct"], CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 20))
+        let d : CustomCollect = CustomCollect.init(["男","女"], ["right","correct"], CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
         return d
     }()
     
@@ -290,7 +328,7 @@ private class PersonInfo_Four: CommonTableViewCell {
     lazy var personInfoFour_IconImg: UIImageView = {
         let d : UIImageView = UIImageView.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: 20, height: 20))
         d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "correct")
+        d.image = #imageLiteral(resourceName: "phone")
         return d
     }()
     
@@ -304,7 +342,7 @@ private class PersonInfo_Four: CommonTableViewCell {
     lazy var personInfoF_DisImg: UIImageView = {
         let d: UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 10 - COMMON_MARGIN, y: 15, width: 15, height: 15))
         d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "correct")
+        d.image = #imageLiteral(resourceName: "right")
         return d
     }()
     
@@ -334,7 +372,7 @@ private class PersonInfo_Five: CommonTableViewCell {
     lazy var personInfoFour_IconImg: UIImageView = {
         let d : UIImageView = UIImageView.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: 20, height: 20))
         d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "correct")
+        d.image = #imageLiteral(resourceName: "list_icon_wechat")
         return d
     }()
     
@@ -348,7 +386,7 @@ private class PersonInfo_Five: CommonTableViewCell {
     lazy var personInfoF_DisImg: UIImageView = {
         let d: UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 10 - COMMON_MARGIN, y: 15, width: 15, height: 15))
         d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "correct")
+        d.image = #imageLiteral(resourceName: "right")
         return d
     }()
     
@@ -411,3 +449,78 @@ private class PersonInfo_Six: CommonTableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+protocol PersonCityDelegate {
+    func chooseCity(province : String,city : String)
+}
+
+// MARK: - 省份、城市
+private class PersonCityCell : CommonTableViewCell {
+    
+    var personCityDelegate : PersonCityDelegate?
+    
+    lazy var sortedImg: UIImageView = {
+        let d : UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 2 * COMMON_MARGIN - 12.5, y: 7.5, width: 25, height: 25))
+        d.image = #imageLiteral(resourceName: "sort")
+        d.contentMode = .scaleAspectFit
+        return d
+    }()
+    
+    lazy var personCityCell : UILabel = {
+        let d : UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.2, height: 20))
+        d.textColor = UIColor.colorWithHexString("333333")
+        d.font = UIFont.systemFont(ofSize: 14)
+        return d
+    }()
+    
+    lazy var cityInfoSelect : UITextField = {
+        let d: UITextField = UITextField.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
+        d.textColor = FONT_COLOR
+        d.text = "小明"
+        
+        d.font = UIFont.systemFont(ofSize: 14)
+        
+        return d
+    }()
+
+    //城市选择器
+    private var v = PickerV()
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(personCityCell)
+        contentView.addSubview(cityInfoSelect)
+        contentView.addSubview(sortedImg)
+        
+        let toolBar = ToolBar()
+        
+        toolBar.seToolBar(confirmTitle: "确定", cancelTitle: "取消", comfirmSEL: #selector(donePicker), cancelSEL: #selector(cancelBtn), target: self)
+        
+        cityInfoSelect.inputAccessoryView = toolBar
+        
+        v = PickerV(frame: CGRect(x: 0, y: UIScreen.main.bounds.width - 100, width: UIScreen.main.bounds.width, height: 200))
+        v.backgroundColor = .white
+        cityInfoSelect.inputView = v
+        
+        
+    }
+    
+    @objc func donePicker() {
+        CCog()
+        self.endEditing(true)
+        
+        v.getPickerViewValue { (province, city, area) in
+            self.personCityDelegate?.chooseCity(province: province, city: city)
+        }
+    }
+    
+    @objc func cancelBtn() {
+        CCog()
+        endEditing(true)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
