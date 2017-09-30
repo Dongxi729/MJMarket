@@ -33,6 +33,18 @@ class MyCellOneV: UIView {
         super.init(frame: frame)
         addSubview(myCellMoneyLabel)
         addSubview(descLabel)
+        
+        
+        
+        if ((AccountModel.shareAccount()?.money) != nil) {
+            CCog(message: AccountModel.shareAccount()?.money)
+            DispatchQueue.main.async {
+                self.myCellMoneyLabel.text = "￥" + ((AccountModel.shareAccount()?.money as? NSNumber)?.stringValue)!
+            }
+        } else {
+            CCog(message: AccountModel.shareAccount()?.money)
+            myCellMoneyLabel.text = "￥" + "0"
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,6 +57,7 @@ class MyCellOneV: UIView {
 
 protocol MyCellOneDelegate {
     func chargeDelegateSEL()
+    func jifenSEL()
 }
 
 class MyCellOne: CommonTableViewCell {
@@ -66,6 +79,10 @@ class MyCellOne: CommonTableViewCell {
         self.myCellOneDelegate?.chargeDelegateSEL()
     }
     
+    func jifen(){
+        self.myCellOneDelegate?.jifenSEL()
+    }
+    
     /// 分割线
     private lazy var seperateLine: UIView = {
         let d: UIView = UIView.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.5 - 0.75, y: 8, width: 1.5, height: self.Height))
@@ -75,8 +92,12 @@ class MyCellOne: CommonTableViewCell {
     
     lazy var rightV: MyCellOneV = {
         let d: MyCellOneV = MyCellOneV.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.5, y: 8, width: SCREEN_WIDTH * 0.5, height: self.Height))
-        d.myCellMoneyLabel.text = "1000"
+        d.myCellMoneyLabel.text = "10"
         d.descLabel.text = "积分"
+        
+        let tapGes = UITapGestureRecognizer.init(target: self, action: #selector(jifen))
+        d.isUserInteractionEnabled = true
+        d.addGestureRecognizer(tapGes)
         return d
     }()
     
@@ -85,6 +106,17 @@ class MyCellOne: CommonTableViewCell {
         contentView.addSubview(leftV)
         contentView.addSubview(rightV)
         contentView.addSubview(seperateLine)
+        
+        DispatchQueue.main.async {
+        
+            if ((AccountModel.shareAccount()?.scores) != nil) {
+            
+                self.rightV.myCellMoneyLabel.text = (AccountModel.shareAccount()?.scores as? NSNumber)?.stringValue
+            } else {
+                self.rightV.myCellMoneyLabel.text = "0"
+            }
+        }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

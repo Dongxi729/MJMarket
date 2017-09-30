@@ -9,25 +9,65 @@
 import UIKit
 
 
-class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,PersonCityDelegate,DatePickerVDelegate,TZImagePickerControllerDelegate,PersonInfo_OneDelegate,PersonInfo_TwoDelegate {
-
-    /// 名字
-    private var nameString : String = ""
+class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,PersonCityDelegate,DatePickerVDelegate,TZImagePickerControllerDelegate,PersonInfo_OneDelegate,PersonInfo_TwoDelegate,PersonInfo_ThreeDelegate {
     
-    /// 选择照片
-    private var chooseImgData : UIImage?
+    /// 名字
+    private lazy var nameString: String = {
+        var d : String = ""
+        
+        if let xx = AccountModel.shareAccount()?.nickname as? String {
+            d = xx
+        } else {
+            d = ""
+        }
+        
+        return d
+    }()
+    
+    
     
     /// 图片地址
-    private var chooseImgUrl : String?
+    private lazy var chooseImgUrl: String = {
+        var d : String = ""
+        if var xx = AccountModel.shareAccount()?.headimg as? String {
+            d = xx
+        }
+        return d
+    }()
     
     /// 日期信息
-    private var dateInfo : String = "2010/10/10"
+    private lazy var dateInfo: String = {
+        var d : String = ""
+        
+        if let xx = AccountModel.shareAccount()?.birthday as? String {
+            d = xx
+        } else {
+            d = "0000/00/00"
+        }
+        
+        return d
+    }()
     
     /// 省份
     private var provinces : [String] = ["省份","城市"]
     
     /// 省份信息
-    private var cityData : [String] = ["北京市","北京辖区"]
+    lazy var cityData: [String] = {
+        var d : [String] = []
+        if let province = AccountModel.shareAccount()?.province as? String {
+            d.append(province)
+        }
+        
+        if let city = AccountModel.shareAccount()?.city as? String {
+            d.append(city)
+        }
+        
+        return d
+    }()
+    
+    
+    /// 性别  0 男 1 女
+    var chooseSex : Int = 0
     
     // MARK: - 选择图片
     func choosePic() {
@@ -59,10 +99,10 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         d.register(PersonBirthCell.self, forCellReuseIdentifier: "PersonBirthCell")
         return d
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         title = "个人信息"
         view.backgroundColor = UIColor.white
@@ -85,7 +125,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         if section == 1 {
             return 2
         }
-    
+        
         if section == 2 {
             return 1
         }
@@ -106,7 +146,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
             return 0.001
         }
     }
-
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 0 {
@@ -116,6 +156,12 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         }
     }
     
+    // MARK: - 性别选择
+    func selectIndex(_ indexPath: IndexPath) {
+        CCog(message: indexPath.row)
+        chooseSex = indexPath.row
+        
+    }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -123,8 +169,8 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonInfo_One") as! PersonInfo_One
             cell.personInfo_OneDelegate = self
             
-            if (chooseImgData != nil) {
-                cell.personInfoOne_headImg.image = chooseImgData
+            if (MineModel.chooseImgData != nil) {
+                cell.personInfoOne_headImg.image = MineModel.chooseImgData
             }
             
             return cell
@@ -139,6 +185,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         
         if indexPath.section == 0 && indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonInfo_Three") as! PersonInfo_Three
+            cell.personInfo_ThreeDelegate = self
             return cell
         }
         
@@ -151,17 +198,25 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         
         if indexPath.section == 0 && indexPath.row == 4 || indexPath.row == 5 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCityCell") as! PersonCityCell
-
+            
             
             cell.personCityDelegate = self
             if indexPath.section == 0 && indexPath.row == 4 {
                 cell.personCityCell.text = provinces[0]
                 cell.cityInfoSelect.text = cityData[0]
+                
+//                if let provinceStr = AccountModel.shareAccount()?.province as? String {
+//                    cell.cityInfoSelect.text = provinceStr
+//                }
             }
             
             if indexPath.section == 0 && indexPath.row == 5 {
                 cell.personCityCell.text = provinces[1]
                 cell.cityInfoSelect.text = cityData[1]
+                
+//                if let cityStr = AccountModel.shareAccount()?.city as? String {
+//                    cell.cityInfoSelect.text = cityStr
+//                }
             }
             
             return cell
@@ -169,6 +224,13 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         
         if indexPath.section == 1 && indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonInfo_Four") as! PersonInfo_Four
+            if let isBind = AccountModel.shareAccount()?.Tel as? String {
+                if isBind.characters.count > 0 {
+                    cell.personInfoF_isBind.text = "已绑定"
+                    cell.personInfoF_DisImg.image = #imageLiteral(resourceName: "binded")
+                    cell.personInfoF_isBind.textColor = COMMON_COLOR
+                }
+            }
             return cell
         }
         
@@ -217,15 +279,44 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         }
         
         if indexPath.section == 0 && indexPath.row == 3 {
+            
+            self.person_TBV.isUserInteractionEnabled = false
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5, execute: {
+                self.person_TBV.isUserInteractionEnabled = true
+            })
+            
             timeSel()
         }
         
     }
     
-
+    
     //  PersonFooVDelegate
     func personBtnSEL() {
         CCog()
+        
+        if chooseImgUrl.characters.count <= 0 {
+            FTIndicator.showToastMessage("请上传头像")
+            return
+        } else {
+            if nameString.characters.count == 0 {
+                FTIndicator.showToastMessage("姓名不能为空")
+                return
+            } else {
+                if dateInfo == "0000/00/00" {
+                    FTIndicator.showToastMessage("请选择生日日期")
+                    return
+                } else {
+                    
+                    ZDXRequestTool.requestPersonInfo(nickname: nameString, sex: chooseSex, province: cityData[0], city: cityData[1], headImgStr: chooseImgUrl, birthdayStr: dateInfo, finished: { (result) in
+                        if result {
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    })
+                }
+            }
+        }
     }
     
     
@@ -238,14 +329,13 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         imagePickerV?.allowCrop = true
         imagePickerV?.cropRect = CGRect.init(x: 0, y: (SCREEN_HEIGHT - SCREEN_WIDTH) / 2, width: SCREEN_WIDTH, height: SCREEN_WIDTH)
         
-        
-        
+
         imagePickerV?.naviBgColor = COMMON_COLOR
         imagePickerV?.didFinishPickingPhotosHandle = {(params) -> Void in
             var chooseImg = UIImage()
             for img in params.0! {
                 chooseImg = img
-                self.chooseImgData = chooseImg
+                
                 CCog(message: chooseImg)
                 
                 
@@ -253,9 +343,10 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
                     CCog(message: result)
                     if let cardURL = (result as? NSDictionary)?.object(forKey: "data") as? String {
                         self.chooseImgUrl = cardURL
+                        MineModel.chooseImgData = chooseImg
                         self.person_TBV.reloadData()
                     }
-                
+                    
                 }, failure: { (error) in
                     CCog(message: error.localizedDescription)
                 })
@@ -300,9 +391,6 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         return d
     }()
     
-    
-    
-
     func chooseMonthAndYear(_ year: String, _ month: String, _ day: String) {
         
         dateInfo = year + "/" + month + "/" + day
@@ -388,6 +476,13 @@ private class PersonInfo_One: CommonTableViewCell {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(personInfoOne_HeadLabel)
         contentView.addSubview(personInfoOne_headImg)
+        
+        if ((AccountModel.shareAccount()?.headimg) != nil) {
+            if var headImgStr = AccountModel.shareAccount()?.headimg as? String {
+                headImgStr = "http://mj.ie1e.com" + headImgStr
+                self.personInfoOne_headImg.setImage(urlString: headImgStr, placeholderImage: #imageLiteral(resourceName: "default_thumb"))
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -429,8 +524,11 @@ private class PersonInfo_Two: CommonTableViewCell,UITextFieldDelegate {
         
         contentView.addSubview(personInfoTwo_NameDescLabel)
         contentView.addSubview(personInfoTwo_NameLabel)
-        
-        
+        if ((AccountModel.shareAccount()?.nickname) != nil) {
+            if let nickNameStr = AccountModel.shareAccount()?.nickname as? String {
+                self.personInfoTwo_NameLabel.text = nickNameStr
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -438,7 +536,13 @@ private class PersonInfo_Two: CommonTableViewCell,UITextFieldDelegate {
     }
 }
 
-private class PersonInfo_Three: CommonTableViewCell {
+
+protocol PersonInfo_ThreeDelegate {
+    func selectIndex(_ indexPath : IndexPath)
+}
+private class PersonInfo_Three: CommonTableViewCell,CustomCollectDelegate {
+    
+    var personInfo_ThreeDelegate : PersonInfo_ThreeDelegate?
     
     lazy var personInfoThree_NameDescLabel: UILabel = {
         let d: UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.2, height: 20))
@@ -450,8 +554,13 @@ private class PersonInfo_Three: CommonTableViewCell {
     
     lazy var cc: CustomCollect = {
         let d : CustomCollect = CustomCollect.init(["男","女"], ["right","correct"], CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
+        d.delegate = self
         return d
     }()
+    
+    func selectCell(_ indexPath: IndexPath) {
+        self.personInfo_ThreeDelegate?.selectIndex(indexPath)
+    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -498,12 +607,29 @@ private class PersonInfo_Four: CommonTableViewCell {
         return d
     }()
     
+    lazy var phoneNum: UILabel = {
+        let d: UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
+        d.textColor = FONT_COLOR
+        d.font = UIFont.systemFont(ofSize: 14)
+        return d
+    }()
+    
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(personInfoFour_IconImg)
         contentView.addSubview(personInfoFour_DescLabel)
         contentView.addSubview(personInfoF_DisImg)
         contentView.addSubview(personInfoF_isBind)
+        contentView.addSubview(phoneNum)
+        
+        
+        if let phoneNum = AccountModel.shareAccount()?.Tel {
+            if var telNum = AccountModel.shareAccount()?.Tel as? String {
+                telNum =  telNum.numberSuitScanf(telNum)
+                self.phoneNum.text = telNum
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -625,7 +751,7 @@ private class PersonCityCell : CommonTableViewCell {
         
         return d
     }()
-
+    
     //城市选择器
     private var v = PickerV()
     
@@ -682,8 +808,8 @@ private class PersonBirthCell : CommonTableViewCell {
     lazy var cityInfoSelect : UILabel = {
         let d: UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
         d.textColor = FONT_COLOR
-        d.text = "2000/10/10"
-
+        d.text = "00/00/00"
+        
         return d
     }()
     
@@ -691,6 +817,12 @@ private class PersonBirthCell : CommonTableViewCell {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(personCityCell)
         contentView.addSubview(cityInfoSelect)
+        
+        if ((AccountModel.shareAccount()?.birthday) != nil) {
+            if let birthDay = AccountModel.shareAccount()?.birthday as? String {
+                self.cityInfoSelect.text = birthDay
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

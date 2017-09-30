@@ -11,6 +11,11 @@
 import UIKit
 
 class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCellTwoDelegate,MyCellOneDelegate,ChagrgeVDelegate {
+    /// 积分
+    func jifenSEL() {
+        self.navigationController?.pushViewController(MyJIfenVC(), animated: true)
+    }
+    
 
 
     lazy var myTbV: UITableView = {
@@ -87,8 +92,6 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-
         // Do any additional setup after loading the view.
 
         view.addSubview(myTbV)
@@ -112,6 +115,18 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyVHeaderV") as! MyVHeaderV
+            if (MineModel.chooseImgData != nil) {
+                cell.headerIconImg.image = MineModel.chooseImgData
+            } else {
+                if var headImgUrl = AccountModel.shareAccount()?.headimg as? String {
+                    headImgUrl = "http://mj.ie1e.com" + headImgUrl
+                    
+                    DispatchQueue.main.async {
+                        cell.headerIconImg.setAvatarImage(urlString: headImgUrl, placeholderImage: #imageLiteral(resourceName: "default_thumb"))
+                    }
+                }
+            }
+            
             return cell
             
         case 1:
@@ -120,8 +135,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "two") as! MyCellTwo
-            
-            
+
             cell.xxx(dss: recArray)
             cell.myCellTwoDelegate = self
             return cell

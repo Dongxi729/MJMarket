@@ -25,7 +25,7 @@ class AboutUSVC : WKViewController {
         
         if navigationAction.navigationType == WKNavigationType.linkActivated {
             
-            aaa(jumpVC: DiscoverVC(), str: subWebViewContactURL(urlStr: self.urlStr))
+            aaa(jumpVC: AboutUSVC(), str: subWebViewContactURL(urlStr: self.urlStr))
             
             decisionHandler(.cancel)
         } else {

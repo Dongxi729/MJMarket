@@ -725,6 +725,15 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             self.navigationController?.pushViewController(vvv, animated: true)
         }
 
+        
+        /// 关于我们
+        if NSStringFromClass(self.classForCoder).contains("MyJIfenVC") {
+            let vc = MyJIfenVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+
     }
     
     

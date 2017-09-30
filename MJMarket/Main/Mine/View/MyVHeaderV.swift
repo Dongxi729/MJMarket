@@ -20,7 +20,6 @@ class MyVHeaderV: CommonTableViewCell {
         let d: UIImageView = UIImageView.init(frame: CGRect.init(x: 2 * COMMON_MARGIN, y: 32 * SCREEN_SCALE , width: SCREEN_WIDTH * 0.2, height: SCREEN_WIDTH * 0.2))
         d.layer.cornerRadius = SCREEN_WIDTH * 0.2 * 0.5
         d.backgroundColor = UIColor.white
-        d.layer.borderWidth = 1
         d.image = #imageLiteral(resourceName: "default_thumb")
         d.contentMode = .scaleAspectFit
         
@@ -43,6 +42,15 @@ class MyVHeaderV: CommonTableViewCell {
         self.backgroundColor = COMMON_COLOR
         contentView.addSubview(nameInfoV)
         contentView.addSubview(headerIconImg)
+        
+        if ((AccountModel.shareAccount()?.headimg) != nil) {
+            if var headImgUrl = AccountModel.shareAccount()?.headimg as? String {
+                headImgUrl = "http://mj.ie1e.com" + headImgUrl
+                self.headerIconImg.setAvatarImage(urlString: headImgUrl, placeholderImage: UIImage.init(named: "default_thumb"))
+            }
+        } else {
+            self.headerIconImg.image = #imageLiteral(resourceName: "default_thumb")
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -87,6 +95,33 @@ class MyHeaderInfoV: UIView,SlideToSignVDelegate {
         addSubview(userType)
         addSubview(userSign)
         addSubview(unlockToSign)
+     
+        if ((AccountModel.shareAccount()?.nickname) != nil) {
+            self.nameLabel.text = AccountModel.shareAccount()?.nickname as? String
+        } else {
+            self.nameLabel.text = ""
+        }
+        
+        if ((AccountModel.shareAccount()?.id) != nil) {
+            self.userSign.text = AccountModel.shareAccount()?.id as? String
+        } else {
+            self.userSign.text = ""
+        }
+        
+        if let userType = AccountModel.shareAccount()?.user_type as? String {
+            if userType == "0" {
+                self.userType.text = "普通"
+            }
+            
+            if userType == "1" {
+                self.userType.text = "会员"
+            }
+            
+            if userType == "2" {
+                self.userType.text = "代理"
+            }
+        }
+     
     }
     
     /// 滑动解锁完毕

@@ -91,6 +91,7 @@
 		264FA77E1F54229E00CE405B /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 264FA76D1F54229E00CE405B /* IQToolbar.m */; };
 		264FA77F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 264FA76F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m */; };
 		264FA7801F54229E00CE405B /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 264FA7711F54229E00CE405B /* IQKeyboardManager.bundle */; };
+		2650C3871F7F7D020080EA6F /* MineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2650C3861F7F7D020080EA6F /* MineModel.swift */; };
 		265A7D6D1F5972A100F0503C /* ChagrgeV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6C1F5972A100F0503C /* ChagrgeV.swift */; };
 		265A7D6F1F59740F00F0503C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6E1F59740F00F0503C /* TestVC.swift */; };
 		265AFD851F6A26040025F3DE /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265AFD841F6A26040025F3DE /* AccountModel.swift */; };
@@ -190,6 +191,7 @@
 		26F73B011F74F8FA00380A03 /* TZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F73AF11F74F8FA00380A03 /* TZProgressView.m */; };
 		26F73B021F74F8FA00380A03 /* TZVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F73AF31F74F8FA00380A03 /* TZVideoPlayerController.m */; };
 		26F73B031F74F8FA00380A03 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F73AF51F74F8FA00380A03 /* UIView+Layout.m */; };
+		26F9702A1F7E88F7005656BA /* MyJIfenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F970291F7E88F7005656BA /* MyJIfenVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -356,6 +358,7 @@
 		264FA76E1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
 		264FA76F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		264FA7711F54229E00CE405B /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
+		2650C3861F7F7D020080EA6F /* MineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineModel.swift; sourceTree = "<group>"; };
 		265A7D6C1F5972A100F0503C /* ChagrgeV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChagrgeV.swift; sourceTree = "<group>"; };
 		265A7D6E1F59740F00F0503C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		265AFD841F6A26040025F3DE /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
@@ -560,6 +563,7 @@
 		26F73AF31F74F8FA00380A03 /* TZVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZVideoPlayerController.m; sourceTree = "<group>"; };
 		26F73AF41F74F8FA00380A03 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
 		26F73AF51F74F8FA00380A03 /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
+		26F970291F7E88F7005656BA /* MyJIfenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyJIfenVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -602,6 +606,7 @@
 				26F6E3DD1F7DF6AD001563CF /* MyCollectVC.swift */,
 				26F6E3DF1F7DF6EB001563CF /* AgentOrderVC.swift */,
 				26F6E3FF1F7E0A78001563CF /* AboutUSVC.swift */,
+				26F970291F7E88F7005656BA /* MyJIfenVC.swift */,
 			);
 			path = WebV;
 			sourceTree = "<group>";
@@ -1233,6 +1238,7 @@
 		26AE2B431F55025500AAA36C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2650C3861F7F7D020080EA6F /* MineModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1591,6 +1597,7 @@
 				264FA6E41F54144400CE405B /* POPSpringAnimation.mm in Sources */,
 				264FA6E61F54144400CE405B /* TransformationMatrix.cpp in Sources */,
 				264FA6F91F54144400CE405B /* NSArray+ ZXPUnicode.m in Sources */,
+				26F9702A1F7E88F7005656BA /* MyJIfenVC.swift in Sources */,
 				26AE2B351F55014000AAA36C /* UIImageViewWebImage.swift in Sources */,
 				268853681F7BCF14008BD4DE /* WXTool.swift in Sources */,
 				264FA6F01F54144400CE405B /* UIImageView+YYWebImage.m in Sources */,
@@ -1633,6 +1640,7 @@
 				264FA7041F5414A600CE405B /* AutoSigned.swift in Sources */,
 				264FA7181F54151700CE405B /* FTToastIndicator.m in Sources */,
 				26F73AC41F74A01600380A03 /* NSDataEx.m in Sources */,
+				2650C3871F7F7D020080EA6F /* MineModel.swift in Sources */,
 				2637439F1F6BACCE00382FF4 /* PlayVC.swift in Sources */,
 				26AE2B2F1F55014000AAA36C /* UnderLineLabel.swift in Sources */,
 				26AE2B2E1F55014000AAA36C /* JFNavigationController.swift in Sources */,

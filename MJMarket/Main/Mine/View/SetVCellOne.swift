@@ -14,7 +14,6 @@ class SetVCellOne: CommonTableViewCell {
         let d : UIImageView = UIImageView.init(frame: CGRect.init(x: COMMON_MARGIN, y: COMMON_MARGIN * SCREEN_SCALE, width: 36 * SCREEN_SCALE, height: SCREEN_SCALE * 36))
         d.layer.cornerRadius = 18 * SCREEN_SCALE
         d.clipsToBounds = true
-        d.backgroundColor = UIColor.black
         return d
     }()
     
@@ -35,7 +34,7 @@ class SetVCellOne: CommonTableViewCell {
     
     lazy var set_DisImg: UIImageView = {
         let d : UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 10 - COMMON_MARGIN, y: 15 * SCREEN_SCALE, width: 15 * SCREEN_SCALE, height: 20 * SCREEN_SCALE))
-        d.image = #imageLiteral(resourceName: "correct")
+        d.image = #imageLiteral(resourceName: "right")
         d.contentMode = .scaleAspectFit
         return d
     }()
@@ -47,7 +46,41 @@ class SetVCellOne: CommonTableViewCell {
         contentView.addSubview(set_NameLabel)
         contentView.addSubview(set_Signlabel)
         contentView.addSubview(set_DisImg)
+        
+        if ((AccountModel.shareAccount()?.user_type) != nil) {
+            
+            if let userType = AccountModel.shareAccount()?.user_type as? String {
+                if userType == "0" {
+                    self.set_Signlabel.text = "普通"
+                }
+                
+                if userType == "1" {
+                    self.set_Signlabel.text = "会员"
+                }
+                
+                if userType == "2" {
+                    self.set_Signlabel.text = "代理"
+                }
+            }
+        }
+        
+        if ((AccountModel.shareAccount()?.nickname) != nil) {
+            
+            if let userName = AccountModel.shareAccount()?.nickname as? String {
+                self.set_NameLabel.text = userName
+            }
+        }
+        
+        
+        if var headImgUrl = AccountModel.shareAccount()?.headimg as? String {
+            headImgUrl = "http://mj.ie1e.com" + headImgUrl
+
+            DispatchQueue.main.async {
+                self.set_HeadImg.setAvatarImage(urlString: headImgUrl, placeholderImage: #imageLiteral(resourceName: "default_thumb"))
+            }
+        }
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

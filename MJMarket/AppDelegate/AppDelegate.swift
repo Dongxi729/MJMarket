@@ -30,9 +30,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setWX()
         
+        checkUpdate()
+        
+        let imgeView = UIImageView.init(frame: CGRect.init(x: 0, y: 150, width: SCREEN_WIDTH, height: 100))
+        
+        if let imgUrl = AccountModel.shareAccount()?.headimg {
+            
+            CCog(message: imgUrl as? String)
+            
+            imgeView.setImage(urlString: imgUrl as? String, placeholderImage: #imageLiteral(resourceName: "default_thumb"))
+        }
+        
+        UIApplication.shared.keyWindow?.addSubview(imgeView)
+        
         return true
     }
     
+    func checkUpdate() {
+        ZDXRequestTool.checkUpdate()
+    }
     
     /// 检查登录
     func checkLogin() {

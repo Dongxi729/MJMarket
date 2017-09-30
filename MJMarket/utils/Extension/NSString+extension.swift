@@ -130,7 +130,7 @@ extension String {
         let emailTest: NSPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
         return emailTest.evaluate(with: self)
     }
-
+    
     //Range转换为NSRange
     func nsRange(from range: Range<String.Index>) -> NSRange {
         let from = range.lowerBound.samePosition(in: utf16)
@@ -172,7 +172,27 @@ extension String {
         let emailTest: NSPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
         return emailTest.evaluate(with: self)
     }
+    
+    
+    //根据开始位置和长度截取字符串
+    func subString(start:Int, length:Int = -1)->String {
+        var len = length
+        if len == -1 {
+            len = characters.count - start
+        }
+        let st = characters.index(startIndex, offsetBy:start)
+        let en = characters.index(st, offsetBy:len)
+        return String(self[st ..< en])
+    }
+    
+    
+    func numberSuitScanf(_ number: String) -> String {
+        
+        //如果是手机号码的话
+        let numberString: String = (number as NSString).replacingCharacters(in: NSRange(location: 3, length: 4), with: "****")
+        return numberString
+        
+        return number
+    }
+    
 }
-
-
-

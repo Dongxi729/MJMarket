@@ -25,7 +25,7 @@ class AgentOrderVC : WKViewController {
         
         if navigationAction.navigationType == WKNavigationType.linkActivated {
             
-            aaa(jumpVC: DiscoverVC(), str: subWebViewContactURL(urlStr: self.urlStr))
+            aaa(jumpVC: AgentOrderVC(), str: subWebViewContactURL(urlStr: self.urlStr))
             
             decisionHandler(.cancel)
         } else {

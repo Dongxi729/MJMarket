@@ -279,6 +279,48 @@ class ZDXRequestTool: NSObject {
             })
         }
     }
+    
+    /// 个人信息
+    class func requestPersonInfo(nickname : String,sex : Int,province: String,city : String,headImgStr : String,birthdayStr : String,finished: @escaping (_ requestSuccess : Bool)->()) {
+        let param : [String : Any] = ["uid" : AccountModel.shareAccount()?.id as! String,
+                                      "nickName" : nickname,
+                                      "sex" : sex,
+                                      "province" : province,
+                                      "city" : city,
+                                      "headimg" : headImgStr,
+                                      "birthday" : birthdayStr]
+        
+        NetWorkTool.shared.postWithPath(path: UPDINFO_URL, paras: param, success: { (result) in
+            CCog(message: result)
+            
+            if let isSuccess = result as? NSDictionary {
+                if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                    if messageStr == "修改成功" {
+                        self.getUserInfo()
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateSuccess"), object: nil)
+                        finished(true)
+                    }
+                }
+            }
+            
+        }) { (error) in
+            CCog(message: error.localizedDescription)
+        }
+    }
+    
+    /// 版本更新
+    class func checkUpdate() {
+        let param : [String : Any] = ["apptype" : "ios"]
+        NetWorkTool.shared.postWithPath(path: CHECK_UPDATE_URL, paras: param, success: { (result) in
+            CCog(message: result)
+        }) { (error) in
+            CCog(message: error.localizedDescription)
+        }
+    }
+    
+    
+    
 }
 
 

@@ -25,7 +25,7 @@ class MyCollectVC : WKViewController {
         
         if navigationAction.navigationType == WKNavigationType.linkActivated {
             
-            aaa(jumpVC: DiscoverVC(), str: subWebViewContactURL(urlStr: self.urlStr))
+            aaa(jumpVC: MyCollectVC(), str: subWebViewContactURL(urlStr: self.urlStr))
             
             decisionHandler(.cancel)
         } else {

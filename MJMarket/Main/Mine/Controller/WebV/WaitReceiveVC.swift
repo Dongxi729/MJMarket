@@ -25,7 +25,7 @@ class WaitReceiveVC : WKViewController {
         
         if navigationAction.navigationType == WKNavigationType.linkActivated {
             
-            aaa(jumpVC: DiscoverVC(), str: subWebViewContactURL(urlStr: self.urlStr))
+            aaa(jumpVC: WaitReceiveVC(), str: subWebViewContactURL(urlStr: self.urlStr))
             
             decisionHandler(.cancel)
         } else {

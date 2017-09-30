@@ -1,20 +1,19 @@
 //
-//  Mycomment.swift
+//  MyJIfenVC.swift
 //  MJMarket
 //
 //  Created by 郑东喜 on 2017/9/29.
 //  Copyright © 2017年 郑东喜. All rights reserved.
-//  我的评价
-
+//
 
 import UIKit
 import WebKit
 
-class Mycomment : WKViewController {
+class MyJIfenVC : WKViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadURL(urlStr: WEB_VIEW_MY_COMMENT)
+        loadURL(urlStr: SCORES_URL)
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -26,7 +25,7 @@ class Mycomment : WKViewController {
         
         if navigationAction.navigationType == WKNavigationType.linkActivated {
             
-            aaa(jumpVC: Mycomment(), str: subWebViewContactURL(urlStr: self.urlStr))
+            aaa(jumpVC: MyJIfenVC(), str: subWebViewContactURL(urlStr: self.urlStr))
             
             decisionHandler(.cancel)
         } else {
@@ -41,4 +40,5 @@ class Mycomment : WKViewController {
     }
     
 }
+
 

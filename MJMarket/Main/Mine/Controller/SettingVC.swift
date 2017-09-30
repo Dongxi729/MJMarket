@@ -9,7 +9,7 @@
 import UIKit
 
 class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
-
+    
     private lazy var set_TbV: UITableView = {
         let d:UITableView = UITableView.init(frame: self.view.bounds, style: .grouped)
         d.delegate = self
@@ -23,7 +23,7 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     private var setCellTwoTitles : [String] = ["意见反馈","关于我们","清除缓存","检查更新"]
     
     private lazy var settingVC_ExitBtn: UIButton = {
-
+        
         var d : UIButton = UIButton.init()
         if SCREEN_HEIGHT == 812 {
             d.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT - (self.navigationController?.navigationBar.Height)! - (self.tabBarController?.tabBar.Height)! - 45 * SCREEN_SCALE, width: SCREEN_WIDTH, height: 45 * SCREEN_SCALE)
@@ -38,13 +38,26 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         return d
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.set_TbV.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         title = "设置"
         view.addSubview(set_TbV)
         view.addSubview(settingVC_ExitBtn)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadSelf), name: NSNotification.Name(rawValue: "updateSuccess"), object: nil)
+    }
+    
+    func reloadSelf() {
+        CCog()
+        self.set_TbV.reloadData()
     }
     
     // MARK: - 表格代理
@@ -60,6 +73,9 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "setOne") as! SetVCellOne
+            
+            cell.set_HeadImg.image = MineModel.chooseImgData
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SetVCellTwo") as! SetVCellTwo
@@ -125,8 +141,10 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         AccountModel.logout()
         UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
     }
-
-
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 
