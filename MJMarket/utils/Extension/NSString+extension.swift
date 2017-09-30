@@ -191,8 +191,7 @@ extension String {
         //如果是手机号码的话
         let numberString: String = (number as NSString).replacingCharacters(in: NSRange(location: 3, length: 4), with: "****")
         return numberString
-        
-        return number
     }
     
+
 }

@@ -192,22 +192,28 @@ class ZDXRequestTool: NSObject {
     ///   - finished: <#finished description#>
     class func setSetPay(findNum phoneNum : String,autoNumber autoNum : String,password pas : String,finished : () -> ()) {
         /// 注册操作
-        
-//        uid pwd pwd1 icon yzm
-        let param2 : [String : Any] = ["icon" : GetUserUid.registerKeyIcon!,
-                                       "uid": AccountModel.shareAccount()?.id as! String,
-                                       "yzm" : autoNum,
-                                       "pwd" : pas,
-                                       "pwd1" : pas]
-        
-        
-        CCog(message: param2)
-        
-        NetWorkTool.shared.postWithPath(path: UPDPAYPWD_URL, paras: param2, success: { (result) in
-            CCog(message: result)
-        }) { (error) in
-            CCog(message: error.localizedDescription)
+
+        if (GetUserUid.registerKeyIcon != nil) {
+            
+            //        uid pwd pwd1 icon yzm
+            let param2 : [String : Any] = ["icon" : GetUserUid.registerKeyIcon!,
+                                           "uid": AccountModel.shareAccount()?.id as! String,
+                                           "yzm" : autoNum,
+                                           "pwd" : pas,
+                                           "pwd1" : pas]
+            
+            
+            CCog(message: param2)
+            
+            NetWorkTool.shared.postWithPath(path: UPDPAYPWD_URL, paras: param2, success: { (result) in
+                CCog(message: result)
+            }) { (error) in
+                CCog(message: error.localizedDescription)
+            }
+        } else {
+            FTIndicator.showToastMessage("请输入验证码")
         }
+        
     }
     
 //    money  paytype(0,微信 1,支付宝)   pwd
@@ -314,12 +320,28 @@ class ZDXRequestTool: NSObject {
         let param : [String : Any] = ["apptype" : "ios"]
         NetWorkTool.shared.postWithPath(path: CHECK_UPDATE_URL, paras: param, success: { (result) in
             CCog(message: result)
+            
         }) { (error) in
             CCog(message: error.localizedDescription)
         }
     }
     
-    
+
+    /// 签到
+    class func signment(finished: @escaping (_ result: Bool)->()) {
+        let param : [String : Any] = ["uid" : AccountModel.shareAccount()?.id as! String]
+        NetWorkTool.shared.postWithPath(path: SIGNMENT_URL, paras: param, success: { (result) in
+            CCog(message: result)
+            if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                if messageStr == "今天已经签到过" {
+                    finished(true)
+                }
+            }
+        }) { (eror) in
+            
+        }
+    }
+
     
 }
 

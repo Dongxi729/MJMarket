@@ -75,6 +75,7 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "setOne") as! SetVCellOne
             
             cell.set_HeadImg.image = MineModel.chooseImgData
+            cell.set_NameLabel.text = MineModel.nameString
             
             return cell
         } else {

@@ -8,11 +8,23 @@
 
 import UIKit
 
-class MyVHeaderV: CommonTableViewCell {
+protocol MyVHeaderVDelegate {
+    func sliSucce()
+}
+class MyVHeaderV: CommonTableViewCell,MyHeaderInfoVDelegate {
+    
+    var myVHeaderVDelegate : MyVHeaderVDelegate?
+    
+    func slideToSignSuccess() {
+        self.myVHeaderVDelegate?.sliSucce()
+    }
+    
     
     lazy var nameInfoV: MyHeaderInfoV = {
         let d : MyHeaderInfoV = MyHeaderInfoV.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.35, y: 32 * SCREEN_SCALE, width: SCREEN_WIDTH * 0.5, height: 70 * SCREEN_SCALE))
+        d.myHeaderInfoVDelegate = self
         return d
+        
     }()
     
     /// 头像
@@ -58,7 +70,14 @@ class MyVHeaderV: CommonTableViewCell {
     }
 }
 
+
+protocol MyHeaderInfoVDelegate {
+    func slideToSignSuccess()
+}
+
 class MyHeaderInfoV: UIView,SlideToSignVDelegate {
+    
+    var myHeaderInfoVDelegate : MyHeaderInfoVDelegate?
     
     lazy var nameLabel: UILabel = {
         let d: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: self.Width, height: self.Height / 3))
@@ -95,7 +114,7 @@ class MyHeaderInfoV: UIView,SlideToSignVDelegate {
         addSubview(userType)
         addSubview(userSign)
         addSubview(unlockToSign)
-     
+        
         if ((AccountModel.shareAccount()?.nickname) != nil) {
             self.nameLabel.text = AccountModel.shareAccount()?.nickname as? String
         } else {
@@ -121,12 +140,26 @@ class MyHeaderInfoV: UIView,SlideToSignVDelegate {
                 self.userType.text = "代理"
             }
         }
-     
+        
     }
     
     /// 滑动解锁完毕
     func slideDone() {
         CCog()
+        if MineModel.signMent == false {
+            
+            ZDXRequestTool.signment { (result) in
+                if result {
+                    CCog(message: result)
+                    MineModel.signMent = true
+                    FTIndicator.showToastMessage("已签到")
+                    self.myHeaderInfoVDelegate?.slideToSignSuccess()
+                }
+            }
+        } else {
+            self.myHeaderInfoVDelegate?.slideToSignSuccess()
+        }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

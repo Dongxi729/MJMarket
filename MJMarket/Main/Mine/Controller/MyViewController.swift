@@ -10,7 +10,11 @@
 
 import UIKit
 
-class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCellTwoDelegate,MyCellOneDelegate,ChagrgeVDelegate {
+class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCellTwoDelegate,MyCellOneDelegate,ChagrgeVDelegate,MyVHeaderVDelegate {
+    func sliSucce() {
+        self.navigationController?.pushViewController(SignmentVC(), animated: true)
+    }
+    
     /// 积分
     func jifenSEL() {
         self.navigationController?.pushViewController(MyJIfenVC(), animated: true)
@@ -107,6 +111,8 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         if #available(iOS 11.0, *) {
             self.myTbV.contentInsetAdjustmentBehavior = .never
         }
+        
+        
     }
     
     
@@ -126,6 +132,12 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
                     }
                 }
             }
+            
+            if MineModel.nameString.characters.count > 0 {
+                cell.nameInfoV.nameLabel.text = MineModel.nameString
+            }
+            
+            cell.myVHeaderVDelegate = self
             
             return cell
             

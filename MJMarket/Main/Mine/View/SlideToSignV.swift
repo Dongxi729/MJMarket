@@ -41,11 +41,23 @@ class SlideToSignV: UIView {
         return d
     }()
     
+    func randomCustom(min: Int, max: Int) -> Int {
+        //  [min, max)  [0, 100)
+        //        var x = arc4random() % UInt32(max);
+        //        return Int(x)
+        // [min, max）
+        let y = arc4random() % UInt32(max) + UInt32(min)
+        print(Int(y))
+        return Int(y)
+    }
+
+    
     /// 监听滑动条的值
     @objc private func valueChanged(sender : UISlider) {
         CCog(message: sender.value)
         if sender.value == 1.0 {
             self.slideToSignVDelegate?.slideDone()
+            return
         }
     }
     

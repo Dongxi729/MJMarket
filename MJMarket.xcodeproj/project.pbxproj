@@ -136,6 +136,7 @@
 		26C6FE471F7E32030082011C /* DatePickerV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C6FE461F7E32020082011C /* DatePickerV.swift */; };
 		26E65E121F7500A00070D765 /* FeedBackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E65E111F7500A00070D765 /* FeedBackVC.swift */; };
 		26EBF51D1F6297E50019DB87 /* UITextFiledForMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EBF51C1F6297E50019DB87 /* UITextFiledForMoney.swift */; };
+		26EC77701F7F8DF6007AE27D /* SignmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EC776F1F7F8DF6007AE27D /* SignmentVC.swift */; };
 		26ED02F41F5798BE007C2EEC /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02F31F5798BE007C2EEC /* SettingVC.swift */; };
 		26ED02F61F57A124007C2EEC /* PersonInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02F51F57A124007C2EEC /* PersonInfoVC.swift */; };
 		26ED02F81F57A658007C2EEC /* SetVCellOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02F71F57A658007C2EEC /* SetVCellOne.swift */; };
@@ -411,6 +412,7 @@
 		26C6FE461F7E32020082011C /* DatePickerV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerV.swift; sourceTree = "<group>"; };
 		26E65E111F7500A00070D765 /* FeedBackVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBackVC.swift; sourceTree = "<group>"; };
 		26EBF51C1F6297E50019DB87 /* UITextFiledForMoney.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFiledForMoney.swift; sourceTree = "<group>"; };
+		26EC776F1F7F8DF6007AE27D /* SignmentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignmentVC.swift; sourceTree = "<group>"; };
 		26ED02F31F5798BE007C2EEC /* SettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		26ED02F51F57A124007C2EEC /* PersonInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonInfoVC.swift; sourceTree = "<group>"; };
 		26ED02F71F57A658007C2EEC /* SetVCellOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetVCellOne.swift; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 				26F6E3DF1F7DF6EB001563CF /* AgentOrderVC.swift */,
 				26F6E3FF1F7E0A78001563CF /* AboutUSVC.swift */,
 				26F970291F7E88F7005656BA /* MyJIfenVC.swift */,
+				26EC776F1F7F8DF6007AE27D /* SignmentVC.swift */,
 			);
 			path = WebV;
 			sourceTree = "<group>";
@@ -1580,6 +1583,7 @@
 				264FA6D71F54144400CE405B /* POPAnimationEvent.mm in Sources */,
 				26F73AD11F74A2EE00380A03 /* PaymenyModel.swift in Sources */,
 				26F73AFE1F74F8FA00380A03 /* TZPhotoPickerController.m in Sources */,
+				26EC77701F7F8DF6007AE27D /* SignmentVC.swift in Sources */,
 				26F73AD71F74B7CC00380A03 /* RemoveCookieTool.swift in Sources */,
 				26F73AF61F74F8FA00380A03 /* NSBundle+TZImagePicker.m in Sources */,
 				264FA6F71F54144400CE405B /* YYWebImageManager.m in Sources */,

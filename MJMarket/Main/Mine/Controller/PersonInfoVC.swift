@@ -11,19 +11,7 @@ import UIKit
 
 class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,PersonCityDelegate,DatePickerVDelegate,TZImagePickerControllerDelegate,PersonInfo_OneDelegate,PersonInfo_TwoDelegate,PersonInfo_ThreeDelegate {
     
-    /// 名字
-    private lazy var nameString: String = {
-        var d : String = ""
-        
-        if let xx = AccountModel.shareAccount()?.nickname as? String {
-            d = xx
-        } else {
-            d = ""
-        }
-        
-        return d
-    }()
-    
+
     
     
     /// 图片地址
@@ -76,7 +64,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
     
     func nameStr(str: String) {
         CCog(message: str)
-        self.nameString = str
+        MineModel.nameString = str
     }
     
     lazy var personHeadV: PersonFooV = {
@@ -179,7 +167,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         if indexPath.section == 0 && indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonInfo_Two") as! PersonInfo_Two
             cell.personInfo_TwoDelegate = self
-            cell.personInfoTwo_NameLabel.text = nameString
+            cell.personInfoTwo_NameLabel.text = MineModel.nameString
             return cell
         }
         
@@ -300,7 +288,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
             FTIndicator.showToastMessage("请上传头像")
             return
         } else {
-            if nameString.characters.count == 0 {
+            if MineModel.nameString.characters.count == 0 {
                 FTIndicator.showToastMessage("姓名不能为空")
                 return
             } else {
@@ -309,7 +297,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
                     return
                 } else {
                     
-                    ZDXRequestTool.requestPersonInfo(nickname: nameString, sex: chooseSex, province: cityData[0], city: cityData[1], headImgStr: chooseImgUrl, birthdayStr: dateInfo, finished: { (result) in
+                    ZDXRequestTool.requestPersonInfo(nickname: MineModel.nameString, sex: chooseSex, province: cityData[0], city: cityData[1], headImgStr: chooseImgUrl, birthdayStr: dateInfo, finished: { (result) in
                         if result {
                             self.navigationController?.popViewController(animated: true)
                         }
@@ -507,7 +495,7 @@ private class PersonInfo_Two: CommonTableViewCell,UITextFieldDelegate {
     }()
     
     lazy var personInfoTwo_NameLabel: UITextField = {
-        let d: UITextField = UITextField.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.2, height: 20))
+        let d: UITextField = UITextField.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
         d.textColor = FONT_COLOR
         d.placeholder = "请输入姓名"
         d.font = UIFont.systemFont(ofSize: 14)

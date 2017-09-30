@@ -11,4 +11,19 @@ import UIKit
 class MineModel: NSObject {
     static var chooseImgData : UIImage?
 
+    /// 名字
+    static var nameString: String = {
+        var d : String = ""
+        
+        if let xx = AccountModel.shareAccount()?.nickname as? String {
+            d = xx
+        } else {
+            d = ""
+        }
+        
+        return d
+    }()
+    
+    static var signMent = false
+    
 }

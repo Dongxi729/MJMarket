@@ -35,25 +35,37 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         
     }
     
+    /// 验证码
+    private var authStr : String = ""
     
+    /// 支付密码
+    private var payPass : String = ""
     
-    private var cellDescTitles : [String] = ["请输入验证码"]
+    /// 确认支付密码
+    private var confirmPayPass : String = ""
+    
+    private var cellDescTitles : [String] = ["请输入验证码","请输入支付密码","请再次输入支付密码"]
     
     // MARK: - 表格代理
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "BindPhoneCell") as! BindPhoneCell
         cell.bindPhoneCellDescLanbel.placeholder = cellDescTitles[indexPath.row]
         cell.bindIndex = indexPath
         cell.bindCellDelegate = self
         cell.bindPhoneCell_Btn.isHidden = false
         
+        if indexPath.row != 0 {
+            cell.bindPhoneCell_Btn.isHidden = true
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     
     
@@ -61,25 +73,51 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         return 10
     }
     
+    
+    
     // MARK: - BindPhoneCellDelegate
     func cellStr(index: IndexPath, str: String) {
         CCog(message: index.row)
         CCog(message: str)
+        
+        if index.row == 0 {
+            authStr = str
+        }
+        
+        if index.row == 1 {
+            payPass = str
+        }
+        
+        if index.row == 2 {
+            confirmPayPass = str
+        }
     }
     
     func getAutoDelegate() {
         CCog()
         ZDXRequestTool.sendAuto(sendNum: "18905036476", authNumber: "1234")
     }
-
+    
     
     // MARK: - PersonFooVDelegate -- 尾部代理方法
     func personBtnSEL() {
         CCog()
-        /// 模拟设置
-        ZDXRequestTool.setSetPay(findNum: AccountModel.shareAccount()?.Tel as! String, autoNumber: "1234", password: "123456") {
+        if authStr.characters.count == 0 {
+            FTIndicator.showToastMessage("请输入验证码")
+            return
+        } else {
+            if payPass.characters.count == 0 {
+                FTIndicator.showToastMessage("请输入支付密码")
+            } else {
+                if confirmPayPass.characters.count == 0 {
+                    FTIndicator.showToastMessage("请再次输入支付密码")
+                } else {
+
+                    ZDXRequestTool.setSetPay(findNum: AccountModel.shareAccount()?.Tel as! String, autoNumber: authStr, password: "123456") {
             
+                    }
+                }
+            }
         }
     }
-
 }

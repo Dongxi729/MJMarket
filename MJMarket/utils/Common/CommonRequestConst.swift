@@ -50,6 +50,13 @@ var UPLOADHEADINMG_URL = COMMON_PREFIX + "/uploadheadimg"
 /// 获取APP最新版本信息  apptype(android  ios)
 var CHECK_UPDATE_URL = COMMON_PREFIX + "/appversion"
 
+/// 签到
+var SIGNMENT_URL = COMMON_PREFIX + "/sign"
+
+/// 微信登录
+//wxlogin
+// openid
+var WXLOGIN_URL = COMMON_PREFIX + "/wxlogin"
 
 //首页
 var WEB_VIEW_HOME_URL = "http://mj.ie1e.com/weixin/index";
@@ -117,3 +124,7 @@ var ABOUT_US_URL = "http://mj.ie1e.com/weixin/aboutus?id=7b05614d793c4f64958ae69
 
 /// 积分
 var SCORES_URL = "http://mj.ie1e.com/wx_user/scoresdetail"
+
+
+/// 签到
+var SIGN_URL = "http://mj.ie1e.com/wx_user/mysign"
