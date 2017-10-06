@@ -9,12 +9,33 @@
 import UIKit
 
 class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
+    
+    
+    /// 验证码
+    var payPassAuth = ""
+    
     lazy var passInputV: PassV = {
         let d :PassV = PassV.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.1, y: 64, width: SCREEN_WIDTH * 0.8, height: 35 * SCREEN_SCALE))
-        d.passDelegate = self
         return d
     }()
-
+    
+    lazy var zdxPayChoosePassInput: XLPasswordInputView = {
+        let d: XLPasswordInputView = XLPasswordInputView.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.08, y: 64, width: SCREEN_WIDTH * 0.85, height: 35 * SCREEN_SCALE))
+        d.textField.delegate = self
+        d.layer.borderColor = UIColor.gray.cgColor
+        return d
+    }()
+    
+    lazy var payPassChangedSuccess: UIBarButtonItem = {
+        let d: UIBarButtonItem = UIBarButtonItem.init(title: "完成", style: .done, target: self, action: #selector(backToMain))
+        d.tintColor = COMMON_COLOR
+        return d
+    }()
+    
+    @objc private func backToMain() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
     /// 描述文本
     private lazy var payPassDesc: UILabel = {
         let d : UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: COMMON_MARGIN, width: SCREEN_WIDTH - 2 * COMMON_MARGIN, height: 40 * SCREEN_SCALE))
@@ -24,7 +45,7 @@ class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
         d.font = UIFont.systemFont(ofSize: 16 * SCREEN_SCALE)
         return d
     }()
-
+    
     private lazy var payPassBottomDescLabel: UILabel = {
         let d : UILabel = UILabel.init(frame: CGRect.init(x: self.passInputV.LeftX, y: self.passInputV.BottomY + COMMON_MARGIN, width: self.passInputV.Width, height: 15))
         d.textColor = UIColor.colorWithHexString("969696")
@@ -35,7 +56,7 @@ class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(passInputV)
         
@@ -44,7 +65,7 @@ class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
         view.addSubview(payPassBottomDescLabel)
         
         title = "支付密码"
-        
+        view.addSubview(zdxPayChoosePassInput)
     }
     
     /// 右侧重置按钮
@@ -53,7 +74,7 @@ class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
         d.tintColor = UIColor.colorWithHexString("333333")
         return d
     }()
-
+    
     func clearPayPasstext() {
         self.passInputV.ttt.text = ""
     }
@@ -67,7 +88,51 @@ class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
             self.navigationItem.rightBarButtonItem = payPassRightItem
         }
     }
-
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        
+//        textField.text = ""
+        zdxPayChoosePassInput.clearPassword()
+        
+        return true
+    }
+    
+    var passStr : [String] = []
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        
+        if textField.text?.characters.count == 6 {
+            
+            passStr.append(textField.text!)
+            
+            CCog(message: passStr)
+            
+            if passStr.count == 2 {
+                
+                CCog(message: passStr[0])
+                CCog(message: passStr[1])
+                
+                if passStr[0] != passStr[1] {
+                    FTIndicator.showToastMessage("两次输入密码不一致")
+                    passStr.remove(at: 1)
+                } else {
+                    
+                    CCog(message: self.payPassAuth)
+                    
+                    ZDXRequestTool.setSetPay(autoNumber: self.payPassAuth, password: passStr[1], finished: { (result) in
+                        if result {
+                            self.payPassDesc.text = "设置成功"
+                            self.navigationItem.rightBarButtonItem = self.payPassChangedSuccess
+                        }
+                    })
+                }
+            }
+        }
+        
+//        zdxPayChoosePassInput.clearPassword()
+        self.payPassDesc.text = "再次确认支付密码"
+    }
 
 }
 
@@ -85,7 +150,7 @@ class PassV: UIView,UITextFieldDelegate {
     var textFielText : String? {
         didSet {
             if (textFielText?.characters.count)! > 5 {
-
+                
                 self.ttt.resignFirstResponder()
             }
         }
@@ -153,8 +218,8 @@ class PassV: UIView,UITextFieldDelegate {
         ttt.attributedText = attributedString
     }
     
-
-
+    
+    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
@@ -190,7 +255,7 @@ class PassV: UIView,UITextFieldDelegate {
         super.init(frame: frame)
         
         for index in 0..<6 {
-//            self.inputV = UIView.init(frame: CGRect.init(x: (6 * SCREEN_SCALE + self.Width / 6.6) * CGFloat(index) , y: 0, width: (self.Width / 6.6 - 6 * SCREEN_SCALE), height: (self.Width / 6.6 - 6 * SCREEN_SCALE)))
+            
             self.inputV = UIView.init(frame: CGRect.init(x: (6 * SCREEN_SCALE + self.Width / 6.6) * CGFloat(index) , y: 0, width: (self.Width / 6.6 - 6 * SCREEN_SCALE), height: self.Height))
             self.inputV.backgroundColor = UIColor.white
             self.inputV.layer.borderColor = UIColor.colorWithHexString("CECECE").cgColor
@@ -198,8 +263,8 @@ class PassV: UIView,UITextFieldDelegate {
             addSubview(self.inputV)
         }
         
-        addSubview(ttt)
-
+        //        addSubview(ttt)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

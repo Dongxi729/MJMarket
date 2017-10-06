@@ -64,6 +64,7 @@ class MainTabBarViewController: UITabBarController {
         //        不在渲染图片
         childVC.tabBarItem.selectedImage = UIImage.init(named: selectImageName)?.withRenderingMode(.alwaysOriginal)
         
+        self.tabBar.isTranslucent = false
         self.addChildViewController(childVC)
     }
 }

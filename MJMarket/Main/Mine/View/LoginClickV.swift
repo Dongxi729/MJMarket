@@ -10,13 +10,13 @@ import UIKit
 
 @objc protocol loginClickVDelegate {
     /// 登录事件
-    @objc optional func loginClick()
+    func loginClick()
     
     /// 注册事件
-    @objc optional func rigClick()
+    func rigClick()
     
     /// 忘记密码
-    @objc optional func forgetPass()
+    func forgetPass()
 }
 
 
@@ -63,18 +63,21 @@ class LoginClickV: UIView {
     }()
     
     /// 登录事件
-    @objc private func clickSEL(sender : UIButton) {
-        self.loginClickDelegate?.loginClick!()
+    @objc func clickSEL(sender : UIButton) {
+        self.loginClickDelegate?.loginClick()
     }
     
     /// 注册事件
-    @objc private func rigSEL() {
-        self.loginClickDelegate?.rigClick!()
+    @objc func rigSEL() {
+        self.loginClickDelegate?.rigClick()
+        if let vc = UIApplication.shared.keyWindow?.rootViewController as? LoginVC {
+            vc.navigationController?.pushViewController(RigisterVC(), animated: true)
+        }
     }
     
     /// 忘记密码事件
-    @objc private func forgetPassSEL() {
-        self.loginClickDelegate?.forgetPass!()
+    @objc func forgetPassSEL() {
+        self.loginClickDelegate?.forgetPass()
     }
 
     override init(frame: CGRect) {

@@ -11,7 +11,7 @@ import UIKit
 
 class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,PersonCityDelegate,DatePickerVDelegate,TZImagePickerControllerDelegate,PersonInfo_OneDelegate,PersonInfo_TwoDelegate,PersonInfo_ThreeDelegate {
     
-
+    
     
     
     /// 图片地址
@@ -192,19 +192,11 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
             if indexPath.section == 0 && indexPath.row == 4 {
                 cell.personCityCell.text = provinces[0]
                 cell.cityInfoSelect.text = cityData[0]
-                
-//                if let provinceStr = AccountModel.shareAccount()?.province as? String {
-//                    cell.cityInfoSelect.text = provinceStr
-//                }
             }
             
             if indexPath.section == 0 && indexPath.row == 5 {
                 cell.personCityCell.text = provinces[1]
                 cell.cityInfoSelect.text = cityData[1]
-                
-//                if let cityStr = AccountModel.shareAccount()?.city as? String {
-//                    cell.cityInfoSelect.text = cityStr
-//                }
             }
             
             return cell
@@ -317,7 +309,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         imagePickerV?.allowCrop = true
         imagePickerV?.cropRect = CGRect.init(x: 0, y: (SCREEN_HEIGHT - SCREEN_WIDTH) / 2, width: SCREEN_WIDTH, height: SCREEN_WIDTH)
         
-
+        
         imagePickerV?.naviBgColor = COMMON_COLOR
         imagePickerV?.didFinishPickingPhotosHandle = {(params) -> Void in
             var chooseImg = UIImage()
@@ -541,7 +533,22 @@ private class PersonInfo_Three: CommonTableViewCell,CustomCollectDelegate {
     }()
     
     lazy var cc: CustomCollect = {
-        let d : CustomCollect = CustomCollect.init(["男","女"], ["right","correct"], CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
+        
+        var d : CustomCollect = CustomCollect.init(["男","女"], ["sex_select","sex_unselect"], CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
+        
+        
+        
+        //        if let sexIsNil = AccountModel.shareAccount()?.sex as? NSNumber {
+        //            if sexIsNil.intValue == 0 {
+        //                imgs = ["sex_select","sex_unselect"]
+        //                d = CustomCollect.init(["男","女"], imgs, CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
+        //            }
+        //            if sexIsNil.intValue == 1 {
+        //                imgs = ["sex_unselect","sex_select"]
+        //                d = CustomCollect.init(["男","女"], imgs, CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
+        //            }
+        //        }
+        
         d.delegate = self
         return d
     }()
@@ -554,7 +561,21 @@ private class PersonInfo_Three: CommonTableViewCell,CustomCollectDelegate {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
         contentView.addSubview(personInfoThree_NameDescLabel)
-        contentView.addSubview(cc)
+        
+        if let sexIsNil = AccountModel.shareAccount()?.sex as? String {
+            if sexIsNil == "0" {
+                let imgs = ["sex_select","sex_unselect"]
+                self.cc = CustomCollect.init(["男","女"], imgs, CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
+                self.contentView.addSubview(self.cc)
+            }
+            if sexIsNil == "1" {
+                let imgs = ["sex_unselect","sex_select"]
+                self.cc = CustomCollect.init(["男","女"], imgs, CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
+                self.contentView.addSubview(self.cc)
+            }
+        }
+        
+        
         
     }
     

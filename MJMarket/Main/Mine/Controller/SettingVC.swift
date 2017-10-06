@@ -20,7 +20,7 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }()
     
     /// 数据源
-    private var setCellTwoTitles : [String] = ["意见反馈","关于我们","清除缓存","检查更新"]
+    private var setCellTwoTitles : [String] = ["意见反馈","关于我们","清除缓存"]
     
     private lazy var settingVC_ExitBtn: UIButton = {
         

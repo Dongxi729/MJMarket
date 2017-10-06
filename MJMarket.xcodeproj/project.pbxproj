@@ -96,6 +96,9 @@
 		265A7D6F1F59740F00F0503C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6E1F59740F00F0503C /* TestVC.swift */; };
 		265AFD851F6A26040025F3DE /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265AFD841F6A26040025F3DE /* AccountModel.swift */; };
 		266ECC121F5BCFFC00D033D0 /* RandomCaptchaV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266ECC111F5BCFFC00D033D0 /* RandomCaptchaV.swift */; };
+		267AA8E71F8762CE00646E0F /* UIImage+XLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 267AA8E31F8762A700646E0F /* UIImage+XLExtension.m */; };
+		267AA8E81F8762D400646E0F /* XLPasswordInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267AA8E41F8762A700646E0F /* XLPasswordInputView.m */; };
+		267AA8E91F87637D00646E0F /* UIView+XLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 267AA8E21F8762A700646E0F /* UIView+XLExtension.m */; };
 		2680AB051F627211008D51AB /* ShareV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2680AB041F627211008D51AB /* ShareV.swift */; };
 		2688530B1F7B8F24008BD4DE /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2688530A1F7B8F24008BD4DE /* SwiftyJSON.swift */; };
 		268853151F7BA416008BD4DE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 268853141F7BA416008BD4DE /* Security.framework */; };
@@ -365,6 +368,12 @@
 		265A7D6E1F59740F00F0503C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		265AFD841F6A26040025F3DE /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		266ECC111F5BCFFC00D033D0 /* RandomCaptchaV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomCaptchaV.swift; sourceTree = "<group>"; };
+		267AA8E01F8762A700646E0F /* UIImage+XLExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+XLExtension.h"; sourceTree = "<group>"; };
+		267AA8E11F8762A700646E0F /* XLPasswordInputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLPasswordInputView.h; sourceTree = "<group>"; };
+		267AA8E21F8762A700646E0F /* UIView+XLExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+XLExtension.m"; sourceTree = "<group>"; };
+		267AA8E31F8762A700646E0F /* UIImage+XLExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+XLExtension.m"; sourceTree = "<group>"; };
+		267AA8E41F8762A700646E0F /* XLPasswordInputView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLPasswordInputView.m; sourceTree = "<group>"; };
+		267AA8E61F8762A700646E0F /* UIView+XLExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+XLExtension.h"; sourceTree = "<group>"; };
 		2680AB041F627211008D51AB /* ShareV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareV.swift; sourceTree = "<group>"; };
 		2688530A1F7B8F24008BD4DE /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		268853121F7BA32E008BD4DE /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
@@ -1093,6 +1102,19 @@
 			path = commonV;
 			sourceTree = "<group>";
 		};
+		267AA8DF1F8762A700646E0F /* passInput */ = {
+			isa = PBXGroup;
+			children = (
+				267AA8E01F8762A700646E0F /* UIImage+XLExtension.h */,
+				267AA8E11F8762A700646E0F /* XLPasswordInputView.h */,
+				267AA8E21F8762A700646E0F /* UIView+XLExtension.m */,
+				267AA8E31F8762A700646E0F /* UIImage+XLExtension.m */,
+				267AA8E41F8762A700646E0F /* XLPasswordInputView.m */,
+				267AA8E61F8762A700646E0F /* UIView+XLExtension.h */,
+			);
+			path = passInput;
+			sourceTree = "<group>";
+		};
 		268853101F7BA32E008BD4DE /* QQ */ = {
 			isa = PBXGroup;
 			children = (
@@ -1119,6 +1141,7 @@
 		26AE2B1E1F55014000AAA36C /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				267AA8DF1F8762A700646E0F /* passInput */,
 				26342E621F6136BB00850676 /* Common */,
 				265A7D6B1F58EA7500F0503C /* commonV */,
 				26AE2B1F1F55014000AAA36C /* Category */,
@@ -1500,6 +1523,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				267AA8E91F87637D00646E0F /* UIView+XLExtension.m in Sources */,
+				267AA8E81F8762D400646E0F /* XLPasswordInputView.m in Sources */,
+				267AA8E71F8762CE00646E0F /* UIImage+XLExtension.m in Sources */,
 				265A7D6F1F59740F00F0503C /* TestVC.swift in Sources */,
 				26F6E3E01F7DF6EB001563CF /* AgentOrderVC.swift in Sources */,
 				2631D0C11F7DF05200BCF8BD /* AllCommementVC.swift in Sources */,

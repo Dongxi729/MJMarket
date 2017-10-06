@@ -25,19 +25,12 @@ class JFNavigationController: UINavigationController, UIGestureRecognizerDelegat
         navBar.barTintColor = UIColor.white
         navBar.isTranslucent = false
         navBar.barStyle = UIBarStyle.black
-        navBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navBar.shadowImage = UIImage()
         navBar.titleTextAttributes = [
             /// 全局标题颜色白色
             NSForegroundColorAttributeName : UIColor.black,
             NSFontAttributeName : UIFont.systemFont(ofSize: 16 * SCREEN_SCALE)
         ]
-        
-        // 全屏返回手势
-     //   panGestureBack()
-        
-        /// 状态栏白色
-        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     /**
@@ -56,14 +49,15 @@ class JFNavigationController: UINavigationController, UIGestureRecognizerDelegat
         
         if childViewControllers.count == 1 {
             return false
-        }  else {
+        }  else {	
             return true
         }
     }
     
     lazy var jfNav_leftBar: UIBarButtonItem = {
-        let d: UIBarButtonItem = UIBarButtonItem.init(title: "返回", style: .plain, target: self, action: #selector(back))
-        d.tintColor = UIColor.white
+//        let d: UIBarButtonItem = UIBarButtonItem.init(title: "返回", style: .plain, target: self, action: #selector(back))
+        let d: UIBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(back))
+        d.tintColor = UIColor.black
         return d
     }()
     

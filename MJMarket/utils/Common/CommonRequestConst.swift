@@ -120,7 +120,7 @@ var shareearn_url = COMMON_PREFIX + "/shareearn"
 
 
 /// 关于我们
-var ABOUT_US_URL = "http://mj.ie1e.com/weixin/aboutus?id=7b05614d793c4f64958ae694a0c1a67b&title=%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC&it=1"
+var ABOUT_US_URL = "http://mj.ie1e.com/weixin/aboutus"
 
 /// 积分
 var SCORES_URL = "http://mj.ie1e.com/wx_user/scoresdetail"

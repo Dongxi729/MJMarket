@@ -23,7 +23,7 @@ class SlideToSignV: UIView {
         d.font = UIFont.systemFont(ofSize: 10 * SCREEN_SCALE)
         d.textColor = UIColor.colorWithHexString("333333")
         d.backgroundColor = UIColor.colorWithHexString("F99441")
-        d.layer.cornerRadius = 10
+        d.layer.cornerRadius = self.Height / 2
         d.clipsToBounds = true
         d.textAlignment = .right
         return d

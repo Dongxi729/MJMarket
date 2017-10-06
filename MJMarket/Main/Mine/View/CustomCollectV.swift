@@ -31,7 +31,7 @@ class CustomCollect : UIView,UICollectionViewDelegate,UICollectionViewDataSource
     
     /// UICollectionView
     lazy var collecTTC: UICollectionView = {
-
+        
         let d : UICollectionView = UICollectionView.init(frame: self.bounds, collectionViewLayout: self.layout)
         d.delegate = self
         d.dataSource = self
@@ -68,10 +68,10 @@ class CustomCollect : UIView,UICollectionViewDelegate,UICollectionViewDataSource
         self.imgs = imgs
         self.layout.itemSize = cellItemSize
         addSubview(collecTTC)
-        
-        
-        let index = IndexPath.init(row: 0, section: 0)
-        collecTTC.selectItem(at: index, animated: false, scrollPosition: .bottom)
+        //
+        //
+        //        let index = IndexPath.init(row: 0, section: 0)
+        //        collecTTC.selectItem(at: index, animated: false, scrollPosition: .bottom)
         
     }
     
@@ -90,19 +90,27 @@ class CustomCollect : UIView,UICollectionViewDelegate,UICollectionViewDataSource
         
         self.customIndex = indexPath
         cell.myLabel.text = titles[indexPath.row]
-        /// 默认输出第一个数据
-        if indexPath.row == 0 {
-            updateCellStatus(cell, selected: true)
+        
+//        cell.myImageView.image = UIImage.init(named: self.imgs[indexPath.row])
+        
+        if ((AccountModel.shareAccount()?.sex) == nil) {
             
+            // 默认输出第一个数据
+            if indexPath.row == 0 {
+                updateCellStatus(cell, selected: true)
+            }
         }
+        
         
         return cell
     }
-
+    
     
     func updateCellStatus(_ cell: MyTestCollectionViewCell, selected: Bool) {
         
         cell.myLabel.textColor = selected ? COMMON_COLOR : UIColor.gray
+        cell.myImageView.image = selected ? UIImage.init(named: "sex_select") : UIImage.init(named: "sex_unselect")
+        
     }
     
     
@@ -121,7 +129,7 @@ class CustomCollect : UIView,UICollectionViewDelegate,UICollectionViewDataSource
         self.delegate?.selectCell(indexPath)
         
         updateCellStatus(cell, selected: true)
-
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -139,7 +147,7 @@ class MyTestCollectionViewCell: UICollectionViewCell {
         d.clipsToBounds = true
         return d
     }()
-
+    
     lazy var myLabel: UILabel = {
         let label = UILabel.init(frame: CGRect.init(x: self.myImageView.RightX, y: 0, width: self.Width * 0.5, height: self.Height))
         label.text = "我的小标题"
@@ -147,14 +155,14 @@ class MyTestCollectionViewCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 13 * SCREEN_SCALE)
         return label
     }()
-
+    
     lazy var myImageView: UIImageView = {
         let d : UIImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: self.Width * 0.29, height: self.Height))
         d.contentMode = UIViewContentMode.scaleAspectFit
         d.layer.borderColor = UIColor.colorWithHexString("F3F3F3").cgColor
         d.layer.cornerRadius = d.Width / 1.6 / SCREEN_SCALE
         d.clipsToBounds = true
-
+        
         return d
     }()
     

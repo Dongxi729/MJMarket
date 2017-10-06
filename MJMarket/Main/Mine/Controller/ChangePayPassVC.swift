@@ -21,8 +21,18 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
     lazy var bindPhone_FoV: PersonFooV = {
         let d: PersonFooV = PersonFooV.init(frame:CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 45))
         d.personFooVDelegate = self
+        d.personInfo_footerV.setTitle("下一步", for: .normal)
+        d.personInfo_footerV.addTarget(self, action: #selector(jumpToSetPayPss), for: .touchUpInside)
         return d
     }()
+    
+    @objc private func jumpToSetPayPss() {
+        if authInputMark {
+            let vc = PayPassVC()
+            vc.payPassAuth = self.authStr
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,14 +47,8 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
     
     /// 验证码
     private var authStr : String = ""
-    
-    /// 支付密码
-    private var payPass : String = ""
-    
-    /// 确认支付密码
-    private var confirmPayPass : String = ""
-    
-    private var cellDescTitles : [String] = ["请输入验证码","请输入支付密码","请再次输入支付密码"]
+
+    private var cellDescTitles : [String] = ["请输入验证码"]
     
     // MARK: - 表格代理
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,8 +68,12 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         return cell
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView.init()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return cellDescTitles.count
     }
     
     
@@ -83,41 +91,23 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         if index.row == 0 {
             authStr = str
         }
-        
-        if index.row == 1 {
-            payPass = str
-        }
-        
-        if index.row == 2 {
-            confirmPayPass = str
-        }
     }
     
     func getAutoDelegate() {
         CCog()
-        ZDXRequestTool.sendAuto(sendNum: "18905036476", authNumber: "1234")
+        ZDXRequestTool.sendAuto()
     }
     
+    /// 是否输入验证码标识
+    private var authInputMark = false
     
     // MARK: - PersonFooVDelegate -- 尾部代理方法
     func personBtnSEL() {
-        CCog()
         if authStr.characters.count == 0 {
             FTIndicator.showToastMessage("请输入验证码")
             return
         } else {
-            if payPass.characters.count == 0 {
-                FTIndicator.showToastMessage("请输入支付密码")
-            } else {
-                if confirmPayPass.characters.count == 0 {
-                    FTIndicator.showToastMessage("请再次输入支付密码")
-                } else {
-
-                    ZDXRequestTool.setSetPay(findNum: AccountModel.shareAccount()?.Tel as! String, autoNumber: authStr, password: "123456") {
-            
-                    }
-                }
-            }
+            authInputMark = true
         }
     }
 }

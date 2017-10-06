@@ -8,11 +8,15 @@
 
 import UIKit
 
-class LoginVC: UIViewController,loginClickVDelegate,LoginInputVDelegate {
+class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
 
     
@@ -48,7 +52,6 @@ class LoginVC: UIViewController,loginClickVDelegate,LoginInputVDelegate {
     /// 按钮(登录、立即注册、忘记密码)
     lazy var loginclickView: LoginClickV = {
         let d : LoginClickV = LoginClickV.init(frame: CGRect.init(x: COMMON_MARGIN, y: self.tfInputV.BottomY + 3 * COMMON_MARGIN * SCREEN_SCALE, width: SCREEN_WIDTH - 2 * COMMON_MARGIN, height: 90))
-        d.layer.borderWidth = 1
         d.loginClickDelegate = self
         return d
     }()

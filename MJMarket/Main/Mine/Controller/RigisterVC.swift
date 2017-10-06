@@ -10,6 +10,16 @@ import UIKit
 
 class RigisterVC: UIViewController ,loginClickVDelegate {
     
+    func rigClick() {
+        CCog()
+        self.navigationController?.pushViewController(RigisterVC(), animated: true)
+    }
+    
+    func forgetPass() {
+        CCog()
+        self.navigationController?.pushViewController(ForgetPassVC(), animated: true)
+    }
+    
     /// 图片logo
     lazy var LoginlogoCenter: UIImageView = {
         let d : UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: SCREEN_HEIGHT * 0.25 * 0.5, width: SCREEN_WIDTH * 0.5, height: SCREEN_WIDTH * 0.5 * (117 / 319)))

@@ -32,23 +32,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         checkUpdate()
         
-        let imgeView = UIImageView.init(frame: CGRect.init(x: 0, y: 150, width: SCREEN_WIDTH, height: 100))
-        
-        if let imgUrl = AccountModel.shareAccount()?.headimg {
-            
-            CCog(message: imgUrl as? String)
-            
-            imgeView.setImage(urlString: imgUrl as? String, placeholderImage: #imageLiteral(resourceName: "default_thumb"))
-        }
-        
-        UIApplication.shared.keyWindow?.addSubview(imgeView)
-        
         return true
     }
     
     func checkUpdate() {
-        ZDXRequestTool.checkUpdate()
+        
+        ZDXRequestTool.checkUpdate { (result) in
+            
+            if let localVersion = (Bundle.main.infoDictionary as NSDictionary?)?.object(forKey: "CFBundleShortVersionString") as? String,
+                let serverVersion = result["version"] {
+                CCog(message: localVersion)
+                CCog(message: serverVersion)
+                if localVersion != serverVersion {
+                    
+                    
+                    
+                    let alertVC = ZDXAlertController.init(title: "现在更新", message: result["updatecontent"], preferredStyle: .alert)
+                    
+                    let messageParentView: UIView? = self.getParentViewOfTitleAndMessage(from: alertVC.view)
+                    if (messageParentView != nil) && (messageParentView?.subviews.count)! > Int(1) {
+                        let messageLb = messageParentView?.subviews[1] as? UILabel
+                        messageLb?.textAlignment = .left
+                    }
+                    
+                    alertVC.addAction(UIAlertAction(title: "前往更新", style: .default, handler: { (action) in
+                        if let updateUrl = result["downloadurl"]{
+                            if updateUrl.contains("http") {
+                                
+                                UIApplication.shared.openURL(URL.init(string: updateUrl)!)
+                            }
+                        }
+                    }))
+                    UIApplication.shared.keyWindow?.rootViewController?.present(alertVC, animated: true, completion: nil)
+                }
+            }
+        }
+        
     }
+    
+    func getParentViewOfTitleAndMessage(from view: UIView) -> UIView {
+        for subView: UIView in view.subviews {
+            if (subView is UILabel) {
+                return view
+            }
+            else {
+                let resultV: UIView? = getParentViewOfTitleAndMessage(from: subView)
+                if resultV != nil {
+                    return resultV ?? UIView()
+                }
+            }
+        }
+        return UIView.init()
+    }
+    
     
     /// 检查登录
     func checkLogin() {
@@ -114,7 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     // MARK: - QQ接入
-
+    
     //QQ工具
     let qqTool = QQTool()
     
@@ -127,6 +163,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setWX() {
         WXApi.registerApp(WXPatient_App_ID)
     }
-
+    
 }
 

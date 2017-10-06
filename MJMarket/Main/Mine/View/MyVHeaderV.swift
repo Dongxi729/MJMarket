@@ -21,7 +21,7 @@ class MyVHeaderV: CommonTableViewCell,MyHeaderInfoVDelegate {
     
     
     lazy var nameInfoV: MyHeaderInfoV = {
-        let d : MyHeaderInfoV = MyHeaderInfoV.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.35, y: 32 * SCREEN_SCALE, width: SCREEN_WIDTH * 0.5, height: 70 * SCREEN_SCALE))
+        let d : MyHeaderInfoV = MyHeaderInfoV.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.3, y: 32 * SCREEN_SCALE, width: SCREEN_WIDTH * 0.5, height: 90 * SCREEN_SCALE))
         d.myHeaderInfoVDelegate = self
         return d
         
@@ -29,7 +29,7 @@ class MyVHeaderV: CommonTableViewCell,MyHeaderInfoVDelegate {
     
     /// 头像
     lazy var headerIconImg: UIImageView = {
-        let d: UIImageView = UIImageView.init(frame: CGRect.init(x: 2 * COMMON_MARGIN, y: 32 * SCREEN_SCALE , width: SCREEN_WIDTH * 0.2, height: SCREEN_WIDTH * 0.2))
+        let d: UIImageView = UIImageView.init(frame: CGRect.init(x: 1.5 * COMMON_MARGIN, y: 32 * SCREEN_SCALE , width: SCREEN_WIDTH * 0.2, height: SCREEN_WIDTH * 0.2))
         d.layer.cornerRadius = SCREEN_WIDTH * 0.2 * 0.5
         d.backgroundColor = UIColor.white
         d.image = #imageLiteral(resourceName: "default_thumb")
@@ -45,6 +45,8 @@ class MyVHeaderV: CommonTableViewCell,MyHeaderInfoVDelegate {
         d.layer.shadowOpacity = 1.0
         //不透明度
         d.layer.shadowRadius = 2.0
+        
+        d.clipsToBounds = true
         
         return d
     }()
@@ -80,7 +82,7 @@ class MyHeaderInfoV: UIView,SlideToSignVDelegate {
     var myHeaderInfoVDelegate : MyHeaderInfoVDelegate?
     
     lazy var nameLabel: UILabel = {
-        let d: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: self.Width, height: self.Height / 3))
+        let d: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: self.Width, height: SCREEN_WIDTH * 0.2 / 3))
         d.font = UIFont.systemFont(ofSize: 15 * SCREEN_SCALE)
         d.text = "爱谁谁"
         d.setColorFultext(ttext: d.text!, tolabel: d, withSuffixStr: "阿萨德撒多撒", lenght: 6, fontSize: 13 * SCREEN_SCALE)
@@ -88,14 +90,14 @@ class MyHeaderInfoV: UIView,SlideToSignVDelegate {
     }()
     
     lazy var userType: UILabel = {
-        let d: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: self.nameLabel.BottomY, width: self.Width, height: self.Height / 3))
+        let d: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: self.nameLabel.BottomY, width: self.Width, height: SCREEN_WIDTH * 0.2 / 3))
         d.font = UIFont.systemFont(ofSize: 13 * SCREEN_SCALE)
         d.text = "sss"
         return d
     }()
     
     lazy var userSign: UILabel = {
-        let d: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: self.userType.BottomY, width: self.Width, height: self.Height / 3.5))
+        let d: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: self.userType.BottomY, width: self.Width, height: SCREEN_WIDTH * 0.2 / 2.5))
         d.font = UIFont.systemFont(ofSize: 10 * SCREEN_SCALE)
         d.text = "sss"
         return d
@@ -103,7 +105,7 @@ class MyHeaderInfoV: UIView,SlideToSignVDelegate {
     
     //// 滑动签到
     lazy var unlockToSign: SlideToSignV = {
-        let d: SlideToSignV = SlideToSignV.init(rect: CGRect.init(x: SCREEN_WIDTH * 0.15, y: self.Height * 0.75, width: SCREEN_WIDTH * 0.45, height: 20 * SCREEN_SCALE), sliderThumImgName: "youhua", bgImgName: "")
+        let d: SlideToSignV = SlideToSignV.init(rect: CGRect.init(x: SCREEN_WIDTH - SCREEN_WIDTH * 0.45 - SCREEN_WIDTH * 0.45 / 1.4 , y: self.Height * 0.75, width: SCREEN_WIDTH * 0.45, height: 15 * SCREEN_SCALE), sliderThumImgName: "youhua", bgImgName: "")
         d.slideToSignVDelegate = self
         return d
     }()

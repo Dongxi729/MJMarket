@@ -20,14 +20,14 @@ class LoginInputV: UIView,UITextFieldDelegate {
     /// 手机
     private lazy var loginFrontIconImgOne: CommonImg = {
         let d : CommonImg = CommonImg.init(frame: CGRect.init(x: COMMON_MARGIN, y: COMMON_MARGIN, width: 15 * SCREEN_SCALE, height: 15 * SCREEN_SCALE))
-        
+        d.image = UIImage.init(named: "phone")
         return d
     }()
     
     /// 密码
     private lazy var loginFrontIconImgTwo: CommonImg = {
         let d : CommonImg = CommonImg.init(frame: CGRect.init(x: COMMON_MARGIN, y: self.Height * 0.65 + COMMON_MARGIN, width: 15 * SCREEN_SCALE, height: 15 * SCREEN_SCALE))
-        
+        d.image = UIImage.init(named: "login_psd")
         return d
     }()
     

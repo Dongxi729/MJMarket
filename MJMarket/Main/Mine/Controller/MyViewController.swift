@@ -27,7 +27,8 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             
             let ac = ZDXAlertController.init(title: "友情提示", message: "您尚未登录", preferredStyle: .alert)
             ac.addAction(UIAlertAction.init(title: "好的", style: .default, handler: { (action) in
-                UIApplication.shared.keyWindow?.rootViewController = LoginVC()
+                let nav = JFNavigationController.init(rootViewController: LoginVC())
+                UIApplication.shared.keyWindow?.rootViewController = nav
             }))
             
             ac.addAction(UIAlertAction.init(title: "取消", style: .cancel, handler: nil))
@@ -39,7 +40,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     }
 
     lazy var myTbV: UITableView = {
-        let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT ), style: .grouped)
+        let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 32), style: .grouped)
         d.delegate = self
         d.dataSource = self
         
@@ -67,9 +68,8 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     /// 右上角按钮
     private lazy var myView_RightBtn: UIButton = {
-        let d : UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - (25 * SCREEN_SCALE) - COMMON_MARGIN, y: 20 + COMMON_MARGIN, width: 25 * SCREEN_SCALE, height: 25 * SCREEN_SCALE))
+        let d : UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - (20 * SCREEN_SCALE) - COMMON_MARGIN, y: UIApplication.shared.statusBarFrame.height, width: 20 * SCREEN_SCALE, height: 20 * SCREEN_SCALE))
         d.addTarget(self, action: #selector(myView_RightBtnSEl), for: .touchUpInside)
-        d.backgroundColor = UIColor.randomColor()
         d.setBackgroundImage(#imageLiteral(resourceName: "setting"), for: .normal)
         return d
     }()
@@ -93,10 +93,11 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        
         self.navigationController?.navigationBar.isHidden = true
         
         if AccountModel.shareAccount()?.token == nil {
-//            FTIndicator.showToastMessage("未登录")
             alertTologin()
         } else {
             ZDXRequestTool.orderCount(finished: { (str) in
@@ -116,16 +117,15 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         self.navigationController?.navigationBar.isHidden = true
         
-        view.addSubview(myView_RightBtn)
+        self.myTbV.addSubview(myView_RightBtn)
         
-        view.backgroundColor = UIColor.colorWithHexString("F8F8F8")
+//        view.backgroundColor = UIColor.colorWithHexString("F8F8F8")
         
+        view.backgroundColor = UIColor.white
 
         if #available(iOS 11.0, *) {
             self.myTbV.contentInsetAdjustmentBehavior = .never
         }
-        
-        
     }
     
     
@@ -178,7 +178,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView.init()
+        return UIView.init(frame: CGRect.init(x: 0, y: 0, width: 0, height: 0))
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -187,7 +187,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 0.0001
+            return 0.01
         } else {
             return COMMON_MARGIN * 0.5
         }
@@ -229,7 +229,6 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     // MARK: - MyCellTwoDelegate
     func btnCli(sender: UIButton) {
         if sender.titleLabel?.text == "全部订单" {
-            CCog()
             self.navigationController?.pushViewController(AllCommementVC(), animated: true)
             
         }

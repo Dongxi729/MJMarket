@@ -12,7 +12,6 @@ class CommonImg: UIImageView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.contentMode = .scaleAspectFit
-        self.layer.borderWidth = 1
     }
     
     required init?(coder aDecoder: NSCoder) {

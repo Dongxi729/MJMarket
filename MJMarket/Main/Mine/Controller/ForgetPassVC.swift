@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ForgetPassVC: UIViewController,UITableViewDelegate,UITableViewDataSource,FotgetSecTwoDelaget {
+class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSource,FotgetSecTwoDelaget {
 
     /// 是否是注册界面
     var isRigster = false
@@ -184,7 +184,7 @@ class ForgetPassVC: UIViewController,UITableViewDelegate,UITableViewDataSource,F
     
     /// 获取验证码代码方法
     func getAuthSEL() {
-        ZDXRequestTool.sendAuto(sendNum: "18905036476", authNumber: "1234")
+        ZDXRequestTool.sendAuto()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
