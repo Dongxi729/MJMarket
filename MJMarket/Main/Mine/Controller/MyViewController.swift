@@ -21,6 +21,22 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     }
     
 
+    /// 提示登录
+    private func alertTologin() {
+        guard let _ = AccountModel.shareAccount()?.id as? String else {
+            
+            let ac = ZDXAlertController.init(title: "友情提示", message: "您尚未登录", preferredStyle: .alert)
+            ac.addAction(UIAlertAction.init(title: "好的", style: .default, handler: { (action) in
+                UIApplication.shared.keyWindow?.rootViewController = LoginVC()
+            }))
+            
+            ac.addAction(UIAlertAction.init(title: "取消", style: .cancel, handler: nil))
+            
+            self.present(ac, animated: true, completion: nil)
+            
+            return
+        }
+    }
 
     lazy var myTbV: UITableView = {
         let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT ), style: .grouped)
@@ -80,16 +96,13 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         self.navigationController?.navigationBar.isHidden = true
         
         if AccountModel.shareAccount()?.token == nil {
-            FTIndicator.showToastMessage("未登录")
+//            FTIndicator.showToastMessage("未登录")
+            alertTologin()
         } else {
-            FTIndicator.showToastMessage("登录")
+            ZDXRequestTool.orderCount(finished: { (str) in
+                self.recArray = str
+            })
         }
-        
-        ZDXRequestTool.orderCount(finished: { (str) in
-            
-            self.recArray = str
-        })
-        
     }
     
     

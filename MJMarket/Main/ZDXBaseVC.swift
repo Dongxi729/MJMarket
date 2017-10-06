@@ -14,9 +14,7 @@ class ZDXBaseVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-//        self.edgesForExtendedLayout = []
-//        self.automaticallyAdjustsScrollViewInsets = false
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,5 +33,4 @@ class ZDXBaseVC: UIViewController {
             navBar?.tintColor = UIColor.white
         }
     }
-
 }

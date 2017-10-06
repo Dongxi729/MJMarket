@@ -329,17 +329,22 @@ class ZDXRequestTool: NSObject {
 
     /// 签到
     class func signment(finished: @escaping (_ result: Bool)->()) {
-        let param : [String : Any] = ["uid" : AccountModel.shareAccount()?.id as! String]
-        NetWorkTool.shared.postWithPath(path: SIGNMENT_URL, paras: param, success: { (result) in
-            CCog(message: result)
-            if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
-                if messageStr == "今天已经签到过" {
-                    finished(true)
-                }
-            }
-        }) { (eror) in
+        
+        if let userID = AccountModel.shareAccount()?.id as? String {
             
+            let param : [String : Any] = ["uid" : userID]
+            NetWorkTool.shared.postWithPath(path: SIGNMENT_URL, paras: param, success: { (result) in
+                CCog(message: result)
+                if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                    if messageStr == "今天已经签到过" {
+                        finished(true)
+                    }
+                }
+            }) { (eror) in
+                
+            }
         }
+        
     }
 
     

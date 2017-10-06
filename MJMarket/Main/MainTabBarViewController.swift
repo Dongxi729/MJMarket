@@ -21,16 +21,11 @@ class MainTabBarViewController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-
+        /// 设置小红点
         super.tabBarController?.viewControllers?[2].tabBarItem.badgeValue = "1"
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-
-    fileprivate func setUpSubViews() -> Void {
+    private func setUpSubViews() -> Void {
         
         //首页
         let mainPageVC = JFNavigationController.init(rootViewController: HomeVC())
@@ -54,13 +49,13 @@ class MainTabBarViewController: UITabBarController {
         self.setupChildVC(findVC, title: "发现", imageName: "find", selectImageName: "find_on")
         
         self.setupChildVC(playVC, title: "玩转", imageName: "play", selectImageName: "play_on")
-//
+        //
         self.setupChildVC(shopVC, title: "购物车", imageName: "cart", selectImageName: "cart_on")
-//
+        //
         self.setupChildVC(meVC, title: "我的", imageName: "my", selectImageName: "my_on")
     }
     
-        
+    
     //添加子页面
     func setupChildVC(_ childVC: UIViewController,title: String,imageName: String,selectImageName: String) {
         
@@ -72,3 +67,6 @@ class MainTabBarViewController: UITabBarController {
         self.addChildViewController(childVC)
     }
 }
+
+
+

@@ -145,6 +145,7 @@
 		26ED03021F5824C0007C2EEC /* ChangePayPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED03011F5824C0007C2EEC /* ChangePayPassVC.swift */; };
 		26ED03041F582B90007C2EEC /* ChangeLoginPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED03031F582B90007C2EEC /* ChangeLoginPassVC.swift */; };
 		26EE87041F70DBEC001AE2EF /* ForgetPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EE87031F70DBEC001AE2EF /* ForgetPassVC.swift */; };
+		26F614981F8715140071A8D4 /* ZDXAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F614971F8715140071A8D4 /* ZDXAlertController.swift */; };
 		26F691B71F566E6000CB6034 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691B61F566E6000CB6034 /* MyViewController.swift */; };
 		26F691BE1F56A68000CB6034 /* SlideToSignV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691BD1F56A68000CB6034 /* SlideToSignV.swift */; };
 		26F691C01F56C36C00CB6034 /* MyVHeaderV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */; };
@@ -421,6 +422,7 @@
 		26ED03011F5824C0007C2EEC /* ChangePayPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePayPassVC.swift; sourceTree = "<group>"; };
 		26ED03031F582B90007C2EEC /* ChangeLoginPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeLoginPassVC.swift; sourceTree = "<group>"; };
 		26EE87031F70DBEC001AE2EF /* ForgetPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPassVC.swift; sourceTree = "<group>"; };
+		26F614971F8715140071A8D4 /* ZDXAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDXAlertController.swift; sourceTree = "<group>"; };
 		26F691B61F566E6000CB6034 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		26F691BD1F56A68000CB6034 /* SlideToSignV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideToSignV.swift; sourceTree = "<group>"; };
 		26F691BF1F56C36C00CB6034 /* MyVHeaderV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyVHeaderV.swift; sourceTree = "<group>"; };
@@ -1086,6 +1088,7 @@
 				2637E07A1F695E090072E611 /* WKViewController.swift */,
 				26F73AD21F74AA2900380A03 /* WKV+Extension.swift */,
 				26918E201F7C879200887737 /* ZDXBaseViewController.swift */,
+				26F614971F8715140071A8D4 /* ZDXAlertController.swift */,
 			);
 			path = commonV;
 			sourceTree = "<group>";
@@ -1598,6 +1601,7 @@
 				26F6E3D81F7DF61C001563CF /* GetGoodVC.swift in Sources */,
 				26F73B001F74F8FA00380A03 /* TZPhotoPreviewController.m in Sources */,
 				26F73B031F74F8FA00380A03 /* UIView+Layout.m in Sources */,
+				26F614981F8715140071A8D4 /* ZDXAlertController.swift in Sources */,
 				264FA6E41F54144400CE405B /* POPSpringAnimation.mm in Sources */,
 				264FA6E61F54144400CE405B /* TransformationMatrix.cpp in Sources */,
 				264FA6F91F54144400CE405B /* NSArray+ ZXPUnicode.m in Sources */,

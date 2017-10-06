@@ -42,7 +42,7 @@ class MyCellOneV: UIView {
                 self.myCellMoneyLabel.text = "￥" + ((AccountModel.shareAccount()?.money as? NSNumber)?.stringValue)!
             }
         } else {
-            CCog(message: AccountModel.shareAccount()?.money)
+        
             myCellMoneyLabel.text = "￥" + "0"
         }
     }
