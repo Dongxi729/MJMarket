@@ -17,6 +17,7 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     
@@ -89,6 +90,12 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate {
             FTIndicator.showToastMessage("手机号码不能为空")
             return
         }
+
+        if !self.loginPhone.checkMobile(mobileNumbel: self.loginPhone as NSString) {
+            FTIndicator.showToastMessage("手机格式不对")
+            return
+        }
+        
         if self.loginPassStr.characters.count == 0 {
             FTIndicator.showToastMessage("密码不能为空")
             return

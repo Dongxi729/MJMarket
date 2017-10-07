@@ -106,9 +106,15 @@ class MyHeaderInfoV: UIView,SlideToSignVDelegate {
     //// 滑动签到
     lazy var unlockToSign: SlideToSignV = {
         let d: SlideToSignV = SlideToSignV.init(rect: CGRect.init(x: SCREEN_WIDTH - SCREEN_WIDTH * 0.45 - SCREEN_WIDTH * 0.45 / 1.4 , y: self.Height * 0.75, width: SCREEN_WIDTH * 0.45, height: 15 * SCREEN_SCALE), sliderThumImgName: "youhua", bgImgName: "")
+        d.slider.value = 0
         d.slideToSignVDelegate = self
         return d
     }()
+    
+    @objc func ddd(){
+        CCog()
+        self.unlockToSign.slider.value = 0
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -117,29 +123,38 @@ class MyHeaderInfoV: UIView,SlideToSignVDelegate {
         addSubview(userSign)
         addSubview(unlockToSign)
         
-        if ((AccountModel.shareAccount()?.nickname) != nil) {
-            self.nameLabel.text = AccountModel.shareAccount()?.nickname as? String
-        } else {
-            self.nameLabel.text = ""
-        }
+//        slideToZero
+        NotificationCenter.default.addObserver(self, selector: #selector(ddd), name: NSNotification.Name(rawValue: "slideToZero"), object: nil)
         
-        if ((AccountModel.shareAccount()?.id) != nil) {
-            self.userSign.text = AccountModel.shareAccount()?.id as? String
-        } else {
-            self.userSign.text = ""
-        }
         
-        if let userType = AccountModel.shareAccount()?.user_type as? String {
-            if userType == "0" {
-                self.userType.text = "普通"
+        DispatchQueue.main.async {
+            
+            if let nickName = AccountModel.shareAccount()?.nickname as? String {
+                
+                CCog(message: nickName)
+                self.nameLabel.text = nickName
+            } else {
+                self.nameLabel.text = ""
             }
             
-            if userType == "1" {
-                self.userType.text = "会员"
+            if let userId = AccountModel.shareAccount()?.id as? String {
+                self.userSign.text = userId
+            } else {
+                self.userSign.text = ""
             }
             
-            if userType == "2" {
-                self.userType.text = "代理"
+            if let userType = AccountModel.shareAccount()?.user_type as? String {
+                if userType == "0" {
+                    self.userType.text = "普通"
+                }
+                
+                if userType == "1" {
+                    self.userType.text = "会员"
+                }
+                
+                if userType == "2" {
+                    self.userType.text = "代理"
+                }
             }
         }
         

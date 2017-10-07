@@ -43,24 +43,28 @@ class MyCellTwo: CommonTableViewCell {
     
     func xxx(dss : [String]) {
         
-        for value in 0..<dss.count {
+        
+        DispatchQueue.main.async {
             
-            let str : Int = Int(dss[value])!
-            
-            redBtn = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.1 + (CGFloat(value) * (SCREEN_WIDTH / 5)), y: 0, width: SCREEN_WIDTH / 19, height: SCREEN_WIDTH / 19))
-            redBtn.backgroundColor = COMMON_COLOR
-            redBtn.layer.cornerRadius = redBtn.Width / 2
-            redBtn.clipsToBounds = true
-            redBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-            redBtn.setTitle(String(str), for: .normal)
-            
-            contentView.addSubview(redBtn)
-            
-            if str <= 0 {
-                redBtn.isHidden = true
+            for value in 0..<dss.count {
+                
+                let str : Int = Int(dss[value])!
+                
+                self.redBtn = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.1 + (CGFloat(value) * (SCREEN_WIDTH / 5)), y: 0, width: SCREEN_WIDTH / 19, height: SCREEN_WIDTH / 19))
+                self.redBtn.backgroundColor = COMMON_COLOR
+                self.redBtn.layer.cornerRadius = self.redBtn.Width / 2
+                self.redBtn.clipsToBounds = true
+                self.redBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+                self.redBtn.setTitle(String(str), for: .normal)
+                
+                self.contentView.addSubview(self.redBtn)
+                
+                if str <= 0 {
+                    self.redBtn.isHidden = true
+                }
             }
-            
         }
+        
     }
     
     func btnSEl(sender : UIButton) {

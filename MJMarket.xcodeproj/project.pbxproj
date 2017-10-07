@@ -110,6 +110,9 @@
 		268853661F7BCEF2008BD4DE /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2688535F1F7BCDC4008BD4DE /* libWeChatSDK.a */; };
 		268853681F7BCF14008BD4DE /* WXTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268853671F7BCF14008BD4DE /* WXTool.swift */; };
 		26918E211F7C879200887737 /* ZDXBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26918E201F7C879200887737 /* ZDXBaseViewController.swift */; };
+		269893381F88901700C150F9 /* headerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269893351F88901600C150F9 /* headerView.swift */; };
+		269893391F88901700C150F9 /* UIScrollView-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269893361F88901600C150F9 /* UIScrollView-extension.swift */; };
+		2698933A1F88901700C150F9 /* footerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269893371F88901600C150F9 /* footerView.swift */; };
 		26AB3CFB1F6A54E50013398F /* ZDXRequestTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AB3CFA1F6A54E50013398F /* ZDXRequestTool.swift */; };
 		26AE2B2D1F55014000AAA36C /* CommonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */; };
 		26AE2B2E1F55014000AAA36C /* JFNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE2B211F55014000AAA36C /* JFNavigationController.swift */; };
@@ -148,6 +151,7 @@
 		26ED03021F5824C0007C2EEC /* ChangePayPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED03011F5824C0007C2EEC /* ChangePayPassVC.swift */; };
 		26ED03041F582B90007C2EEC /* ChangeLoginPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED03031F582B90007C2EEC /* ChangeLoginPassVC.swift */; };
 		26EE87041F70DBEC001AE2EF /* ForgetPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EE87031F70DBEC001AE2EF /* ForgetPassVC.swift */; };
+		26F212191F88526800FECC9F /* UserAgrementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F212181F88526800FECC9F /* UserAgrementVC.swift */; };
 		26F614981F8715140071A8D4 /* ZDXAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F614971F8715140071A8D4 /* ZDXAlertController.swift */; };
 		26F691B71F566E6000CB6034 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691B61F566E6000CB6034 /* MyViewController.swift */; };
 		26F691BE1F56A68000CB6034 /* SlideToSignV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F691BD1F56A68000CB6034 /* SlideToSignV.swift */; };
@@ -393,6 +397,10 @@
 		268853651F7BCDC4008BD4DE /* WXApiObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		268853671F7BCF14008BD4DE /* WXTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WXTool.swift; sourceTree = "<group>"; };
 		26918E201F7C879200887737 /* ZDXBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDXBaseViewController.swift; sourceTree = "<group>"; };
+		269893351F88901600C150F9 /* headerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = headerView.swift; sourceTree = "<group>"; };
+		269893361F88901600C150F9 /* UIScrollView-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView-extension.swift"; sourceTree = "<group>"; };
+		269893371F88901600C150F9 /* footerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = footerView.swift; sourceTree = "<group>"; };
+		2698933D1F88977A00C150F9 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		26AB3CFA1F6A54E50013398F /* ZDXRequestTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZDXRequestTool.swift; sourceTree = "<group>"; };
 		26AE2B201F55014000AAA36C /* CommonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTableViewCell.swift; sourceTree = "<group>"; };
 		26AE2B211F55014000AAA36C /* JFNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFNavigationController.swift; sourceTree = "<group>"; };
@@ -431,6 +439,7 @@
 		26ED03011F5824C0007C2EEC /* ChangePayPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePayPassVC.swift; sourceTree = "<group>"; };
 		26ED03031F582B90007C2EEC /* ChangeLoginPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeLoginPassVC.swift; sourceTree = "<group>"; };
 		26EE87031F70DBEC001AE2EF /* ForgetPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPassVC.swift; sourceTree = "<group>"; };
+		26F212181F88526800FECC9F /* UserAgrementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgrementVC.swift; sourceTree = "<group>"; };
 		26F614971F8715140071A8D4 /* ZDXAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDXAlertController.swift; sourceTree = "<group>"; };
 		26F691B61F566E6000CB6034 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		26F691BD1F56A68000CB6034 /* SlideToSignV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideToSignV.swift; sourceTree = "<group>"; };
@@ -621,6 +630,7 @@
 				26F6E3FF1F7E0A78001563CF /* AboutUSVC.swift */,
 				26F970291F7E88F7005656BA /* MyJIfenVC.swift */,
 				26EC776F1F7F8DF6007AE27D /* SignmentVC.swift */,
+				26F212181F88526800FECC9F /* UserAgrementVC.swift */,
 			);
 			path = WebV;
 			sourceTree = "<group>";
@@ -934,6 +944,7 @@
 		264FA6CA1F54144400CE405B /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				2698933C1F88902F00C150F9 /* refreshControl */,
 				26C6FE441F7E25760082011C /* PickerV.swift */,
 				26C6FE421F7E24DA0082011C /* ToolBar.swift */,
 				2688530A1F7B8F24008BD4DE /* SwiftyJSON.swift */,
@@ -1136,6 +1147,17 @@
 				268853651F7BCDC4008BD4DE /* WXApiObject.h */,
 			);
 			path = Weixin;
+			sourceTree = "<group>";
+		};
+		2698933C1F88902F00C150F9 /* refreshControl */ = {
+			isa = PBXGroup;
+			children = (
+				2698933D1F88977A00C150F9 /* arrow.png */,
+				269893371F88901600C150F9 /* footerView.swift */,
+				269893351F88901600C150F9 /* headerView.swift */,
+				269893361F88901600C150F9 /* UIScrollView-extension.swift */,
+			);
+			path = refreshControl;
 			sourceTree = "<group>";
 		};
 		26AE2B1E1F55014000AAA36C /* utils */ = {
@@ -1573,6 +1595,8 @@
 				26F6E3DA1F7DF64A001563CF /* MyCoupon.swift in Sources */,
 				26F73AC01F74A01600380A03 /* base64.m in Sources */,
 				26AE2B501F5504C400AAA36C /* LoginInputV.swift in Sources */,
+				269893381F88901700C150F9 /* headerView.swift in Sources */,
+				26F212191F88526800FECC9F /* UserAgrementVC.swift in Sources */,
 				26AE2B341F55014000AAA36C /* UIImageExtension.swift in Sources */,
 				26342E641F6136CE00850676 /* CommonRequestConst.swift in Sources */,
 				26F73AF91F74F8FA00380A03 /* TZGifPhotoPreviewController.m in Sources */,
@@ -1634,6 +1658,7 @@
 				26F9702A1F7E88F7005656BA /* MyJIfenVC.swift in Sources */,
 				26AE2B351F55014000AAA36C /* UIImageViewWebImage.swift in Sources */,
 				268853681F7BCF14008BD4DE /* WXTool.swift in Sources */,
+				2698933A1F88901700C150F9 /* footerView.swift in Sources */,
 				264FA6F01F54144400CE405B /* UIImageView+YYWebImage.m in Sources */,
 				264FA7151F54151700CE405B /* FTNotificationIndicator.m in Sources */,
 				264FA6EC1F54144400CE405B /* CALayer+YYWebImage.m in Sources */,
@@ -1646,6 +1671,7 @@
 				264FA6E81F54144400CE405B /* YYDiskCache.m in Sources */,
 				2688530B1F7B8F24008BD4DE /* SwiftyJSON.swift in Sources */,
 				264FA6DB1F54144400CE405B /* POPAnimator.mm in Sources */,
+				269893391F88901700C150F9 /* UIScrollView-extension.swift in Sources */,
 				26ED02FA1F57B7AD007C2EEC /* CustomCollectV.swift in Sources */,
 				26C6FE451F7E25770082011C /* PickerV.swift in Sources */,
 				26F73AD91F74F19E00380A03 /* PaySuccessVC.swift in Sources */,

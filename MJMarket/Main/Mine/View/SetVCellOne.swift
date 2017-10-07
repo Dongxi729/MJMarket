@@ -47,7 +47,8 @@ class SetVCellOne: CommonTableViewCell {
         contentView.addSubview(set_Signlabel)
         contentView.addSubview(set_DisImg)
         
-        if ((AccountModel.shareAccount()?.user_type) != nil) {
+        
+        DispatchQueue.main.async {
             
             if let userType = AccountModel.shareAccount()?.user_type as? String {
                 if userType == "0" {
@@ -62,23 +63,26 @@ class SetVCellOne: CommonTableViewCell {
                     self.set_Signlabel.text = "代理"
                 }
             }
-        }
-        
-        if ((AccountModel.shareAccount()?.nickname) != nil) {
             
             if let userName = AccountModel.shareAccount()?.nickname as? String {
+                
                 self.set_NameLabel.text = userName
             }
-        }
-        
-        
-        if var headImgUrl = AccountModel.shareAccount()?.headimg as? String {
-            headImgUrl = "http://mj.ie1e.com" + headImgUrl
-
-            DispatchQueue.main.async {
+            
+            
+            if var headImgUrl = AccountModel.shareAccount()?.headimg as? String {
+                
+                headImgUrl = "http://mj.ie1e.com" + headImgUrl
+                
                 self.set_HeadImg.setAvatarImage(urlString: headImgUrl, placeholderImage: #imageLiteral(resourceName: "default_thumb"))
+                
+            } else {
+                
+                self.set_HeadImg.image = #imageLiteral(resourceName: "default_thumb")
+                
             }
         }
+        
     }
     
     

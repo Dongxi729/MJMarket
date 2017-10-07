@@ -46,7 +46,42 @@ class ZDXRequestTool: NSObject {
                 CCog(message: error.localizedDescription)
             }
         }
+    }
+    
+    // MARK: - 发生验证码须填写点好号码
+    /// 发生验证码
+    ///
+    /// - Parameters:
+    ///   - num: 手机号码
+    ///   - authNum: 验证码
+    class func sendAuto(phoneNumber phone : String) {
         
+        /// 发送验证码
+        let param2 : [String : Any] = ["mobile" : phone]
+        
+        NetWorkTool.shared.postWithPath(path: SENDSMS_URL, paras: param2, success: { (result) in
+            CCog(message: result)
+            
+            if let dic = result as? NSDictionary {
+                
+                if let singKey = (dic["data"] as? NSDictionary)?["icon"] as? String,
+                    let sendResult = dic["message"] as? String {
+                    
+                    /// singKey写在静态全局变量
+                    GetUserUid.registerKeyIcon = singKey
+                    
+                    if sendResult == "发送成功" {
+                        FTIndicator.showToastMessage(sendResult)
+                    }
+                }
+                
+                
+            }
+            
+            
+        }) { (error) in
+            CCog(message: error.localizedDescription)
+        }
     }
     
     // MARK: - 注册操作
@@ -56,17 +91,34 @@ class ZDXRequestTool: NSObject {
     ///   - phoneNum: 电话号码
     ///   - autoNum: 验证码
     ///   - pas: 密码
-    class func register(registerNum phoneNum : String,autoNumber autoNum : String,password pas : String) {
-        /// 注册操作
-        let param2 : [String : Any] = ["icon" : GetUserUid.registerKeyIcon!,
-                                       "tel": phoneNum,
-                                       "yzm" : autoNum,
-                                       "password1" : pas,
-                                       "password2" : pas]
-        NetWorkTool.shared.postWithPath(path: REG_URL, paras: param2, success: { (result) in
-            CCog(message: result)
-        }) { (error) in
-            CCog(message: error.localizedDescription)
+    class func register(registerNum phoneNum : String,autoNumber autoNum : String,password pas : String,finished:@escaping (_ regist : Bool) -> ()) {
+        
+        if let autoStrUid = GetUserUid.registerKeyIcon {
+
+            /// 注册操作
+            let param2 : [String : Any] = ["icon" : autoStrUid,
+                                           "tel": phoneNum,
+                                           "yzm" : autoNum,
+                                           "password1" : pas,
+                                           "password2" : pas]
+            NetWorkTool.shared.postWithPath(path: REG_URL, paras: param2, success: { (result) in
+                CCog(message: result)
+                //            注册成功，已自动登录
+                if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String,
+                    let userID = ((result as? NSDictionary)?.object(forKey: "data") as? NSDictionary)?.object(forKey: "uid") as? String {
+                    FTIndicator.showToastMessage(messageStr)
+                    if messageStr == "注册成功，已自动登录" {
+                        CCog(message: userID)
+                        finished(true)
+                        getUserInfo(uidStr: userID)
+                    }
+                }
+                
+            }) { (error) in
+                CCog(message: error.localizedDescription)
+            }
+        } else {
+            FTIndicator.showToastMessage("请输入验证码")
         }
     }
     
@@ -88,45 +140,65 @@ class ZDXRequestTool: NSObject {
             CCog(message: result)
             
             
-            if let dicccc = result as? NSDictionary {
+            if let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
                 
-                if let dicData = dicccc["data"] as? NSDictionary {
-                    
-                    
-                    if let userInfoStr = dicData["uid"] as? String {
-                        // 获取用户信息
-                        let getUserInfo : [String : Any] = ["uid" : userInfoStr]
-                        
-                        CCog(message: getUserInfo)
-                        NetWorkTool.shared.postWithPath(path:USER_INFO_URL , paras:getUserInfo , success: { (result) in
-                            CCog(message: result)
-                            
-                            if let dic = result as? NSDictionary {
-                                
-                                if let dicData = dic["data"] as? NSDictionary {
-                                    let account = AccountModel.init(dict: dicData as! [String : Any])
-                                    account.updateUserInfo()
-                                    
-                                    if let msgAlert = dicccc["message"] as? String {
-                                        if msgAlert == "登录成功" {
-                                            Model.boolSwotvh = false
-                                            let vc = WKViewController()
-                                            vc.clearCookie()
-                                            finished(true)
-                                        }
-                                    }
-                                    
-                                }
-                            }
-                        }, failure: { (error) in
-                            CCog(message: error)
-                        })
-                        
-                    }
-                    
+                FTIndicator.showToastMessage(message)
+                if message == "登录成功" {
+                    Model.boolSwotvh = false
+                    let vc = WKViewController()
+                    vc.clearCookie()
+                    finished(true)
                 }
-                
             }
+            
+            
+            if let uidStr = ((result as? NSDictionary)?.object(forKey: "data") as? NSDictionary)?.object(forKey: "uid") as? String {
+                getUserInfo(uidStr: uidStr)
+            }
+            
+//
+//
+//            if let dicccc = result as? NSDictionary {
+//
+//                if let dicData = dicccc["data"] as? NSDictionary,
+//                    let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
+//
+//
+//                    if let msgAlert = dicccc["message"] as? String {
+//                        FTIndicator.showToastMessage(msgAlert)
+//                        if msgAlert == "登录成功" {
+//                            Model.boolSwotvh = false
+//                            let vc = WKViewController()
+//                            vc.clearCookie()
+//                            finished(true)
+//                        }
+//                    }
+//
+//                    if let userInfoStr = dicData["uid"] as? String {
+//                        // 获取用户信息
+//                        let getUserInfo : [String : Any] = ["uid" : userInfoStr]
+//
+//                        CCog(message: getUserInfo)
+//                        NetWorkTool.shared.postWithPath(path:USER_INFO_URL , paras:getUserInfo , success: { (result) in
+//
+//
+//                            if let dic = result as? NSDictionary {
+//
+//                                if let dicData = dic["data"] as? NSDictionary {
+//                                    let account = AccountModel.init(dict: dicData as! [String : Any])
+//                                    account.updateUserInfo()
+//
+//                                }
+//                            }
+//                        }, failure: { (error) in
+//                            CCog(message: error)
+//                        })
+//
+//                    }
+//
+//                }
+//
+//            }
         }, failure: { (error) in
             CCog(message: error.localizedDescription)
         })
@@ -148,28 +220,61 @@ class ZDXRequestTool: NSObject {
                     if let dicData = dic["data"] as? NSDictionary {
                         let account = AccountModel.init(dict: dicData as! [String : Any])
                         account.updateUserInfo()
-                        
+
+                        if let userName = AccountModel.shareAccount()?.nickname as? String {
+                            MineModel.nameString = userName
+                        }
                     }
                 }
             }, failure: { (error) in
                 CCog(message: error)
             })
-            
         }
     }
     
-    /// 修改登录密码
-    class func changeLoginPass(oldPassword oldPass: String,newPassword newPass : String) {
+    // MARK: - 手动输入用户信息
+    /// 手动输入UID信息
+    class func getUserInfo(uidStr uid : String) {
         
-        let changePass : [String : String] = ["uid" : GetUserUid.userUID!,
+        // 获取用户信息
+        let getUserInfo : [String : Any] = ["uid" : uid]
+        
+        CCog(message: getUserInfo)
+        NetWorkTool.shared.postWithPath(path:USER_INFO_URL , paras:getUserInfo , success: { (result) in
+            CCog(message: result)
+            
+            if let dic = result as? NSDictionary {
+                
+                if let dicData = dic["data"] as? NSDictionary {
+                    let account = AccountModel.init(dict: dicData as! [String : Any])
+                    account.updateUserInfo()
+                    
+                }
+            }
+        }, failure: { (error) in
+            CCog(message: error)
+        })
+    }
+    
+    /// 修改登录密码
+    class func changeLoginPass(oldPassword oldPass: String,newPassword newPass : String,finished : @escaping (_ findSuccess : Bool)->()) {
+        
+        
+        let changePass : [String : String] = ["uid" : AccountModel.shareAccount()?.id as! String,
                                               "oldpwd" : oldPass,
                                               "pwd1" : newPass,
                                               "pwd2" : newPass]
         
-        NetWorkTool.shared.getWithPath(path: UPDLOGINGPWD_URL, paras: changePass, success: { (result) in
+        NetWorkTool.shared.postWithPath(path: UPDLOGINGPWD_URL, paras: changePass, success: { (result) in
             CCog(message: result)
+            if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                FTIndicator.showToastMessage(messageStr)
+                if messageStr == "修改成功" {
+                    finished(true)
+                }
+            }
         }) { (error) in
-            CCog(message: error)
+            CCog(message: error.localizedDescription)
         }
     }
     
@@ -180,7 +285,7 @@ class ZDXRequestTool: NSObject {
     ///   - phoneNum: 电话号码
     ///   - autoNum: 验证码
     ///   - pas: 密码
-    class func findPass(findNum phoneNum : String,autoNumber autoNum : String,password pas : String) {
+    class func findPass(findNum phoneNum : String,autoNumber autoNum : String,password pas : String,finished : @escaping (_ findSuccess : Bool)->()) {
         /// 注册操作
         let param2 : [String : Any] = ["icon" : GetUserUid.registerKeyIcon!,
                                        "tel": phoneNum,
@@ -191,6 +296,12 @@ class ZDXRequestTool: NSObject {
         CCog(message: param2)
         NetWorkTool.shared.postWithPath(path: FINDPWD_URL, paras: param2, success: { (result) in
             CCog(message: result)
+            if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                FTIndicator.showToastMessage(messageStr)
+                if messageStr == "找回密码成功" {
+                    finished(true)
+                }
+            }
         }) { (error) in
             CCog(message: error.localizedDescription)
         }
@@ -214,11 +325,8 @@ class ZDXRequestTool: NSObject {
                                            "pwd" : pas,
                                            "pwd1" : pas]
             
-            
-            CCog(message: param2)
-            
             NetWorkTool.shared.postWithPath(path: UPDPAYPWD_URL, paras: param2, success: { (result) in
-                CCog(message: result)
+                
                 if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
                     if messageStr == "设置成功" {
                         finished(true)
@@ -242,7 +350,7 @@ class ZDXRequestTool: NSObject {
                                       "money" : moneyStr]
         
         NetWorkTool.shared.postWithPath(path: WEB_VIEW_CHARGE, paras: param, success: { (result) in
-            CCog(message: result)
+            
             if let chargeSignStr = (result as? NSDictionary)?.object(forKey: "data") as? String {
                 finished(chargeSignStr)
             }
@@ -287,15 +395,13 @@ class ZDXRequestTool: NSObject {
                     CCog(message: chargeSignStr)
                     
                     badge.append("0")
+                    badge.append((chargeSignStr.object(forKey: "payed") as! NSNumber).stringValue)
                     badge.append((chargeSignStr.object(forKey: "nocomment") as! NSNumber).stringValue)
                     badge.append((chargeSignStr.object(forKey: "nopay") as! NSNumber).stringValue)
-                    badge.append((chargeSignStr.object(forKey: "payed") as! NSNumber).stringValue)
                     badge.append("0")
                     
                     if badge.count == 5 {
                         finished(badge)
-                        
-                        CCog(message: badge)
                     }
                 }
             }, failure: { (error) in
@@ -304,7 +410,7 @@ class ZDXRequestTool: NSObject {
         }
     }
     
-    // MARK: - 个人信息
+    // MARK: - 修改个人信息
     /// 个人信息
     class func requestPersonInfo(nickname : String,sex : Int,province: String,city : String,headImgStr : String,birthdayStr : String,finished: @escaping (_ requestSuccess : Bool)->()) {
         let param : [String : Any] = ["uid" : AccountModel.shareAccount()?.id as! String,
@@ -377,7 +483,7 @@ class ZDXRequestTool: NSObject {
             NetWorkTool.shared.postWithPath(path: SIGNMENT_URL, paras: param, success: { (result) in
                 CCog(message: result)
                 if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
-                    if messageStr == "今天已经签到过" {
+                    if messageStr == "今天已经签到过" || messageStr == "签到成功" {
                         finished(true)
                     }
                 }

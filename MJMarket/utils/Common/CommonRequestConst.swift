@@ -128,3 +128,6 @@ var SCORES_URL = "http://mj.ie1e.com/wx_user/scoresdetail"
 
 /// 签到
 var SIGN_URL = "http://mj.ie1e.com/wx_user/mysign"
+
+//// 注册协议
+var USERAGREEMENT_URL = "http://mj.ie1e.com/weixin/info?id=e6e6afff0d4d410e97b24608a8b60a06&it=1"

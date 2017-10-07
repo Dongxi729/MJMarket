@@ -26,6 +26,7 @@ class SlideToSignV: UIView {
         d.layer.cornerRadius = self.Height / 2
         d.clipsToBounds = true
         d.textAlignment = .right
+        
         return d
     }()
     
@@ -36,7 +37,7 @@ class SlideToSignV: UIView {
         d.addTarget(self, action: #selector(valueChanged(sender:)), for: .valueChanged)
         d.maximumTrackTintColor = .clear
         d.minimumTrackTintColor = .clear
-        
+        d.isContinuous = false
         
         return d
     }()

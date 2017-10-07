@@ -11,23 +11,19 @@ import WebKit
 
 
 
-class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler,ShareVDelegate {
+class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler,ShareVDelegate,headerViewelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .default
-        
-
-            self.navigationController?.setNavigationBarHidden(true, animated: true)
-    
     }
     
     ///网页模板
-    lazy var webView: WKWebView = {
-        var wkV : WKWebView = WKWebView.init()
+    func addWebView() {
+        
         
         //配置webview
-        var configuration = WKWebViewConfiguration()
+        let configuration = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
 
         
@@ -52,10 +48,15 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         
         configuration.userContentController = userContentController
         
-//        let rect = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64)
-        wkV = WKWebView.init(frame: self.view.bounds, configuration: configuration)
+        if #available(iOS 11.0, *) {
+            
+            self.webView = WKWebView.init(frame: self.view.bounds, configuration: configuration)
+        } else {
+            self.webView = WKWebView.init(frame: CGRect.init(x: 0, y: 20, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 20), configuration: configuration)
+        }
+
         
-        wkV.navigationDelegate = self;
+        self.webView.navigationDelegate = self;
         
         
         
@@ -63,13 +64,11 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         configuration.preferences.javaScriptEnabled = true
         configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
         //词句注释，无法唤起微信支付
-        wkV.uiDelegate = self
+        self.webView.uiDelegate = self
         
         /// 取出webView中滑动视图的横竖滑动条
-        wkV.scrollView.showsVerticalScrollIndicator = false
-        wkV.scrollView.showsHorizontalScrollIndicator = false
-        
-        wkV.scrollView.addSubview(self.edgesFor)
+        self.webView.scrollView.showsVerticalScrollIndicator = false
+        self.webView.scrollView.showsHorizontalScrollIndicator = false
         
         if (Model.shopDetail != nil) {
             
@@ -90,9 +89,6 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         }
         
         
-        
-        //        //配置webview
-        
         configuration.userContentController = userContentController
         
         
@@ -103,14 +99,39 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "afterShareApp")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "shareApp")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "weChatPay")
-        return wkV
         
+        
+        //监听KVO
+//        self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil) // add observer for key path
+        //添加刷新控件
+        webView.scrollView.addHeaderViewfun()
+        
+        /// 取出webView中滑动视图的横竖滑动条
+        webView.scrollView.showsVerticalScrollIndicator = false
+        webView.scrollView.showsHorizontalScrollIndicator = false
+        
+        let d : headerView = webView.viewWithTag(888) as! headerView
+        d.delegate = self;
+   
+        view.addSubview(webView)
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "estimatedProgress" {
+            self.progresssView.isHidden = webView.estimatedProgress == 1
+            self.progresssView.setProgress(Float(webView.estimatedProgress), animated: true)
+        }
+    }
+    
+    lazy var progresssView: UIProgressView = {
+        let d : UIProgressView = UIProgressView.init(frame: CGRect.init(x: 0, y: UIApplication.shared.statusBarFrame.height, width: SCREEN_WIDTH, height: 20))
+        d.tintColor = COMMON_COLOR
+        return d
     }()
     
     /// 分享视图
     private lazy var shareC: ShareV = {
         let d : ShareV = ShareV.init(CGRect.init(x: 0, y: SCREEN_HEIGHT, width: SCREEN_WIDTH, height: 150))
-        d.backgroundColor = COMMON_COLOR
         return d
     }()
     
@@ -119,8 +140,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         alert.addAction(UIAlertAction.init(title: "确定", style: .default, handler: { (action) in
             completionHandler()
         }))
-        
-        
+
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -167,11 +187,8 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                 }
             }
             
-            
-            CCog()
-            
-            if webView.canGoBack {
-                webView.goBack()
+            if self.webView.canGoBack {
+                self.webView.goBack()
             }
         }
         
@@ -225,7 +242,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                     do {
                         
                         /// 内容
-                        if var contentStr = try JSON(data: jsonStr)["content"].string {
+                        if let contentStr = try JSON(data: jsonStr)["content"].string {
                             CCog(message: contentStr)
                             
                             let startLocation = contentStr.index(of: "{")
@@ -256,7 +273,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                             
                         }
                         
-                        if var hasAfter = try JSON(data: jsonStr)["hasAfter"].int,let productID = try JSON(data: jsonStr)["productid"].string {
+                        if let hasAfter = try JSON(data: jsonStr)["hasAfter"].int,let productID = try JSON(data: jsonStr)["productid"].string {
                             CCog(message: hasAfter)
                             CCog(message: productID)
                             let param : [String : String] = ["productid" : productID,
@@ -272,8 +289,6 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                                 })
                             }
                         }
-                        
-                        
                         
                     } catch {
                         
@@ -428,20 +443,33 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     
     /// url全局变量
     var urlStr = ""
+
+    var webView : WKWebView = WKWebView.init()
     
-    lazy var edgesFor: UIRefreshControl = {
-        let d : UIRefreshControl = UIRefreshControl.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 20))
-        d.addTarget(self, action: #selector(valueChanged(sender:)), for: .valueChanged)
+    /// 增加丢失网络图片
+    lazy var lostNetImg: UIImageView = {
+        let d : UIImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 3))
+        d.image = UIImage.init(named: "index_404(1)")
+        d.contentMode = UIViewContentMode.scaleAspectFit
+        d.isUserInteractionEnabled = true
+        let tapGes = UITapGestureRecognizer.init(target: self, action: #selector(refreshWebFunc))
+        d.addGestureRecognizer(tapGes)
         return d
     }()
     
-    
-    func valueChanged(sender : UIRefreshControl) {
-        self.webView.reload()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            sender.endRefreshing()
+    func refreshWebFunc() {
+        if reloadMark {
+            self.webView.reload()
+        } else {
+            self.webView.load(URLRequest.init(url: URL.init(string: self.urlStr)!))
         }
+    }
+    
+    /// 添加网络丢失图片
+    func addLostImg() {
+        lostNetImg.center = (UIApplication.shared.keyWindow?.center)!
+        UIApplication.shared.keyWindow?.addSubview(lostNetImg)
+        lostNetImg.isHidden = true
     }
     
     override func viewDidLoad() {
@@ -454,11 +482,11 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
        
         UIApplication.shared.keyWindow?.addSubview(shareC)
         
-        let wxPayBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 100, height: 100))
-        wxPayBtn.backgroundColor = UIColor.randomColor()
-        wxPayBtn.addTarget(self, action: #selector(weixinPay), for: .touchUpInside)
-//        UIApplication.shared.keyWindow?.addSubview(wxPayBtn)
+        view.addSubview(progresssView)
+     
+        addWebView()
         
+        addLostImg()
     }
     
     /// 清除cookie
@@ -506,108 +534,30 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         return tempUrl
     }
     
-    
-    /// 加载URL
-    @objc func loadURL(urlStr : String) {
-        
-        CCog(message: urlStr)
-        
-        var tempUrl = ""
-        
-        var bool = false
-        
-        if ((AccountModel.shareAccount()?.token) != nil) {
-            bool = true
-        } else {
-            
-            bool = false
-        }
-        
-        
-        if (self.navigationController?.viewControllers.count)! >= 2 {
-            
-            if SCREEN_HEIGHT == 812 {
-                self.webView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH , height: SCREEN_HEIGHT - (navigationController?.navigationBar.Height)! - (tabBarController?.tabBar.Height)!)
-            }
-            
-            tempUrl = self.urlStr
-            
-            if tempUrl.contains("?") {
-                
-                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
-                
-                if !tempUrl.contains("token") {
-                    tempUrl = tempUrl + "&isapp=1&token=" + contactStr
-                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
-                    CCog(message: tempUrl)
-                } else {
-                    CCog(message: tempUrl)
-                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
-                }
-                
-            } else {
-                tempUrl = urlStr
-                
-                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
-                
-                if !tempUrl.contains("token") {
-                    
-                    tempUrl = tempUrl + "?isapp=1&token=" + contactStr
-                    CCog(message: tempUrl)
-                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
-                } else {
-                    
-                    CCog(message: tempUrl)
-                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
-                }
-            }
-        } else {
-            
-            if NSStringFromClass(self.classForCoder).contains("ShopCarVC") {
-                
-                if SCREEN_HEIGHT == 812 {
-                    self.webView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH , height: SCREEN_HEIGHT - (navigationController?.navigationBar.Height)! - (tabBarController?.tabBar.Height)!)
-                    
-                }
-                
+    deinit {
 
-            }
-            
-            tempUrl = urlStr
-            if tempUrl.contains("?") {
-                
-                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
-                
-                if !urlStr.contains("token") {
-                    tempUrl = urlStr + "&isapp=1&token=" + contactStr
-                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
-                    CCog(message: tempUrl)
-                } else {
-                    
-                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
-                    CCog(message: tempUrl)
-                }
-            } else {
-                
-                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
-                
-                if !urlStr.contains("token") {
-                    
-                    tempUrl = urlStr + "?isapp=1&token=" + contactStr
-                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
-                    CCog(message: tempUrl)
-                } else {
-                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
-                    CCog(message: tempUrl)
-                }
-            }
-        }
+        CCog()
+        
+//        if !webView.isLoading {
+        
+//            webView.removeObserver(self, forKeyPath: "estimatedProgress")
+//            progresssView.reloadInputViews()
+//        }
+        
     }
     
+    
+    
+    /// 加载完成标识
+    var reloadMark = false
     
     // MARK: - 网页代理---完成
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 
+        reloadMark = true
+        
+        lostNetImg.isHidden = true
+        
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         if NSStringFromClass(self.classForCoder).contains("HomeVC") {
@@ -619,23 +569,36 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             }
         }
         
-    }
-    
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-//        if NSStringFromClass(self.classForCoder).contains("LoginVC") ||
-//            NSStringFromClass(self.classForCoder).contains("RigisterVC") ||
-//            NSStringFromClass(self.classForCoder).contains("PayPassVC") ||
-//            NSStringFromClass(self.classForCoder).contains("MyViewController") ||
-//            NSStringFromClass(self.classForCoder).contains("SettigVC") ||
-//            NSStringFromClass(self.classForCoder).contains("PersonInfoVC") ||
-//            NSStringFromClass(self.classForCoder).contains("LoginVC") {
-//        }
+        self.progresssView.progress = Float(webView.estimatedProgress)
         
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        if webView.estimatedProgress == 1.0 {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.progresssView.alpha = 0
+            })
+        }
     }
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
+
+    }
+    
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        
+        CCog()
+//        SettingVC
+//        MyViewController
+        super.viewDidDisappear(animated)
+        if NSStringFromClass(self.classForCoder).contains("MyViewController") || NSStringFromClass(self.classForCoder).contains("MyViewController") {
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+        }
+        
+        self.lostNetImg.isHidden = true
+    }
+    
 }
 
 // MARK:- 弱引用交互事件
@@ -660,32 +623,5 @@ class Model: NSObject {
     static var key1 : [String : String] = [:]
     
     static var boolSwotvh = false
-    
-}
-
-
-
-public extension DispatchQueue {
-    
-    private static var _onceTracker = [String]()
-    
-    /**
-     Executes a block of code, associated with a unique token, only once.  The code is thread safe and will
-     only execute the code once even in the presence of multithreaded calls.
-     
-     - parameter token: A unique reverse DNS style name such as com.vectorform. or a GUID
-     - parameter block: Block to execute once
-     */
-    public class func once(token: String, block:()->Void) {
-        objc_sync_enter(self)
-        defer { objc_sync_exit(self) }
-        
-        if _onceTracker.contains(token) {
-            return
-        }
-        
-        _onceTracker.append(token)
-        block()
-    }
     
 }

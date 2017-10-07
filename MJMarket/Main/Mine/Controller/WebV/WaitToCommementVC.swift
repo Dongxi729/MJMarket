@@ -10,11 +10,10 @@ import UIKit
 import WebKit
 
 class WaitToCommementVC : WKViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadURL(urlStr: WEB_VIEW_ORDER_LIST_WAIT_COMMENT)
+        loadURL(urlStr: WEB_VIEW_ORDER_LIST_WAIT_RECEIVER)
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -26,7 +25,7 @@ class WaitToCommementVC : WKViewController {
         
         if navigationAction.navigationType == WKNavigationType.linkActivated {
             
-            aaa(jumpVC: WaitToCommementVC(), str: subWebViewContactURL(urlStr: self.urlStr))
+            aaa(jumpVC: WaitReceiveVC(), str: subWebViewContactURL(urlStr: self.urlStr))
             
             decisionHandler(.cancel)
         } else {

@@ -24,7 +24,7 @@ class JFNavigationController: UINavigationController, UIGestureRecognizerDelegat
         /// 导航栏背景颜色
         navBar.barTintColor = UIColor.white
         navBar.isTranslucent = false
-        navBar.barStyle = UIBarStyle.black
+        navBar.barStyle = UIBarStyle.default
         navBar.shadowImage = UIImage()
         navBar.titleTextAttributes = [
             /// 全局标题颜色白色

@@ -41,7 +41,9 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.set_TbV.reloadData()
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadSelf), name: NSNotification.Name(rawValue: "updateSuccess"), object: nil)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        self.set_TbV.reloadData()
     }
     
     override func viewDidLoad() {
@@ -52,8 +54,9 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         view.addSubview(set_TbV)
         view.addSubview(settingVC_ExitBtn)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadSelf), name: NSNotification.Name(rawValue: "updateSuccess"), object: nil)
     }
+    
+    
     
     func reloadSelf() {
         CCog()

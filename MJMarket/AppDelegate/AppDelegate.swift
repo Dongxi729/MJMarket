@@ -41,8 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if let localVersion = (Bundle.main.infoDictionary as NSDictionary?)?.object(forKey: "CFBundleShortVersionString") as? String,
                 let serverVersion = result["version"] {
-                CCog(message: localVersion)
-                CCog(message: serverVersion)
                 if localVersion != serverVersion {
                     
                     

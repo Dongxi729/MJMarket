@@ -91,7 +91,7 @@ class CustomCollect : UIView,UICollectionViewDelegate,UICollectionViewDataSource
         self.customIndex = indexPath
         cell.myLabel.text = titles[indexPath.row]
         
-//        cell.myImageView.image = UIImage.init(named: self.imgs[indexPath.row])
+        cell.myImageView.image = UIImage.init(named: self.imgs[indexPath.row])
         
         if ((AccountModel.shareAccount()?.sex) == nil) {
             

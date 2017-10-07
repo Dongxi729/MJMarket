@@ -27,9 +27,6 @@ class HomeVC: WKViewController {
         
         // Do any additional setup after loading the view.
         
-        CCog(message: self.navigationController?.viewControllers.count as Any)
-
-        
         loadURL(urlStr: WEB_VIEW_HOME_URL)
     }
     

@@ -9,12 +9,12 @@
 import UIKit
 
 class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSource,FotgetSecTwoDelaget {
-
+    
     /// 是否是注册界面
     var isRigster = false
     
     lazy var forgetTBV: UITableView = {
-        let d : UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), style: .grouped)
+        let d : UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: .grouped)
         d.backgroundColor = UIColor.white
         d.separatorStyle = .none
         d.delegate = self
@@ -36,9 +36,15 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(forgetTBV)
+        
+        if isRigster {
+            title = "用户注册"
+        } else {
+            title = "忘记密码"
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -66,19 +72,68 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
         return 4
     }
     
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        if isRigster {
+            
+            if section == 1 {
+                
+                
+                let checkImg : UIButton = UIButton.init(frame: CGRect.init(x: COMMON_MARGIN, y: 2.5, width: 15, height: 15))
+                checkImg.setBackgroundImage(#imageLiteral(resourceName: "checked"), for: .normal)
+                checkImg.addTarget(self, action: #selector(changeImg(sender:)), for: .touchUpInside)
+                checkImg.layer.cornerRadius = 5
+                checkImg.layer.borderWidth = 1
+                
+                
+                let d : UILabel = UILabel.init(frame: CGRect.init(x: checkImg.RightX, y: 0, width: SCREEN_WIDTH - 3 * COMMON_MARGIN, height: 20))
+                d.font = UIFont.systemFont(ofSize: 12)
+                d.setColorFultext(ttext: "登录即为同意", tolabel: d, withSuffixStr: "《闽集商城用户服务协议》", lenght: 12)
+                let tapGes = UITapGestureRecognizer.init(target: self, action: #selector(jumpToAlias))
+                
+                d.isUserInteractionEnabled = true
+                d.addGestureRecognizer(tapGes)
+                
+                let footerV = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 20))
+                footerV.addSubview(d)
+                footerV.addSubview(checkImg)
+                return footerV
+            }
+        }
+        return UIView.init()
+    }
+    
+    @objc private func jumpToAlias() {
+        self.navigationController?.pushViewController(UserAgrementVC(), animated: true)
+    }
+    
+     @objc private func changeImg(sender : UIButton) {
+        if sender.backgroundImage(for: .normal) == #imageLiteral(resourceName: "checked") {
+            sender.setBackgroundImage(#imageLiteral(resourceName: "binded"), for: .normal)
+            FTIndicator.showToastMessage("请同意注册协议")
+            return
+        }
+        
+        if sender.backgroundImage(for: .normal) == #imageLiteral(resourceName: "binded") {
+            sender.setBackgroundImage(#imageLiteral(resourceName: "checked"), for: .normal)
+            return
+        }
+        
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return UIView.init()
     }
-
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 0.001
         }
-
+        
         if section == 3 {
             return COMMON_MARGIN
         }
-
+        
         return 0
     }
     
@@ -107,9 +162,9 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
             let cell = tableView.dequeueReusableCell(withIdentifier: "ForgetHeadV") as! ForgetHeadV
             return cell
         }
-
-        if indexPath.section == 1 {
         
+        if indexPath.section == 1 {
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: "FotgetSecTwo") as! FotgetSecTwo
             cell.iconImg.image = UIImage.init(named: iconTiles[indexPath.row])
             cell.tfInput.placeholder = tfTitles[indexPath.row]
@@ -126,7 +181,7 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
                 cell.tfInput.isHidden = false
                 cell.replaceTfInput.isHidden = true
             }
-
+            
             return cell
         }
         
@@ -137,7 +192,7 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
             }
             return cell
         }
-
+        
         if indexPath.section == 3 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ForgetFourCell") as! ForgetFourCell
             
@@ -147,7 +202,7 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
         return UITableViewCell.init()
         
     }
-
+    
     /// 手机号码
     private var forget_phone : String = ""
     
@@ -174,7 +229,7 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
         if str.placeholder?.description == "请输入密码" {
             forgetpass_str = str.text!
         }
-       
+        
         if str.placeholder?.description == "请再次输入密码" {
             confirmPassStr = str.text!
         }
@@ -184,7 +239,13 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
     
     /// 获取验证码代码方法
     func getAuthSEL() {
-        ZDXRequestTool.sendAuto()
+        CCog()
+        if self.forget_phone.characters.count > 0 {
+            ZDXRequestTool.sendAuto(phoneNumber: self.forget_phone)
+        } else {
+            FTIndicator.showToastMessage("请输入您的手机号码")
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -222,18 +283,26 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
                 if forget_phone.characters.count > 0 && auth_str.characters.count > 0 && forgetpass_str.characters.count > 0 && confirmPassStr.characters.count > 0 {
                     /// 注册的接口逻辑
                     if isRigster {
-                        ZDXRequestTool.register(registerNum: forget_phone, autoNumber: auth_str, password: forgetpass_str)
+//                        ZDXRequestTool.register(registerNum: forget_phone, autoNumber: auth_str, password: forgetpass_str)
+                        ZDXRequestTool.register(registerNum: forget_phone, autoNumber: auth_str, password: forgetpass_str, finished: { (result) in
+                            if result {
+                                UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
+                            }
+                        })
                     }
                     /// 忘记密码的接口逻辑
                     if !isRigster {
-                        ZDXRequestTool.findPass(findNum: forget_phone, autoNumber: auth_str, password: forgetpass_str)
+                        ZDXRequestTool.findPass(findNum: forget_phone, autoNumber: auth_str, password: forgetpass_str, finished: { (result) in
+                            if result {
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        })
                     }
                 }
             } else {
                 FTIndicator.showToastMessage("请输入格式正确的手机号码")
             }
             
-
         }
     }
 }
@@ -282,9 +351,9 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
         return d
     }()
     
-   
+    
     lazy var getSendNumBtn: UIButton = {
-        let d: UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - 40 * SCREEN_SCALE - COMMON_MARGIN - 40 * SCREEN_SCALE - COMMON_MARGIN, y: 12.5, width: 80 * SCREEN_SCALE, height: 20 * SCREEN_SCALE))
+        let d: UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - 40 * SCREEN_SCALE - COMMON_MARGIN - 40 * SCREEN_SCALE - COMMON_MARGIN, y: 4, width: 80 * SCREEN_SCALE, height: 30 * SCREEN_SCALE))
         d.layer.borderColor = FONT_COLOR.cgColor
         d.layer.cornerRadius = 5
         d.layer.borderWidth = 1
@@ -336,8 +405,7 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
         if textField.placeholder?.description == "请输入您的手机号码" {
             textField.keyboardType = .numberPad
             let str = (textField.text!)
-            if str.characters.count <= 12 {
-//                self.fotgetSecTwoDelaget?.getTftext(str: textField)
+            if str.characters.count <= 11 {
                 return true
             }
             textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
@@ -349,7 +417,6 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
             let currentString: NSString = (textField.text as NSString?)!
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
-//            self.fotgetSecTwoDelaget?.getTftext(str: textField)
             return newString.length <= maxLength
         }
         
@@ -358,21 +425,19 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
             let currentString: NSString = (textField.text as NSString?)!
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
-//            self.fotgetSecTwoDelaget?.getTftext(str: textField)
             return newString.length <= maxLength
         }
-
+        
         if textField.placeholder?.description == "请再次输入密码" {
             let maxLength = 30
             let currentString: NSString = (textField.text as NSString?)!
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
-//            self.fotgetSecTwoDelaget?.getTftext(str: textField)
             return newString.length <= maxLength
         }
-
+        
         return false
-
+        
     }
 }
 
@@ -450,3 +515,17 @@ class ForgetFourCell: CommonTableViewCell {
     
     
 }
+
+class Btn: UIButton {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        layer.borderWidth = 1
+        layer.cornerRadius = 10
+        clipsToBounds = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+

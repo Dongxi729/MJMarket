@@ -44,10 +44,14 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         var d : [String] = []
         if let province = AccountModel.shareAccount()?.province as? String {
             d.append(province)
+        } else {
+            d.append("北京")
         }
         
         if let city = AccountModel.shareAccount()?.city as? String {
             d.append(city)
+        } else {
+            d.append("东城区")
         }
         
         return d
@@ -457,11 +461,11 @@ private class PersonInfo_One: CommonTableViewCell {
         contentView.addSubview(personInfoOne_HeadLabel)
         contentView.addSubview(personInfoOne_headImg)
         
-        if ((AccountModel.shareAccount()?.headimg) != nil) {
-            if var headImgStr = AccountModel.shareAccount()?.headimg as? String {
-                headImgStr = "http://mj.ie1e.com" + headImgStr
-                self.personInfoOne_headImg.setImage(urlString: headImgStr, placeholderImage: #imageLiteral(resourceName: "default_thumb"))
-            }
+        if var headImgStr = AccountModel.shareAccount()?.headimg as? String {
+            headImgStr = "http://mj.ie1e.com" + headImgStr
+            self.personInfoOne_headImg.setImage(urlString: headImgStr, placeholderImage: #imageLiteral(resourceName: "default_thumb"))
+        } else {
+            self.personInfoOne_headImg.image = #imageLiteral(resourceName: "default_thumb")
         }
     }
     
@@ -504,11 +508,12 @@ private class PersonInfo_Two: CommonTableViewCell,UITextFieldDelegate {
         
         contentView.addSubview(personInfoTwo_NameDescLabel)
         contentView.addSubview(personInfoTwo_NameLabel)
-        if ((AccountModel.shareAccount()?.nickname) != nil) {
             if let nickNameStr = AccountModel.shareAccount()?.nickname as? String {
-                self.personInfoTwo_NameLabel.text = nickNameStr
+                DispatchQueue.main.async {
+                    self.personInfoTwo_NameLabel.text = nickNameStr
+                }
             }
-        }
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -535,25 +540,12 @@ private class PersonInfo_Three: CommonTableViewCell,CustomCollectDelegate {
     lazy var cc: CustomCollect = {
         
         var d : CustomCollect = CustomCollect.init(["男","女"], ["sex_select","sex_unselect"], CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
-        
-        
-        
-        //        if let sexIsNil = AccountModel.shareAccount()?.sex as? NSNumber {
-        //            if sexIsNil.intValue == 0 {
-        //                imgs = ["sex_select","sex_unselect"]
-        //                d = CustomCollect.init(["男","女"], imgs, CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
-        //            }
-        //            if sexIsNil.intValue == 1 {
-        //                imgs = ["sex_unselect","sex_select"]
-        //                d = CustomCollect.init(["男","女"], imgs, CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
-        //            }
-        //        }
-        
         d.delegate = self
         return d
     }()
     
     func selectCell(_ indexPath: IndexPath) {
+        
         self.personInfo_ThreeDelegate?.selectIndex(indexPath)
     }
     
@@ -573,6 +565,10 @@ private class PersonInfo_Three: CommonTableViewCell,CustomCollectDelegate {
                 self.cc = CustomCollect.init(["男","女"], imgs, CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
                 self.contentView.addSubview(self.cc)
             }
+        } else {
+            let imgs = ["sex_unselect","sex_unselect"]
+            self.cc = CustomCollect.init(["男","女"], imgs, CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
+            self.contentView.addSubview(self.cc)
         }
         
         

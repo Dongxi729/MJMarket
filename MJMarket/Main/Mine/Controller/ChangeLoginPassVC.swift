@@ -39,7 +39,7 @@ class ChangeLoginPassVC: UIViewController,UITableViewDelegate,UITableViewDataSou
         
     }
     
-    private var cellDescTitles : [String] = ["请输入您的登录号码","请重复输入登录密码"]
+    private var cellDescTitles : [String] = ["请输入您的登录密码","请重复输入登录密码"]
     
     // MARK: - 表格代理
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,16 +71,43 @@ class ChangeLoginPassVC: UIViewController,UITableViewDelegate,UITableViewDataSou
         return UIView.init()
     }
     
+    
+    /// 第一次登录密码
+    private var loginPass = ""
+    private var loginConfirmPass = ""
     // MARK: - BindPhoneCellDelegate
     func cellStr(index: IndexPath, str: String) {
         CCog(message: index.row)
         CCog(message: str)
+        switch index.row {
+        case 0:
+            loginPass = str
+        case 1:
+            loginConfirmPass = str
+        default:
+            break
+        }
     }
     
     
     // MARK: - PersonFooVDelegate -- 尾部代理方法
     func personBtnSEL() {
         CCog()
+        if loginPass.characters.count == 0 {
+            FTIndicator.showToastMessage("请输入登录密码")
+            return
+        }
+        
+        if loginConfirmPass.characters.count == 0 {
+            FTIndicator.showToastMessage("请再次输入登录密码")
+            return
+        }
+//        ZDXRequestTool.changeLoginPass(oldPassword: loginPass, newPassword: loginConfirmPass)
+        ZDXRequestTool.changeLoginPass(oldPassword: loginPass, newPassword: loginConfirmPass) { (result) in
+            if result {
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        }
     }
     
 }

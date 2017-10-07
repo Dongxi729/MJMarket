@@ -203,6 +203,158 @@ extension WKViewController {
             self.navigationController?.pushViewController(vvv, animated: true)
         }
         
+        /// 注册协议
+        if NSStringFromClass(self.classForCoder).contains("UserAgrementVC") {
+            let vc = UserAgrementVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+        
+        /// 签到 - SignmentVC
+        if NSStringFromClass(self.classForCoder).contains("SignmentVC") {
+            let vc = SignmentVC()
+            let vvv = vc
+            vvv.urlStr = str
+            self.navigationController?.pushViewController(vvv, animated: true)
+        }
+        
     }
 
 }
+
+
+extension WKViewController {
+    
+    
+    /// 加载URL
+    @objc func loadURL(urlStr : String) {
+        
+        CCog(message: urlStr)
+        
+        var tempUrl = ""
+        
+        var bool = false
+        
+        if ((AccountModel.shareAccount()?.token) != nil) {
+            bool = true
+        } else {
+            
+            bool = false
+        }
+        
+        
+        if (self.navigationController?.viewControllers.count)! >= 2 {
+            
+            if SCREEN_HEIGHT == 812 {
+                self.webView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH , height: SCREEN_HEIGHT - (tabBarController?.tabBar.Height)!)
+            }
+            
+            tempUrl = self.urlStr
+            
+            if tempUrl.contains("?") {
+                
+                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
+                
+                if !tempUrl.contains("token") {
+                    tempUrl = tempUrl + "&isapp=1&token=" + contactStr
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                    CCog(message: tempUrl)
+                } else {
+                    CCog(message: tempUrl)
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                }
+                
+            } else {
+                tempUrl = urlStr
+                
+                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
+                
+                if !tempUrl.contains("token") {
+                    
+                    tempUrl = tempUrl + "?isapp=1&token=" + contactStr
+                    CCog(message: tempUrl)
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                } else {
+                    
+                    CCog(message: tempUrl)
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                }
+            }
+        } else {
+            
+            if NSStringFromClass(self.classForCoder).contains("ShopCarVC") {
+                
+                if SCREEN_HEIGHT == 812 {
+                    self.webView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH , height: SCREEN_HEIGHT - (navigationController?.navigationBar.Height)! - (tabBarController?.tabBar.Height)!)
+                    
+                }
+            }
+            
+            tempUrl = urlStr
+            if tempUrl.contains("?") {
+                
+                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
+                
+                if !urlStr.contains("token") {
+                    tempUrl = urlStr + "&isapp=1&token=" + contactStr
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                    CCog(message: tempUrl)
+                } else {
+                    
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                    CCog(message: tempUrl)
+                }
+            } else {
+                
+                let contactStr = bool ? String(describing: (AccountModel.shareAccount()?.token)!) : ""
+                
+                if !urlStr.contains("token") {
+                    
+                    tempUrl = urlStr + "?isapp=1&token=" + contactStr
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                    CCog(message: tempUrl)
+                } else {
+                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
+                    CCog(message: tempUrl)
+                }
+            }
+        }
+    }
+
+    
+    // MARK: - headerViewelegate
+    func headerViewEndfun(_ _endRefresh: () -> Void) {
+        CCog()
+        /// 取出刷新头
+        let d : headerView = self.webView.viewWithTag(888) as! headerView
+
+        NetCheck.shared.returnNetStatus { (result) in
+            CCog(message: result)
+            
+            if result {
+                CCog()
+
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+                    self.webView.reload()
+                    d.endRefresh()
+                }
+
+            } else {
+                d.endRefresh()
+                
+                FTIndicator.showToastMessage("网络连接失败")
+                
+                /// 显示丢失网络的图片
+                self.lostNetImg.isHidden = false
+            }
+        }
+        
+    }
+    
+    func loadRefreshControl() {
+        
+    }
+}
+
+

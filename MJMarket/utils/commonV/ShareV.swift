@@ -83,7 +83,6 @@ class ShareV: UIView,ShareCellDelegate {
         
         addSubview(shareToDesc)
         addSubview(shareIcons)
-        CCog(message: shareToDesc.frame)
         addSubview(leftLine)
         addSubview(rightLine)
         addSubview(cancelBtn)
@@ -156,9 +155,7 @@ class ShareBtn : UIButton {
         
         super.init(frame: frame)
         
-        
-        self.layer.borderWidth = 1
-        
+
         self.titleLabel?.font = UIFont.systemFont(ofSize: 10)
         self.titleLabel?.textAlignment = .center
         self.titleLabel?.textColor = FONT_COLOR

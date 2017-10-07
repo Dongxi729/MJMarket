@@ -60,10 +60,9 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.isHidden = false
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "slideToZero"), object: nil)
     }
-    
-
-    
     
     
     /// 右上角按钮
@@ -87,13 +86,14 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     var recArray: [String] = [] {
         didSet {
-            self.myTbV.reloadData()
+//            self.myTbV.reloadData()
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "slideToZero"), object: nil)
         
         self.navigationController?.navigationBar.isHidden = true
         
@@ -101,7 +101,9 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             alertTologin()
         } else {
             ZDXRequestTool.orderCount(finished: { (str) in
+                CCog(message: str)
                 self.recArray = str
+                
             })
         }
     }
