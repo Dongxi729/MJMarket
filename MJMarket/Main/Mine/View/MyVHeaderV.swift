@@ -112,7 +112,6 @@ class MyHeaderInfoV: UIView,SlideToSignVDelegate {
     }()
     
     @objc func ddd(){
-        CCog()
         self.unlockToSign.slider.value = 0
     }
     

@@ -130,7 +130,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             alertTologin()
         } else {
             ZDXRequestTool.orderCount(finished: { (str) in
-                CCog(message: str)
+              
                 self.recArray = str
                 UserDefaults.standard.set(str, forKey: "redIcon")
                 UserDefaults.standard.synchronize()

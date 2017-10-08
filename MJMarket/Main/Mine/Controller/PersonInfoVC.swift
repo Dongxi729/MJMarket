@@ -9,7 +9,7 @@
 import UIKit
 
 
-class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,PersonCityDelegate,DatePickerVDelegate,TZImagePickerControllerDelegate,PersonInfo_OneDelegate,PersonInfo_TwoDelegate,PersonInfo_ThreeDelegate {
+class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,PersonCityDelegate,DatePickerVDelegate,TZImagePickerControllerDelegate,PersonInfo_OneDelegate,PersonInfo_TwoDelegate,Peroninfo_ThreeDelegate {
     
     
     
@@ -67,7 +67,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
     }
     
     func nameStr(str: String) {
-        CCog(message: str)
+        
         MineModel.nameString = str
     }
     
@@ -83,7 +83,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         d.dataSource = self
         d.register(PersonInfo_One.self, forCellReuseIdentifier: "PersonInfo_One")
         d.register(PersonInfo_Two.self, forCellReuseIdentifier: "PersonInfo_Two")
-        d.register(PersonInfo_Three.self, forCellReuseIdentifier: "PersonInfo_Three")
+        d.register(Peroninfo_Three.self, forCellReuseIdentifier: "Peroninfo_Three")
         d.register(PersonInfo_Four.self, forCellReuseIdentifier: "PersonInfo_Four")
         d.register(PersonInfo_Five.self, forCellReuseIdentifier: "PersonInfo_Five")
         d.register(PersonInfo_Six.self, forCellReuseIdentifier: "PersonInfo_Six")
@@ -148,13 +148,10 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         }
     }
     
-    // MARK: - 性别选择
-    func selectIndex(_ indexPath: IndexPath) {
-        CCog(message: indexPath.row)
-        chooseSex = indexPath.row
-        
+    func choosePersonChooseSex(_ index: IndexPath) {
+        CCog(message: index.row)
+        chooseSex = index.row
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 && indexPath.row == 0 {
@@ -176,8 +173,8 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         }
         
         if indexPath.section == 0 && indexPath.row == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PersonInfo_Three") as! PersonInfo_Three
-            cell.personInfo_ThreeDelegate = self
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Peroninfo_Three") as! Peroninfo_Three
+            cell.peroninfo_ThreeDelegate = self
             return cell
         }
         
@@ -273,13 +270,16 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
             timeSel()
         }
         
+        
+        if indexPath.section == 0 && indexPath.row == 2 {
+            CCog()
+        }
     }
     
     
     //  PersonFooVDelegate
     func personBtnSEL() {
-        CCog()
-        
+
         if chooseImgUrl.characters.count <= 0 {
             FTIndicator.showToastMessage("请上传头像")
             return
@@ -367,7 +367,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         self.datePickerV = dateV
     }
     
-    // MARK: - 选择生日
+    // MARK: - 选择生日 
     lazy var maskV: UIView = {
         let d: UIView = UIView.init(frame: (UIApplication.shared.keyWindow?.bounds)!)
         d.backgroundColor = UIColor.gray
@@ -390,450 +390,4 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         self.datePickerV.removeFromSuperview()
     }
 }
-
-
-protocol PersonFooVDelegate {
-    func personBtnSEL()
-}
-// MARK: - 表格尾部
-class PersonFooV : UIView {
-    
-    var personFooVDelegate : PersonFooVDelegate?
-    
-    lazy var personInfo_footerV: UIButton = {
-        let d : UIButton = UIButton.init(frame: CGRect.init(x: COMMON_MARGIN, y: 0, width: SCREEN_WIDTH - 2 * COMMON_MARGIN, height: 35 * SCREEN_SCALE))
-        d.backgroundColor = COMMON_COLOR
-        d.setTitle("保存", for: .normal)
-        d.addTarget(self, action: #selector(personSaveSEL), for: .touchUpInside)
-        d.layer.cornerRadius = 17.5
-        return d
-    }()
-    
-    @objc private func personSaveSEL() {
-        self.personFooVDelegate?.personBtnSEL()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubview(personInfo_footerV)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-
-protocol PersonInfo_OneDelegate {
-    func choosePic()
-}
-private class PersonInfo_One: CommonTableViewCell {
-    
-    var personInfo_OneDelegate : PersonInfo_OneDelegate?
-    
-    lazy var personInfoOne_HeadLabel: UILabel = {
-        let d: UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: 17.5, width: SCREEN_WIDTH * 0.2, height: 20))
-        d.textColor = FONT_COLOR
-        d.text = "头像"
-        d.font = UIFont.systemFont(ofSize: 14)
-        return d
-    }()
-    
-    lazy var personInfoOne_headImg: UIImageView = {
-        let d: UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 6, width: 43, height: 43))
-        d.layer.cornerRadius = (43) / 2
-        d.clipsToBounds = true
-        d.backgroundColor = UIColor.gray
-        d.contentMode = .scaleAspectFill
-        
-        d.isUserInteractionEnabled = true
-        let tapGes = UITapGestureRecognizer.init(target: self, action: #selector(choosePic))
-        d.addGestureRecognizer(tapGes)
-        return d
-    }()
-    
-    @objc func choosePic() {
-        self.personInfo_OneDelegate?.choosePic()
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(personInfoOne_HeadLabel)
-        contentView.addSubview(personInfoOne_headImg)
-        
-        if var headImgStr = AccountModel.shareAccount()?.headimg as? String {
-            headImgStr = "http://mj.ie1e.com" + headImgStr
-            self.personInfoOne_headImg.setImage(urlString: headImgStr, placeholderImage: #imageLiteral(resourceName: "default_thumb"))
-        } else {
-            self.personInfoOne_headImg.image = #imageLiteral(resourceName: "default_thumb")
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-
-protocol PersonInfo_TwoDelegate {
-    func nameStr(str : String)
-}
-private class PersonInfo_Two: CommonTableViewCell,UITextFieldDelegate {
-    
-    var personInfo_TwoDelegate : PersonInfo_TwoDelegate?
-    
-    lazy var personInfoTwo_NameDescLabel: UILabel = {
-        let d: UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.2, height: 20))
-        d.textColor = FONT_COLOR
-        d.text = "用户名"
-        d.font = UIFont.systemFont(ofSize: 14)
-        return d
-    }()
-    
-    lazy var personInfoTwo_NameLabel: UITextField = {
-        let d: UITextField = UITextField.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
-        d.textColor = FONT_COLOR
-        d.placeholder = "请输入姓名"
-        d.font = UIFont.systemFont(ofSize: 14)
-        d.delegate = self
-        return d
-    }()
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        self.personInfo_TwoDelegate?.nameStr(str: textField.text!)
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        
-        contentView.addSubview(personInfoTwo_NameDescLabel)
-        contentView.addSubview(personInfoTwo_NameLabel)
-            if let nickNameStr = AccountModel.shareAccount()?.nickname as? String {
-                DispatchQueue.main.async {
-                    self.personInfoTwo_NameLabel.text = nickNameStr
-                }
-            }
-
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-
-protocol PersonInfo_ThreeDelegate {
-    func selectIndex(_ indexPath : IndexPath)
-}
-private class PersonInfo_Three: CommonTableViewCell,CustomCollectDelegate {
-    
-    var personInfo_ThreeDelegate : PersonInfo_ThreeDelegate?
-    
-    lazy var personInfoThree_NameDescLabel: UILabel = {
-        let d: UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.2, height: 20))
-        d.textColor = FONT_COLOR
-        d.text = "性别"
-        d.font = UIFont.systemFont(ofSize: 14)
-        return d
-    }()
-    
-    lazy var cc: CustomCollect = {
-        
-        var d : CustomCollect = CustomCollect.init(["男","女"], ["sex_select","sex_unselect"], CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
-        d.delegate = self
-        return d
-    }()
-    
-    func selectCell(_ indexPath: IndexPath) {
-        
-        self.personInfo_ThreeDelegate?.selectIndex(indexPath)
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        
-        contentView.addSubview(personInfoThree_NameDescLabel)
-        
-        if let sexIsNil = AccountModel.shareAccount()?.sex as? String {
-            if sexIsNil == "0" {
-                let imgs = ["sex_select","sex_unselect"]
-                self.cc = CustomCollect.init(["男","女"], imgs, CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
-                self.contentView.addSubview(self.cc)
-            }
-            if sexIsNil == "1" {
-                let imgs = ["sex_unselect","sex_select"]
-                self.cc = CustomCollect.init(["男","女"], imgs, CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
-                self.contentView.addSubview(self.cc)
-            }
-        } else {
-            let imgs = ["sex_unselect","sex_unselect"]
-            self.cc = CustomCollect.init(["男","女"], imgs, CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.45, height: 20), CGSize.init(width: (SCREEN_WIDTH * 0.45 - 20) / 2, height: 25))
-            self.contentView.addSubview(self.cc)
-        }
-        
-        
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-private class PersonInfo_Four: CommonTableViewCell {
-    
-    lazy var personInfoFour_IconImg: UIImageView = {
-        let d : UIImageView = UIImageView.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: 20, height: 20))
-        d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "phone")
-        return d
-    }()
-    
-    lazy var personInfoFour_DescLabel: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: 45, y: 12.5, width: 80, height: 20))
-        d.font = UIFont.systemFont(ofSize: 14)
-        d.text = "手机"
-        return d
-    }()
-    
-    lazy var personInfoF_DisImg: UIImageView = {
-        let d: UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 10 - COMMON_MARGIN, y: 15, width: 15, height: 15))
-        d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "right")
-        return d
-    }()
-    
-    lazy var personInfoF_isBind: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 12.5, width: SCREEN_WIDTH - 10 - COMMON_MARGIN - 15, height: 20))
-        d.text = "绑定"
-        d.font = UIFont.systemFont(ofSize: 14)
-        d.textColor = FONT_COLOR
-        d.textAlignment = .right
-        return d
-    }()
-    
-    lazy var phoneNum: UILabel = {
-        let d: UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
-        d.textColor = FONT_COLOR
-        d.font = UIFont.systemFont(ofSize: 14)
-        return d
-    }()
-    
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(personInfoFour_IconImg)
-        contentView.addSubview(personInfoFour_DescLabel)
-        contentView.addSubview(personInfoF_DisImg)
-        contentView.addSubview(personInfoF_isBind)
-        contentView.addSubview(phoneNum)
-        
-        
-        if let phoneNum = AccountModel.shareAccount()?.Tel {
-            if var telNum = AccountModel.shareAccount()?.Tel as? String {
-                telNum =  telNum.numberSuitScanf(telNum)
-                self.phoneNum.text = telNum
-            }
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-private class PersonInfo_Five: CommonTableViewCell {
-    lazy var personInfoFour_IconImg: UIImageView = {
-        let d : UIImageView = UIImageView.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: 20, height: 20))
-        d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "list_icon_wechat")
-        return d
-    }()
-    
-    lazy var personInfoFour_DescLabel: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: 45, y: 12.5, width: 80, height: 20))
-        d.font = UIFont.systemFont(ofSize: 14)
-        d.text = "微信"
-        return d
-    }()
-    
-    lazy var personInfoF_DisImg: UIImageView = {
-        let d: UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 10 - COMMON_MARGIN, y: 15, width: 15, height: 15))
-        d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "right")
-        return d
-    }()
-    
-    lazy var personInfoF_isBind: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 12.5, width: SCREEN_WIDTH - 10 - COMMON_MARGIN - 15, height: 20))
-        d.text = "绑定"
-        d.font = UIFont.systemFont(ofSize: 14)
-        d.textColor = FONT_COLOR
-        d.textAlignment = .right
-        return d
-    }()
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(personInfoFour_IconImg)
-        contentView.addSubview(personInfoFour_DescLabel)
-        contentView.addSubview(personInfoF_DisImg)
-        contentView.addSubview(personInfoF_isBind)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-private class PersonInfo_Six: CommonTableViewCell {
-    
-    lazy var personInfo_SixDesc: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
-        d.textColor = UIColor.colorWithHexString("333333")
-        d.font = UIFont.systemFont(ofSize: 14)
-        d.text = "支付密码"
-        return d
-    }()
-    
-    lazy var personInfoF_DisImg: UIImageView = {
-        let d: UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 10 - COMMON_MARGIN, y: 15, width: 15, height: 15))
-        d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "right")
-        return d
-    }()
-    
-    lazy var personInfoF_isBind: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 12.5, width: SCREEN_WIDTH - 10 - COMMON_MARGIN - 15, height: 20))
-        d.text = "修改"
-        d.font = UIFont.systemFont(ofSize: 14)
-        d.textColor = FONT_COLOR
-        d.textAlignment = .right
-        return d
-    }()
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(personInfo_SixDesc)
-        contentView.addSubview(personInfoF_DisImg)
-        contentView.addSubview(personInfoF_isBind)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-protocol PersonCityDelegate {
-    func chooseCity(province : String,city : String)
-}
-
-// MARK: - 省份、城市
-private class PersonCityCell : CommonTableViewCell {
-    
-    var personCityDelegate : PersonCityDelegate?
-    
-    lazy var sortedImg: UIImageView = {
-        let d : UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH - 2 * COMMON_MARGIN - 12.5, y: 7.5, width: 25, height: 25))
-        d.image = #imageLiteral(resourceName: "sort")
-        d.contentMode = .scaleAspectFit
-        return d
-    }()
-    
-    lazy var personCityCell : UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.2, height: 20))
-        d.textColor = FONT_COLOR
-        d.font = UIFont.systemFont(ofSize: 14)
-        return d
-    }()
-    
-    lazy var cityInfoSelect : UITextField = {
-        let d: UITextField = UITextField.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
-        d.textColor = FONT_COLOR
-        d.text = "小明"
-        
-        d.font = UIFont.systemFont(ofSize: 14)
-        
-        return d
-    }()
-    
-    //城市选择器
-    private var v = PickerV()
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(personCityCell)
-        contentView.addSubview(cityInfoSelect)
-        contentView.addSubview(sortedImg)
-        
-        let toolBar = ToolBar()
-        
-        toolBar.seToolBar(confirmTitle: "确定", cancelTitle: "取消", comfirmSEL: #selector(donePicker), cancelSEL: #selector(cancelBtn), target: self)
-        
-        cityInfoSelect.inputAccessoryView = toolBar
-        
-        v = PickerV(frame: CGRect(x: 0, y: UIScreen.main.bounds.width - 100, width: UIScreen.main.bounds.width, height: 200))
-        v.backgroundColor = .white
-        cityInfoSelect.inputView = v
-        
-        
-    }
-    
-    @objc func donePicker() {
-        CCog()
-        self.endEditing(true)
-        
-        v.getPickerViewValue { (province, city, area) in
-            self.personCityDelegate?.chooseCity(province: province, city: city)
-        }
-    }
-    
-    @objc func cancelBtn() {
-        CCog()
-        endEditing(true)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-// MARK: - 生日
-private class PersonBirthCell : CommonTableViewCell {
-    
-    
-    lazy var personCityCell : UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.2, height: 20))
-        d.textColor = FONT_COLOR
-        d.font = UIFont.systemFont(ofSize: 14)
-        
-        return d
-    }()
-    
-    lazy var cityInfoSelect : UILabel = {
-        let d: UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
-        d.textColor = FONT_COLOR
-        d.text = "00/00/00"
-        
-        return d
-    }()
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(personCityCell)
-        contentView.addSubview(cityInfoSelect)
-        
-        if ((AccountModel.shareAccount()?.birthday) != nil) {
-            if let birthDay = AccountModel.shareAccount()?.birthday as? String {
-                self.cityInfoSelect.text = birthDay
-            }
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
-
 

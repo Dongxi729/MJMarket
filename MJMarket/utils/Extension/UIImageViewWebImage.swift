@@ -33,9 +33,7 @@ extension UIImageView {
     ///   - urlString: 图片url
     ///   - placeholderImage: 占位图
     func setAvatarImage(urlString: String?, placeholderImage: UIImage?) {
-        
-        CCog(message: urlString)
-        
+            
         guard let urlString = urlString,
             let url = URL(string: urlString) else {
                 image = placeholderImage

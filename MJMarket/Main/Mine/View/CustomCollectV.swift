@@ -14,7 +14,7 @@ protocol CustomCollectDelegate {
 }
 
 class CustomCollect : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-    var delegate : CustomCollectDelegate?
+    var customDelegate : CustomCollectDelegate?
     
     /// collectionView布局
     lazy var layout: UICollectionViewFlowLayout = {
@@ -68,10 +68,10 @@ class CustomCollect : UIView,UICollectionViewDelegate,UICollectionViewDataSource
         self.imgs = imgs
         self.layout.itemSize = cellItemSize
         addSubview(collecTTC)
-        //
-        //
-        //        let index = IndexPath.init(row: 0, section: 0)
-        //        collecTTC.selectItem(at: index, animated: false, scrollPosition: .bottom)
+        
+        
+        let index = IndexPath.init(row: 0, section: 0)
+        collecTTC.selectItem(at: index, animated: false, scrollPosition: .bottom)
         
     }
     
@@ -126,7 +126,7 @@ class CustomCollect : UIView,UICollectionViewDelegate,UICollectionViewDataSource
         
         let cell = collectionView.cellForItem(at: indexPath) as! MyTestCollectionViewCell
         
-        self.delegate?.selectCell(indexPath)
+        self.customDelegate?.selectCell(indexPath)
         
         updateCellStatus(cell, selected: true)
         

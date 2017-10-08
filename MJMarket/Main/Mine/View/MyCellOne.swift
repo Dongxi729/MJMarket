@@ -37,7 +37,6 @@ class MyCellOneV: UIView {
         
         
         if ((AccountModel.shareAccount()?.money) != nil) {
-            CCog(message: AccountModel.shareAccount()?.money)
             DispatchQueue.main.async {
                 self.myCellMoneyLabel.text = "￥" + ((AccountModel.shareAccount()?.money as? NSNumber)?.stringValue)!
             }

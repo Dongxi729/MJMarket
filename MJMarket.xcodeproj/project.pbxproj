@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		261E0B5F1F89F765006949EB /* Peroninfo_Three.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E0B5E1F89F765006949EB /* Peroninfo_Three.swift */; };
+		261E67B51F89F9D500423382 /* PersonBirthCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67B41F89F9D500423382 /* PersonBirthCell.swift */; };
+		261E67B71F89FA3F00423382 /* PersonCityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67B61F89FA3F00423382 /* PersonCityCell.swift */; };
+		261E67B91F89FA6C00423382 /* PersonInfo_Six.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67B81F89FA6C00423382 /* PersonInfo_Six.swift */; };
+		261E67BB1F89FADD00423382 /* PersonInfo_Five.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67BA1F89FADD00423382 /* PersonInfo_Five.swift */; };
+		261E67BD1F89FB0300423382 /* PersonInfo_Four.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67BC1F89FB0300423382 /* PersonInfo_Four.swift */; };
+		261E67C11F89FB9D00423382 /* PersonInfo_Two.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67C01F89FB9D00423382 /* PersonInfo_Two.swift */; };
+		261E67C31F89FBBD00423382 /* PersonInfo_One.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67C21F89FBBD00423382 /* PersonInfo_One.swift */; };
+		261E67C51F89FC4E00423382 /* PersonFooV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67C41F89FC4E00423382 /* PersonFooV.swift */; };
 		26314CBD1F7912E400E4FF72 /* WaitToPayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26314CBC1F7912E400E4FF72 /* WaitToPayVC.swift */; };
 		2631D0C11F7DF05200BCF8BD /* AllCommementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631D0C01F7DF05200BCF8BD /* AllCommementVC.swift */; };
 		2631D0C31F7DF23000BCF8BD /* WaitReceiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631D0C21F7DF23000BCF8BD /* WaitReceiveVC.swift */; };
@@ -204,6 +213,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		261E0B5E1F89F765006949EB /* Peroninfo_Three.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peroninfo_Three.swift; sourceTree = "<group>"; };
+		261E67B41F89F9D500423382 /* PersonBirthCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonBirthCell.swift; sourceTree = "<group>"; };
+		261E67B61F89FA3F00423382 /* PersonCityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCityCell.swift; sourceTree = "<group>"; };
+		261E67B81F89FA6C00423382 /* PersonInfo_Six.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfo_Six.swift; sourceTree = "<group>"; };
+		261E67BA1F89FADD00423382 /* PersonInfo_Five.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfo_Five.swift; sourceTree = "<group>"; };
+		261E67BC1F89FB0300423382 /* PersonInfo_Four.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfo_Four.swift; sourceTree = "<group>"; };
+		261E67C01F89FB9D00423382 /* PersonInfo_Two.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfo_Two.swift; sourceTree = "<group>"; };
+		261E67C21F89FBBD00423382 /* PersonInfo_One.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfo_One.swift; sourceTree = "<group>"; };
+		261E67C41F89FC4E00423382 /* PersonFooV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonFooV.swift; sourceTree = "<group>"; };
 		26314CBC1F7912E400E4FF72 /* WaitToPayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitToPayVC.swift; sourceTree = "<group>"; };
 		2631D0C01F7DF05200BCF8BD /* AllCommementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCommementVC.swift; sourceTree = "<group>"; };
 		2631D0C21F7DF23000BCF8BD /* WaitReceiveVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitReceiveVC.swift; sourceTree = "<group>"; };
@@ -614,6 +632,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		261E67B31F89F9AA00423382 /* person_info */ = {
+			isa = PBXGroup;
+			children = (
+				261E0B5E1F89F765006949EB /* Peroninfo_Three.swift */,
+				261E67B41F89F9D500423382 /* PersonBirthCell.swift */,
+				261E67B61F89FA3F00423382 /* PersonCityCell.swift */,
+				261E67B81F89FA6C00423382 /* PersonInfo_Six.swift */,
+				261E67BA1F89FADD00423382 /* PersonInfo_Five.swift */,
+				261E67BC1F89FB0300423382 /* PersonInfo_Four.swift */,
+				261E67C01F89FB9D00423382 /* PersonInfo_Two.swift */,
+				261E67C21F89FBBD00423382 /* PersonInfo_One.swift */,
+				261E67C41F89FC4E00423382 /* PersonFooV.swift */,
+			);
+			path = person_info;
+			sourceTree = "<group>";
+		};
 		2631D0BF1F7DF03C00BCF8BD /* WebV */ = {
 			isa = PBXGroup;
 			children = (
@@ -1309,6 +1343,7 @@
 				26F691C31F56D43800CB6034 /* MyCellTwo.swift */,
 				26F691C51F56D64000CB6034 /* MyCellThree.swift */,
 				26ED02F71F57A658007C2EEC /* SetVCellOne.swift */,
+				261E67B31F89F9AA00423382 /* person_info */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1548,6 +1583,7 @@
 				267AA8E91F87637D00646E0F /* UIView+XLExtension.m in Sources */,
 				267AA8E81F8762D400646E0F /* XLPasswordInputView.m in Sources */,
 				267AA8E71F8762CE00646E0F /* UIImage+XLExtension.m in Sources */,
+				261E0B5F1F89F765006949EB /* Peroninfo_Three.swift in Sources */,
 				265A7D6F1F59740F00F0503C /* TestVC.swift in Sources */,
 				26F6E3E01F7DF6EB001563CF /* AgentOrderVC.swift in Sources */,
 				2631D0C11F7DF05200BCF8BD /* AllCommementVC.swift in Sources */,
@@ -1569,6 +1605,7 @@
 				264FA6E21F54144400CE405B /* POPMath.mm in Sources */,
 				264FA6F81F54144400CE405B /* YYWebImageOperation.m in Sources */,
 				264FA6EF1F54144400CE405B /* UIImage+YYWebImage.m in Sources */,
+				261E67C51F89FC4E00423382 /* PersonFooV.swift in Sources */,
 				264FA6DA1F54144400CE405B /* POPAnimationTracer.mm in Sources */,
 				264FA6D81F54144400CE405B /* POPAnimationExtras.mm in Sources */,
 				26F6E4001F7E0A78001563CF /* AboutUSVC.swift in Sources */,
@@ -1590,6 +1627,7 @@
 				26AE2B561F5513FD00AAA36C /* ZDXBaseVC.swift in Sources */,
 				26F73B011F74F8FA00380A03 /* TZProgressView.m in Sources */,
 				2637438F1F6BAAD500382FF4 /* HomeVC.swift in Sources */,
+				261E67C11F89FB9D00423382 /* PersonInfo_Two.swift in Sources */,
 				264FA6E71F54144400CE405B /* YYCache.m in Sources */,
 				264FA6ED1F54144400CE405B /* MKAnnotationView+YYWebImage.m in Sources */,
 				26F6E3DA1F7DF64A001563CF /* MyCoupon.swift in Sources */,
@@ -1608,6 +1646,7 @@
 				26F73AC71F74A01600380A03 /* RSADataVerifier.m in Sources */,
 				26AE2B361F55014000AAA36C /* UILabel + Extension.swift in Sources */,
 				26F6E3DC1F7DF67E001563CF /* Mycomment.swift in Sources */,
+				261E67BD1F89FB0300423382 /* PersonInfo_Four.swift in Sources */,
 				26F73AF71F74F8FA00380A03 /* TZAssetCell.m in Sources */,
 				264FA6D51F54144400CE405B /* POPAnimatableProperty.mm in Sources */,
 				2631D0C31F7DF23000BCF8BD /* WaitReceiveVC.swift in Sources */,
@@ -1627,6 +1666,7 @@
 				26F73AFA1F74F8FA00380A03 /* TZImageCropManager.m in Sources */,
 				26F691BE1F56A68000CB6034 /* SlideToSignV.swift in Sources */,
 				26AE2B481F55037300AAA36C /* SeparateBtn.swift in Sources */,
+				261E67B51F89F9D500423382 /* PersonBirthCell.swift in Sources */,
 				264FA77E1F54229E00CE405B /* IQToolbar.m in Sources */,
 				26ED02F61F57A124007C2EEC /* PersonInfoVC.swift in Sources */,
 				264FA6E31F54144400CE405B /* POPPropertyAnimation.mm in Sources */,
@@ -1635,6 +1675,7 @@
 				2680AB051F627211008D51AB /* ShareV.swift in Sources */,
 				264FA6D71F54144400CE405B /* POPAnimationEvent.mm in Sources */,
 				26F73AD11F74A2EE00380A03 /* PaymenyModel.swift in Sources */,
+				261E67BB1F89FADD00423382 /* PersonInfo_Five.swift in Sources */,
 				26F73AFE1F74F8FA00380A03 /* TZPhotoPickerController.m in Sources */,
 				26EC77701F7F8DF6007AE27D /* SignmentVC.swift in Sources */,
 				26F73AD71F74B7CC00380A03 /* RemoveCookieTool.swift in Sources */,
@@ -1642,6 +1683,7 @@
 				264FA6F71F54144400CE405B /* YYWebImageManager.m in Sources */,
 				26AE2B4E1F5503FD00AAA36C /* LoginClickV.swift in Sources */,
 				26EE87041F70DBEC001AE2EF /* ForgetPassVC.swift in Sources */,
+				261E67C31F89FBBD00423382 /* PersonInfo_One.swift in Sources */,
 				26AE2B521F55056300AAA36C /* MainTabBarViewController.swift in Sources */,
 				264FA6DF1F54144400CE405B /* POPDecayAnimation.mm in Sources */,
 				264FA6EB1F54144400CE405B /* _YYWebImageSetter.m in Sources */,
@@ -1660,6 +1702,7 @@
 				268853681F7BCF14008BD4DE /* WXTool.swift in Sources */,
 				2698933A1F88901700C150F9 /* footerView.swift in Sources */,
 				264FA6F01F54144400CE405B /* UIImageView+YYWebImage.m in Sources */,
+				261E67B71F89FA3F00423382 /* PersonCityCell.swift in Sources */,
 				264FA7151F54151700CE405B /* FTNotificationIndicator.m in Sources */,
 				264FA6EC1F54144400CE405B /* CALayer+YYWebImage.m in Sources */,
 				264FA6E01F54144400CE405B /* POPGeometry.mm in Sources */,
@@ -1680,6 +1723,7 @@
 				26AE2B3B1F55023200AAA36C /* AppDelegate.swift in Sources */,
 				26AE2B331F55014000AAA36C /* NSString+extension.swift in Sources */,
 				26F73AC61F74A01600380A03 /* RSADataSigner.m in Sources */,
+				261E67B91F89FA6C00423382 /* PersonInfo_Six.swift in Sources */,
 				264FA6F51F54144400CE405B /* YYSpriteSheetImage.m in Sources */,
 				26AE2B4A1F55038C00AAA36C /* CommonImg.swift in Sources */,
 				26F73AFB1F74F8FA00380A03 /* TZImageManager.m in Sources */,

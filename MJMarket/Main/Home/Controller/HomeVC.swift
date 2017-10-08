@@ -33,7 +33,6 @@ class HomeVC: WKViewController {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        CCog(message: navigationAction.request.url?.absoluteString as Any)
         
         self.urlStr = (navigationAction.request.url?.absoluteString)!
 

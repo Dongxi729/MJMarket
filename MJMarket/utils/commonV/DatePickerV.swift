@@ -145,9 +145,7 @@ class DatePickerV: UIView {
     
     /// 确定按钮
     func dateConfimrBtnSEL() {
-//        self.datePickerTitle.text = self.dateYear + "年"
-//        self.datePickerTitle.text = self.dateMonth + "月"
-//        self.datePickerTitle.text = self.day + "日"
+
         self.datePickerDelegate?.chooseMonthAndYear(dateYear, dateMonth,day)
     }
     
