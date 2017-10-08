@@ -12,8 +12,7 @@ import UIKit
 
 class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCellTwoDelegate,MyCellOneDelegate,ChagrgeVDelegate,MyVHeaderVDelegate {
     func btnCli(sender: IndexPath) {
-        CCog(message: sender.row)
-        
+
         
         if sender.row == 0 {
             

@@ -54,6 +54,7 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         view.addSubview(set_TbV)
         view.addSubview(settingVC_ExitBtn)
         
+        view.backgroundColor = UIColor.white
     }
     
     
@@ -76,8 +77,10 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "setOne") as! SetVCellOne
+            if (MineModel.chooseImgData != nil) {
+                cell.set_HeadImg.image = MineModel.chooseImgData
+            }
             
-            cell.set_HeadImg.image = MineModel.chooseImgData
             cell.set_NameLabel.text = MineModel.nameString
             
             return cell
