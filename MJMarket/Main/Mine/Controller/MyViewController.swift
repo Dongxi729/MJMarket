@@ -136,6 +136,8 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
                 UserDefaults.standard.synchronize()
             })
         }
+        
+        self.myTbV.reloadData()
     }
     
     

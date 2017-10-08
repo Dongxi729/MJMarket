@@ -65,6 +65,8 @@ class MyVHeaderV: CommonTableViewCell,MyHeaderInfoVDelegate {
         } else {
             self.headerIconImg.image = #imageLiteral(resourceName: "default_thumb")
         }
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

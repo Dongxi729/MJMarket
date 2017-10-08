@@ -43,7 +43,6 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadSelf), name: NSNotification.Name(rawValue: "updateSuccess"), object: nil)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-//        self.set_TbV.reloadData()
     }
     
     override func viewDidLoad() {
@@ -147,6 +146,9 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         RemoveCookieTool.removeCookie()
         AccountModel.logout()
         UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
+        MineModel.nameString = ""
+        MineModel.chooseImgData = nil
+        MineModel.signMent = false
     }
     
     deinit {

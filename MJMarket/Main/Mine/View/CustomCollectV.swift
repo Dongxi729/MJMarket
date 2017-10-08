@@ -36,7 +36,7 @@ class CustomCollect : UIView,UICollectionViewDelegate,UICollectionViewDataSource
         d.delegate = self
         d.dataSource = self
         d.backgroundColor = .white
-        d.layer.borderWidth = 1
+        
         d.register(MyTestCollectionViewCell.self, forCellWithReuseIdentifier: "MyTestCollectionViewCell")
         
         return d
@@ -84,14 +84,21 @@ class CustomCollect : UIView,UICollectionViewDelegate,UICollectionViewDataSource
         return titles.count
     }
     
+    var xxxx = false
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyTestCollectionViewCell", for: indexPath) as! MyTestCollectionViewCell
-        
         
         self.customIndex = indexPath
         cell.myLabel.text = titles[indexPath.row]
         
-        cell.myImageView.image = UIImage.init(named: self.imgs[indexPath.row])
+        if !xxxx {
+            CCog(message: self.imgs[indexPath.row])
+            cell.myImageView.image = UIImage.init(named: self.imgs[indexPath.row])
+            if indexPath.row == 1 {
+                xxxx = true
+            }
+        }
         
         if ((AccountModel.shareAccount()?.sex) == nil) {
             
@@ -108,18 +115,17 @@ class CustomCollect : UIView,UICollectionViewDelegate,UICollectionViewDataSource
     
     func updateCellStatus(_ cell: MyTestCollectionViewCell, selected: Bool) {
         
-        cell.myLabel.textColor = selected ? COMMON_COLOR : UIColor.gray
         cell.myImageView.image = selected ? UIImage.init(named: "sex_select") : UIImage.init(named: "sex_unselect")
-        
+     
     }
     
-    
+
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! MyTestCollectionViewCell
         updateCellStatus(cell, selected: false)
-        if indexPath.row == 0 {
-            updateCellStatus(cell, selected: false)
-        }
+
+        
+        CCog(message: indexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -176,4 +182,3 @@ class MyTestCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

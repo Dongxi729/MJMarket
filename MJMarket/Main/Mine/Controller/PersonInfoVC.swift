@@ -11,8 +11,9 @@ import UIKit
 
 class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,PersonCityDelegate,DatePickerVDelegate,TZImagePickerControllerDelegate,PersonInfo_OneDelegate,PersonInfo_TwoDelegate,Peroninfo_ThreeDelegate {
     
-    
-    
+
+    /// 性别  0 男 1 女
+    var chooseSex : Int = 0
     
     /// 图片地址
     private lazy var chooseImgUrl: String = {
@@ -58,8 +59,6 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
     }()
     
     
-    /// 性别  0 男 1 女
-    var chooseSex : Int = 0
     
     // MARK: - 选择图片
     func choosePic() {
@@ -67,7 +66,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
     }
     
     func nameStr(str: String) {
-        
+        CCog()
         MineModel.nameString = str
     }
     
@@ -148,11 +147,12 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         }
     }
     
-    func choosePersonChooseSex(_ index: IndexPath) {
-        CCog(message: index.row)
-        chooseSex = index.row
+    func peroninfo_ThreePass(chooseSexInt: Int) {
+        CCog(message: chooseSexInt)
+        chooseSex = chooseSexInt
     }
     
+    var loaded = false
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 && indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonInfo_One") as! PersonInfo_One
@@ -174,6 +174,23 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         
         if indexPath.section == 0 && indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Peroninfo_Three") as! Peroninfo_Three
+            
+            if let xxx = AccountModel.shareAccount()?.sex as? String {
+                if xxx == "0" {
+                    cell.sexV.imgs = ["sex_select","sex_unselect"]
+                }
+                if xxx == "1" {
+                    cell.sexV.imgs = ["sex_unselect","sex_select"]
+
+                }
+            } else {
+                if !loaded {
+                    
+                    loaded = true
+                    cell.sexV.imgs = ["sex_select","sex_unselect"]
+                }
+            }
+            
             cell.peroninfo_ThreeDelegate = self
             return cell
         }

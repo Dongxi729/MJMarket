@@ -579,18 +579,18 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        CCog()
         
-//        self.navigationController?.setNavigationBarHidden(false, animated: true)
-
     }
     
-    
-    
-    override func viewDidDisappear(_ animated: Bool) {
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         
         CCog()
-//        SettingVC
-//        MyViewController
+        self.lostNetImg.isHidden = false
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+    
         super.viewDidDisappear(animated)
         if NSStringFromClass(self.classForCoder).contains("MyViewController") || NSStringFromClass(self.classForCoder).contains("MyViewController") {
             self.navigationController?.setNavigationBarHidden(false, animated: true)

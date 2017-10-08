@@ -114,6 +114,10 @@ class ZDXRequestTool: NSObject {
                     }
                 }
                 
+                if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                    
+                }
+                
             }) { (error) in
                 CCog(message: error.localizedDescription)
             }
