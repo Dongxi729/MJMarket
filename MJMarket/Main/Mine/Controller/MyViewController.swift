@@ -11,6 +11,36 @@
 import UIKit
 
 class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCellTwoDelegate,MyCellOneDelegate,ChagrgeVDelegate,MyVHeaderVDelegate {
+    func btnCli(sender: IndexPath) {
+        CCog(message: sender.row)
+        
+        
+        if sender.row == 0 {
+            
+            self.navigationController?.pushViewController(AllCommementVC(), animated: true)
+        }
+        
+        if sender.row == 1 {
+            
+            self.navigationController?.pushViewController(WaitReceiveVC(), animated: true)
+        }
+        
+        if sender.row == 2 {
+            
+            self.navigationController?.pushViewController(WaitToCommementVC(), animated: true)
+        }
+        
+        if sender.row == 3 {
+            
+            self.navigationController?.pushViewController(WaitToPay(), animated: true)
+        }
+        
+        if sender.row == 4 {
+            self.navigationController?.pushViewController(RefundVC(), animated: true)
+            
+        }
+    }
+    
     func sliSucce() {
         self.navigationController?.pushViewController(SignmentVC(), animated: true)
     }
@@ -20,7 +50,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         self.navigationController?.pushViewController(MyJIfenVC(), animated: true)
     }
     
-
+    
     /// 提示登录
     private func alertTologin() {
         guard let _ = AccountModel.shareAccount()?.id as? String else {
@@ -38,7 +68,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             return
         }
     }
-
+    
     lazy var myTbV: UITableView = {
         let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 32), style: .grouped)
         d.delegate = self
@@ -53,7 +83,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         /// cell的分割线颜色
         d.separatorColor = UIColor.colorWithHexString("F3F3F3")
-
+        
         return d
     }()
     
@@ -86,7 +116,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     var recArray: [String] = [] {
         didSet {
-//            self.myTbV.reloadData()
+            self.myTbV.reloadData()
         }
     }
     
@@ -103,7 +133,8 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             ZDXRequestTool.orderCount(finished: { (str) in
                 CCog(message: str)
                 self.recArray = str
-                
+                UserDefaults.standard.set(str, forKey: "redIcon")
+                UserDefaults.standard.synchronize()
             })
         }
     }
@@ -113,7 +144,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-
+        
         view.addSubview(myTbV)
         UIApplication.shared.statusBarStyle = .default
         
@@ -121,10 +152,8 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         self.myTbV.addSubview(myView_RightBtn)
         
-//        view.backgroundColor = UIColor.colorWithHexString("F8F8F8")
-        
         view.backgroundColor = UIColor.white
-
+        
         if #available(iOS 11.0, *) {
             self.myTbV.contentInsetAdjustmentBehavior = .never
         }
@@ -162,9 +191,8 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "two") as! MyCellTwo
-
-            cell.xxx(dss: recArray)
             cell.myCellTwoDelegate = self
+            cell.cellDataSouece = recArray
             return cell
             
         case 3:
@@ -194,7 +222,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             return COMMON_MARGIN * 0.5
         }
     }
-
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
         return COMMON_MARGIN * 0.5
@@ -208,7 +236,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         case 1:
             return 60
         case 2:
-            return 60 * SCREEN_SCALE
+            return 60
         case 3:
             return 45
         default:
@@ -229,35 +257,12 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     }
     
     // MARK: - MyCellTwoDelegate
-    func btnCli(sender: UIButton) {
-        if sender.titleLabel?.text == "全部订单" {
-            self.navigationController?.pushViewController(AllCommementVC(), animated: true)
-            
-        }
-        
-        if sender.titleLabel?.text == "待收货" {
-            CCog()
-            self.navigationController?.pushViewController(WaitReceiveVC(), animated: true)
-        }
-        
-        if sender.titleLabel?.text == "待评价" {
-            CCog()
-            self.navigationController?.pushViewController(WaitToCommementVC(), animated: true)
-        }
-        
-        if sender.titleLabel?.text == "代付款" {
-            CCog()
-            self.navigationController?.pushViewController(WaitToPay(), animated: true)
-        }
-        
-        if sender.titleLabel?.text == "退款/售后" {
-            CCog()
-            self.navigationController?.pushViewController(RefundVC(), animated: true)
-        }
-    }
+    //    func btnCli(sender: UIButton) {
+    //
+    //    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      
+        
         
         /// 收货地址
         if indexPath.section == 3 && indexPath.row == 0 {
@@ -267,7 +272,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         /// 优惠券
         if indexPath.section == 3 && indexPath.row == 1 {
             self.navigationController?.pushViewController(MyCoupon(), animated: true)
-
+            
         }
         
         /// 我的评价
@@ -290,13 +295,13 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             self.navigationController?.pushViewController(AgentOrderVC(), animated: true)
         }
     }
-
+    
     
     func chargeDelegateSEL() {
         CCog()
         let payV = ChagrgeV.init(CGRect.init(x: 0, y: 0, width: 265, height: (310) * 1.15))
         payV.chagrgeVDelegate = self
-
+        
         UIApplication.shared.keyWindow?.addSubview(payV)
         payV.center = (UIApplication.shared.keyWindow?.center)!
     }

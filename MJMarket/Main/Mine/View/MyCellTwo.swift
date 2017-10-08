@@ -9,73 +9,176 @@
 import UIKit
 
 protocol MyCellTwoDelegate {
-    func btnCli(sender : UIButton)
+    func btnCli(sender : IndexPath)
 }
 
-class MyCellTwo: CommonTableViewCell {
+class MyCellTwo : CommonTableViewCell,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    var indexPAth : IndexPath?
+    
     var myCellTwoDelegate : MyCellTwoDelegate?
     
-    var btnWithRed : BtnWithRedMark = BtnWithRedMark()
-    
-    
-    var redBtn = UIButton()
-    
-    
-    private var myCellTwoTitls : [String] = ["全部订单","待收货","待评价","代付款","退款/售后"]
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(collV)
+    }
     
     /// 图片名字
     private var imgsName : [String] = ["full_order","wait_payment","wait_receiver","wait_evaluate","refund_after"]
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
+    private var titleSource : [String] = ["全部订单","待收货","待评价","代收款","退货/售后"]
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    var cellDataSouece = [""] {
+        didSet {
+            print(#line,cellDataSouece)
+            
+            self.collV.reloadData()
+        }
+    }
+    
+    
+    /// 九宫格
+    lazy var collV: UICollectionView = {
         
-        for value in 0..<myCellTwoTitls.count {
-            btnWithRed = BtnWithRedMark.init(frame: CGRect.init(x: CGFloat(value) * (SCREEN_WIDTH / 5), y: 0, width: SCREEN_WIDTH / 5, height: SCREEN_WIDTH / 5 * 0.8))
-            btnWithRed.myInfoBtn.setTitle(myCellTwoTitls[value], for: .normal)
-            btnWithRed.myInfoBtn.addTarget(self, action: #selector(btnSEl(sender:)), for: .touchUpInside)
-            btnWithRed.myInfoBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12 * SCREEN_SCALE)
+        let layout = UICollectionViewFlowLayout.init()
+        let d : UICollectionView = UICollectionView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: self.bounds.height * 1.3), collectionViewLayout: layout)
+        
+        d.backgroundColor = UIColor.clear
+        
+        d.dataSource = self
+        d.delegate = self
+        
+        d.register(Home_cell.self, forCellWithReuseIdentifier: "cell")
+        
+        layout.itemSize = CGSize.init(width: UIScreen.main.bounds.width / 6, height: self.bounds.height * 1.3)
+        d.showsVerticalScrollIndicator = false
+        
+        return d
+    }()
+    
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        CCog(message: indexPath.row)
+        self.myCellTwoDelegate?.btnCli(sender: indexPath)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(5, 5, 0, 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! Home_cell
 
-            btnWithRed.myInfoBtn.setImage(UIImage.init(named: imgsName[value]), for: .normal)
-            contentView.addSubview(btnWithRed)
-            
-        }
-    }
-    
-    func xxx(dss : [String]) {
-        
-        
-        DispatchQueue.main.async {
-            
-            for value in 0..<dss.count {
-                
-                let str : Int = Int(dss[value])!
-                
-                self.redBtn = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.1 + (CGFloat(value) * (SCREEN_WIDTH / 5)), y: 0, width: SCREEN_WIDTH / 19, height: SCREEN_WIDTH / 19))
-                self.redBtn.backgroundColor = COMMON_COLOR
-                self.redBtn.layer.cornerRadius = self.redBtn.Width / 2
-                self.redBtn.clipsToBounds = true
-                self.redBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-                self.redBtn.setTitle(String(str), for: .normal)
-                
-                self.contentView.addSubview(self.redBtn)
-                
-                if str <= 0 {
-                    self.redBtn.isHidden = true
+        if cellDataSouece.count == 0 {
+            if let redSource = UserDefaults.standard.object(forKey: "redIcon") as? [String] {
+                if redSource[indexPath.row] == "0" {
+                    cell.seprateBtn.redV.isHidden = true
+                } else {
+                    cell.seprateBtn.redV.isHidden = false
                 }
+                cell.seprateBtn.redV.text = redSource[indexPath.row]
+                cell.seprateBtn.setImage(UIImage.init(named: imgsName[indexPath.row]), for: .normal)
+                cell.seprateBtn.setTitleColor(.black, for: .normal)
+                cell.seprateBtn.setTitle(self.titleSource[indexPath.row], for: .normal)
+            } else {
+                var tempSource = ["0","0","0","0","0"]
+                if tempSource[indexPath.row] == "0" {
+                    cell.seprateBtn.redV.isHidden = true
+                } else {
+                    cell.seprateBtn.redV.isHidden = false
+                }
+                cell.seprateBtn.redV.text = tempSource[indexPath.row]
+                cell.seprateBtn.setImage(UIImage.init(named: imgsName[indexPath.row]), for: .normal)
+                cell.seprateBtn.setTitleColor(.black, for: .normal)
+                cell.seprateBtn.setTitle(self.titleSource[indexPath.row], for: .normal)
             }
+        } else {
+            
+            if cellDataSouece[indexPath.row] == "0" {
+                cell.seprateBtn.redV.isHidden = true
+            } else {
+                cell.seprateBtn.redV.isHidden = false
+            }
+            cell.seprateBtn.redV.text = cellDataSouece[indexPath.row]
+            cell.seprateBtn.setImage(UIImage.init(named: imgsName[indexPath.row]), for: .normal)
+            cell.seprateBtn.setTitleColor(.black, for: .normal)
+            
+            cell.seprateBtn.setTitle(self.titleSource[indexPath.row], for: .normal)
         }
-        
+
+        return cell
     }
+}
+
+
+class Home_cell: UICollectionViewCell {
+    lazy var btn: UILabel = {
+        let d : UILabel = UILabel.init(frame: self.bounds)
+        return d
+    }()
     
-    func btnSEl(sender : UIButton) {
-        self.myCellTwoDelegate?.btnCli(sender: sender)
+    lazy var seprateBtn: BtnWithRedMark2 = {
+        let d : BtnWithRedMark2 = BtnWithRedMark2.init(frame: self.bounds)
+        return d
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.addSubview(seprateBtn)
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+class BtnWithRedMark2 : UIButton {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(redV)
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        self.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+        self.titleLabel?.textAlignment = .center
+        self.isUserInteractionEnabled = false
+        
+    }
+    
+    override func titleRect(forContentRect contentRect: CGRect) -> CGRect {
+        return CGRect.init(x: 0, y: self.bounds.height * 0.6, width: self.bounds.width, height: self.bounds.height * 0.4)
+    }
+    
+    override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
+        return CGRect.init(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height * 0.6)
+    }
+    
+    lazy var redV: UILabel = {
+        let d: UILabel = UILabel.init(frame: CGRect.init(x: self.bounds.width * 0.6, y: 0, width: self.bounds.width / 3, height: self.bounds.height / 3))
+        d.textColor = UIColor.white
+        d.font = UIFont.systemFont(ofSize: 12)
+        d.layer.cornerRadius = (self.bounds.height / 6)
+        d.clipsToBounds = true
+        d.textAlignment = .center
+        d.backgroundColor = UIColor.red
+        return d
+    }()
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 
 class BtnWithRedMark: UIView {
     
@@ -90,11 +193,8 @@ class BtnWithRedMark: UIView {
         return d
     }()
     
-    
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        myInfoBtn.center = self.center
         addSubview(myInfoBtn)
     }
     
