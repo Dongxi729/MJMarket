@@ -60,7 +60,7 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate {
     lazy var wxLoginBtn: SeparateBtn = {
         let d: SeparateBtn = SeparateBtn.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.5 - 80 * 0.5 * SCREEN_SCALE, y: self.sepateBtn.BottomY + COMMON_MARGIN, width: 80 * SCREEN_SCALE, height: 80 * SCREEN_SCALE))
         d.setTitle("微信登录", for: .normal)
-        d.setImage(UIImage.init(named: "list_icon_wechat"), for: .normal)
+        d.setImage(UIImage.init(named: "wechat_friend"), for: .normal)
         d.setTitleColor(FONT_COLOR, for: .normal)
         d.addTarget(self, action: #selector(wxLoginSEL), for: .touchUpInside)
         return d

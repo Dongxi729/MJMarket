@@ -160,49 +160,6 @@ class ZDXRequestTool: NSObject {
                 getUserInfo(uidStr: uidStr)
             }
             
-//
-//
-//            if let dicccc = result as? NSDictionary {
-//
-//                if let dicData = dicccc["data"] as? NSDictionary,
-//                    let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
-//
-//
-//                    if let msgAlert = dicccc["message"] as? String {
-//                        FTIndicator.showToastMessage(msgAlert)
-//                        if msgAlert == "登录成功" {
-//                            Model.boolSwotvh = false
-//                            let vc = WKViewController()
-//                            vc.clearCookie()
-//                            finished(true)
-//                        }
-//                    }
-//
-//                    if let userInfoStr = dicData["uid"] as? String {
-//                        // 获取用户信息
-//                        let getUserInfo : [String : Any] = ["uid" : userInfoStr]
-//
-//                        CCog(message: getUserInfo)
-//                        NetWorkTool.shared.postWithPath(path:USER_INFO_URL , paras:getUserInfo , success: { (result) in
-//
-//
-//                            if let dic = result as? NSDictionary {
-//
-//                                if let dicData = dic["data"] as? NSDictionary {
-//                                    let account = AccountModel.init(dict: dicData as! [String : Any])
-//                                    account.updateUserInfo()
-//
-//                                }
-//                            }
-//                        }, failure: { (error) in
-//                            CCog(message: error)
-//                        })
-//
-//                    }
-//
-//                }
-//
-//            }
         }, failure: { (error) in
             CCog(message: error.localizedDescription)
         })

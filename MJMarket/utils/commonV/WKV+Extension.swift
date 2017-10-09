@@ -258,12 +258,9 @@ extension WKViewController {
                 
                 if !tempUrl.contains("token") {
                     tempUrl = tempUrl + "&isapp=1&token=" + contactStr
-//                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
                     self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
                     
                 } else {
-                    
-//                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
                     self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
                 }
                 
@@ -275,13 +272,9 @@ extension WKViewController {
                 if !tempUrl.contains("token") {
                     
                     tempUrl = tempUrl + "?isapp=1&token=" + contactStr
-                    CCog(message: tempUrl)
-//                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
                     self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
                 } else {
                     
-//                    CCog(message: tempUrl)
-//                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
                     self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
                 }
             }

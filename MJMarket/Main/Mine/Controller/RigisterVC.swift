@@ -64,11 +64,14 @@ class RigisterVC: UIViewController ,loginClickVDelegate {
         return d
     }()
     
-    lazy var wxLoginBtn: SeparateBtn = {
+    private lazy var wxLoginBtn: SeparateBtn = {
         let d: SeparateBtn = SeparateBtn.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.5 - 80 * 0.5 * SCREEN_SCALE, y: SCREEN_HEIGHT * 0.65, width: 80 * SCREEN_SCALE, height: 80 * SCREEN_SCALE))
+        
         d.setTitle("微信登录", for: .normal)
+        d.setImage(UIImage.init(named: "wechat_friend"), for: .normal)
         d.setTitleColor(FONT_COLOR, for: .normal)
         d.addTarget(self, action: #selector(wxLoginSEL), for: .touchUpInside)
+        d.layer.borderWidth = 1
         return d
     }()
 
@@ -79,7 +82,7 @@ class RigisterVC: UIViewController ,loginClickVDelegate {
         view.addSubview(LoginlogoCenter)
         view.addSubview(tfInputV)
         view.addSubview(loginclickView)
-        view.addSubview(wxLoginBtn)
+//        view.addSubview(wxLoginBtn)
         
         view.addSubview(rigitVC_Already)
         

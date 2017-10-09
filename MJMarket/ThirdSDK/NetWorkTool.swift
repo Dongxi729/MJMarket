@@ -99,8 +99,6 @@ extension NetWorkTool {
                 
                 if let data = data {
                     
-//                    CCog(message: String.init(data: data, encoding: String.Encoding.utf8))
-                    
                     if let result = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
                         
                         success(result)
@@ -108,6 +106,9 @@ extension NetWorkTool {
 
                 } else {
                     failure(error!)
+                    if (((error! as NSError).userInfo as? NSDictionary)?.object(forKey: "NSLocalizedDescription") as? String) != nil {
+                        toast(toast: "网络出现异常")
+                    }
                 }
             }
         }

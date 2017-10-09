@@ -492,7 +492,8 @@ class ForgetFourCell: CommonTableViewCell {
     
     /// 微信登录
     lazy var wxLoginBtn: SeparateBtn = {
-        let d: SeparateBtn = SeparateBtn.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.5 - 80 * 0.5 * SCREEN_SCALE, y: self.shareToDesc.BottomY + COMMON_MARGIN, width: 80 * SCREEN_SCALE, height: 50 * SCREEN_SCALE))
+        let d: SeparateBtn = SeparateBtn.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.5 - 80 * 0.5 * SCREEN_SCALE, y: self.shareToDesc.BottomY + COMMON_MARGIN, width: 80 * SCREEN_SCALE, height: 80 * SCREEN_SCALE))
+        d.setImage(UIImage.init(named: "wechat_friend"), for: .normal)
         d.setTitle("微信登录", for: .normal)
         d.setTitleColor(FONT_COLOR, for: .normal)
         return d
