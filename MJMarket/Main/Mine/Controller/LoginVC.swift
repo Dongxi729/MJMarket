@@ -18,6 +18,8 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "reload"), object: nil)
     }
 
     
@@ -75,11 +77,44 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate {
         view.addSubview(wxLoginBtn)
         view.addSubview(sepateBtn)
         view.backgroundColor = UIColor.white
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
+    }
+    
+    /// 微信登录
+    @objc func wxlogin() {
+        
+        ZDXRequestTool.wxLoginSEL { (result) in
+            if result {
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+                
+                UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
+            }
+        }
     }
     
     // MARK: - 微信登录
     @objc private func wxLoginSEL() {
-        CCog()
+        
+        CCog(message: WXApi.isWXAppInstalled())
+        
+        if WXApi.isWXAppInstalled() {
+            
+            if MineModel.wxOPENID.characters.count == 0 {
+                let tool = WXTool()
+                tool.clickAuto()
+            } else {
+                ZDXRequestTool.wxLoginSEL(finished: { (result) in
+                    if result {
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+                        
+                        UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
+                    }
+                })
+            }
+        }
     }
 
     

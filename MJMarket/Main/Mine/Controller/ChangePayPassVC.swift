@@ -93,7 +93,12 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         }
     }
     
-    func getAutoDelegate() {
+//    func getAutoDelegate() {
+//        CCog()
+//        ZDXRequestTool.sendAuto()
+//    }
+    
+    func getAutoDelegate(sender: CountDownBtn) {
         CCog()
         ZDXRequestTool.sendAuto()
     }

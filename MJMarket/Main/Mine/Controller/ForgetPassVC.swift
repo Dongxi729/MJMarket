@@ -8,7 +8,28 @@
 
 import UIKit
 
-class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSource,FotgetSecTwoDelaget {
+class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSource,FotgetSecTwoDelaget,ForgetCellDelegate {
+    func wechatLoginDelegateSEL() {
+        CCog(message: WXApi.isWXAppInstalled())
+        
+        if WXApi.isWXAppInstalled() {
+            
+            if MineModel.wxOPENID.characters.count == 0 {
+                let tool = WXTool()
+                tool.clickAuto()
+            } else {
+                ZDXRequestTool.wxLoginSEL(finished: { (result) in
+                    if result {
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+                        
+                        UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
+                    }
+                })
+            }
+        }
+    }
+    
     
     /// 是否是注册界面
     var isRigster = false
@@ -45,7 +66,24 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
         } else {
             title = "忘记密码"
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
     }
+    
+    /// 微信登录
+    @objc func wxlogin() {
+        
+        ZDXRequestTool.wxLoginSEL { (result) in
+            if result {
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+                
+                UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
+            }
+        }
+    }
+    
+   
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
@@ -195,7 +233,7 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
         
         if indexPath.section == 3 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ForgetFourCell") as! ForgetFourCell
-            
+            cell.forgetFourCellDelegate = self
             return cell
         }
         
@@ -352,8 +390,8 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
     }()
     
     
-    lazy var getSendNumBtn: UIButton = {
-        let d: UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - 40 * SCREEN_SCALE - COMMON_MARGIN - 40 * SCREEN_SCALE - COMMON_MARGIN, y: 4, width: 80 * SCREEN_SCALE, height: 30 * SCREEN_SCALE))
+    lazy var getSendNumBtn: CountDownBtn = {
+        let d: CountDownBtn = CountDownBtn.init(frame: CGRect.init(x: SCREEN_WIDTH - 40 * SCREEN_SCALE - COMMON_MARGIN - 40 * SCREEN_SCALE - COMMON_MARGIN, y: 4, width: 80 * SCREEN_SCALE, height: 30 * SCREEN_SCALE))
         d.layer.borderColor = FONT_COLOR.cgColor
         d.layer.cornerRadius = 5
         d.layer.borderWidth = 1
@@ -466,8 +504,13 @@ class ForgetThurd: CommonTableViewCell {
     }
 }
 
-
+protocol ForgetCellDelegate {
+    func wechatLoginDelegateSEL()
+}
 class ForgetFourCell: CommonTableViewCell {
+    
+    var forgetFourCellDelegate : ForgetCellDelegate?
+    
     private lazy var leftLine: UIView = {
         let d : UIView = UIView.init(frame: CGRect.init(x:self.shareToDesc.LeftX - COMMON_MARGIN - SCREEN_WIDTH * 0.15, y: 10, width: SCREEN_WIDTH * 0.15, height: 1))
         d.backgroundColor = UIColor.colorWithHexString("333333")
@@ -496,8 +539,15 @@ class ForgetFourCell: CommonTableViewCell {
         d.setImage(UIImage.init(named: "wechat_friend"), for: .normal)
         d.setTitle("微信登录", for: .normal)
         d.setTitleColor(FONT_COLOR, for: .normal)
+        d.addTarget(self, action: #selector(wxChatLogin), for: .touchUpInside)
         return d
     }()
+    
+    /// 微信登录事件
+    @objc func wxChatLogin() {
+        CCog()
+        self.forgetFourCellDelegate?.wechatLoginDelegateSEL()
+    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)

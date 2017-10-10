@@ -16,6 +16,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .default
+
     }
     
     ///网页模板
@@ -174,7 +175,6 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                     ss = ss.replacingOccurrences(of: "\"", with: "\\\"")
                     Model.shopDetail = ss
                     
-                    
                 }
             }
         }
@@ -187,9 +187,9 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                 }
             }
             
-            if self.webView.canGoBack {
-                self.webView.goBack()
-            }
+//            if self.webView.canGoBack {
+//                self.webView.goBack()
+//            }
         }
         
         if msg == "aliPay" {
@@ -197,30 +197,31 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             if let dic = message.body as? NSDictionary {
                 if let signStr = dic["content"] as? String {
                     PaymenyModel.shared.alipay(orderString: signStr, comfun: { (result) in
-                        switch result {
-                        case "用户中途取消":
-                            CCog(message: "用户中途取消")
-                            
-                            break
-                            
-                        case "网页支付成功":
-                            CCog(message: "网页支付成功")
-                            break
-                            
-                        case "正在处理中":
-                            CCog(message: "正在处理中")
-                            break
-                            
-                        case "网络连接出错":
-                            CCog(message: "网络连接出错")
-                            break
-                            
-                        case "订单支付失败":
-                            CCog(message: "订单支付失败")
-                            break
-                        default:
-                            break
-                        }
+                        self.navigationController?.pushViewController(PaySuccessVC(), animated: true)
+//                        switch result {
+//                        case "用户中途取消":
+//                            CCog(message: "用户中途取消")
+//
+//                            break
+//
+//                        case "网页支付成功":
+//                            CCog(message: "网页支付成功")
+//                            break
+//
+//                        case "正在处理中":
+//                            CCog(message: "正在处理中")
+//                            break
+//
+//                        case "网络连接出错":
+//                            CCog(message: "网络连接出错")
+//                            break
+//
+//                        case "订单支付失败":
+//                            CCog(message: "订单支付失败")
+//                            break
+//                        default:
+//                            break
+//                        }
                     })
                 }
             }
@@ -314,7 +315,6 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                         
                         if let result = try? JSONSerialization.jsonObject(with: jsonStr, options: .allowFragments) {
                             
-                            CCog(message: result as? NSDictionary)
                             if let dicPayDic = result as? NSDictionary {
                                 weixinPay(payDic: dicPayDic)
                             }
@@ -340,33 +340,35 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             
             WXTool.shared.sendWXPay(wxDict: payDic, _com: { (result) in
                 
+                self.navigationController?.pushViewController(PaySuccessVC(), animated: true)
+                
                 /**
                  ## 支付结果返回 result 👆
                  
                  -2    用户退出支付
                  -1    支付事变
                  0     支付成功
-                 */
-                switch result {
-                case "-2":
-                    
-                    print("用户退出支付")
-                    //..执行用户退出支付。。。
-                    break
-                    
-                case "0":
-                    //...执行支付成功。。。
-                    print("支付成功")
-                    break
-                    
-                case "-1":
-                    print("支付失败")
-                    //...执行支付失败。。。
-                    break
-                    
-                default:
-                    break
-                }
+//                 */
+//                switch result {
+//                case "-2":
+//
+//                    print("用户退出支付")
+//                    //..执行用户退出支付。。。
+//                    break
+//
+//                case "0":
+//                    //...执行支付成功。。。
+//                    print("支付成功")
+//                    break
+//
+//                case "-1":
+//                    print("支付失败")
+//                    //...执行支付失败。。。
+//                    break
+//
+//                default:
+//                    break
+//                }
                 
             })
         }
@@ -472,6 +474,8 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         lostNetImg.isHidden = true
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -487,6 +491,13 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         addWebView()
         
         addLostImg()
+        
+//        view.addSubview(indicator)
+        UIApplication.shared.keyWindow?.addSubview(indicator)
+    }
+    
+    @objc func loginToReload() {
+        self.webView.reload()
     }
     
     /// 清除cookie
@@ -546,7 +557,12 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         
     }
     
-    
+    lazy var indicator: UIActivityIndicatorView = {
+        let d : UIActivityIndicatorView = UIActivityIndicatorView.init(frame: (UIApplication.shared.keyWindow?.bounds)!)
+        d.activityIndicatorViewStyle = .gray
+        d.tag = 888
+        return d
+    }()
     
     /// 加载完成标识
     var reloadMark = false
@@ -554,6 +570,8 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     // MARK: - 网页代理---完成
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 
+        self.indicator.stopAnimating()
+        
         reloadMark = true
         
         lostNetImg.isHidden = true
@@ -564,16 +582,19 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             
             if Model.boolSwotvh == false {
                 CCog()
-                self.webView.reload()
+                
+                self.webView.load(URLRequest.init(url: URL.init(string: self.urlStr)!))
                 Model.boolSwotvh = true
             }
         }
+        
         
         self.progresssView.progress = Float(webView.estimatedProgress)
         
         if webView.estimatedProgress == 1.0 {
             UIView.animate(withDuration: 0.5, animations: {
                 self.progresssView.alpha = 0
+                
             })
         }
     }
@@ -581,12 +602,28 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         CCog()
         
+        NetCheck.shared.returnNetStatus { (resu) in
+            if resu {
+            
+                self.indicator.startAnimating()
+            } else {
+                self.indicator.stopAnimating()
+            }
+        }
+        
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         
         CCog()
         self.lostNetImg.isHidden = false
+        self.indicator.stopAnimating()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "reload"), object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

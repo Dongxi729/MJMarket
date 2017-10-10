@@ -27,7 +27,6 @@ class PersonInfo_One: CommonTableViewCell {
         let d: UIImageView = UIImageView.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 6, width: 43, height: 43))
         d.layer.cornerRadius = (43) / 2
         d.clipsToBounds = true
-        d.backgroundColor = UIColor.gray
         d.contentMode = .scaleAspectFill
         
         d.isUserInteractionEnabled = true

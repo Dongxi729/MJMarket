@@ -23,7 +23,10 @@ class MineModel: NSObject {
         
         return d
     }()
-    
+    /// 是否签到
     static var signMent = false
+    
+    /// 微信openID
+    static var wxOPENID = ""
     
 }

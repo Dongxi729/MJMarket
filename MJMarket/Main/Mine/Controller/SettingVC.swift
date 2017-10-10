@@ -144,6 +144,9 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     // MARK: - 退出当前账号
     @objc private func exitLocalCount() {
         RemoveCookieTool.removeCookie()
+        RemoveCookieTool.removeCookie()
+        RemoveCookieTool.removeCookie()
+        RemoveCookieTool.removeCookie()
         AccountModel.logout()
         UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
         MineModel.nameString = ""

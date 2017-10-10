@@ -58,6 +58,9 @@ var SIGNMENT_URL = COMMON_PREFIX + "/sign"
 // openid
 var WXLOGIN_URL = COMMON_PREFIX + "/wxlogin"
 
+// 绑定微信 //bindopenid  uid+openid
+var BINDWXOPENID_URL = COMMON_PREFIX + "/bindopenid"
+
 //首页
 var WEB_VIEW_HOME_URL = "http://mj.ie1e.com/weixin/index";
 
@@ -131,3 +134,6 @@ var SIGN_URL = "http://mj.ie1e.com/wx_user/mysign"
 
 //// 注册协议
 var USERAGREEMENT_URL = "http://mj.ie1e.com/weixin/info?id=e6e6afff0d4d410e97b24608a8b60a06&it=1"
+
+
+

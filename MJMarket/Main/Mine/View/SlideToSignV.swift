@@ -18,13 +18,10 @@ protocol SlideToSignVDelegate {
 class SlideToSignV: UIView {
     
     lazy var totalLabel: UILabel = {
-        let d: UILabel = UILabel.init(frame: self.bounds)
-        d.text = "少时诵诗书所所"
+        let d : UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: self.bounds.width - COMMON_MARGIN, height: self.bounds.height))
+        d.text = "查看签到日期  "
         d.font = UIFont.systemFont(ofSize: 10 * SCREEN_SCALE)
-        d.textColor = UIColor.colorWithHexString("333333")
-        d.backgroundColor = UIColor.colorWithHexString("F99441")
-        d.layer.cornerRadius = self.Height / 2
-        d.clipsToBounds = true
+        d.textColor = UIColor.white
         d.textAlignment = .right
         
         return d
@@ -37,6 +34,9 @@ class SlideToSignV: UIView {
         d.addTarget(self, action: #selector(valueChanged(sender:)), for: .valueChanged)
         d.maximumTrackTintColor = .clear
         d.minimumTrackTintColor = .clear
+        d.backgroundColor = UIColor.colorWithHexString("F99441")
+        d.layer.cornerRadius = self.Height / 2
+        d.clipsToBounds = true
         d.isContinuous = false
         
         return d
@@ -70,13 +70,14 @@ class SlideToSignV: UIView {
         /// 背景图片
         let lineImg = UIImageView.init(frame: self.bounds)
         lineImg.image = UIImage.init(named: bgImgName)
+        lineImg.contentMode = .scaleAspectFill
         addSubview(lineImg)
         
         slider.setThumbImage(UIImage.init(named: sliderThumImgName), for: .normal)
-        slider.maximumValueImageRect(forBounds: CGRect.init(x: 100, y: 100, width: 100, height: 100))
-        addSubview(totalLabel)
+        slider.maximumValueImageRect(forBounds: CGRect.init(x: SCREEN_WIDTH / 2, y: 100, width: SCREEN_WIDTH / 2, height: 100))
+        slider.thumbRect(forBounds: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH / 2, height: self.Height), trackRect: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH / 2, height: self.Height), value: 0)
         addSubview(slider)
-        
+        addSubview(totalLabel)        
     }
     
     

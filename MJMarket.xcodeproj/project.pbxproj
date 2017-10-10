@@ -16,6 +16,7 @@
 		261E67C11F89FB9D00423382 /* PersonInfo_Two.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67C01F89FB9D00423382 /* PersonInfo_Two.swift */; };
 		261E67C31F89FBBD00423382 /* PersonInfo_One.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67C21F89FBBD00423382 /* PersonInfo_One.swift */; };
 		261E67C51F89FC4E00423382 /* PersonFooV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67C41F89FC4E00423382 /* PersonFooV.swift */; };
+		262112421F8B218300E4FDDA /* CountDownBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262112411F8B218300E4FDDA /* CountDownBtn.swift */; };
 		26314CBD1F7912E400E4FF72 /* WaitToPayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26314CBC1F7912E400E4FF72 /* WaitToPayVC.swift */; };
 		2631D0C11F7DF05200BCF8BD /* AllCommementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631D0C01F7DF05200BCF8BD /* AllCommementVC.swift */; };
 		2631D0C31F7DF23000BCF8BD /* WaitReceiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631D0C21F7DF23000BCF8BD /* WaitReceiveVC.swift */; };
@@ -222,6 +223,7 @@
 		261E67C01F89FB9D00423382 /* PersonInfo_Two.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfo_Two.swift; sourceTree = "<group>"; };
 		261E67C21F89FBBD00423382 /* PersonInfo_One.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfo_One.swift; sourceTree = "<group>"; };
 		261E67C41F89FC4E00423382 /* PersonFooV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonFooV.swift; sourceTree = "<group>"; };
+		262112411F8B218300E4FDDA /* CountDownBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownBtn.swift; sourceTree = "<group>"; };
 		26314CBC1F7912E400E4FF72 /* WaitToPayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitToPayVC.swift; sourceTree = "<group>"; };
 		2631D0C01F7DF05200BCF8BD /* AllCommementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCommementVC.swift; sourceTree = "<group>"; };
 		2631D0C21F7DF23000BCF8BD /* WaitReceiveVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitReceiveVC.swift; sourceTree = "<group>"; };
@@ -978,6 +980,7 @@
 		264FA6CA1F54144400CE405B /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				262112411F8B218300E4FDDA /* CountDownBtn.swift */,
 				2698933C1F88902F00C150F9 /* refreshControl */,
 				26C6FE441F7E25760082011C /* PickerV.swift */,
 				26C6FE421F7E24DA0082011C /* ToolBar.swift */,
@@ -1673,6 +1676,7 @@
 				264FA6EA1F54144400CE405B /* YYMemoryCache.m in Sources */,
 				26EBF51D1F6297E50019DB87 /* UITextFiledForMoney.swift in Sources */,
 				2680AB051F627211008D51AB /* ShareV.swift in Sources */,
+				262112421F8B218300E4FDDA /* CountDownBtn.swift in Sources */,
 				264FA6D71F54144400CE405B /* POPAnimationEvent.mm in Sources */,
 				26F73AD11F74A2EE00380A03 /* PaymenyModel.swift in Sources */,
 				261E67BB1F89FADD00423382 /* PersonInfo_Five.swift in Sources */,

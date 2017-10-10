@@ -70,9 +70,9 @@ class ZDXRequestTool: NSObject {
                     /// singKey写在静态全局变量
                     GetUserUid.registerKeyIcon = singKey
                     
-                    if sendResult == "发送成功" {
-                        FTIndicator.showToastMessage(sendResult)
-                    }
+                    FTIndicator.showToastMessage(sendResult)
+//                    if sendResult == "发送成功" {
+//                    }
                 }
                 
                 
@@ -142,7 +142,6 @@ class ZDXRequestTool: NSObject {
         
         NetWorkTool.shared.postWithPath(path: LOGIN_URL, paras: loginParam, success: { (result) in
             CCog(message: result)
-            
             
             if let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
                 
@@ -287,6 +286,7 @@ class ZDXRequestTool: NSObject {
                                            "pwd1" : pas]
             
             NetWorkTool.shared.postWithPath(path: UPDPAYPWD_URL, paras: param2, success: { (result) in
+                CCog(message: result)
                 
                 if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
                     if messageStr == "设置成功" {
@@ -356,9 +356,9 @@ class ZDXRequestTool: NSObject {
                     CCog(message: chargeSignStr)
                     
                     badge.append("0")
+                    badge.append((chargeSignStr.object(forKey: "nopay") as! NSNumber).stringValue)
                     badge.append((chargeSignStr.object(forKey: "payed") as! NSNumber).stringValue)
                     badge.append((chargeSignStr.object(forKey: "nocomment") as! NSNumber).stringValue)
-                    badge.append((chargeSignStr.object(forKey: "nopay") as! NSNumber).stringValue)
                     badge.append("0")
                     
                     if badge.count == 5 {
@@ -455,6 +455,55 @@ class ZDXRequestTool: NSObject {
         
     }
     
+    // MARK: - 微信登录
+    class func wxLoginSEL(finished: @escaping (_ isloginSuccess : Bool) -> ()) {
+        let param : [String : String] = ["openid" : MineModel.wxOPENID]
+        NetWorkTool.shared.postWithPath(path: WXLOGIN_URL, paras: param, success: { (result) in
+            CCog(message: result)
+            if let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                
+                FTIndicator.showToastMessage(message)
+                if message == "登录成功" {
+                    Model.boolSwotvh = false
+                    let vc = WKViewController()
+                    vc.clearCookie()
+                    finished(true)
+                }
+            }
+            
+            
+            if let uidStr = ((result as? NSDictionary)?.object(forKey: "data") as? NSDictionary)?.object(forKey: "uid") as? String {
+                getUserInfo(uidStr: uidStr)
+            }
+            
+        }) { (_) in
+            
+        }
+    }
+    
+    // MARK: - 绑定手机
+//    icon,tel,yzm
+    class func bindPhone(autoNum auto : String,telPhone telStr : String,finished: (_ bindSuccess : Bool) -> ()) {
+        let param2 : [String : Any] = ["icon" : GetUserUid.registerKeyIcon!,
+                                       "tel": telStr,
+                                       "yzm" : auto]
+        NetWorkTool.shared.postWithPath(path: BINDPHONE_URL, paras: param2, success: { (result) in
+            CCog(message: result)
+            if let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                
+                FTIndicator.showToastMessage(message)
+                
+            }
+        }) { (_) in
+            
+        }
+        
+    }
+    
+//    /// 绑定手机号 icon tel yzm----icon 验证码返回值
+//    var BINDPHONE_URL = COMMON_PREFIX + "/bindphone"
+    // MARK: - 微信绑定
+
     
 }
 

@@ -69,7 +69,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     }
     
     lazy var myTbV: UITableView = {
-        let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 32), style: .grouped)
+        let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: -COMMON_MARGIN, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 32), style: .grouped)
         d.delegate = self
         d.dataSource = self
         
@@ -124,7 +124,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "slideToZero"), object: nil)
         
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.setToolbarHidden(true, animated: true)
         
         if AccountModel.shareAccount()?.token == nil {
             alertTologin()
@@ -146,7 +146,9 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         // Do any additional setup after loading the view.
         
+        
         view.addSubview(myTbV)
+        
         UIApplication.shared.statusBarStyle = .default
         
         self.navigationController?.navigationBar.isHidden = true
@@ -157,6 +159,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         if #available(iOS 11.0, *) {
             self.myTbV.contentInsetAdjustmentBehavior = .never
+            self.myTbV.frame = self.view.bounds
         }
     }
     

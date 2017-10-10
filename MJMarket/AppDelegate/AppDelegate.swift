@@ -32,6 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         checkUpdate()
         
+        NetCheck.shared.returnNetStatus { (result) in
+            CCog()
+        }
+        
         return true
     }
     

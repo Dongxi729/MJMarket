@@ -67,8 +67,8 @@ class LoginInputV: UIView,UITextFieldDelegate {
     
     ////////////////////////////////////////////////
     /// 协议条款
-    lazy var getSendNumBtn: UIButton = {
-        let d: UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - 40 * SCREEN_SCALE - COMMON_MARGIN - 40 * SCREEN_SCALE - COMMON_MARGIN, y: self.loginLineOne.BottomY * 1.2, width: 80 * SCREEN_SCALE, height: 20 * SCREEN_SCALE))
+    lazy var getSendNumBtn: CountDownBtn = {
+        let d: CountDownBtn = CountDownBtn.init(frame: CGRect.init(x: SCREEN_WIDTH - 40 * SCREEN_SCALE - COMMON_MARGIN - 40 * SCREEN_SCALE - COMMON_MARGIN, y: self.loginLineOne.BottomY * 1.2, width: 80 * SCREEN_SCALE, height: 20 * SCREEN_SCALE))
         d.layer.borderColor = FONT_COLOR.cgColor
         d.layer.cornerRadius = 5
         d.layer.borderWidth = 1

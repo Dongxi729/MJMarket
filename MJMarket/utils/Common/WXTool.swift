@@ -29,7 +29,7 @@ var thirdHeadImgURL : String = ""
 
 
 ///商户ID
-let wxPartnerId = "1283100701"
+//let wxPartnerId = "1489839512"
 
 // MARK:- 微信请求的参数、openID 、头像地址、昵称
 let wid = "wxopenID"
@@ -166,26 +166,48 @@ class WXTool : UIView,WXApiDelegate,NSURLConnectionDelegate {
 
                     print("微信个人信息",wxInfoData)
                     
-                    let accessDict = responseObject as! NSDictionary
-
-                    let accessToken = accessDict[WX_ACCESS_TOKEN] as! String
-                    var openID = accessDict[WX_OPEN_ID] as! String
-                    let refreshToken = accessDict[WX_REFRESH_TOKEN] as! String
-
-
-                    // 本地持久化，以便access_token的使用、刷新或者持续
-
-                    if (accessToken.characters.count != 0) && !(accessToken == "") && (openID.characters.count != 0) && !(openID == "") {
-                        UserDefaults.standard.set(accessToken, forKey: WX_ACCESS_TOKEN)
-                        UserDefaults.standard.set(openID, forKey: WX_OPEN_ID)
-                        UserDefaults.standard.set(refreshToken, forKey: WX_REFRESH_TOKEN)
-                        UserDefaults.standard.synchronize()
-                    }
-                    self.wechatLoginByRequestForUserInfo()
                     
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: { 
-                        self.payBackMsg(msg: "授权成功")
-                    })
+                    
+//                    微信个人信息 {
+//                        "access_token" = "XO-sURDDcd_3ugIpWPT7rD5isgWcCujCsyY8Z0gP-V5kMmqmbDcXm4s0GQfjG9vP3fjh3-CM3Q4Vsjf7rtbtNt5aFsxCgnXwOP3GYcZD7S4";
+//                        "expires_in" = 7200;
+//                        openid = "owWi801jB_lg_G2MyyvH3UwOQpyo";
+//                        "refresh_token" = 3TGJKFe0aTU4LBiTeBh2xcBri7yEKmZDGeJChrhZueZQoslD2uMd95nENhP16TIvqbEg4Z989FNgtYGgpe6FzWHh7qyWcpQn5EQ01GHJIeM;
+//                        scope = "snsapi_userinfo";
+//                        unionid = oqP1N0r6ddwx4BbCPatcGyjkYrkA;
+//                    }
+                    if let accessDict = responseObject as? NSDictionary,
+                        let accessToken = accessDict[WX_ACCESS_TOKEN] as? String,
+                        var openID = accessDict[WX_OPEN_ID] as? String,
+                        let refreshToken = accessDict[WX_REFRESH_TOKEN] as? String {
+                        if let wx_openId = accessDict.object(forKey: "openid") as? String {
+                            MineModel.wxOPENID = wx_openId
+                            CCog(message: MineModel.wxOPENID)
+                            
+                            /// 发通知接收
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
+                            
+                            // 本地持久化，以便access_token的使用、刷新或者持续
+                            
+                            if (accessToken.characters.count != 0) && !(accessToken == "") && (openID.characters.count != 0) && !(openID == "") {
+                                UserDefaults.standard.set(accessToken, forKey: WX_ACCESS_TOKEN)
+                                UserDefaults.standard.set(openID, forKey: WX_OPEN_ID)
+                                UserDefaults.standard.set(refreshToken, forKey: WX_REFRESH_TOKEN)
+                                UserDefaults.standard.synchronize()
+                            }
+                            self.wechatLoginByRequestForUserInfo()
+                            
+                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: { 
+                                self.payBackMsg(msg: "授权成功")
+                            })
+                        }
+                    }
+
+                    
+                    
+                    
+
+
 
                 }, failure: { (error) in
                     print("获取access_token时出错 = \(error)")
@@ -410,22 +432,30 @@ extension WXTool {
                     return
                 }
                 
-                print(refreshDict)
+                CCog(message: refreshDict)
                 
-                let reAccessToken = refreshDict[WX_ACCESS_TOKEN] as! String
-
-                // 如果reAccessToken为空,说明reAccessToken也过期了,反之则没有过期
-                if (reAccessToken.characters.count == 0) {
-
-                    UserDefaults.standard.set(refreshToken, forKey: WX_ACCESS_TOKEN)
-                    UserDefaults.standard.set(refreshDict[WX_OPEN_ID], forKey: WX_OPEN_ID)
-                    UserDefaults.standard.set(refreshDict[WX_REFRESH_TOKEN], forKey: WX_REFRESH_TOKEN)
-                    UserDefaults.standard.synchronize()
-                    // 当存在reAccessToken不为空时直接执行AppDelegate中的
+                if let reAccessToken = refreshDict[WX_ACCESS_TOKEN] as? String {
+                    
+                    // 如果reAccessToken为空,说明reAccessToken也过期了,反之则没有过期
+                    if (reAccessToken.characters.count == 0) {
+                        
+                        UserDefaults.standard.set(refreshToken, forKey: WX_ACCESS_TOKEN)
+                        UserDefaults.standard.set(refreshDict[WX_OPEN_ID], forKey: WX_OPEN_ID)
+                        UserDefaults.standard.set(refreshDict[WX_REFRESH_TOKEN], forKey: WX_REFRESH_TOKEN)
+                        UserDefaults.standard.synchronize()
+                        
+                        CCog(message: WX_OPEN_ID)
+                        
+                        // 当存在reAccessToken不为空时直接执行AppDelegate中的
+                    } else {
+                        //没获取相关微信授权信息，则进行获取
+                        self.wechatLogin()
+                    }
                 } else {
                     //没获取相关微信授权信息，则进行获取
                     self.wechatLogin()
                 }
+
 
             }, failure: { (error) in
 
@@ -494,21 +524,19 @@ extension WXTool {
         
         req.openID = WXPatient_App_ID
         //
-        req.partnerId = wxPartnerId
+        req.partnerId = wxDict["partnerid"] as! String
         
         req.package = "Sign=WXPay"
         
-        req.prepayId = wxDict["prepayId"] as! String
+        req.prepayId = wxDict["prepayid"] as! String
 
-        let temp   = wxDict["timeStamp"] as! NSString
+        let temp   = wxDict["timestamp"] as! NSString
         
         let temInt : Int = Int(temp as String)!
-        
-//        let result = UInt32(String(temp.characters.dropFirst(2)), radix: 16)
 
         req.timeStamp = UInt32(temInt)
 
-        req.nonceStr = wxDict["nonceStr"] as! String
+        req.nonceStr = wxDict["noncestr"] as! String
         
         req.sign = wxDict["sign"] as! String
         

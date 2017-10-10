@@ -56,21 +56,28 @@ class PersonInfoSexV: UIView {
     
     var titles  : [String] = ["男","女"]
     
+    var ccc = false
+    
     var imgs : [String] = [] {
         didSet {
-            
-            for i in 0..<self.imgs.count {
-                CCog(message: self.imgs[i])
-                self.button = BtnWithTwoSide.init()
-                self.button.frame = CGRect(x: CGFloat(i) * self.bounds.width / 2, y: 0, width: self.bounds.width / 2, height: self.bounds.height)
-                self.button.addTarget(self, action: #selector(btnChanged(sender:)), for: .touchUpInside)
-                self.button.layer.borderWidth = 1
-                self.button.setTitle(titles[i], for: .normal)
-                self.button.setTitleColor(UIColor.black, for: .normal)
-                self.button.setImage(UIImage.init(named: imgs[i]), for: .normal)
-                self.button.tag = 100 + i
-                addSubview(self.button)
+            if ccc == false {
+                
+                for i in 0..<self.imgs.count {
+                    self.button = BtnWithTwoSide.init()
+                    self.button.frame = CGRect(x: CGFloat(i) * self.bounds.width / 2, y: 0, width: self.bounds.width / 2, height: self.bounds.height)
+                    self.button.addTarget(self, action: #selector(btnChanged(sender:)), for: .touchUpInside)
+                    self.button.setTitle(titles[i], for: .normal)
+                    self.button.setTitleColor(UIColor.black, for: .normal)
+                    self.button.setImage(UIImage.init(named: imgs[i]), for: .normal)
+                    self.button.tag = 100 + i
+                    
+                    if i == 1 {
+                        ccc = true
+                    }
+                    addSubview(self.button)
+                }
             }
+            
         }
     }
     

@@ -57,12 +57,15 @@ class PersonInfo_Four: CommonTableViewCell {
         contentView.addSubview(phoneNum)
         
         
-        if let phoneNum = AccountModel.shareAccount()?.Tel {
+        
             if var telNum = AccountModel.shareAccount()?.Tel as? String {
-                telNum =  telNum.numberSuitScanf(telNum)
-                self.phoneNum.text = telNum
+                if telNum.characters.count >= 11 {
+                    
+                    telNum =  telNum.numberSuitScanf(telNum)
+                    self.phoneNum.text = telNum
+                }
             }
-        }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

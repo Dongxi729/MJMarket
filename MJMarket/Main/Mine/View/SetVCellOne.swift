@@ -74,7 +74,7 @@ class SetVCellOne: CommonTableViewCell {
                 
                 headImgUrl = "http://mj.ie1e.com" + headImgUrl
                 
-                self.set_HeadImg.setAvatarImage(urlString: headImgUrl, placeholderImage: #imageLiteral(resourceName: "default_thumb"))
+                self.set_HeadImg.setImage(urlString: headImgUrl, placeholderImage: UIImage.init(named: ""))
                 
             } else {
                 

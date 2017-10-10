@@ -91,6 +91,10 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         return d
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -100,8 +104,15 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         view.addSubview(person_TBV)
         
         person_TBV.tableFooterView = personHeadV
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
+    }
     
     // MARK: - 表格代理方法
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -181,8 +192,8 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
                 }
                 if xxx == "1" {
                     cell.sexV.imgs = ["sex_unselect","sex_select"]
-
                 }
+                loaded = true
             } else {
                 if !loaded {
                     
@@ -198,7 +209,12 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         if indexPath.section == 0 && indexPath.row == 3 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonBirthCell") as! PersonBirthCell
             cell.personCityCell.text = "生日"
-            cell.cityInfoSelect.text = dateInfo
+            
+            let range = NSRange.init(location: 0, length: 10)
+            var aaa : NSString = (dateInfo as NSString)
+            
+            aaa = aaa.substring(with: range) as NSString
+            cell.cityInfoSelect.text = aaa as String
             return cell
         }
         
@@ -226,6 +242,10 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
                 if isBind.characters.count > 0 {
                     cell.personInfoF_isBind.text = "已绑定"
                     cell.personInfoF_DisImg.image = #imageLiteral(resourceName: "binded")
+                    
+                    
+                } else {
+                    cell.personInfoF_isBind.text = "未绑定"
                     cell.personInfoF_isBind.textColor = COMMON_COLOR
                 }
             }
@@ -267,10 +287,72 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 && indexPath.row == 0 {
-            self.navigationController?.pushViewController(BindPhoneVC(), animated: true)
+    // MARK: - 微信登录
+    /// 微信登录
+    @objc private func wxlogin() {
+        
+        ZDXRequestTool.wxLoginSEL { (result) in
+            if result {
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+                
+                UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
+            }
         }
+    }
+    
+    // MARK: - 微信登录
+    @objc private func wxLoginSEL() {
+        
+        CCog(message: WXApi.isWXAppInstalled())
+        
+        if WXApi.isWXAppInstalled() {
+            
+            if MineModel.wxOPENID.characters.count == 0 {
+                let tool = WXTool()
+                tool.clickAuto()
+            } else {
+                ZDXRequestTool.wxLoginSEL(finished: { (result) in
+                    if result {
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+                        
+                        UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
+                    }
+                })
+            }
+        }
+    }
+
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if indexPath.section == 1 && indexPath.row == 0 {
+            
+            if let phoneNum = AccountModel.shareAccount()?.Tel as? String {
+                if phoneNum.characters.count >= 11 {
+                    
+                } else {
+                    
+                    self.navigationController?.pushViewController(BindPhoneVC(), animated: true)
+                }
+            }
+        }
+
+        if indexPath.section == 1 && indexPath.row == 1 {
+            
+            if let phoneNum = AccountModel.shareAccount()?.openid as? String {
+                if phoneNum.characters.count >= 11 {
+                    
+                }
+            } else if indexPath.section == 1 && indexPath.row == 1 {
+                //            self.navigationController?.pushViewController(BindPhoneVC(), animated: true)
+                //////////////////////////////////////////////////////////////////////////////
+                CCog(message: "是否微信授权做事")
+                
+            }
+        }
+        
         
         if indexPath.section == 2 && indexPath.row == 0 {
             self.navigationController?.pushViewController(ChangePayPassVC(), animated: true)

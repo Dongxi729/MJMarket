@@ -32,7 +32,6 @@ class PersonInfo_Five: CommonTableViewCell {
     
     lazy var personInfoF_isBind: UILabel = {
         let d : UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 12.5, width: SCREEN_WIDTH - 10 - COMMON_MARGIN - 15, height: 20))
-        d.text = "绑定"
         d.font = UIFont.systemFont(ofSize: 14)
         d.textColor = FONT_COLOR
         d.textAlignment = .right
@@ -45,6 +44,17 @@ class PersonInfo_Five: CommonTableViewCell {
         contentView.addSubview(personInfoFour_DescLabel)
         contentView.addSubview(personInfoF_DisImg)
         contentView.addSubview(personInfoF_isBind)
+        
+        if let wxOpenStr = AccountModel.shareAccount()?.openid as? String {
+            if wxOpenStr.characters.count > 0 {
+                self.personInfoF_isBind.text = "已绑定"
+                self.personInfoF_isBind.textColor = UIColor.gray
+                self.personInfoF_DisImg.image = #imageLiteral(resourceName: "binded")
+            }
+        } else {
+            self.personInfoF_isBind.text = "未绑定"
+            self.personInfoF_isBind.textColor = COMMON_COLOR
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

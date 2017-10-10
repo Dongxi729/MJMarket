@@ -9,8 +9,14 @@
 import UIKit
 
 class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,BindPhoneCellDelegate {
-    func getAutoDelegate() {
-        
+    func getAutoDelegate(sender: CountDownBtn) {
+        CCog()
+        if telPhone.checkMobile(mobileNumbel: telPhone as NSString) {
+            ZDXRequestTool.sendAuto(phoneNumber: telPhone)
+            sender.initwith(color: COMMON_COLOR, title: "", superView: self.view)
+        } else {
+            toast(toast: "请输入正确的电话号码")
+        }
     }
 
     
@@ -37,6 +43,9 @@ class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Pe
         view.addSubview(bindPhone_TBV)
         bindPhone_TBV.tableFooterView = bindPhone_FoV
         
+        self.bindPhone_FoV.personInfo_footerV.backgroundColor = UIColor.gray
+        self.bindPhone_FoV.personInfo_footerV.isEnabled = false
+        
     }
     
     private var cellTitles : [String] = ["请输入您的手机号码","请输入验证码"]
@@ -59,6 +68,14 @@ class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Pe
         return cell
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView.init()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.001
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
@@ -71,20 +88,44 @@ class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Pe
     // MARK: - PersonFooVDelegate
     func personBtnSEL() {
         CCog()
+
+        ZDXRequestTool.bindPhone(autoNum: getAutoStr, telPhone: telPhone) { (result) in
+            
+        }
     }
+    
+    /// 验证码
+    private var getAutoStr = ""
+    
+    /// 电话号码
+    private var telPhone = ""
     
     // MARK: - BindPhoneCellDelegate
     func cellStr(index: IndexPath, str: String) {
         CCog(message: index.row)
         CCog(message: str)
+        if index.row == 0 {
+            telPhone = str
+        }
+        
+        if index.row == 1 {
+            getAutoStr = str
+        }
+        
+        if telPhone.characters.count == 0 || getAutoStr.characters.count == 0 {
+            self.bindPhone_FoV.personInfo_footerV.isEnabled = false
+            self.bindPhone_FoV.personInfo_footerV.backgroundColor = UIColor.gray
+        } else {
+            self.bindPhone_FoV.personInfo_footerV.isEnabled = true
+            self.bindPhone_FoV.personInfo_footerV.backgroundColor = COMMON_COLOR
+        }
     }
-
 }
 
 
 protocol BindPhoneCellDelegate {
     func cellStr(index : IndexPath,str : String)
-    func getAutoDelegate()
+    func getAutoDelegate(sender : CountDownBtn)
 }
 class BindPhoneCell: CommonTableViewCell,UITextFieldDelegate {
     var bindIndex : IndexPath?
@@ -92,25 +133,32 @@ class BindPhoneCell: CommonTableViewCell,UITextFieldDelegate {
     var bindCellDelegate : BindPhoneCellDelegate?
     
     lazy var bindPhoneCellDescLanbel: UITextField = {
-        let d: UITextField = UITextField.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.8, height: 20))
+        let d: UITextField = UITextField.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.65, height: 20))
         d.placeholder = "请输入您的手机号码"
         d.font = UIFont.systemFont(ofSize: 14)
+        d.keyboardType = .numberPad
+        d.clearButtonMode = .whileEditing
         d.delegate = self
         return d
     }()
     
-    lazy var bindPhoneCell_Btn: UIButton = {
-        let d : UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - 100 - COMMON_MARGIN, y: 8, width: 100, height: 45 - 8 * 2))
+
+    lazy var bindPhoneCell_Btn: CountDownBtn = {
+        let d : CountDownBtn = CountDownBtn.init(frame: CGRect.init(x: SCREEN_WIDTH - 100 - COMMON_MARGIN, y: 8, width: 100, height: 45 - 8 * 2))
         d.layer.cornerRadius = 5
         d.backgroundColor = COMMON_COLOR
         d.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        d.setTitle("获取验证码", for: .normal)
+        d.setTitle("发送验证码", for: .normal)
         d.addTarget(self, action: #selector(getAuth), for: .touchUpInside)
         return d
     }()
     
-    func getAuth() {
-        self.bindCellDelegate?.getAutoDelegate()
+    func getAuth(sender : CountDownBtn) {
+        self.bindCellDelegate?.getAutoDelegate(sender: sender)
+    
+//        sender.initwith(color: COMMON_COLOR, title: "", superView: self)
+        
+        
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
