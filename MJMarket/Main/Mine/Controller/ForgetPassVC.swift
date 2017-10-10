@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSource,FotgetSecTwoDelaget,ForgetCellDelegate {
+class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSource,FotgetSecTwoDelaget,ForgetCellDelegate,WXApiDelegate {
     func wechatLoginDelegateSEL() {
         CCog(message: WXApi.isWXAppInstalled())
         
@@ -27,6 +27,19 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
                     }
                 })
             }
+        } else {
+            let req = SendAuthReq()
+            
+            let kAuthScope = "snsapi_message,snsapi_userinfo,snsapi_friend,snsapi_contact";
+            let kAutoOpenID = "0c806938e2413ce73eef92cc3"
+            let kAuthState = "xxx"
+            
+            req.scope = kAuthScope
+            req.state = kAuthState
+            req.openID = kAutoOpenID
+            WXApi.sendAuthReq(req, viewController: UIApplication.shared.keyWindow?.rootViewController, delegate: self)
+            
+            
         }
     }
     
@@ -66,6 +79,10 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
         } else {
             title = "忘记密码"
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
     }
     
@@ -276,14 +293,18 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
     
     
     /// 获取验证码代码方法
-    func getAuthSEL() {
-        CCog()
-        if self.forget_phone.characters.count > 0 {
-            ZDXRequestTool.sendAuto(phoneNumber: self.forget_phone)
-        } else {
-            FTIndicator.showToastMessage("请输入您的手机号码")
-        }
+    func getAuthSEL(sender: CountDownBtn) {
         
+        if self.forget_phone.characters.count > 0 && forget_phone.checkMobile(mobileNumbel: forget_phone as NSString) {
+//            ZDXRequestTool.sendAuto(phoneNumber: self.forget_phone)
+            ZDXRequestTool.sendAuto(phoneNumber: self.forget_phone, finished: { (result) in
+                if result {                
+                    sender.initwith(color: UIColor.white, title: "", superView: self.view)
+                }
+            })
+        } else {
+            FTIndicator.showToastMessage("请输入格式正确的电话号码")
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -367,7 +388,7 @@ class ForgetHeadV: CommonTableViewCell {
 protocol FotgetSecTwoDelaget {
     func getTftext(str : UITextField)
     
-    func getAuthSEL()
+    func getAuthSEL(sender : CountDownBtn)
 }
 
 class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
@@ -399,12 +420,12 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
         d.isUserInteractionEnabled = true
         d.setTitle("获取验证码", for: .normal)
         d.titleLabel?.font = UIFont.systemFont(ofSize: 12 * SCREEN_SCALE)
-        d.addTarget(self, action: #selector(getAuthSEL), for: .touchUpInside)
+        d.addTarget(self, action: #selector(getAuthSEL(sender:)), for: .touchUpInside)
         return d
     }()
     
-    func getAuthSEL() {
-        self.fotgetSecTwoDelaget?.getAuthSEL()
+    func getAuthSEL(sender : CountDownBtn) {
+        self.fotgetSecTwoDelaget?.getAuthSEL(sender: sender)
     }
     
     /// 文本框

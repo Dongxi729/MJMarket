@@ -29,6 +29,11 @@ class DiscoverVC: WKViewController {
         self.urlStr = (navigationAction.request.url?.absoluteString)!
 
         
+        if urlStr.contains("http://mj.ie1e.com/wx_find/courses") {
+            self.webView.load(URLRequest.init(url: URL.init(string: urlStr)!))
+            decisionHandler(.allow)
+        }
+        
         if navigationAction.navigationType == WKNavigationType.linkActivated {
             
             aaa(jumpVC: DiscoverVC(), str: subWebViewContactURL(urlStr: self.urlStr))

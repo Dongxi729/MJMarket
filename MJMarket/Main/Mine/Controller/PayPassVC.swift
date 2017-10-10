@@ -26,12 +26,21 @@ class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
         return d
     }()
     
+    /// 完成操作
     lazy var payPassChangedSuccess: UIBarButtonItem = {
         let d: UIBarButtonItem = UIBarButtonItem.init(title: "完成", style: .done, target: self, action: #selector(backToMain))
-        d.tintColor = COMMON_COLOR
+        d.tintColor = UIColor.colorWithHexString("333333")
         return d
     }()
     
+    /// 确定
+    lazy var confirmServer: UIBarButtonItem = {
+        let d: UIBarButtonItem = UIBarButtonItem.init(title: "确定", style: .done, target: self, action: #selector(changePayPass))
+        d.tintColor = UIColor.colorWithHexString("333333")
+        return d
+    }()
+    
+    /// 返回首页
     @objc private func backToMain() {
         navigationController?.popToRootViewController(animated: true)
     }
@@ -66,17 +75,54 @@ class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
         
         title = "支付密码"
         view.addSubview(zdxPayChoosePassInput)
+        
+        self.navigationItem.rightBarButtonItems = [payPassConfirmItem,resetItem]
+        
+        self.payPassConfirmItem.isEnabled = false
     }
     
     /// 右侧重置按钮
-    private lazy var payPassRightItem: UIBarButtonItem = {
+    private lazy var resetItem: UIBarButtonItem = {
         let d: UIBarButtonItem = UIBarButtonItem.init(title: "重置", style: .plain, target: self, action: #selector(clearPayPasstext))
         d.tintColor = UIColor.colorWithHexString("333333")
         return d
     }()
     
+    lazy var payPassConfirmItem: UIBarButtonItem = {
+        
+        var d = UIBarButtonItem.init()
+        
+        d = UIBarButtonItem.init(title: "下一步", style: .plain, target: self, action: #selector(becomFirst))
+
+        d.tintColor = UIColor.colorWithHexString("333333")
+        
+        return d
+    }()
+    
+    @objc func becomFirst() {
+        zdxPayChoosePassInput.clearPassword()
+    }
+    
+    /// 清除密码
     func clearPayPasstext() {
         self.passInputV.ttt.text = ""
+        zdxPayChoosePassInput.clearPassword()
+        payPassDesc.text = "为了账户安全请设置支付密码"
+        passStr.removeAll()
+    }
+    
+    /// 设置完成
+    private var setComplete = false
+    
+    /// 修改支付密码
+    func changePayPass() {
+        
+        ZDXRequestTool.setSetPay(autoNumber: self.payPassAuth, password: passStr[1], finished: { (result) in
+            if result {
+                /// confirmServer
+                self.navigationItem.rightBarButtonItems = [self.payPassChangedSuccess,self.resetItem]
+            }
+        })
     }
     
     // MARK: - PassVDelegate
@@ -85,13 +131,11 @@ class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
         
         if str.characters.count == 6 {
             self.payPassDesc.text = "再次确认支付密码"
-            self.navigationItem.rightBarButtonItem = payPassRightItem
+            self.payPassConfirmItem.isEnabled = true
         }
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        
-//        textField.text = ""
         zdxPayChoosePassInput.clearPassword()
         
         return true
@@ -105,7 +149,8 @@ class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
         if textField.text?.characters.count == 6 {
             
             passStr.append(textField.text!)
-            
+            self.payPassConfirmItem.isEnabled = true
+           
             CCog(message: passStr)
             
             if passStr.count == 2 {
@@ -119,18 +164,12 @@ class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
                 } else {
                     
                     CCog(message: self.payPassAuth)
-                    
-                    ZDXRequestTool.setSetPay(autoNumber: self.payPassAuth, password: passStr[1], finished: { (result) in
-                        if result {
-                            self.payPassDesc.text = "设置成功"
-                            self.navigationItem.rightBarButtonItem = self.payPassChangedSuccess
-                        }
-                    })
+                    /// confirmServer
+                    self.navigationItem.rightBarButtonItems = [self.confirmServer,self.resetItem]
                 }
             }
         }
         
-//        zdxPayChoosePassInput.clearPassword()
         self.payPassDesc.text = "再次确认支付密码"
     }
 

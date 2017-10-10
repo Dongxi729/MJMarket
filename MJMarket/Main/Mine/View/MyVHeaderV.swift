@@ -41,7 +41,7 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
     
     //// 滑动签到
     lazy var unlockToSign: SlideToSignV = {
-        let d: SlideToSignV = SlideToSignV.init(rect: CGRect.init(x: SCREEN_WIDTH * 0.2 , y: 100 * SCREEN_SCALE, width: SCREEN_WIDTH - 2 * COMMON_MARGIN - SCREEN_WIDTH * 0.2, height: 15 * SCREEN_SCALE), sliderThumImgName: "youhua", bgImgName: "")
+        let d: SlideToSignV = SlideToSignV.init(rect: CGRect.init(x: SCREEN_WIDTH * 0.25 , y: 100 * SCREEN_SCALE, width: SCREEN_WIDTH - 2 * COMMON_MARGIN - SCREEN_WIDTH * 0.2, height: 15 * SCREEN_SCALE), sliderThumImgName: "youhua", bgImgName: "")
         d.slider.value = 0
         d.slideToSignVDelegate = self
         return d
@@ -92,6 +92,8 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
         contentView.addSubview(nameInfoV)
         contentView.addSubview(headerIconImg)
         contentView.addSubview(unlockToSign)
+        
+        self.layer.borderColor = UIColor.clear.cgColor
         
         DispatchQueue.main.async {
             

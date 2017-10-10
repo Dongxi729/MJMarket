@@ -93,14 +93,13 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         }
     }
     
-//    func getAutoDelegate() {
-//        CCog()
-//        ZDXRequestTool.sendAuto()
-//    }
-    
     func getAutoDelegate(sender: CountDownBtn) {
-        CCog()
-        ZDXRequestTool.sendAuto()
+
+        ZDXRequestTool.sendAuto { (result) in
+            if result {
+                sender.initwith(color: COMMON_COLOR, title: "", superView: self.view)
+            }
+        }
     }
     
     /// 是否输入验证码标识

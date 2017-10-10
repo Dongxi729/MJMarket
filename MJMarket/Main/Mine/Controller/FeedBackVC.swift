@@ -17,7 +17,6 @@ class FeedBackVC: WKViewController {
         
         // Do any additional setup after loading the view.
         
-        CCog(message: self.navigationController?.viewControllers.count as Any)
         
         if (self.navigationController?.viewControllers.count)! >= 4 {
             
@@ -45,8 +44,6 @@ class FeedBackVC: WKViewController {
     
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        CCog(message: navigationAction.request.url?.absoluteString as Any)
         
         self.urlStr = (navigationAction.request.url?.absoluteString)!
         

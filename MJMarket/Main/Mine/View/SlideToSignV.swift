@@ -8,9 +8,6 @@
 
 import UIKit
 
-////        let d = SlideToSignV.init(rect: CGRect.init(x: 0, y: 100, width: SCREEN_WIDTH * 0.45, height: 25), sliderThumImgName: "/Users/zhengdongxi/Desktop/屏幕快照 2017-08-30 下午2.05.31.png", bgImgName: "/Users/zhengdongxi/Desktop/屏幕快照 2017-08-30 下午2.16.12.png")
-//d.slideToSignVDelegate = self
-
 protocol SlideToSignVDelegate {
     func slideDone()
 }
@@ -18,11 +15,14 @@ protocol SlideToSignVDelegate {
 class SlideToSignV: UIView {
     
     lazy var totalLabel: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: self.bounds.width - COMMON_MARGIN, height: self.bounds.height))
+        let d : UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.3, y: 0, width: self.bounds.width / 2 - COMMON_MARGIN, height: self.bounds.height))
         d.text = "查看签到日期  "
         d.font = UIFont.systemFont(ofSize: 10 * SCREEN_SCALE)
         d.textColor = UIColor.white
+        d.backgroundColor = UIColor.colorWithHexString("F99441")
         d.textAlignment = .right
+        d.layer.cornerRadius = self.Height / 2
+        d.clipsToBounds = true
         
         return d
     }()
@@ -34,9 +34,6 @@ class SlideToSignV: UIView {
         d.addTarget(self, action: #selector(valueChanged(sender:)), for: .valueChanged)
         d.maximumTrackTintColor = .clear
         d.minimumTrackTintColor = .clear
-        d.backgroundColor = UIColor.colorWithHexString("F99441")
-        d.layer.cornerRadius = self.Height / 2
-        d.clipsToBounds = true
         d.isContinuous = false
         
         return d
@@ -58,7 +55,9 @@ class SlideToSignV: UIView {
         CCog(message: sender.value)
         if sender.value == 1.0 {
             self.slideToSignVDelegate?.slideDone()
-            return
+            self.totalLabel.text = "查看签到日期"
+        } else {
+            self.totalLabel.text = "请滑动到底"
         }
     }
     
@@ -76,8 +75,8 @@ class SlideToSignV: UIView {
         slider.setThumbImage(UIImage.init(named: sliderThumImgName), for: .normal)
         slider.maximumValueImageRect(forBounds: CGRect.init(x: SCREEN_WIDTH / 2, y: 100, width: SCREEN_WIDTH / 2, height: 100))
         slider.thumbRect(forBounds: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH / 2, height: self.Height), trackRect: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH / 2, height: self.Height), value: 0)
+        addSubview(totalLabel)
         addSubview(slider)
-        addSubview(totalLabel)        
     }
     
     

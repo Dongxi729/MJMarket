@@ -576,7 +576,13 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         
         lostNetImg.isHidden = true
         
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        if !NSStringFromClass(self.classForCoder).contains("DiscoverVC") {
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        } else {
+            self.webView.frame = self.view.bounds
+            self.navigationItem.title = webView.title
+        }
+        
         
         if NSStringFromClass(self.classForCoder).contains("HomeVC") {
             

@@ -308,9 +308,7 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
             
 //            if let phoneNum = AccountModel.shareAccount()?.Tel as? String {
 //                if phoneNum.characters.count >= 11 {
-//                    
 //                } else {
-                    
                     self.navigationController?.pushViewController(BindPhoneVC(), animated: true)
 //                }
 //            }

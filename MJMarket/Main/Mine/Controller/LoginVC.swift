@@ -8,11 +8,16 @@
 
 import UIKit
 
-class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate {
+class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXApiDelegate {
+
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -20,6 +25,7 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate {
         navigationController?.setNavigationBarHidden(false, animated: true)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "reload"), object: nil)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 
     
@@ -78,12 +84,15 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate {
         view.addSubview(sepateBtn)
         view.backgroundColor = UIColor.white
         
-        NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
     }
+    
+    
     
     /// 微信登录
     @objc func wxlogin() {
         
+        CCog()
         ZDXRequestTool.wxLoginSEL { (result) in
             if result {
                 
@@ -114,6 +123,19 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate {
                     }
                 })
             }
+        } else {
+            let req = SendAuthReq()
+            
+            let kAuthScope = "snsapi_message,snsapi_userinfo,snsapi_friend,snsapi_contact";
+            let kAutoOpenID = "0c806938e2413ce73eef92cc3"
+            let kAuthState = "xxx"
+            
+            req.scope = kAuthScope
+            req.state = kAuthState
+            req.openID = kAutoOpenID
+            WXApi.sendAuthReq(req, viewController: UIApplication.shared.keyWindow?.rootViewController, delegate: self)
+            
+            
         }
     }
 

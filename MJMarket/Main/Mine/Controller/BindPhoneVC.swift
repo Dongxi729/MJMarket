@@ -12,8 +12,12 @@ class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Pe
     func getAutoDelegate(sender: CountDownBtn) {
         CCog()
         if telPhone.checkMobile(mobileNumbel: telPhone as NSString) {
-            ZDXRequestTool.sendAuto(phoneNumber: telPhone)
-            sender.initwith(color: COMMON_COLOR, title: "", superView: self.view)
+//            ZDXRequestTool.sendAuto(phoneNumber: telPhone)
+            ZDXRequestTool.sendAuto(phoneNumber: telPhone, finished: { (result) in
+                if result {
+                    sender.initwith(color: COMMON_COLOR, title: "", superView: self.view)
+                }
+            })
         } else {
             toast(toast: "请输入正确的电话号码")
         }
@@ -134,6 +138,7 @@ protocol BindPhoneCellDelegate {
 }
 class BindPhoneCell: CommonTableViewCell,UITextFieldDelegate {
     var bindIndex : IndexPath?
+    
     
     var bindCellDelegate : BindPhoneCellDelegate?
     

@@ -39,7 +39,7 @@ class MainTabBarViewController: UITabBarController {
         //购物车
         let shopVC = JFNavigationController.init(rootViewController: ShopCarVC())
         
-        //我的
+        //我的Owkv
         let meVC = JFNavigationController.init(rootViewController: MyViewController())
         
         
