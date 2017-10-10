@@ -239,6 +239,7 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
             
             return cell
         }
+
         
         if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ForgetThurd") as! ForgetThurd
@@ -480,6 +481,7 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
         }
         
         if textField.placeholder?.description == "请输入密码" {
+            textField.isSecureTextEntry = true
             let maxLength = 6
             let currentString: NSString = (textField.text as NSString?)!
             let newString: NSString =
@@ -488,6 +490,7 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
         }
         
         if textField.placeholder?.description == "请再次输入密码" {
+            textField.isSecureTextEntry = true
             let maxLength = 30
             let currentString: NSString = (textField.text as NSString?)!
             let newString: NSString =

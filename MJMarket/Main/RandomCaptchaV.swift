@@ -59,8 +59,6 @@ class RandomCaptchaView: UIView {
             let getStr = changeArray.object(at: Int(index))
             self.changeString = self.changeString! + (getStr as! String)
         }
-        print("验证码：\(changeString!)")
-        
         
     }
     

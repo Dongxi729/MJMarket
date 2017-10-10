@@ -15,6 +15,13 @@ import UIKit
 protocol ChagrgeVDelegate {
     func selectChargeApp(_ selectType : Int)
     func selectChargeAppWithMoney(_ selectType : Int)
+    
+    
+    /// 微信充值成功回调
+    func wxChargeSuccess()
+    
+    /// 支付宝充值成功回调
+    func alipayChargeSuccess()
 }
 
 class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
@@ -98,7 +105,7 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
     
     /// 充值
     func chargeSEL() {
-     
+        
         if chaegeCount.validateMoney() {
             if isAutoSuccess == false {
                 FTIndicator.showToastMessage("请输入验证码")
@@ -109,13 +116,68 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
                     FTIndicator.showToastMessage("请输入支付密码")
                     
                 } else {
-                    CCog(message: paytype)
-
-                    ZDXRequestTool.payTypeWithSelect(payType: paytype, passStr: payPassStr, moneyStr: chaegeCount, finished: { (aliPay) in
-                        PaymenyModel.shared.alipay(orderString: aliPay, comfun: { (result) in
-                            CCog(message: result)
+                    /// 微信支付
+                    if paytype == 0 {
+                        let tool = WXTool()
+                        
+                        ZDXRequestTool.payTypeWithSelect(payType: paytype, passStr: payPassStr, moneyStr: chaegeCount, finished: { (wxPay) in
+                            
+                            
+                            if let jsonStr = wxPay.data(using: String.Encoding.utf8, allowLossyConversion: false) {
+                                
+                                if let result = try? JSONSerialization.jsonObject(with: jsonStr, options: .allowFragments) {
+                                    
+                                    if let dicPayDic = result as? NSDictionary {
+                                        tool.sendWXPay(wxDict: dicPayDic, _com: { (result) in
+                                            
+                                            self.dismissV()
+                                            
+                                            /**
+                                             ## 支付结果返回 result 👆
+                                             
+                                             -2    用户退出支付
+                                             -1    支付事变
+                                             0     支付成功
+                                             //                 */
+                                            switch result {
+                                            case "-2":
+                            
+                                                print("用户退出支付")
+                                                //..执行用户退出支付。。。
+                                                break
+                            
+                                            case "0":
+                                                //...执行支付成功。。。
+                                                print("支付成功")
+                                                self.chagrgeVDelegate?.wxChargeSuccess()
+                                                
+                                                break
+                            
+                                            case "-1":
+                                                print("支付失败")
+                                                //...执行支付失败。。。
+                                                break
+                            
+                                            default:
+                                                break
+                                            }
+                                        })
+                                    }
+                                }
+                            }
                         })
-                    })
+                    }
+                    
+                    /// 支付宝
+                    if paytype == 1 {
+                        
+                        ZDXRequestTool.payTypeWithSelect(payType: paytype, passStr: payPassStr, moneyStr: chaegeCount, finished: { (aliPay) in
+                            PaymenyModel.shared.alipay(orderString: aliPay, comfun: { (result) in
+                                CCog(message: result)
+                                self.dismissV()
+                            })
+                        })
+                    }
                 }
             }
             
@@ -123,12 +185,6 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
             FTIndicator.showToastMessage("请输入的金额")
             return
         }
-        
-        CCog(message: payPassStr)
-        CCog(message: chaegeCount)
-        CCog(message: isAutoSuccess)
-        
-        
     }
     
     private lazy var topWindown: UIWindow = {
@@ -140,8 +196,6 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
     
     private lazy var maskV: UIView = {
         let d : UIView = UIView.init(frame: (UIApplication.shared.keyWindow?.frame)!)
-        d.backgroundColor = UIColor.white
-        d.alpha = 0
         return d
     }()
     
@@ -150,7 +204,7 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
         
         UIView.animate(withDuration: 0.25) {
             UIApplication.shared.keyWindow?.addSubview(self.topWindown)
-            self.topWindown.addSubview(self.maskV)
+//            self.topWindown.addSubview(self.maskV)
             self.topWindown.alpha = 1
         }
         
@@ -169,7 +223,54 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
         addSubview(chargeCancelBt)
         addSubview(chargeConfirmBtn)
         
+        ///接收appdelegate代理传回的值
+        NotificationCenter.default.addObserver(self, selector: #selector(self.info(notification:)), name: NSNotification.Name(rawValue: "123"), object: nil)
+        
     }
+    
+    func info(notification : NSNotification) -> Void {
+        
+        let dic = notification.userInfo as! [AnyHashable : NSObject] as NSDictionary
+        
+        
+        let result = dic["re"] as! String
+        
+        dismissV()
+        
+        switch result {
+        case "用户中途取消":
+            CCog(message: "用户中途取消")
+            
+            break
+            
+        case "支付成功":
+            
+            //清楚购物车信息
+            CCog(message: "支付成功")
+            
+            self.chagrgeVDelegate?.alipayChargeSuccess()
+            
+            break
+            
+        case "正在处理中":
+            CCog(message: "正在处理中")
+            break
+            
+        case "网络连接出错":
+            CCog(message: "网络连接出错")
+            
+            break
+            
+        case "订单支付失败":
+            CCog(message: "订单支付失败")
+            break
+        default:
+            break
+        }
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "123"), object: nil)
+    }
+    
     
     /// 充值金额
     private var chaegeCount : String = ""
@@ -200,7 +301,6 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
     }
     
     func selectChargeType(chargeType: Int) {
-        CCog(message: chargeType)
         
         paytype = chargeType
         self.chagrgeVDelegate?.selectChargeApp(chargeType)

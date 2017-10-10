@@ -48,7 +48,10 @@ class ZDXRequestTool: NSObject {
 
                     if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                         if message.intValue == 1 {
-                            getUserInfo()
+//                            getUserInfo()
+                            getUserInfo(finished: { (_) in
+                                
+                            })
                             
                             finished(true)
                         }
@@ -93,7 +96,10 @@ class ZDXRequestTool: NSObject {
                 
                 if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                     if message.intValue == 1 {
-                        getUserInfo()
+//                        getUserInfo()
+                        getUserInfo(finished: { (_) in
+                            
+                        })
                         
                         finished(true)
                     }
@@ -176,11 +182,16 @@ class ZDXRequestTool: NSObject {
             
             if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                 if message.intValue == 1 {
-                    getUserInfo()
-                    Model.boolSwotvh = false
-                    let vc = WKViewController()
-                    vc.clearCookie()
-                    finished(true)
+//                    getUserInfo()
+                    getUserInfo(finished: { (result) in
+                        if result {
+                            
+                            Model.boolSwotvh = false
+                            let vc = WKViewController()
+                            vc.clearCookie()
+                            finished(true)
+                        }
+                    })
                 }
                 
                 if message.intValue == 0 {
@@ -199,7 +210,7 @@ class ZDXRequestTool: NSObject {
     }
     
     // MARK: - 获取用户信息
-    class func getUserInfo() {
+    class func getUserInfo(finished: @escaping (_ isloginSuccess : Bool) -> ()) {
         
         if let userInfoStr = AccountModel.shareAccount()?.id {
             // 获取用户信息
@@ -211,6 +222,8 @@ class ZDXRequestTool: NSObject {
                 
                 if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                     if message.intValue == 1 {
+                        
+                        finished(true)
                         
                         if let dic = result as? NSDictionary {
                             
@@ -274,9 +287,10 @@ class ZDXRequestTool: NSObject {
             
             if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                 if message.intValue == 1 {
-                    getUserInfo()
+                    getUserInfo(finished: { (result) in
+                        finished(true)
+                    })
                     
-                    finished(true)
                 }
                 
                 if message.intValue == 0 {
@@ -357,9 +371,12 @@ class ZDXRequestTool: NSObject {
 //
                 if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                     if message.intValue == 1 {
-                        getUserInfo()
+                        getUserInfo(finished: { (result) in
+                            if result {
+                                finished(true)
+                            }
+                        })
                         
-                        finished(true)
                     }
                     
                     if message.intValue == 0 {
@@ -460,17 +477,18 @@ class ZDXRequestTool: NSObject {
                                       "birthday" : birthdayStr]
         
         
-        CCog(message: param)
         NetWorkTool.shared.postWithPath(path: UPDINFO_URL, paras: param, success: { (result) in
             CCog(message: result)
             
             if let isSuccess = result as? NSDictionary {
                 if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
                     if messageStr == "修改成功" {
-                        self.getUserInfo()
-                        
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateSuccess"), object: nil)
-                        finished(true)
+//                        self.getUserInfo()
+                        getUserInfo(finished: { (result) in
+                            
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateSuccess"), object: nil)
+                            finished(true)
+                        })
                     }
                 }
             }
@@ -568,9 +586,10 @@ class ZDXRequestTool: NSObject {
             CCog(message: result)
             if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                 if message.intValue == 1 {
-                    getUserInfo()
+                    getUserInfo(finished: { (result) in
+                        finished(true)
+                    })
                     
-                    finished(true)
                 }
                 
                 if message.intValue == 0 {
@@ -610,9 +629,13 @@ class ZDXRequestTool: NSObject {
             
             if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                 if message.intValue == 1 {
-                    getUserInfo()
+//                    getUserInfo()
+                    getUserInfo(finished: { (result) in
+                        if result {
+                            finished(true)
+                        }
+                    })
                     
-                    finished(true)
                 }
                 
                 if message.intValue == 0 {

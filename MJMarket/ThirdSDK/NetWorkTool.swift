@@ -109,6 +109,8 @@ extension NetWorkTool {
                     if (((error! as NSError).userInfo as? NSDictionary)?.object(forKey: "NSLocalizedDescription") as? String) != nil {
                         toast(toast: "网络出现异常")
                     }
+                    
+                    
                 }
             }
         }

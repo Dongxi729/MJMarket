@@ -106,16 +106,28 @@ class MyCellOne: CommonTableViewCell {
         contentView.addSubview(rightV)
         contentView.addSubview(seperateLine)
         
-        DispatchQueue.main.async {
         
-            if ((AccountModel.shareAccount()?.scores) != nil) {
+        CCog()
+        
+        
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        DispatchQueue.main.async {
             
+            if let moneyStr = (AccountModel.shareAccount()?.money as? NSNumber)?.stringValue {
+                self.leftV.myCellMoneyLabel.text = "￥" + moneyStr
+            }
+            
+            if ((AccountModel.shareAccount()?.scores) != nil) {
+                
                 self.rightV.myCellMoneyLabel.text = (AccountModel.shareAccount()?.scores as? NSNumber)?.stringValue
             } else {
                 self.rightV.myCellMoneyLabel.text = "0"
             }
         }
-        
+        CCog()
     }
     
     required init?(coder aDecoder: NSCoder) {

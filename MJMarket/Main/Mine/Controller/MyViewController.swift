@@ -11,6 +11,29 @@
 import UIKit
 
 class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCellTwoDelegate,MyCellOneDelegate,ChagrgeVDelegate,MyVHeaderVDelegate {
+    func wxChargeSuccess() {
+        CCog()
+
+        ZDXRequestTool.getUserInfo { (result) in
+    
+            CCog(message: result)
+            if result {
+                self.myTbV.reloadData()
+            }
+        }
+    }
+    
+    func alipayChargeSuccess() {
+        CCog()
+        ZDXRequestTool.getUserInfo { (result) in
+            if result {
+                
+                
+                self.myTbV.reloadData()
+            }
+        }
+    }
+    
     func btnCli(sender: IndexPath) {
 
         
@@ -140,7 +163,11 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             })
         }
         
-        self.myTbV.reloadData()
+        DispatchQueue.main.async {
+            
+            self.myTbV.reloadData()
+        }
+        
     }
     
     
@@ -305,12 +332,13 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     
     func chargeDelegateSEL() {
-        CCog()
         let payV = ChagrgeV.init(CGRect.init(x: 0, y: 0, width: 265, height: (310) * 1.15))
         payV.chagrgeVDelegate = self
         
         UIApplication.shared.keyWindow?.addSubview(payV)
         payV.center = (UIApplication.shared.keyWindow?.center)!
+        
+        zdx_setupButtonSpringAnimation(payV)
     }
     
     

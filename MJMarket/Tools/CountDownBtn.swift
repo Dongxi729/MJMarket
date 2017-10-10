@@ -51,13 +51,7 @@ class CountDownBtn: UIButton {
         i -= 1
         button.setTitle("\(i)秒", for: .disabled)
         
-        
-//        if NSStringFromClass(self.classForCoder).contains("ForgetPassVC") {
-//            button.backgroundColor=UIColor.white
-//        } else {
-//            button.backgroundColor=COMMON_COLOR
-//        }
-        
+ 
         
         if i == 0 {
             timer.invalidate()
