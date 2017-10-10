@@ -90,7 +90,12 @@ class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Pe
         CCog()
 
         ZDXRequestTool.bindPhone(autoNum: getAutoStr, telPhone: telPhone) { (result) in
-            
+            if result {
+                self.bindPhone_TBV.reloadData()
+                toast(toast: "绑定成功")
+            } else {
+                toast(toast: "绑定失败")
+            }
         }
     }
     
@@ -133,7 +138,7 @@ class BindPhoneCell: CommonTableViewCell,UITextFieldDelegate {
     var bindCellDelegate : BindPhoneCellDelegate?
     
     lazy var bindPhoneCellDescLanbel: UITextField = {
-        let d: UITextField = UITextField.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.65, height: 20))
+        let d: UITextField = UITextField.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
         d.placeholder = "请输入您的手机号码"
         d.font = UIFont.systemFont(ofSize: 14)
         d.keyboardType = .numberPad
@@ -179,6 +184,15 @@ class BindPhoneCell: CommonTableViewCell,UITextFieldDelegate {
                 currentString.replacingCharacters(in: range, with: string) as NSString
             //            self.fotgetSecTwoDelaget?.getTftext(str: textField)
             return newString.length <= maxLength
+        }
+        
+        if textField.placeholder?.description == "请输入您的手机号码" {
+            textField.keyboardType = .numberPad
+            let str = (textField.text!)
+            if str.characters.count <= 11 {
+                return true
+            }
+            textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
         }
         
         return true

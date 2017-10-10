@@ -483,16 +483,22 @@ class ZDXRequestTool: NSObject {
     
     // MARK: - 绑定手机
 //    icon,tel,yzm
-    class func bindPhone(autoNum auto : String,telPhone telStr : String,finished: (_ bindSuccess : Bool) -> ()) {
+    class func bindPhone(autoNum auto : String,telPhone telStr : String,finished: @escaping (_ bindSuccess : Bool) -> ()) {
         let param2 : [String : Any] = ["icon" : GetUserUid.registerKeyIcon!,
                                        "tel": telStr,
                                        "yzm" : auto]
         NetWorkTool.shared.postWithPath(path: BINDPHONE_URL, paras: param2, success: { (result) in
             CCog(message: result)
-            if let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
+            if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
+                if message.intValue == 1 {
+                    getUserInfo()
+                    
+                    finished(true)
+                }
                 
-                FTIndicator.showToastMessage(message)
-                
+                if message.intValue == 0 {
+                    finished(false)
+                }
             }
         }) { (_) in
             
@@ -502,8 +508,44 @@ class ZDXRequestTool: NSObject {
     
 //    /// 绑定手机号 icon tel yzm----icon 验证码返回值
 //    var BINDPHONE_URL = COMMON_PREFIX + "/bindphone"
-    // MARK: - 微信绑定
-
+    // MARK: - 微信绑定  uid+openid
+    class func wxBind(finished: @escaping (_ bindSuccess : Bool) -> ()) {
+        let param : [String : String] = ["uid" : AccountModel.shareAccount()?.id as! String,
+                                         "openid" : MineModel.wxOPENID]
+        NetWorkTool.shared.postWithPath(path: BINDWXOPENID_URL, paras: param, success: { (result) in
+            CCog(message: result)
+            
+            /**
+             {
+             data = "<null>";
+             message = "该微信账号已经绑定过其他账号！";
+             success = 0;
+             total = 0;
+             }
+             */
+            
+//            let result : [AnyHashable : Any] = [
+//                "data" : "<null>",
+//                "message" : "该微信账号已经绑定过其他账号！",
+//                "success" : 1,
+//                "total" : 0
+//            ]
+            
+            if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
+                if message.intValue == 1 {
+                    getUserInfo()
+                    
+                    finished(true)
+                }
+                
+                if message.intValue == 0 {
+                    finished(false)
+                }
+            }
+        }) { (_) in
+            
+        }
+    }
     
 }
 

@@ -86,12 +86,8 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         return d
     }()
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.isHidden = false
-        
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "slideToZero"), object: nil)
-    }
+    
+    
     
     
     /// 右上角按钮
@@ -119,12 +115,19 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "slideToZero"), object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "slideToZero"), object: nil)
         
-        self.navigationController?.setToolbarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         if AccountModel.shareAccount()?.token == nil {
             alertTologin()

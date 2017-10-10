@@ -105,7 +105,20 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         
         person_TBV.tableFooterView = personHeadV
         
-        NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(bindWeChat), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
+    }
+    
+    /// 绑定微信
+    @objc func bindWeChat() {
+        CCog()
+        ZDXRequestTool.wxBind { (result) in
+            if result {
+                self.person_TBV.reloadData()
+                toast(toast: "绑定成功")
+            }  else {
+                toast(toast: "绑定失败")
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -287,56 +300,20 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         }
     }
     
-    // MARK: - 微信登录
-    /// 微信登录
-    @objc private func wxlogin() {
-        
-        ZDXRequestTool.wxLoginSEL { (result) in
-            if result {
-                
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
-                
-                UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
-            }
-        }
-    }
-    
-    // MARK: - 微信登录
-    @objc private func wxLoginSEL() {
-        
-        CCog(message: WXApi.isWXAppInstalled())
-        
-        if WXApi.isWXAppInstalled() {
-            
-            if MineModel.wxOPENID.characters.count == 0 {
-                let tool = WXTool()
-                tool.clickAuto()
-            } else {
-                ZDXRequestTool.wxLoginSEL(finished: { (result) in
-                    if result {
-                        
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
-                        
-                        UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
-                    }
-                })
-            }
-        }
-    }
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 1 && indexPath.row == 0 {
             
-            if let phoneNum = AccountModel.shareAccount()?.Tel as? String {
-                if phoneNum.characters.count >= 11 {
-                    
-                } else {
+//            if let phoneNum = AccountModel.shareAccount()?.Tel as? String {
+//                if phoneNum.characters.count >= 11 {
+//                    
+//                } else {
                     
                     self.navigationController?.pushViewController(BindPhoneVC(), animated: true)
-                }
-            }
+//                }
+//            }
         }
 
         if indexPath.section == 1 && indexPath.row == 1 {
@@ -349,7 +326,24 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
                 //            self.navigationController?.pushViewController(BindPhoneVC(), animated: true)
                 //////////////////////////////////////////////////////////////////////////////
                 CCog(message: "是否微信授权做事")
-                
+                if WXApi.isWXAppInstalled() {
+                    
+                    if MineModel.wxOPENID.characters.count == 0 {
+                        let tool = WXTool()
+                        tool.clickAuto()
+                    } else {
+                        ZDXRequestTool.wxBind { (result) in
+                            if result {
+                                self.person_TBV.reloadData()
+                                toast(toast: "绑定成功")
+                            }  else {
+                                toast(toast: "绑定失败")
+                            }
+                        }
+                    }
+                } else {
+                    toast(toast: "未安装微信")
+                }
             }
         }
         
