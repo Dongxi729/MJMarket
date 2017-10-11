@@ -111,10 +111,10 @@ class LoginInputV: UIView,UITextFieldDelegate {
         d.backgroundColor = UIColor.colorWithHexString("F3F3F3")
         return d
     }()
-    
-    
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
+
+        
         if textField.placeholder == "请输入您的手机号码" {
             self.loginInputDelegate?.loginInputTfNum(tfNum: textField.text!)
         }

@@ -102,6 +102,7 @@
 		264FA77F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 264FA76F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m */; };
 		264FA7801F54229E00CE405B /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 264FA7711F54229E00CE405B /* IQKeyboardManager.bundle */; };
 		2650C3871F7F7D020080EA6F /* MineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2650C3861F7F7D020080EA6F /* MineModel.swift */; };
+		26586F931F8E2F610018790B /* TFwithChooseDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26586F921F8E2F610018790B /* TFwithChooseDate.swift */; };
 		265A7D6D1F5972A100F0503C /* ChagrgeV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6C1F5972A100F0503C /* ChagrgeV.swift */; };
 		265A7D6F1F59740F00F0503C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6E1F59740F00F0503C /* TestVC.swift */; };
 		265AFD851F6A26040025F3DE /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265AFD841F6A26040025F3DE /* AccountModel.swift */; };
@@ -109,6 +110,7 @@
 		267AA8E71F8762CE00646E0F /* UIImage+XLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 267AA8E31F8762A700646E0F /* UIImage+XLExtension.m */; };
 		267AA8E81F8762D400646E0F /* XLPasswordInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267AA8E41F8762A700646E0F /* XLPasswordInputView.m */; };
 		267AA8E91F87637D00646E0F /* UIView+XLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 267AA8E21F8762A700646E0F /* UIView+XLExtension.m */; };
+		267BECDD1F8E14D000CAACC8 /* NSString+XMGExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 267BECDB1F8E14CF00CAACC8 /* NSString+XMGExtension.m */; };
 		2680AB051F627211008D51AB /* ShareV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2680AB041F627211008D51AB /* ShareV.swift */; };
 		2688530B1F7B8F24008BD4DE /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2688530A1F7B8F24008BD4DE /* SwiftyJSON.swift */; };
 		268853151F7BA416008BD4DE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 268853141F7BA416008BD4DE /* Security.framework */; };
@@ -388,6 +390,7 @@
 		264FA76F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		264FA7711F54229E00CE405B /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
 		2650C3861F7F7D020080EA6F /* MineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineModel.swift; sourceTree = "<group>"; };
+		26586F921F8E2F610018790B /* TFwithChooseDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFwithChooseDate.swift; sourceTree = "<group>"; };
 		265A7D6C1F5972A100F0503C /* ChagrgeV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChagrgeV.swift; sourceTree = "<group>"; };
 		265A7D6E1F59740F00F0503C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		265AFD841F6A26040025F3DE /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
@@ -398,6 +401,8 @@
 		267AA8E31F8762A700646E0F /* UIImage+XLExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+XLExtension.m"; sourceTree = "<group>"; };
 		267AA8E41F8762A700646E0F /* XLPasswordInputView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLPasswordInputView.m; sourceTree = "<group>"; };
 		267AA8E61F8762A700646E0F /* UIView+XLExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+XLExtension.h"; sourceTree = "<group>"; };
+		267BECDB1F8E14CF00CAACC8 /* NSString+XMGExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMGExtension.m"; sourceTree = "<group>"; };
+		267BECDC1F8E14CF00CAACC8 /* NSString+XMGExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+XMGExtension.h"; sourceTree = "<group>"; };
 		2680AB041F627211008D51AB /* ShareV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareV.swift; sourceTree = "<group>"; };
 		2688530A1F7B8F24008BD4DE /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		268853121F7BA32E008BD4DE /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
@@ -980,6 +985,8 @@
 		264FA6CA1F54144400CE405B /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				267BECDC1F8E14CF00CAACC8 /* NSString+XMGExtension.h */,
+				267BECDB1F8E14CF00CAACC8 /* NSString+XMGExtension.m */,
 				262112411F8B218300E4FDDA /* CountDownBtn.swift */,
 				2698933C1F88902F00C150F9 /* refreshControl */,
 				26C6FE441F7E25760082011C /* PickerV.swift */,
@@ -1146,6 +1153,7 @@
 				26F73AD21F74AA2900380A03 /* WKV+Extension.swift */,
 				26918E201F7C879200887737 /* ZDXBaseViewController.swift */,
 				26F614971F8715140071A8D4 /* ZDXAlertController.swift */,
+				26586F921F8E2F610018790B /* TFwithChooseDate.swift */,
 			);
 			path = commonV;
 			sourceTree = "<group>";
@@ -1681,6 +1689,7 @@
 				26F73AD11F74A2EE00380A03 /* PaymenyModel.swift in Sources */,
 				261E67BB1F89FADD00423382 /* PersonInfo_Five.swift in Sources */,
 				26F73AFE1F74F8FA00380A03 /* TZPhotoPickerController.m in Sources */,
+				267BECDD1F8E14D000CAACC8 /* NSString+XMGExtension.m in Sources */,
 				26EC77701F7F8DF6007AE27D /* SignmentVC.swift in Sources */,
 				26F73AD71F74B7CC00380A03 /* RemoveCookieTool.swift in Sources */,
 				26F73AF61F74F8FA00380A03 /* NSBundle+TZImagePicker.m in Sources */,
@@ -1726,6 +1735,7 @@
 				264FA7781F54229E00CE405B /* IQKeyboardManager.m in Sources */,
 				26AE2B3B1F55023200AAA36C /* AppDelegate.swift in Sources */,
 				26AE2B331F55014000AAA36C /* NSString+extension.swift in Sources */,
+				26586F931F8E2F610018790B /* TFwithChooseDate.swift in Sources */,
 				26F73AC61F74A01600380A03 /* RSADataSigner.m in Sources */,
 				261E67B91F89FA6C00423382 /* PersonInfo_Six.swift in Sources */,
 				264FA6F51F54144400CE405B /* YYSpriteSheetImage.m in Sources */,

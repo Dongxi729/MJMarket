@@ -9,7 +9,12 @@
 import UIKit
 
 
-class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,PersonCityDelegate,DatePickerVDelegate,TZImagePickerControllerDelegate,PersonInfo_OneDelegate,PersonInfo_TwoDelegate,Peroninfo_ThreeDelegate {
+class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,PersonCityDelegate,DatePickerVDelegate,TZImagePickerControllerDelegate,PersonInfo_OneDelegate,PersonInfo_TwoDelegate,Peroninfo_ThreeDelegate,PersonBirthCellDelegate {
+    func personBirthStr(str: String) {
+        CCog(message: str)
+        dateInfo = str
+    }
+    
     
 
     /// 性别  0 男 1 女
@@ -93,6 +98,13 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        ZDXRequestTool.getUserInfo { (result) in
+            if result {
+                
+                self.person_TBV.reloadData()
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -110,7 +122,6 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
     
     /// 绑定微信
     @objc func bindWeChat() {
-        CCog()
         ZDXRequestTool.wxBind { (result) in
             if result {
                 self.person_TBV.reloadData()
@@ -223,11 +234,13 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonBirthCell") as! PersonBirthCell
             cell.personCityCell.text = "生日"
             
+            cell.personBirthCellDelegate = self
+            
             let range = NSRange.init(location: 0, length: 10)
             var aaa : NSString = (dateInfo as NSString)
             
             aaa = aaa.substring(with: range) as NSString
-            cell.cityInfoSelect.text = aaa as String
+            cell.cityInfoSelect.tftfft.text = aaa as String
             return cell
         }
         
@@ -306,12 +319,12 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         
         if indexPath.section == 1 && indexPath.row == 0 {
             
-//            if let phoneNum = AccountModel.shareAccount()?.Tel as? String {
-//                if phoneNum.characters.count >= 11 {
-//                } else {
+            if let phoneNum = AccountModel.shareAccount()?.Tel as? String {
+                if phoneNum.characters.count >= 11 {
+                } else {
                     self.navigationController?.pushViewController(BindPhoneVC(), animated: true)
-//                }
-//            }
+                }
+            }
         }
 
         if indexPath.section == 1 && indexPath.row == 1 {
@@ -347,18 +360,22 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         
         
         if indexPath.section == 2 && indexPath.row == 0 {
-            self.navigationController?.pushViewController(ChangePayPassVC(), animated: true)
+           
+            if let phoneNum = AccountModel.shareAccount()?.Tel as? String {
+                if phoneNum.characters.count == 11 {
+                    self.navigationController?.pushViewController(ChangePayPassVC(), animated: true)
+                } else {
+                    toast(toast: "请先绑定手机号")
+                }
+            }
+            
         }
         
         if indexPath.section == 0 && indexPath.row == 3 {
             
-            self.person_TBV.isUserInteractionEnabled = false
+       
             
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5, execute: {
-                self.person_TBV.isUserInteractionEnabled = true
-            })
-            
-            timeSel()
+//            timeSel()
         }
         
         

@@ -110,10 +110,44 @@ class SetVCellTwo: CommonTableViewCell {
         return d
     }()
     
+    //文件夹缓存地址
+    private lazy var cacheSaveStr = ""
+    
+    ///清除缓存文本
+    lazy var clearCaheLabel : UILabel = {
+        let cacheLable : UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH - 50 - 2 * 10, y: 10 * 1.25, width: 50, height: 20))
+        
+        cacheLable.font = UIFont.systemFont(ofSize: 14)
+        
+        ///清除缓存
+        DispatchQueue.main.async {
+            
+            //2.获取ios 本地文件library缓存大小
+            var paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first! as NSString
+            paths = paths.replacingOccurrences(of: "file:///", with: "/") as NSString
+            
+            self.cacheSaveStr = paths as String
+            
+            //1.本地文件大小统计
+            let localFileSize = paths.fileSize()
+            
+            let localCacheNum = Float(localFileSize) / 1024 / 1024
+            
+            cacheLable.text = NSString.localizedStringWithFormat("%.2fMB", localCacheNum) as String
+            
+            cacheLable.sizeToFit()
+        }
+        
+        
+        return cacheLable
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(setCellTwo_DescLabel)
         contentView.addSubview(setTwoCell_DisImg)
+        contentView.addSubview(clearCaheLabel)
+        clearCaheLabel.isHidden = true
     }
     
     required init?(coder aDecoder: NSCoder) {

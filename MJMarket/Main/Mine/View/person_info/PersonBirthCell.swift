@@ -7,7 +7,13 @@
 //// MARK: - 生日
 
 import UIKit
-class PersonBirthCell : CommonTableViewCell {
+
+protocol PersonBirthCellDelegate {
+    func personBirthStr(str : String)
+}
+class PersonBirthCell : CommonTableViewCell,TFwithChooseDateDelegate {
+    
+    var personBirthCellDelegate : PersonBirthCellDelegate?
     
     lazy var personCityCell : UILabel = {
         let d : UILabel = UILabel.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: SCREEN_WIDTH * 0.2, height: 20))
@@ -17,13 +23,21 @@ class PersonBirthCell : CommonTableViewCell {
         return d
     }()
     
-    lazy var cityInfoSelect : UILabel = {
-        let d: UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
-        d.textColor = FONT_COLOR
-        d.text = "00/00/00"
-        
+    lazy var cityInfoSelect : TFwithChooseDate = {
+        let d: TFwithChooseDate = TFwithChooseDate.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25, y: 12.5, width: SCREEN_WIDTH * 0.6, height: 20))
+        d.tFwithChooseDateDelegate = self
+        d.tftfft.text = "00/00/00"
+        d.tftfft.textColor = FONT_COLOR
         return d
     }()
+    
+    
+    
+    func dateStr(str: String) {
+     print(#line,str)
+        self.personBirthCellDelegate?.personBirthStr(str: str)
+        self.cityInfoSelect.tftfft.text = str
+    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -32,7 +46,7 @@ class PersonBirthCell : CommonTableViewCell {
         
         if ((AccountModel.shareAccount()?.birthday) != nil) {
             if let birthDay = AccountModel.shareAccount()?.birthday as? String {
-                self.cityInfoSelect.text = birthDay
+                self.cityInfoSelect.tftfft.text = birthDay
             }
         }
     }

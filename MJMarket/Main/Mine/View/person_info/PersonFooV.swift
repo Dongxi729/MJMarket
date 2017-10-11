@@ -26,6 +26,14 @@ class PersonFooV : UIView {
         return d
     }()
     
+    /// 底部文本标识
+    lazy var personInfo_bottomLabelDesc: UILabel = {
+        let d: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: self.personInfo_footerV.BottomY + COMMON_MARGIN, width: SCREEN_WIDTH, height: 20))
+        d.font = UIFont.systemFont(ofSize: 10 * SCREEN_SCALE)
+        d.textAlignment = .center
+        return d
+    }()
+    
     @objc private func personSaveSEL() {
         self.personFooVDelegate?.personBtnSEL()
     }
@@ -33,6 +41,8 @@ class PersonFooV : UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(personInfo_footerV)
+        addSubview(personInfo_bottomLabelDesc)
+        personInfo_bottomLabelDesc.isHidden = true
     }
     
     required init?(coder aDecoder: NSCoder) {

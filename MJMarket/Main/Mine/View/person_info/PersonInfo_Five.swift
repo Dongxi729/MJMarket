@@ -12,7 +12,7 @@ class PersonInfo_Five: CommonTableViewCell {
     lazy var personInfoFour_IconImg: UIImageView = {
         let d : UIImageView = UIImageView.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: 20, height: 20))
         d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "list_icon_wechat")
+        d.image = UIImage.init(named: "wechat_friend")
         return d
     }()
     

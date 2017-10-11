@@ -97,6 +97,7 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
         return d
     }()
     
+    /// 隐藏视图
     func dismissV() {
         UIView.animate(withDuration: 0.25) {
             UIApplication.shared.keyWindow?.isHidden = true
@@ -130,6 +131,7 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
                                     if let dicPayDic = result as? NSDictionary {
                                         tool.sendWXPay(wxDict: dicPayDic, _com: { (result) in
                                             
+                                            CCog()
                                             self.dismissV()
                                             
                                             /**
@@ -141,21 +143,18 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
                                              //                 */
                                             switch result {
                                             case "-2":
-                            
-                                                print("用户退出支付")
-                                                //..执行用户退出支付。。。
+                                                toast(toast: "支付失败")
                                                 break
                             
                                             case "0":
-                                                //...执行支付成功。。。
                                                 print("支付成功")
                                                 self.chagrgeVDelegate?.wxChargeSuccess()
                                                 
                                                 break
                             
                                             case "-1":
-                                                print("支付失败")
-                                                //...执行支付失败。。。
+
+                                                toast(toast: "支付失败")
                                                 break
                             
                                             default:
@@ -173,7 +172,7 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
                         
                         ZDXRequestTool.payTypeWithSelect(payType: paytype, passStr: payPassStr, moneyStr: chaegeCount, finished: { (aliPay) in
                             PaymenyModel.shared.alipay(orderString: aliPay, comfun: { (result) in
-                                CCog(message: result)
+                                CCog()
                                 self.dismissV()
                             })
                         })
@@ -240,7 +239,7 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
         switch result {
         case "用户中途取消":
             CCog(message: "用户中途取消")
-            
+            toast(toast: "支付失败")
             break
             
         case "支付成功":
@@ -253,16 +252,16 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
             break
             
         case "正在处理中":
-            CCog(message: "正在处理中")
+            toast(toast: "支付失败")
             break
             
         case "网络连接出错":
-            CCog(message: "网络连接出错")
+            toast(toast: "支付失败")
             
             break
             
         case "订单支付失败":
-            CCog(message: "订单支付失败")
+            toast(toast: "支付失败")
             break
         default:
             break
@@ -359,6 +358,7 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
         d.font = UIFont.systemFont(ofSize: 14)
         d.clipsToBounds = true
         d.keyboardType = .numberPad
+        d.isSecureTextEntry  = true
         d.tag = 112
         d.delegate = self
         d.placeholder = "  请输入支付密码"

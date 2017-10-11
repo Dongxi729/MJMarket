@@ -28,5 +28,7 @@ class MineModel: NSObject {
     
     /// 微信openID
     static var wxOPENID = ""
-    
+
+    /// 微信unionId
+    static var wxUNIONID = ""
 }

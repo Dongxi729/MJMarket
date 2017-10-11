@@ -15,7 +15,7 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXA
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+//        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
 
     }
@@ -25,9 +25,22 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXA
         navigationController?.setNavigationBarHidden(false, animated: true)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "reload"), object: nil)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+//        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        view.addSubview(LoginlogoCenter)
+        view.addSubview(tfInputV)
+        view.addSubview(loginclickView)
+        view.addSubview(wxLoginBtn)
+        view.addSubview(sepateBtn)
+        view.backgroundColor = UIColor.white
+        
+        //        NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
+    }
+    
     
     /// 图片logo
     lazy var LoginlogoCenter: UIImageView = {
@@ -74,19 +87,7 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXA
         return d
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        view.addSubview(LoginlogoCenter)
-        view.addSubview(tfInputV)
-        view.addSubview(loginclickView)
-        view.addSubview(wxLoginBtn)
-        view.addSubview(sepateBtn)
-        view.backgroundColor = UIColor.white
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
-    }
-    
+
     
     
     /// 微信登录
@@ -124,8 +125,8 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXA
                 })
             }
         } else {
+            /// 微信网页登录
             let req = SendAuthReq()
-            
             let kAuthScope = "snsapi_message,snsapi_userinfo,snsapi_friend,snsapi_contact";
             let kAutoOpenID = "0c806938e2413ce73eef92cc3"
             let kAuthState = "xxx"
@@ -134,8 +135,6 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXA
             req.state = kAuthState
             req.openID = kAutoOpenID
             WXApi.sendAuthReq(req, viewController: UIApplication.shared.keyWindow?.rootViewController, delegate: self)
-            
-            
         }
     }
 
@@ -160,6 +159,8 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXA
         
         if self.loginPhone.characters.count > 0 && self.loginPassStr.characters.count > 0 {
             ZDXRequestTool.login(phoneNumber: self.loginPhone, passwor: self.loginPassStr, finished: { (result) in
+                
+                CCog(message: result)
                 if result {
                     
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
@@ -238,8 +239,6 @@ class UseThirdLoginLine: UIView {
         addSubview(leftLine)
         
         addSubview(rightLine)
-        
-        CCog(message: shareToDesc.frame)
     }
     
     required init?(coder aDecoder: NSCoder) {

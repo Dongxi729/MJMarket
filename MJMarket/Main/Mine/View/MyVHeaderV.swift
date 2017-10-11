@@ -25,7 +25,6 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
                 if result {
                     CCog(message: result)
                     MineModel.signMent = true
-                    FTIndicator.showToastMessage("已签到")
                     self.myVHeaderVDelegate?.sliSucce()
                 }
             }

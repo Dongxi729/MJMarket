@@ -180,8 +180,10 @@ class WXTool : UIView,WXApiDelegate,NSURLConnectionDelegate {
                         let accessToken = accessDict[WX_ACCESS_TOKEN] as? String,
                         var openID = accessDict[WX_OPEN_ID] as? String,
                         let refreshToken = accessDict[WX_REFRESH_TOKEN] as? String {
-                        if let wx_openId = accessDict.object(forKey: "openid") as? String {
+                        if let wx_openId = accessDict.object(forKey: "openid") as? String,
+                            let wx_unionid  = accessDict.object(forKey: "unionid") as? String {
                             MineModel.wxOPENID = wx_openId
+                            MineModel.wxUNIONID = wx_unionid
                             CCog(message: MineModel.wxOPENID)
                             
                             /// 发通知接收

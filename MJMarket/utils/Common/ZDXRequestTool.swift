@@ -27,16 +27,6 @@ class ZDXRequestTool: NSObject {
                 
                 if let dic = result as? NSDictionary {
                     
-//                    if let singKey = (dic["data"] as? NSDictionary)?["icon"] as? String,
-//                        let sendResult = dic["message"] as? String {
-//
-//                        /// singKey写在静态全局变量
-//                        GetUserUid.registerKeyIcon = singKey
-//
-//                        if sendResult == "发送成功" {
-//                            FTIndicator.showToastMessage(sendResult)
-//                        }
-//                    }
                     if let singKey = (dic["data"] as? NSDictionary)?["icon"] as? String,
                         let sendResult = dic["message"] as? String {
                         
@@ -45,10 +35,14 @@ class ZDXRequestTool: NSObject {
                         
                         FTIndicator.showToastMessage(sendResult)
                     }
-
+                    
+                    if let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                        
+                        FTIndicator.showToastMessage(message)
+                    }
+                    
                     if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                         if message.intValue == 1 {
-//                            getUserInfo()
                             getUserInfo(finished: { (_) in
                                 
                             })
@@ -83,20 +77,22 @@ class ZDXRequestTool: NSObject {
         NetWorkTool.shared.postWithPath(path: SENDSMS_URL, paras: param2, success: { (result) in
             CCog(message: result)
             
+            if let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                
+                FTIndicator.showToastMessage(message)
+            }
+            
             if let dic = result as? NSDictionary {
                 
-                if let singKey = (dic["data"] as? NSDictionary)?["icon"] as? String,
-                    let sendResult = dic["message"] as? String {
+                if let singKey = (dic["data"] as? NSDictionary)?["icon"] as? String {
                     
                     /// singKey写在静态全局变量
                     GetUserUid.registerKeyIcon = singKey
-                    
-                    FTIndicator.showToastMessage(sendResult)
                 }
                 
                 if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                     if message.intValue == 1 {
-//                        getUserInfo()
+                        //                        getUserInfo()
                         getUserInfo(finished: { (_) in
                             
                         })
@@ -126,7 +122,7 @@ class ZDXRequestTool: NSObject {
     class func register(registerNum phoneNum : String,autoNumber autoNum : String,password pas : String,finished:@escaping (_ regist : Bool) -> ()) {
         
         if let autoStrUid = GetUserUid.registerKeyIcon {
-
+            
             /// 注册操作
             let param2 : [String : Any] = ["icon" : autoStrUid,
                                            "tel": phoneNum,
@@ -172,26 +168,23 @@ class ZDXRequestTool: NSObject {
         NetWorkTool.shared.postWithPath(path: LOGIN_URL, paras: loginParam, success: { (result) in
             CCog(message: result)
             
-//            if let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
-//
-//                FTIndicator.showToastMessage(message)
-//                if message == "登录成功" {
-//                }
-//            }
+            if let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                
+                FTIndicator.showToastMessage(message)
+            }
             
             
             if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                 if message.intValue == 1 {
-//                    getUserInfo()
-                    getUserInfo(finished: { (result) in
-                        if result {
+                    
+                    if let uidStr = ((result as? NSDictionary)?.object(forKey: "data") as? NSDictionary)?.object(forKey: "uid") as? String {
+                        getUserInfo(uidStr: uidStr)
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                             
-                            Model.boolSwotvh = false
-                            let vc = WKViewController()
-                            vc.clearCookie()
                             finished(true)
-                        }
-                    })
+                        })
+                    }
                 }
                 
                 if message.intValue == 0 {
@@ -199,10 +192,6 @@ class ZDXRequestTool: NSObject {
                 }
             }
             
-            
-            if let uidStr = ((result as? NSDictionary)?.object(forKey: "data") as? NSDictionary)?.object(forKey: "uid") as? String {
-                getUserInfo(uidStr: uidStr)
-            }
             
         }, failure: { (error) in
             CCog(message: error.localizedDescription)
@@ -216,20 +205,19 @@ class ZDXRequestTool: NSObject {
             // 获取用户信息
             let getUserInfo : [String : Any] = ["uid" : userInfoStr]
             
-            CCog(message: getUserInfo)
             NetWorkTool.shared.postWithPath(path:USER_INFO_URL , paras:getUserInfo , success: { (result) in
-                CCog(message: result)
                 
                 if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                     if message.intValue == 1 {
-                        
-                        finished(true)
-                        
                         if let dic = result as? NSDictionary {
                             
                             if let dicData = dic["data"] as? NSDictionary {
                                 let account = AccountModel.init(dict: dicData as! [String : Any])
                                 account.updateUserInfo()
+                                
+                                
+                                finished(true)
+                                
                                 
                                 if let userName = AccountModel.shareAccount()?.nickname as? String {
                                     MineModel.nameString = userName
@@ -256,12 +244,19 @@ class ZDXRequestTool: NSObject {
         NetWorkTool.shared.postWithPath(path:USER_INFO_URL , paras:getUserInfo , success: { (result) in
             CCog(message: result)
             
-            if let dic = result as? NSDictionary {
-                
-                if let dicData = dic["data"] as? NSDictionary {
-                    let account = AccountModel.init(dict: dicData as! [String : Any])
-                    account.updateUserInfo()
-                    
+            if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
+                if message.intValue == 1 {
+                    if let dic = result as? NSDictionary {
+                        
+                        if let dicData = dic["data"] as? NSDictionary {
+                            let account = AccountModel.init(dict: dicData as! [String : Any])
+                            account.updateUserInfo()
+                            
+                            if let userName = AccountModel.shareAccount()?.nickname as? String {
+                                MineModel.nameString = userName
+                            }
+                        }
+                    }
                 }
             }
         }, failure: { (error) in
@@ -282,7 +277,6 @@ class ZDXRequestTool: NSObject {
             CCog(message: result)
             if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
                 FTIndicator.showToastMessage(messageStr)
-
             }
             
             if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
@@ -332,13 +326,6 @@ class ZDXRequestTool: NSObject {
     }
     
     /// 设置支付密码
-    ///
-    /// - Parameters:
-    ///   - phoneNum: <#phoneNum description#>
-    ///   - autoNum: <#autoNum description#>
-    ///   - pas: <#pas description#>
-    ///   - finished: <#finished description#>
-    
     /**
      {
      data = "<null>";
@@ -347,28 +334,30 @@ class ZDXRequestTool: NSObject {
      total = 0;
      }
      */
+    // MARK: - 设置支付密码
     class func setSetPay(autoNumber autoNum : String,password pas : String,finished : @escaping (_ setSuccess : Bool) -> ()) {
         /// 注册操作
         if (GetUserUid.registerKeyIcon != nil) {
-        
+            
             //        uid pwd pwd1 icon yzm
-            let param2 : [String : Any] = ["icon" : "GetUserUid.registerKeyIcon!",
+            let param2 : [String : Any] = ["icon" : GetUserUid.registerKeyIcon!,
                                            "uid": AccountModel.shareAccount()?.id as! String,
                                            "yzm" : autoNum,
                                            "pwd" : pas,
                                            "pwd1" : pas]
             
+            CCog(message: param2)
             NetWorkTool.shared.postWithPath(path: UPDPAYPWD_URL, paras: param2, success: { (result) in
                 CCog(message: result)
                 
-//                let result : [AnyHashable : Any] = [
-//                    "data" : "<null>",
-//                    "message" : "设置成功",
-//                    "success" : 1,
-//                    "total" : 0
-//                 ]
-//
-//
+                //                let result : [AnyHashable : Any] = [
+                //                    "data" : "<null>",
+                //                    "message" : "设置成功",
+                //                    "success" : 1,
+                //                    "total" : 0
+                //                 ]
+                //
+                //
                 if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                     if message.intValue == 1 {
                         getUserInfo(finished: { (result) in
@@ -393,11 +382,12 @@ class ZDXRequestTool: NSObject {
         } else {
             FTIndicator.showToastMessage("请输入验证码")
         }
-    
+        
     }
     
     //    money  paytype(0,微信 1,支付宝)   pwd
     //    var WEB_VIEW_CHARGE = COMMON_PREFIX + "/recharge"
+    // MARK: - 支付选择-传回加密支付信息
     class func payTypeWithSelect(payType : Int,passStr : String,moneyStr : String,finished: @escaping (_ chargeSignedStr : String) -> ()) {
         let param : [String : Any] = ["pwd" : passStr,
                                       "payType" : payType,
@@ -405,6 +395,12 @@ class ZDXRequestTool: NSObject {
                                       "money" : moneyStr]
         
         NetWorkTool.shared.postWithPath(path: WEB_VIEW_CHARGE, paras: param, success: { (result) in
+            
+            CCog(message: result)
+            
+            if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                toast(toast: messageStr)
+            }
             
             if let chargeSignStr = (result as? NSDictionary)?.object(forKey: "data") as? String {
                 finished(chargeSignStr)
@@ -443,11 +439,9 @@ class ZDXRequestTool: NSObject {
             let param : [String : Any] = ["uid" : userToken]
             
             NetWorkTool.shared.postWithPath(path: ORDERCOUNT_URL, paras: param, success: { (result) in
-                CCog(message: result)
                 
                 var badge : [String] = []
                 if let chargeSignStr = (result as? NSDictionary)?.object(forKey: "data") as? NSDictionary {
-                    CCog(message: chargeSignStr)
                     
                     badge.append("0")
                     badge.append((chargeSignStr.object(forKey: "nopay") as! NSNumber).stringValue)
@@ -480,19 +474,24 @@ class ZDXRequestTool: NSObject {
         NetWorkTool.shared.postWithPath(path: UPDINFO_URL, paras: param, success: { (result) in
             CCog(message: result)
             
-            if let isSuccess = result as? NSDictionary {
-                if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
-                    if messageStr == "修改成功" {
-//                        self.getUserInfo()
-                        getUserInfo(finished: { (result) in
-                            
-                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateSuccess"), object: nil)
-                            finished(true)
-                        })
-                    }
+            
+            if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
+                if message.intValue == 1 {
+                    getUserInfo(finished: { (result) in
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateSuccess"), object: nil)
+                        finished(true)
+                    })
+                }
+                if message.intValue == 0 {
+                    finished(false)
                 }
             }
             
+            if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                toast(toast: messageStr)
+            }
+
         }) { (error) in
             CCog(message: error.localizedDescription)
         }
@@ -539,6 +538,7 @@ class ZDXRequestTool: NSObject {
             NetWorkTool.shared.postWithPath(path: SIGNMENT_URL, paras: param, success: { (result) in
                 CCog(message: result)
                 if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                    toast(toast: messageStr)
                     if messageStr == "今天已经签到过" || messageStr == "签到成功" {
                         finished(true)
                     }
@@ -552,24 +552,32 @@ class ZDXRequestTool: NSObject {
     
     // MARK: - 微信登录
     class func wxLoginSEL(finished: @escaping (_ isloginSuccess : Bool) -> ()) {
-        let param : [String : String] = ["openid" : MineModel.wxOPENID]
+        let param : [String : String] = ["openid" : MineModel.wxOPENID,"unionid" : MineModel.wxUNIONID]
         NetWorkTool.shared.postWithPath(path: WXLOGIN_URL, paras: param, success: { (result) in
             CCog(message: result)
-            if let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
-                
-                FTIndicator.showToastMessage(message)
-                if message == "登录成功" {
+            
+            if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
+                if message.intValue == 1 {
+                    
                     Model.boolSwotvh = false
                     let vc = WKViewController()
                     vc.clearCookie()
-                    finished(true)
+                    
+                    
+                    if let uidStr = ((result as? NSDictionary)?.object(forKey: "data") as? NSDictionary)?.object(forKey: "uid") as? String {
+                        getUserInfo(uidStr: uidStr)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                            finished(true)
+                        })
+                    }
+                }
+                
+                if message.intValue == 0 {
+                    finished(false)
                 }
             }
             
             
-            if let uidStr = ((result as? NSDictionary)?.object(forKey: "data") as? NSDictionary)?.object(forKey: "uid") as? String {
-                getUserInfo(uidStr: uidStr)
-            }
             
         }) { (_) in
             
@@ -577,7 +585,7 @@ class ZDXRequestTool: NSObject {
     }
     
     // MARK: - 绑定手机
-//    icon,tel,yzm
+    //    icon,tel,yzm
     class func bindPhone(autoNum auto : String,telPhone telStr : String,finished: @escaping (_ bindSuccess : Bool) -> ()) {
         let param2 : [String : Any] = ["icon" : GetUserUid.registerKeyIcon!,
                                        "tel": telStr,
@@ -602,34 +610,19 @@ class ZDXRequestTool: NSObject {
         
     }
     
-//    /// 绑定手机号 icon tel yzm----icon 验证码返回值
-//    var BINDPHONE_URL = COMMON_PREFIX + "/bindphone"
+    //    /// 绑定手机号 icon tel yzm----icon 验证码返回值
+    //    var BINDPHONE_URL = COMMON_PREFIX + "/bindphone"
     // MARK: - 微信绑定  uid+openid
     class func wxBind(finished: @escaping (_ bindSuccess : Bool) -> ()) {
         let param : [String : String] = ["uid" : AccountModel.shareAccount()?.id as! String,
-                                         "openid" : MineModel.wxOPENID]
+                                         "openid" : MineModel.wxOPENID,
+                                         "unionid" : MineModel.wxUNIONID]
         NetWorkTool.shared.postWithPath(path: BINDWXOPENID_URL, paras: param, success: { (result) in
-            CCog(message: result)
             
-            /**
-             {
-             data = "<null>";
-             message = "该微信账号已经绑定过其他账号！";
-             success = 0;
-             total = 0;
-             }
-             */
-            
-//            let result : [AnyHashable : Any] = [
-//                "data" : "<null>",
-//                "message" : "该微信账号已经绑定过其他账号！",
-//                "success" : 1,
-//                "total" : 0
-//            ]
             
             if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                 if message.intValue == 1 {
-//                    getUserInfo()
+                    //                    getUserInfo()
                     getUserInfo(finished: { (result) in
                         if result {
                             finished(true)

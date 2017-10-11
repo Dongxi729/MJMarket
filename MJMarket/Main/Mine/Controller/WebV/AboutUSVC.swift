@@ -13,7 +13,18 @@ class AboutUSVC : WKViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadURL(urlStr: ABOUT_US_URL)
+//        loadURL(urlStr: ABOUT_US_URL)
+//        webView.load(URLRequest.init(url: URL.init(string:  "http://mj.ie1e.com/weixin/aboutus?id=7b05614d793c4f64958ae694a0c1a67b&title=关于我们&it=1")!))
+        let baseUrl = "http://mj.ie1e.com/weixin/aboutus?id=7b05614d793c4f64958ae694a0c1a67b&title="
+        
+        let str = "关于我们&it=1"
+        
+        let utf8Str = str.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        
+        let url = URL.init(string: baseUrl + utf8Str!)
+        
+        webView.load(URLRequest.init(url: url!))
+        
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

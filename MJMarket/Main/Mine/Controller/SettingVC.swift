@@ -7,6 +7,7 @@
 //  设置
 
 import UIKit
+import WebKit
 
 class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -59,7 +60,6 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     
     func reloadSelf() {
-        CCog()
         self.set_TbV.reloadData()
     }
     
@@ -86,8 +86,12 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SetVCellTwo") as! SetVCellTwo
             cell.setCellTwo_DescLabel.text = setCellTwoTitles[indexPath.row]
+            if indexPath.section == 1 && indexPath.row == 2 {
+                cell.clearCaheLabel.isHidden = false
+            }
             return cell
         }
+        
     }
     
     
@@ -139,6 +143,37 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         if indexPath.section == 1 && indexPath.row == 1 {
             self.navigationController?.pushViewController(AboutUSVC(), animated: true)
         }
+        
+        if indexPath.section == 1 && indexPath.row == 2 {
+            DispatchQueue.main.async {
+                
+                let cell = tableView.cellForRow(at: indexPath) as! SetVCellTwo
+                
+                //缓存机制:http://www.jianshu.com/p/186a3b236bc9
+                if #available(iOS 9.0, *) {
+                    
+                    let websiteDataTypes = WKWebsiteDataStore.allWebsiteDataTypes()
+                    let dateForm = NSDate.init(timeIntervalSince1970: 0)
+                    
+                    
+                    WKWebsiteDataStore.default().removeData(ofTypes: websiteDataTypes, modifiedSince: dateForm as Date, completionHandler: {
+                        
+                        toast(toast: "清除完毕")
+                        cell.clearCaheLabel.text = "0.0MB"
+
+                    })
+                    
+                } else {
+                    
+                    var libraryPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.userDomainMask, false).first!
+                    libraryPath += "/Cookies"
+                    URLCache.shared.removeAllCachedResponses()
+                    toast(toast: "清除完毕")
+                    cell.clearCaheLabel.text = "0.0MB"
+
+                }
+            }
+        }
     }
     
     // MARK: - 退出当前账号
@@ -152,6 +187,10 @@ class SettingVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         MineModel.nameString = ""
         MineModel.chooseImgData = nil
         MineModel.signMent = false
+        
+        /// UserDefaults.standard.set(str, forKey: "redIcon")
+        UserDefaults.standard.removeObject(forKey: "redIcon")
+        UserDefaults.standard.synchronize()
     }
     
     deinit {

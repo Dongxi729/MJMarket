@@ -230,8 +230,6 @@ extension WKViewController {
     /// 加载URL
     @objc func loadURL(urlStr : String) {
         
-        CCog(message: urlStr)
-        
         var tempUrl = ""
         
         var bool = false
@@ -322,17 +320,14 @@ extension WKViewController {
     
     // MARK: - headerViewelegate
     func headerViewEndfun(_ _endRefresh: () -> Void) {
-        CCog()
         /// 取出刷新头
         let d : headerView = self.webView.viewWithTag(888) as! headerView
 
         NetCheck.shared.returnNetStatus { (result) in
-            CCog(message: result)
             
             if result {
-                CCog()
 
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                     self.webView.reload()
                     d.endRefresh()
                 }

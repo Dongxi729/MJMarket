@@ -43,3 +43,4 @@
 /// 密码输入视图
 #import "XLPasswordInputView.h"
 
+#import "NSString+XMGExtension.h"

@@ -109,6 +109,7 @@ class PayPassVC: UIViewController,UITextFieldDelegate,PassVDelegate {
         zdxPayChoosePassInput.clearPassword()
         payPassDesc.text = "为了账户安全请设置支付密码"
         passStr.removeAll()
+        self.navigationItem.rightBarButtonItems = [payPassConfirmItem,resetItem]
     }
     
     /// 设置完成

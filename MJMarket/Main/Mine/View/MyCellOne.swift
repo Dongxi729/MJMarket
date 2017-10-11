@@ -127,7 +127,6 @@ class MyCellOne: CommonTableViewCell {
                 self.rightV.myCellMoneyLabel.text = "0"
             }
         }
-        CCog()
     }
     
     required init?(coder aDecoder: NSCoder) {

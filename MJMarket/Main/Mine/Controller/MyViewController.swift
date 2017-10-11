@@ -27,8 +27,6 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         CCog()
         ZDXRequestTool.getUserInfo { (result) in
             if result {
-                
-                
                 self.myTbV.reloadData()
             }
         }
@@ -147,6 +145,12 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        ZDXRequestTool.getUserInfo { (result) in
+            if result {
+                self.myTbV.reloadData()
+            }
+        }
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "slideToZero"), object: nil)
         

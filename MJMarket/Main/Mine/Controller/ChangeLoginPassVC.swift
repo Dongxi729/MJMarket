@@ -24,6 +24,8 @@ class ChangeLoginPassVC: UIViewController,UITableViewDelegate,UITableViewDataSou
     lazy var bindPhone_FoV: PersonFooV = {
         let d: PersonFooV = PersonFooV.init(frame:CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 45))
         d.personFooVDelegate = self
+        d.personInfo_bottomLabelDesc.isHidden = false
+        d.personInfo_bottomLabelDesc.text = "您当前为这只登录密码,请设置登录密码"
         return d
     }()
     
@@ -38,7 +40,7 @@ class ChangeLoginPassVC: UIViewController,UITableViewDelegate,UITableViewDataSou
         
     }
     
-    private var cellDescTitles : [String] = ["请输入您的登录密码","请重复输入登录密码"]
+    private var cellDescTitles : [String] = ["旧密码","请输入您的登录密码","请重复输入登录密码"]
     
     // MARK: - 表格代理
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -47,14 +49,14 @@ class ChangeLoginPassVC: UIViewController,UITableViewDelegate,UITableViewDataSou
         cell.bindPhoneCellDescLanbel.placeholder = cellDescTitles[indexPath.row]
         cell.bindIndex = indexPath
         cell.bindCellDelegate = self
-        
+        cell.bindPhoneCellDescLanbel.isSecureTextEntry = true
         cell.bindPhoneCell_Btn.isHidden = true
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return cellDescTitles.count
     }
     
     
@@ -72,22 +74,29 @@ class ChangeLoginPassVC: UIViewController,UITableViewDelegate,UITableViewDataSou
     
     
     /// 第一次登录密码
+    /// 新密码
     private var loginPass = ""
+    /// 确认密码
     private var loginConfirmPass = ""
+    
+    /// 旧密码
+    private var oldLoginPass = ""
+    
     // MARK: - BindPhoneCellDelegate
     func cellStr(index: IndexPath, str: String) {
         CCog(message: index.row)
         CCog(message: str)
         switch index.row {
         case 0:
-            loginPass = str
+            oldLoginPass = str
         case 1:
+            loginPass = str
+        case 2:
             loginConfirmPass = str
         default:
             break
         }
     }
-    
     
     // MARK: - PersonFooVDelegate -- 尾部代理方法
     func personBtnSEL() {
@@ -101,12 +110,16 @@ class ChangeLoginPassVC: UIViewController,UITableViewDelegate,UITableViewDataSou
             FTIndicator.showToastMessage("请再次输入登录密码")
             return
         }
-//        ZDXRequestTool.changeLoginPass(oldPassword: loginPass, newPassword: loginConfirmPass)
-        ZDXRequestTool.changeLoginPass(oldPassword: loginPass, newPassword: loginConfirmPass) { (result) in
+
+        if loginConfirmPass != loginPass {
+            toast(toast: "输入密码不一致")
+            return
+        }
+
+        ZDXRequestTool.changeLoginPass(oldPassword: oldLoginPass, newPassword: loginConfirmPass) { (result) in
             if result {
                 self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }
-    
 }

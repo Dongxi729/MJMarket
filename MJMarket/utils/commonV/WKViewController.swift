@@ -9,14 +9,62 @@
 import UIKit
 import WebKit
 
-
+import CoreTelephony
 
 class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler,ShareVDelegate,headerViewelegate {
+    
+    /// 网络禁止访问
+    var netForbidden = false
+    
+    /// 检查网络权限
+    func checkNetForbid() {
+        
+        if #available(iOS 9.0, *) {
+            
+            let culluarData = CTCellularData()
+            
+            culluarData.cellularDataRestrictionDidUpdateNotifier = { (state : CTCellularDataRestrictedState) -> Void in
+                
+                ///网络受限
+                if state.hashValue == 1 {
+                    
+                    DispatchQueue.main.async {
+                        
+                        
+                        let alertVC = UIAlertController.init(title: "无法访问蜂窝", message: "请前往设置进行开启", preferredStyle: .alert)
+                        alertVC.addAction(UIAlertAction.init(title: "好的", style: .default, handler: { (action) in
+                            
+                            let url = NSURL.init(string: UIApplicationOpenSettingsURLString)
+                            
+                            if UIApplication.shared.openURL(url! as URL) {
+                                UIApplication.shared.openURL(url! as URL)
+                            }
+                        }))
+                        
+                        self.present(alertVC, animated: true, completion: nil)
+                        
+                        
+                        self.lostNetImg.isHidden = true
+                        return
+                    }
+                    
+                    ///网络未受限
+                } else {
+                    self.netForbidden = false
+                    if self.urlStr.characters.count  > 0 {
+                        
+                        self.webView.load(URLRequest.init(url: URL.init(string: self.urlStr)!))
+                    }
+                }
+            }
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .default
-
+        
+        
     }
     
     ///网页模板
@@ -186,10 +234,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                     self.navigationController?.popViewController(animated: true)
                 }
             }
-            
-//            if self.webView.canGoBack {
-//                self.webView.goBack()
-//            }
+
         }
         
         if msg == "aliPay" {
@@ -198,30 +243,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                 if let signStr = dic["content"] as? String {
                     PaymenyModel.shared.alipay(orderString: signStr, comfun: { (result) in
                         self.navigationController?.pushViewController(PaySuccessVC(), animated: true)
-//                        switch result {
-//                        case "用户中途取消":
-//                            CCog(message: "用户中途取消")
-//
-//                            break
-//
-//                        case "网页支付成功":
-//                            CCog(message: "网页支付成功")
-//                            break
-//
-//                        case "正在处理中":
-//                            CCog(message: "正在处理中")
-//                            break
-//
-//                        case "网络连接出错":
-//                            CCog(message: "网络连接出错")
-//                            break
-//
-//                        case "订单支付失败":
-//                            CCog(message: "订单支付失败")
-//                            break
-//                        default:
-//                            break
-//                        }
+
                     })
                 }
             }
@@ -235,7 +257,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             /// http://mj.ie1e.com
             
 //    {"content":"【东东超市】东东超市海直购 TAKARAA 巧克力饼干\r\n【普通价】￥78.00\r\n【会员价】￥18.90\r\n【下单链接】{mj.ie1e.com/wx_product/product_detail?id=P1502760529315}","imgs":["/upload/images/20170815/20170815092346518342.jpg"],"productid":"P1502760529315","hasAfter":1}
-            CCog(message: message.body)
+//            CCog(message: message.body)
             
 
             if let jsonData = message.body as? String {
@@ -327,12 +349,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     
     // MARK: - 微信支付
     @objc func weixinPay(payDic : NSDictionary) -> Void {
-//        let payDic = ["noncestr" : "9a3dd4b8567747a5aa6b949065255d23",
-//                      "prepayid" : "wx201701051710489b60009b730164476901",
-//                      "sign" : "28B633B390F29F41293EC78D2EC357BE",
-//                      "timestamp" : "1483607428"]
-//
-        
+
         if WXApi.isWXAppInstalled() == false {
             FTIndicator.showToastMessage("未安装微信或版本不支持")
             
@@ -341,35 +358,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             WXTool.shared.sendWXPay(wxDict: payDic, _com: { (result) in
                 
                 self.navigationController?.pushViewController(PaySuccessVC(), animated: true)
-                
-                /**
-                 ## 支付结果返回 result 👆
-                 
-                 -2    用户退出支付
-                 -1    支付事变
-                 0     支付成功
-//                 */
-//                switch result {
-//                case "-2":
-//
-//                    print("用户退出支付")
-//                    //..执行用户退出支付。。。
-//                    break
-//
-//                case "0":
-//                    //...执行支付成功。。。
-//                    print("支付成功")
-//                    break
-//
-//                case "-1":
-//                    print("支付失败")
-//                    //...执行支付失败。。。
-//                    break
-//
-//                default:
-//                    break
-//                }
-                
+
             })
         }
         
@@ -379,10 +368,13 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     
     // MARK: - 分享QQ
     func shareToQQ() {
-        CCog()
-        
+    
         QQTool.qqShare(title: "闽集商城", desc: self.shareContent, link: self.shareLinkURL, imgUrl: self.shareImgURl, type: QQApiURLTargetTypeAudio)
     }
+    
+    // MARK: - 分享微信
+    //发送给好友还是朋友圈（默认好友）
+    var _scene = Int32(WXSceneSession.rawValue)
     
     /// 分享朋友圈
     func shareToFriend() {
@@ -397,50 +389,54 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     }
     
     
-    //发送给好友还是朋友圈（默认好友）
-    var _scene = Int32(WXSceneSession.rawValue)
+
     
     /// 分享微信朋友圈
     func shareToWxFriend() {
         
-       _scene = Int32(WXSceneSession.rawValue)
-        
-        let message =  WXMediaMessage()
-        
-        //发送的图片
-        
-        let imageObject =  WXImageObject()
-        
-        var image = UIImage.init()
-        
-        if (self.imgData != nil) {
+        if WXApi.isWXAppInstalled() {
             
-            image = UIImage.init(data: self.imgData!)!
-            imageObject.imageData = UIImagePNGRepresentation(UIImage.init(data: self.imgData!)!)
-            message.mediaObject = imageObject
+            _scene = Int32(WXSceneSession.rawValue)
             
-            //图片缩略图
-            let width = 240.0 as CGFloat
-            let height = width*(image.size.height)/(image.size.width)
+            let message =  WXMediaMessage()
             
-            UIGraphicsBeginImageContext(CGSize(width: width, height: height))
-            image.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
-            message.setThumbImage(UIGraphicsGetImageFromCurrentImageContext())
-            UIGraphicsEndImageContext()
+            //发送的图片
             
-            let req =  SendMessageToWXReq()
-            req.bText = false
-            req.message = message
-            req.scene = self._scene
-            WXApi.send(req)
+            let imageObject =  WXImageObject()
+            
+            var image = UIImage.init()
+            
+            if (self.imgData != nil) {
+                
+                image = UIImage.init(data: self.imgData!)!
+                imageObject.imageData = UIImagePNGRepresentation(UIImage.init(data: self.imgData!)!)
+                message.mediaObject = imageObject
+                
+                //图片缩略图
+                let width = 240.0 as CGFloat
+                let height = width*(image.size.height)/(image.size.width)
+                
+                UIGraphicsBeginImageContext(CGSize(width: width, height: height))
+                image.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+                message.setThumbImage(UIGraphicsGetImageFromCurrentImageContext())
+                UIGraphicsEndImageContext()
+                
+                let req =  SendMessageToWXReq()
+                req.bText = false
+                req.message = message
+                req.scene = self._scene
+                WXApi.send(req)
+            } else {
+                let req = SendMessageToWXReq()
+                req.bText = true
+                req.text = self.shareContent
+                req.scene = _scene
+                WXApi.send(req)
+            }
+            
         } else {
-            let req = SendMessageToWXReq()
-            req.bText = true
-            req.text = self.shareContent
-            req.scene = _scene
-            WXApi.send(req)
+            toast(toast: "未安装微信")
         }
-        
     }
     
     /// url全局变量
@@ -492,12 +488,17 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         
         addLostImg()
         
-//        view.addSubview(indicator)
+        checkNetForbid()
+        
         UIApplication.shared.keyWindow?.addSubview(indicator)
     }
     
     @objc func loginToReload() {
         self.webView.reload()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        indicator.stopAnimating()
     }
     
     /// 清除cookie
@@ -547,7 +548,6 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     
     deinit {
 
-        CCog()
         
 //        if !webView.isLoading {
         
@@ -558,8 +558,9 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     }
     
     lazy var indicator: UIActivityIndicatorView = {
-        let d : UIActivityIndicatorView = UIActivityIndicatorView.init(frame: (UIApplication.shared.keyWindow?.bounds)!)
+        let d : UIActivityIndicatorView = UIActivityIndicatorView.init(frame:CGRect.init(x: 0, y: 0, width: 30, height: 30))
         d.activityIndicatorViewStyle = .gray
+        d.center = (UIApplication.shared.keyWindow?.center)!
         d.tag = 888
         return d
     }()
@@ -575,7 +576,6 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         reloadMark = true
         
         lostNetImg.isHidden = true
-        
         if !NSStringFromClass(self.classForCoder).contains("DiscoverVC") {
             self.navigationController?.setNavigationBarHidden(true, animated: true)
         } else {
@@ -587,8 +587,6 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         if NSStringFromClass(self.classForCoder).contains("HomeVC") {
             
             if Model.boolSwotvh == false {
-                CCog()
-                
                 self.webView.load(URLRequest.init(url: URL.init(string: self.urlStr)!))
                 Model.boolSwotvh = true
             }
@@ -600,36 +598,48 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         if webView.estimatedProgress == 1.0 {
             UIView.animate(withDuration: 0.5, animations: {
                 self.progresssView.alpha = 0
-                
             })
+        }
+        
+        if netForbidden {
+            self.lostNetImg.isHidden = true
         }
     }
     
+ 
+    
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        CCog()
-        
         NetCheck.shared.returnNetStatus { (resu) in
             if resu {
             
                 self.indicator.startAnimating()
             } else {
                 self.indicator.stopAnimating()
+                self.navigationController?.setNavigationBarHidden(false, animated: false)
+                self.lostNetImg.isHidden = false
             }
+        }
+        if netForbidden {
+            self.lostNetImg.isHidden = true
         }
         
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         
-        CCog()
-        self.lostNetImg.isHidden = false
-        self.indicator.stopAnimating()
+            self.lostNetImg.isHidden = false
+            self.indicator.stopAnimating()
+        
+        if netForbidden {
+            self.lostNetImg.isHidden = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "reload"), object: nil)
+        indicator.stopAnimating()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
