@@ -56,9 +56,14 @@ class ShopCarVC: WKViewController {
     
     
     override func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        self.webView.frame = CGRect.init(x: 0, y: 20, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        
+   
+        if (self.navigationController?.viewControllers.count)! >= 2 {
+            self.webView.frame = CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT )
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        } else {
+            self.webView.frame = CGRect.init(x: 0, y: 20, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64)
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {

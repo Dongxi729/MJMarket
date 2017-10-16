@@ -278,13 +278,10 @@ extension WKViewController {
             }
         } else {
             
-            if NSStringFromClass(self.classForCoder).contains("ShopCarVC") {
-                
-                if SCREEN_HEIGHT == 812 {
-                    self.webView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH , height: SCREEN_HEIGHT - (navigationController?.navigationBar.Height)! - (tabBarController?.tabBar.Height)!)
-                    
-                }
-            }
+ 
+//                if SCREEN_HEIGHT == 812 {
+//                    self.webView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH , height: SCREEN_HEIGHT - (navigationController?.navigationBar.Height)! - (tabBarController?.tabBar.Height)!)
+//                }
             
             tempUrl = urlStr
             if tempUrl.contains("?") {
@@ -337,8 +334,12 @@ extension WKViewController {
                 
                 FTIndicator.showToastMessage("网络连接失败")
                 
-                /// 显示丢失网络的图片
-                self.lostNetImg.isHidden = false
+                
+                if self.reloadMark == false {
+                    
+                    /// 显示丢失网络的图片
+                    self.lostNetImg.isHidden = false
+                }
             }
         }
         

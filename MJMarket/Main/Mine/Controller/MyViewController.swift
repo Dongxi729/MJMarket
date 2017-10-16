@@ -10,9 +10,37 @@
 
 import UIKit
 
-class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCellTwoDelegate,MyCellOneDelegate,ChagrgeVDelegate,MyVHeaderVDelegate {
+class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCellTwoDelegate,MyCellOneDelegate,ChagrgeVDelegate,MyVHeaderVDelegate, headerViewelegate {
+    
+    // MARK: - headerViewelegate
+    func headerViewEndfun(_ _endRefresh: () -> Void) {
+        /// 取出刷新头
+        let d : headerView = self.myTbV.viewWithTag(888) as! headerView
+        ZDXRequestTool.getUserInfo { (result) in
+            if result {
+                toast(toast: "更新个人信息成功")
+                self.myTbV.reloadData()
+                self.myTbV.frame = self.view.bounds
+                d.endRefresh()
+            } else {
+                d.endRefresh()
+                self.myTbV.frame = self.view.bounds
+            }
+        }
+        
+        if AccountModel.shareAccount()?.id != nil {
+            
+            
+            ZDXRequestTool.orderCount(finished: { (str) in
+                
+                self.recArray = str
+                UserDefaults.standard.set(str, forKey: "redIcon")
+                UserDefaults.standard.synchronize()
+            })
+        }
+    }
+    
     func wxChargeSuccess() {
-        CCog()
 
         ZDXRequestTool.getUserInfo { (result) in
     
@@ -24,7 +52,6 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     }
     
     func alipayChargeSuccess() {
-        CCog()
         ZDXRequestTool.getUserInfo { (result) in
             if result {
                 self.myTbV.reloadData()
@@ -89,8 +116,10 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         }
     }
     
+    
+    
     lazy var myTbV: UITableView = {
-        let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: -COMMON_MARGIN, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 32), style: .grouped)
+        let d: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: -COMMON_MARGIN * 2, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 32), style: .grouped)
         d.delegate = self
         d.dataSource = self
         
@@ -103,6 +132,8 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         /// cell的分割线颜色
         d.separatorColor = UIColor.colorWithHexString("F3F3F3")
+        
+        
         
         return d
     }()
@@ -182,6 +213,10 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         
         view.addSubview(myTbV)
+        
+        myTbV.addHeaderViewfun()
+        let refresgControl : headerView = myTbV.viewWithTag(888) as! headerView
+        refresgControl.delegate = self;
         
         UIApplication.shared.statusBarStyle = .default
         

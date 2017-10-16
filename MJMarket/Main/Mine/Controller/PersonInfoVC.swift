@@ -280,6 +280,15 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         
         if indexPath.section == 1 && indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonInfo_Five") as! PersonInfo_Five
+            
+            if let openid_app = AccountModel.shareAccount()?.openid_app as? String {
+                if openid_app.characters.count  > 10 {
+                    cell.personInfoF_isBind.text = "已绑定"
+                    cell.personInfoF_DisImg.image = #imageLiteral(resourceName: "binded")
+                }
+            } else {
+                cell.personInfoF_isBind.text = "未绑定"
+            }
             return cell
         }
         
@@ -319,12 +328,12 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         
         if indexPath.section == 1 && indexPath.row == 0 {
             
-            if let phoneNum = AccountModel.shareAccount()?.Tel as? String {
-                if phoneNum.characters.count >= 11 {
-                } else {
+//            if let phoneNum = AccountModel.shareAccount()?.Tel as? String {
+//                if phoneNum.characters.count >= 11 {
+//                } else {
                     self.navigationController?.pushViewController(BindPhoneVC(), animated: true)
-                }
-            }
+//                }
+//            }
         }
 
         if indexPath.section == 1 && indexPath.row == 1 {
@@ -428,11 +437,9 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
             for img in params.0! {
                 chooseImg = img
                 
-                CCog(message: chooseImg)
                 
                 
                 NetWorkTool.shared.postWithImageWithData(imgData:  UIImage.compressImage(image: chooseImg, maxLength: 3 * 1000 * 1000)! as Data, path: UPLOADHEADINMG_URL, success: { (result) in
-                    CCog(message: result)
                     if let cardURL = (result as? NSDictionary)?.object(forKey: "data") as? String {
                         self.chooseImgUrl = cardURL
                         MineModel.chooseImgData = chooseImg

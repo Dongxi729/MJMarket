@@ -27,25 +27,25 @@ class CountDownBtn: UIButton {
     var  currentColor:UIColor?
     
     //初始化控件
-    func initwith(color : UIColor,title:String,superView:UIView) -> Void {
+    func initwith(color : UIColor,title:String,superView:UIView,titleColor : UIColor) -> Void {
         self.setTitle(title, for: UIControlState.normal)
         
-        self.backgroundColor = currentColor
+        self.currentColor = color
+        self.backgroundColor = color
         self.setTitle("\(NUMSS)秒", for: UIControlState.disabled)
         self.titleLabel?.adjustsFontSizeToFitWidth = true
         self.isEnabled=false
-        
+        self.setTitleColor(titleColor, for: .normal)
         
         myTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(tiemrBengin), userInfo: self, repeats: true)
         
         RunLoop.main.add(myTimer!, forMode: RunLoopMode.commonModes)
-//        superView.addSubview(self)
         
         self.isUserInteractionEnabled = true
-        self.currentColor = color
     }
     
     func  tiemrBengin(timer:Timer) {
+        
         let  button = timer.userInfo as! CountDownBtn
         button.backgroundColor=self.currentColor
         i -= 1
@@ -66,5 +66,9 @@ class CountDownBtn: UIButton {
             i = NUMSS
             
         }
+    }
+    
+     func removeTimer() {
+        myTimer?.invalidate()
     }
 }

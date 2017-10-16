@@ -47,7 +47,7 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
     
     /// 验证码
     private var authStr : String = ""
-
+    
     private var cellDescTitles : [String] = ["请输入验证码"]
     
     // MARK: - 表格代理
@@ -94,10 +94,10 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
     }
     
     func getAutoDelegate(sender: CountDownBtn) {
-
+        
         ZDXRequestTool.sendAuto { (result) in
             if result {
-                sender.initwith(color: COMMON_COLOR, title: "", superView: self.view)
+                sender.initwith(color: COMMON_COLOR, title: "", superView: self.view, titleColor: .white)
             }
         }
     }

@@ -25,7 +25,11 @@ class MyCoupon : WKViewController {
         
         if navigationAction.navigationType == WKNavigationType.linkActivated {
             
-            aaa(jumpVC: MyCoupon(), str: subWebViewContactURL(urlStr: self.urlStr))
+            if  !urlStr.contains("http://mj.ie1e.com/Error/") {
+                
+                aaa(jumpVC: MyCoupon(), str: subWebViewContactURL(urlStr: self.urlStr))
+            }
+            
             
             decisionHandler(.cancel)
         } else {

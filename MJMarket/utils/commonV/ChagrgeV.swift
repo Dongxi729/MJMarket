@@ -399,15 +399,12 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
             //caseInsensitive 不区分大小写
             let result = text1?.range(of: text2!, options: .caseInsensitive)
             if result == nil {
-                let alert = UIAlertView(title: nil, message: "验证码错误", delegate: self, cancelButtonTitle: "确定")
-                alert.show()
                 
+                toast(toast: "验证码错误")
                 self.chagrgeOneVDelegate?.autoSuccess(isSuccess: false)
             } else {
                 self.chagrgeOneVDelegate?.autoSuccess(isSuccess: true)
-                let alert = UIAlertView(title: nil, message: "验证码正确", delegate: self, cancelButtonTitle: "确定")
-                
-                alert.show()
+                toast(toast: "验证码正确")
             }
         }
         
@@ -548,7 +545,6 @@ class ZDXCheckDeskCellDown: CommonTableViewCell {
     
     lazy var zdxCDCheckImg: UIImageView = {
         let d : UIImageView = UIImageView.init(frame: CGRect.init(x: 0.65 * (self.Width - 2 * COMMON_MARGIN), y: 7.5, width: 15, height: 15))
-        d.layer.borderWidth = 0.5
         
         d.contentMode = .scaleAspectFit
         return d

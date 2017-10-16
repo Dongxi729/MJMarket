@@ -16,7 +16,6 @@
 		261E67C11F89FB9D00423382 /* PersonInfo_Two.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67C01F89FB9D00423382 /* PersonInfo_Two.swift */; };
 		261E67C31F89FBBD00423382 /* PersonInfo_One.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67C21F89FBBD00423382 /* PersonInfo_One.swift */; };
 		261E67C51F89FC4E00423382 /* PersonFooV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261E67C41F89FC4E00423382 /* PersonFooV.swift */; };
-		262112421F8B218300E4FDDA /* CountDownBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262112411F8B218300E4FDDA /* CountDownBtn.swift */; };
 		26314CBD1F7912E400E4FF72 /* WaitToPayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26314CBC1F7912E400E4FF72 /* WaitToPayVC.swift */; };
 		2631D0C11F7DF05200BCF8BD /* AllCommementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631D0C01F7DF05200BCF8BD /* AllCommementVC.swift */; };
 		2631D0C31F7DF23000BCF8BD /* WaitReceiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631D0C21F7DF23000BCF8BD /* WaitReceiveVC.swift */; };
@@ -106,6 +105,7 @@
 		265A7D6D1F5972A100F0503C /* ChagrgeV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6C1F5972A100F0503C /* ChagrgeV.swift */; };
 		265A7D6F1F59740F00F0503C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A7D6E1F59740F00F0503C /* TestVC.swift */; };
 		265AFD851F6A26040025F3DE /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265AFD841F6A26040025F3DE /* AccountModel.swift */; };
+		2664F5AC1F8E472000350FD3 /* CountDownBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2664F5AB1F8E472000350FD3 /* CountDownBtn.swift */; };
 		266ECC121F5BCFFC00D033D0 /* RandomCaptchaV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266ECC111F5BCFFC00D033D0 /* RandomCaptchaV.swift */; };
 		267AA8E71F8762CE00646E0F /* UIImage+XLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 267AA8E31F8762A700646E0F /* UIImage+XLExtension.m */; };
 		267AA8E81F8762D400646E0F /* XLPasswordInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267AA8E41F8762A700646E0F /* XLPasswordInputView.m */; };
@@ -154,6 +154,7 @@
 		26C6FE471F7E32030082011C /* DatePickerV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C6FE461F7E32020082011C /* DatePickerV.swift */; };
 		26E65E121F7500A00070D765 /* FeedBackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E65E111F7500A00070D765 /* FeedBackVC.swift */; };
 		26EBF51D1F6297E50019DB87 /* UITextFiledForMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EBF51C1F6297E50019DB87 /* UITextFiledForMoney.swift */; };
+		26EC3AD71F8F1A49006A8EE6 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26EC3AD61F8F1A49006A8EE6 /* ImageIO.framework */; };
 		26EC77701F7F8DF6007AE27D /* SignmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EC776F1F7F8DF6007AE27D /* SignmentVC.swift */; };
 		26ED02F41F5798BE007C2EEC /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02F31F5798BE007C2EEC /* SettingVC.swift */; };
 		26ED02F61F57A124007C2EEC /* PersonInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED02F51F57A124007C2EEC /* PersonInfoVC.swift */; };
@@ -225,7 +226,6 @@
 		261E67C01F89FB9D00423382 /* PersonInfo_Two.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfo_Two.swift; sourceTree = "<group>"; };
 		261E67C21F89FBBD00423382 /* PersonInfo_One.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfo_One.swift; sourceTree = "<group>"; };
 		261E67C41F89FC4E00423382 /* PersonFooV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonFooV.swift; sourceTree = "<group>"; };
-		262112411F8B218300E4FDDA /* CountDownBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownBtn.swift; sourceTree = "<group>"; };
 		26314CBC1F7912E400E4FF72 /* WaitToPayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitToPayVC.swift; sourceTree = "<group>"; };
 		2631D0C01F7DF05200BCF8BD /* AllCommementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCommementVC.swift; sourceTree = "<group>"; };
 		2631D0C21F7DF23000BCF8BD /* WaitReceiveVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitReceiveVC.swift; sourceTree = "<group>"; };
@@ -394,6 +394,7 @@
 		265A7D6C1F5972A100F0503C /* ChagrgeV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChagrgeV.swift; sourceTree = "<group>"; };
 		265A7D6E1F59740F00F0503C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		265AFD841F6A26040025F3DE /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
+		2664F5AB1F8E472000350FD3 /* CountDownBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownBtn.swift; sourceTree = "<group>"; };
 		266ECC111F5BCFFC00D033D0 /* RandomCaptchaV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomCaptchaV.swift; sourceTree = "<group>"; };
 		267AA8E01F8762A700646E0F /* UIImage+XLExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+XLExtension.h"; sourceTree = "<group>"; };
 		267AA8E11F8762A700646E0F /* XLPasswordInputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLPasswordInputView.h; sourceTree = "<group>"; };
@@ -455,6 +456,7 @@
 		26C6FE461F7E32020082011C /* DatePickerV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerV.swift; sourceTree = "<group>"; };
 		26E65E111F7500A00070D765 /* FeedBackVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBackVC.swift; sourceTree = "<group>"; };
 		26EBF51C1F6297E50019DB87 /* UITextFiledForMoney.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFiledForMoney.swift; sourceTree = "<group>"; };
+		26EC3AD61F8F1A49006A8EE6 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		26EC776F1F7F8DF6007AE27D /* SignmentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignmentVC.swift; sourceTree = "<group>"; };
 		26ED02F31F5798BE007C2EEC /* SettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		26ED02F51F57A124007C2EEC /* PersonInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonInfoVC.swift; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26EC3AD71F8F1A49006A8EE6 /* ImageIO.framework in Frameworks */,
 				268853661F7BCEF2008BD4DE /* libWeChatSDK.a in Frameworks */,
 				2688535D1F7BBDE9008BD4DE /* TencentOpenAPI.framework in Frameworks */,
 				26F73AC91F74A0FC00380A03 /* CoreTelephony.framework in Frameworks */,
@@ -987,7 +990,7 @@
 			children = (
 				267BECDC1F8E14CF00CAACC8 /* NSString+XMGExtension.h */,
 				267BECDB1F8E14CF00CAACC8 /* NSString+XMGExtension.m */,
-				262112411F8B218300E4FDDA /* CountDownBtn.swift */,
+				2664F5AB1F8E472000350FD3 /* CountDownBtn.swift */,
 				2698933C1F88902F00C150F9 /* refreshControl */,
 				26C6FE441F7E25760082011C /* PickerV.swift */,
 				26C6FE421F7E24DA0082011C /* ToolBar.swift */,
@@ -1049,6 +1052,7 @@
 		264FA71B1F54161B00CE405B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				26EC3AD61F8F1A49006A8EE6 /* ImageIO.framework */,
 				2688531D1F7BA673008BD4DE /* libstdc++.tbd */,
 				2688531B1F7BA656008BD4DE /* libiconv.tbd */,
 				268853191F7BA646008BD4DE /* libstdc++.6.tbd */,
@@ -1599,6 +1603,7 @@
 				26F6E3E01F7DF6EB001563CF /* AgentOrderVC.swift in Sources */,
 				2631D0C11F7DF05200BCF8BD /* AllCommementVC.swift in Sources */,
 				264FA71A1F5415D600CE405B /* ZDXCommon.swift in Sources */,
+				2664F5AC1F8E472000350FD3 /* CountDownBtn.swift in Sources */,
 				26BB3D331F682BBC00FFFD89 /* TestWKV.swift in Sources */,
 				26AE2B301F55014000AAA36C /* Color+Extension.swift in Sources */,
 				263743A11F6BAD0A00382FF4 /* ShopCarVC.swift in Sources */,
@@ -1684,7 +1689,6 @@
 				264FA6EA1F54144400CE405B /* YYMemoryCache.m in Sources */,
 				26EBF51D1F6297E50019DB87 /* UITextFiledForMoney.swift in Sources */,
 				2680AB051F627211008D51AB /* ShareV.swift in Sources */,
-				262112421F8B218300E4FDDA /* CountDownBtn.swift in Sources */,
 				264FA6D71F54144400CE405B /* POPAnimationEvent.mm in Sources */,
 				26F73AD11F74A2EE00380A03 /* PaymenyModel.swift in Sources */,
 				261E67BB1F89FADD00423382 /* PersonInfo_Five.swift in Sources */,

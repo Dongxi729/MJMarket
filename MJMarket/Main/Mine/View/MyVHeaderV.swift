@@ -57,7 +57,6 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
         let d: UIImageView = UIImageView.init(frame: CGRect.init(x: 1.5 * COMMON_MARGIN, y: 32 * SCREEN_SCALE , width: SCREEN_WIDTH * 0.2, height: SCREEN_WIDTH * 0.2))
         d.layer.cornerRadius = SCREEN_WIDTH * 0.2 * 0.5
         d.backgroundColor = UIColor.white
-        d.image = #imageLiteral(resourceName: "default_thumb")
         d.contentMode = .scaleAspectFit
         
         var layer: CALayer? = d.layer
@@ -80,7 +79,7 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
     private lazy var personInfoHeadBgv: UIImageView = {
         let d: UIImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 120 * SCREEN_SCALE))
         d.image = UIImage.init(named: "person_infoBgV")
-        d.contentMode = UIViewContentMode.scaleAspectFill
+        d.contentMode = UIViewContentMode.scaleToFill
         return d
     }()
     
@@ -100,6 +99,25 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
                 if var headImgUrl = AccountModel.shareAccount()?.headimg as? String {
                     headImgUrl = "http://mj.ie1e.com" + headImgUrl
                     self.headerIconImg.setAvatarImage(urlString: headImgUrl, placeholderImage: UIImage.init(named: "default_thumb"))
+                    //创建URL对象
+//                    let url = URL(string:headImgUrl)!
+//                    //创建请求对象
+//                    let request = URLRequest(url: url)
+//
+//                    let session = URLSession.shared
+//                    let dataTask = session.dataTask(with: request, completionHandler: {
+//                        (data, response, error) -> Void in
+//                        if error != nil{
+//                            print(error.debugDescription)
+//                        }else{
+//                            //将图片数据赋予UIImage
+//                            let img = UIImage(data:data!)
+//                            self.headerIconImg.image = img
+//                        }
+//                    }) as URLSessionTask
+//
+//                    //使用resume方法启动任务
+//                    dataTask.resume()
                 }
             } else {
                 self.headerIconImg.image = #imageLiteral(resourceName: "default_thumb")
@@ -164,7 +182,6 @@ class MyHeaderInfoV: UIView {
             
             if let nickName = AccountModel.shareAccount()?.nickname as? String {
                 
-                CCog(message: nickName)
                 self.nameLabel.text = nickName
             } else {
                 self.nameLabel.text = ""

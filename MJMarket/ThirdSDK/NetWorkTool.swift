@@ -94,6 +94,8 @@ extension NetWorkTool {
         
         //(3) 发送请求
         NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue:OperationQueue()) { (res, data, error)in
+            
+
             //返回主线程执行
             DispatchQueue.main.sync {
                 
@@ -107,7 +109,7 @@ extension NetWorkTool {
                 } else {
                     failure(error!)
                     if (((error! as NSError).userInfo as? NSDictionary)?.object(forKey: "NSLocalizedDescription") as? String) != nil {
-                        toast(toast: "网络出现异常")
+//                        toast(toast: "网络出现异常")
                     }
                     
                     

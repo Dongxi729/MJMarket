@@ -110,11 +110,18 @@ class headerView: UIView {
         //            beginRefresh()
         //        }
         
-        
-        ///适用于编辑状态的webview
-        if point.y < -100 * SCREEN_SCALE
-        {
-            beginRefresh()
+        if SCREEN_HEIGHT == 812 {
+            ///适用于编辑状态的webview
+            if point.y < -150 * SCREEN_SCALE
+            {
+                beginRefresh()
+            }
+        } else {
+            ///适用于编辑状态的webview
+            if point.y < -100 * SCREEN_SCALE
+            {
+                beginRefresh()
+            }
         }
     }
     

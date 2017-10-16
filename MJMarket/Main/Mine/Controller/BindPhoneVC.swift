@@ -10,14 +10,12 @@ import UIKit
 
 class BindPhoneVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PersonFooVDelegate,BindPhoneCellDelegate {
     func getAutoDelegate(sender: CountDownBtn) {
-        CCog()
         if telPhone.checkMobile(mobileNumbel: telPhone as NSString) {
-//            ZDXRequestTool.sendAuto(phoneNumber: telPhone)
-            ZDXRequestTool.sendAuto(phoneNumber: telPhone, finished: { (result) in
-                if result {
-                    sender.initwith(color: COMMON_COLOR, title: "", superView: self.view)
-                }
-            })
+//            ZDXRequestTool.sendAuto(phoneNumber: telPhone, finished: { (result) in
+//                if result {
+                    sender.initwith(color: COMMON_COLOR, title: "", superView: self.view, titleColor: .white)
+//                }
+//            })
         } else {
             toast(toast: "请输入正确的电话号码")
         }
@@ -159,6 +157,8 @@ class BindPhoneCell: CommonTableViewCell,UITextFieldDelegate {
         d.backgroundColor = COMMON_COLOR
         d.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         d.setTitle("发送验证码", for: .normal)
+        d.backgroundColor = COMMON_COLOR
+        d.setTitleColor(UIColor.white, for: .normal)
         d.addTarget(self, action: #selector(getAuth), for: .touchUpInside)
         return d
     }()

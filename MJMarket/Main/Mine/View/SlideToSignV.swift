@@ -15,7 +15,7 @@ protocol SlideToSignVDelegate {
 class SlideToSignV: UIView {
     
     lazy var totalLabel: UILabel = {
-        let d : UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.3, y: 0, width: self.bounds.width / 2 - COMMON_MARGIN, height: self.bounds.height))
+        let d : UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.28, y: 0, width: self.bounds.width / 1.95 - COMMON_MARGIN, height: self.bounds.height))
         d.text = "查看签到日期  "
         d.font = UIFont.systemFont(ofSize: 10 * SCREEN_SCALE)
         d.textColor = UIColor.white

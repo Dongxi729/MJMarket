@@ -55,6 +55,7 @@ class MyCellTwo : CommonTableViewCell,UICollectionViewDelegate,UICollectionViewD
         
         layout.itemSize = CGSize.init(width: UIScreen.main.bounds.width / 6, height: self.bounds.height * 1.3)
         d.showsVerticalScrollIndicator = false
+        d.isScrollEnabled = false
         
         return d
     }()

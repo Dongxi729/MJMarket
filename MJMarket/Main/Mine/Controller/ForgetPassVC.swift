@@ -81,6 +81,12 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let cout = CountDownBtn.init(frame: CGRect.zero)
+        cout.removeTimer()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
@@ -297,10 +303,9 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
     func getAuthSEL(sender: CountDownBtn) {
         
         if self.forget_phone.characters.count > 0 && forget_phone.checkMobile(mobileNumbel: forget_phone as NSString) {
-//            ZDXRequestTool.sendAuto(phoneNumber: self.forget_phone)
             ZDXRequestTool.sendAuto(phoneNumber: self.forget_phone, finished: { (result) in
-                if result {                
-                    sender.initwith(color: UIColor.white, title: "", superView: self.view)
+                if result {
+                    sender.initwith(color: COMMON_COLOR, title: "", superView: self.view, titleColor: .white)
                 }
             })
         } else {
@@ -343,7 +348,6 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
                 if forget_phone.characters.count > 0 && auth_str.characters.count > 0 && forgetpass_str.characters.count > 0 && confirmPassStr.characters.count > 0 {
                     /// 注册的接口逻辑
                     if isRigster {
-//                        ZDXRequestTool.register(registerNum: forget_phone, autoNumber: auth_str, password: forgetpass_str)
                         ZDXRequestTool.register(registerNum: forget_phone, autoNumber: auth_str, password: forgetpass_str, finished: { (result) in
                             if result {
                                 UIApplication.shared.keyWindow?.rootViewController = MainTabBarViewController()
@@ -416,11 +420,12 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
         let d: CountDownBtn = CountDownBtn.init(frame: CGRect.init(x: SCREEN_WIDTH - 40 * SCREEN_SCALE - COMMON_MARGIN - 40 * SCREEN_SCALE - COMMON_MARGIN, y: 4, width: 80 * SCREEN_SCALE, height: 30 * SCREEN_SCALE))
         d.layer.borderColor = FONT_COLOR.cgColor
         d.layer.cornerRadius = 5
-        d.layer.borderWidth = 1
         d.setTitleColor(FONT_COLOR, for: .normal)
         d.isUserInteractionEnabled = true
         d.setTitle("获取验证码", for: .normal)
         d.titleLabel?.font = UIFont.systemFont(ofSize: 12 * SCREEN_SCALE)
+        d.backgroundColor = COMMON_COLOR
+        d.setTitleColor(UIColor.white, for: .normal)
         d.addTarget(self, action: #selector(getAuthSEL(sender:)), for: .touchUpInside)
         return d
     }()
@@ -462,6 +467,8 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        
         if textField.placeholder?.description == "请输入您的手机号码" {
             textField.keyboardType = .numberPad
             let str = (textField.text!)
@@ -481,6 +488,7 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
         }
         
         if textField.placeholder?.description == "请输入密码" {
+            textField.keyboardType = .numbersAndPunctuation
             textField.isSecureTextEntry = true
             let maxLength = 6
             let currentString: NSString = (textField.text as NSString?)!
@@ -490,6 +498,7 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
         }
         
         if textField.placeholder?.description == "请再次输入密码" {
+            textField.keyboardType = .numbersAndPunctuation
             textField.isSecureTextEntry = true
             let maxLength = 30
             let currentString: NSString = (textField.text as NSString?)!

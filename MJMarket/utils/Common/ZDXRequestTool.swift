@@ -134,12 +134,16 @@ class ZDXRequestTool: NSObject {
                 //            注册成功，已自动登录
                 if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String,
                     let userID = ((result as? NSDictionary)?.object(forKey: "data") as? NSDictionary)?.object(forKey: "uid") as? String {
-                    FTIndicator.showToastMessage(messageStr)
                     if messageStr == "注册成功，已自动登录" {
                         CCog(message: userID)
                         finished(true)
                         getUserInfo(uidStr: userID)
                     }
+                }
+                
+                
+                if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String   {
+                    FTIndicator.showToastMessage(messageStr)
                 }
                 
                 
@@ -228,7 +232,7 @@ class ZDXRequestTool: NSObject {
                 }
                 
             }, failure: { (error) in
-                CCog(message: error)
+                finished(false)
             })
         }
     }
@@ -472,9 +476,7 @@ class ZDXRequestTool: NSObject {
         
         
         NetWorkTool.shared.postWithPath(path: UPDINFO_URL, paras: param, success: { (result) in
-            CCog(message: result)
-            
-            
+                        
             if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                 if message.intValue == 1 {
                     getUserInfo(finished: { (result) in

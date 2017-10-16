@@ -79,6 +79,8 @@ class AccountModel: NSObject,NSCoding {
     var token : Any?
     
     var user_type : Any?
+    
+    var openid_app : Any?
 
     // KVC 字典转模型
     init(dict: [String: Any]) {
@@ -173,6 +175,7 @@ class AccountModel: NSObject,NSCoding {
         aCoder.encode(sex, forKey: "sex")
         aCoder.encode(token, forKey: "token")
         aCoder.encode(user_type, forKey: "user_type")
+        aCoder.encode(openid_app, forKey: "openid_app")
     }
     
     
@@ -200,5 +203,6 @@ class AccountModel: NSObject,NSCoding {
         sex = aDecoder.decodeObject(forKey: "sex") as? String
         token = aDecoder.decodeObject(forKey: "token") as? String
         user_type = aDecoder.decodeObject(forKey: "user_type") as? String
+        openid_app = aDecoder.decodeObject(forKey: "openid_app") as? String
     }
 }

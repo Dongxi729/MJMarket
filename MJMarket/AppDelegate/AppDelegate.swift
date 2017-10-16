@@ -36,6 +36,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             CCog()
         }
         
+        let url = "https://pay.fjykt.com:48443/api/bankcard/getCards"
+        let param : [String : Any] = ["token" : "0000",
+                                      "mobile" : "000000"]
+        NetWorkTool.shared.postWithPath(path: url, paras: param, success: { (result) in
+            CCog(message: result)
+        }) { (_) in
+            
+        }
+        
         return true
     }
     

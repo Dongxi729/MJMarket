@@ -92,8 +92,6 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXA
     
     /// 微信登录
     @objc func wxlogin() {
-        
-        CCog()
         ZDXRequestTool.wxLoginSEL { (result) in
             if result {
                 
@@ -106,8 +104,6 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXA
     
     // MARK: - 微信登录
     @objc private func wxLoginSEL() {
-        
-        CCog(message: WXApi.isWXAppInstalled())
         
         if WXApi.isWXAppInstalled() {
             
