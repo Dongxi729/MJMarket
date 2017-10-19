@@ -45,6 +45,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                         
                         
                         self.lostNetImg.isHidden = true
+                        self.netLostDescLabel.isHidden = true
                         return
                     }
                     
@@ -66,8 +67,10 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         
         NetCheck.shared.returnNetStatus { (result) in
             if !result {
+                self.navigationController?.setNavigationBarHidden(true, animated: true)
                 if self.reloadMark == false {
                     self.lostNetImg.isHidden = false
+                    self.netLostDescLabel.isHidden = false
                 }
             }
         }
@@ -456,10 +459,21 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         d.image = UIImage.init(named: "index_404(1)")
         d.contentMode = UIViewContentMode.scaleAspectFit
         d.isUserInteractionEnabled = true
+        
         let tapGes = UITapGestureRecognizer.init(target: self, action: #selector(refreshWebFunc))
         d.addGestureRecognizer(tapGes)
         return d
     }()
+    
+    /// 断网提示问题
+    lazy var netLostDescLabel: UILabel = {
+        let d : UILabel = UILabel.init(frame: CGRect.init(x: 0, y: self.lostNetImg.BottomY + 2 * COMMON_MARGIN, width: SCREEN_WIDTH, height: 20))
+        d.text = "请检查网络或点击图标重试"
+        d.textColor = .black
+        d.textAlignment = .center
+        return d
+    }()
+    
     
     func refreshWebFunc() {
         self.indicator.isHidden = true
@@ -477,9 +491,11 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         if !NSStringFromClass(self.classForCoder).contains("MyViewController") {
             
             UIApplication.shared.keyWindow?.addSubview(lostNetImg)
+            UIApplication.shared.keyWindow?.addSubview(netLostDescLabel)
         }
         
         lostNetImg.isHidden = true
+        netLostDescLabel.isHidden = true
     }
     
     
@@ -588,10 +604,12 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         reloadMark = true
         
         lostNetImg.isHidden = true
+        netLostDescLabel.isHidden = true
         if !NSStringFromClass(self.classForCoder).contains("DiscoverVC") {
             self.navigationController?.setNavigationBarHidden(true, animated: true)
         } else {
-            self.webView.frame = self.view.bounds
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+            self.webView.frame = CGRect.init(x: 0, y: 20, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 20)
             self.navigationItem.title = webView.title
         }
         
@@ -615,6 +633,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         
         if netForbidden {
             self.lostNetImg.isHidden = true
+            self.netLostDescLabel.isHidden = true
         }
         
         if SCREEN_HEIGHT == 812 {
@@ -631,25 +650,32 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                 
                 self.navigationController?.setNavigationBarHidden(true, animated: true)
                 self.indicator.startAnimating()
-                self.lostNetImg.isHidden = true
+                if !self.reloadMark {
+                    self.lostNetImg.isHidden = true
+                    self.netLostDescLabel.isHidden = true
+                }
             } else {
                 self.indicator.stopAnimating()
                 self.navigationController?.setNavigationBarHidden(false, animated: false)
                 self.lostNetImg.isHidden = false
+                self.netLostDescLabel.isHidden = false
             }
         }
         if netForbidden {
             self.lostNetImg.isHidden = true
+            self.netLostDescLabel.isHidden = true
         }
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         
         self.lostNetImg.isHidden = false
+        self.netLostDescLabel.isHidden = false
         self.indicator.stopAnimating()
         
         if netForbidden {
             self.lostNetImg.isHidden = true
+            self.netLostDescLabel.isHidden = true
         }
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -671,6 +697,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         }
         
         self.lostNetImg.isHidden = true
+        self.netLostDescLabel.isHidden = true
     }
     
 }

@@ -46,6 +46,14 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
         return d
     }()
     
+    lazy var tapToSign: UIButton = {
+        let d : UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25 , y: 100 * SCREEN_SCALE, width: SCREEN_WIDTH - 2 * COMMON_MARGIN - SCREEN_WIDTH * 0.2, height: 15 * SCREEN_SCALE))
+        d.addTarget(self, action: #selector(slideDone), for: .touchUpInside)
+        d.setTitle("点击签到", for: .normal)
+        d.setTitleColor(COMMON_COLOR, for: .normal)
+        return d
+    }()
+    
     lazy var nameInfoV: MyHeaderInfoV = {
         let d : MyHeaderInfoV = MyHeaderInfoV.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.3, y: 32 * SCREEN_SCALE, width: SCREEN_WIDTH * 0.5, height: 90 * SCREEN_SCALE))
         return d
@@ -89,7 +97,8 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
         contentView.addSubview(personInfoHeadBgv)
         contentView.addSubview(nameInfoV)
         contentView.addSubview(headerIconImg)
-        contentView.addSubview(unlockToSign)
+//        contentView.addSubview(unlockToSign)
+        contentView.addSubview(tapToSign)
         
         self.layer.borderColor = UIColor.clear.cgColor
         
@@ -99,25 +108,7 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
                 if var headImgUrl = AccountModel.shareAccount()?.headimg as? String {
                     headImgUrl = "http://mj.ie1e.com" + headImgUrl
                     self.headerIconImg.setAvatarImage(urlString: headImgUrl, placeholderImage: UIImage.init(named: "default_thumb"))
-                    //创建URL对象
-//                    let url = URL(string:headImgUrl)!
-//                    //创建请求对象
-//                    let request = URLRequest(url: url)
-//
-//                    let session = URLSession.shared
-//                    let dataTask = session.dataTask(with: request, completionHandler: {
-//                        (data, response, error) -> Void in
-//                        if error != nil{
-//                            print(error.debugDescription)
-//                        }else{
-//                            //将图片数据赋予UIImage
-//                            let img = UIImage(data:data!)
-//                            self.headerIconImg.image = img
-//                        }
-//                    }) as URLSessionTask
-//
-//                    //使用resume方法启动任务
-//                    dataTask.resume()
+
                 }
             } else {
                 self.headerIconImg.image = #imageLiteral(resourceName: "default_thumb")
