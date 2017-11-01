@@ -43,7 +43,7 @@ class LoginInputV: UIView,UITextFieldDelegate {
             NSForegroundColorAttributeName: FONT_COLOR,
             NSFontAttributeName : UIFont.systemFont(ofSize: 13 * SCREEN_SCALE) // Note the !
         ]
-        
+        d.addTarget(self, action: #selector(textChanged(sender:)), for: .editingChanged)
         d.attributedPlaceholder = NSAttributedString(string: "请输入您的手机号码", attributes:attributes)
         return d
     }()
@@ -60,11 +60,21 @@ class LoginInputV: UIView,UITextFieldDelegate {
             NSForegroundColorAttributeName: FONT_COLOR,
             NSFontAttributeName : UIFont.systemFont(ofSize: 13 * SCREEN_SCALE) // Note the !
         ]
-        
+        d.addTarget(self, action: #selector(textChanged(sender:)), for: .editingChanged)
         d.attributedPlaceholder = NSAttributedString(string: "请输入密码", attributes:attributes)
         return d
     }()
     
+    ////////////////////////////////////////////////
+    @objc func textChanged(sender : UITextField) {
+        if sender.placeholder == "请输入您的手机号码" {
+            self.loginInputDelegate?.loginInputTfNum(tfNum: sender.text!)
+        }
+
+        if sender.placeholder == "请输入密码" {
+            self.loginInputDelegate?.loginInputPass(pass: sender.text!)
+        }
+    }
     ////////////////////////////////////////////////
     /// 协议条款
     lazy var getSendNumBtn: CountDownBtn = {
@@ -112,26 +122,30 @@ class LoginInputV: UIView,UITextFieldDelegate {
         return d
     }()
 
-    func textFieldDidEndEditing(_ textField: UITextField) {
-
-        
-        if textField.placeholder == "请输入您的手机号码" {
-            self.loginInputDelegate?.loginInputTfNum(tfNum: textField.text!)
-        }
-        
-        if textField.placeholder == "请输入密码" {
-            self.loginInputDelegate?.loginInputPass(pass: textField.text!)
-        }
-    }
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//
+//
+//        if textField.placeholder == "请输入您的手机号码" {
+//            self.loginInputDelegate?.loginInputTfNum(tfNum: textField.text!)
+//        }
+//
+//        if textField.placeholder == "请输入密码" {
+//            self.loginInputDelegate?.loginInputPass(pass: textField.text!)
+//        }
+//    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField.placeholder?.description == "请输入您的手机号码" {
-            
-            let str = (textField.text!)
-            if str.characters.count <= 11 {
-                return true
+            textField.keyboardType = .numberPad
+
+            if (string == ""  && range.length > 0) {
+                return true;
             }
-            textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
+            
+            if (textField.text?.characters.count)! > 10 {
+                return false
+            }
+            return true
         } else if textField.placeholder?.description == "请输入密码" {
             let maxLength = 6
             let currentString: NSString = (textField.text as NSString?)!

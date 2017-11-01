@@ -27,35 +27,7 @@ class WaitToPayVC: WKViewController {
             super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
         }
     }
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        CCog(message: navigationAction.request.url?.absoluteString as Any)
-        
-        self.urlStr = (navigationAction.request.url?.absoluteString)!
-        
-        if self.urlStr.contains("http://mj.ie1e.com/wx_cart/cart?isapp=1&token")  {
-            ZDXRequestTool.cartCount { (redCount) in
-                super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
-            }
-        }
-        
-        if navigationAction.navigationType == WKNavigationType.linkActivated && !self.urlStr.contains("#") || self.urlStr == ("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("isapp") {
-            
-            aaa(jumpVC: ShopCarVC(), str: subWebViewContactURL(urlStr: self.urlStr))
-            
-            CCog(message: self.urlStr)
-            
-            decisionHandler(.cancel)
-        } else {
-            
-            decisionHandler(.allow)
-        }
-    }
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        decisionHandler(.allow)
-    }
+
 }
 
 

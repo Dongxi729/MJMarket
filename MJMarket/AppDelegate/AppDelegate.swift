@@ -28,26 +28,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //设置QQ
         setQQ()
         
+        
+            
         setWX()
         
         checkUpdate()
-        
-        NetCheck.shared.returnNetStatus { (result) in
-            CCog()
-        }
-        
-        let url = "https://pay.fjykt.com:48443/api/bankcard/getCards"
-        let param : [String : Any] = ["token" : "0000",
-                                      "mobile" : "000000"]
-        NetWorkTool.shared.postWithPath(path: url, paras: param, success: { (result) in
-            CCog(message: result)
-        }) { (_) in
-            
-        }
-        
         return true
     }
-    
+
     
     func checkUpdate() {
         
@@ -56,8 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let localVersion = (Bundle.main.infoDictionary as NSDictionary?)?.object(forKey: "CFBundleShortVersionString") as? String,
                 let serverVersion = result["version"] {
                 if localVersion != serverVersion {
-                    
-                    
+                   
                     
                     let alertVC = ZDXAlertController.init(title: "现在更新", message: result["updatecontent"], preferredStyle: .alert)
                     
@@ -175,6 +162,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setWX() {
         WXApi.registerApp(WXPatient_App_ID)
     }
-    
 }
 

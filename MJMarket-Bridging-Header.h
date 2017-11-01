@@ -13,9 +13,6 @@
 #import "FTIndicator.h"
 
 
-/// 网络监测
-#import "Reachability.h"
-
 #import "IQKeyboardManager.h"
 
 
@@ -46,3 +43,5 @@
 #import "NSString+XMGExtension.h"
 
 
+
+#import "AFNetworking.h"

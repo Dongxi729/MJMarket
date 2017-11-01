@@ -140,7 +140,11 @@ static UIApplication *_YYSharedApplication() {
     
     NSNumber *visiable = timer.userInfo;
     if (app.networkActivityIndicatorVisible != visiable.boolValue) {
-        [app setNetworkActivityIndicatorVisible:visiable.boolValue];
+        
+        //GCD 获取主线程的方法
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [app setNetworkActivityIndicatorVisible:visiable.boolValue];
+        });
     }
     [timer invalidate];
 }

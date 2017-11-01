@@ -134,10 +134,13 @@ class ZDXRequestTool: NSObject {
                 //            注册成功，已自动登录
                 if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String,
                     let userID = ((result as? NSDictionary)?.object(forKey: "data") as? NSDictionary)?.object(forKey: "uid") as? String {
-                    if messageStr == "注册成功，已自动登录" {
-                        CCog(message: userID)
-                        finished(true)
-                        getUserInfo(uidStr: userID)
+                    
+                    if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
+                        if message.intValue == 1 {
+                            CCog(message: userID)
+                            finished(true)
+                            getUserInfo(uidStr: userID)
+                        }
                     }
                 }
                 
@@ -180,6 +183,7 @@ class ZDXRequestTool: NSObject {
             
             if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                 if message.intValue == 1 {
+                    Model.boolSwotvh = false
                     
                     if let uidStr = ((result as? NSDictionary)?.object(forKey: "data") as? NSDictionary)?.object(forKey: "uid") as? String {
                         getUserInfo(uidStr: uidStr)
@@ -210,6 +214,10 @@ class ZDXRequestTool: NSObject {
             let getUserInfo : [String : Any] = ["uid" : userInfoStr]
             
             NetWorkTool.shared.postWithPath(path:USER_INFO_URL , paras:getUserInfo , success: { (result) in
+                
+                if let messfail = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                    finished(false)
+                }
                 
                 if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                     if message.intValue == 1 {
@@ -541,8 +549,11 @@ class ZDXRequestTool: NSObject {
                 CCog(message: result)
                 if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
                     toast(toast: messageStr)
-                    if messageStr == "今天已经签到过" || messageStr == "签到成功" {
+                    if messageStr == "今天已经签到过" {
                         finished(true)
+                    }
+                    if messageStr == "签到成功" {
+                        
                     }
                 }
             }) { (eror) in
@@ -619,8 +630,10 @@ class ZDXRequestTool: NSObject {
         let param : [String : String] = ["uid" : AccountModel.shareAccount()?.id as! String,
                                          "openid" : MineModel.wxOPENID,
                                          "unionid" : MineModel.wxUNIONID]
+        
+        
         NetWorkTool.shared.postWithPath(path: BINDWXOPENID_URL, paras: param, success: { (result) in
-            
+        CCog(message: result)
             
             if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                 if message.intValue == 1 {

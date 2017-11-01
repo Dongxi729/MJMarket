@@ -14,8 +14,6 @@ class UserAgrementVC: WKViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
         self.webView.load(URLRequest.init(url: URL.init(string: USERAGREEMENT_URL)!))
     }
 }

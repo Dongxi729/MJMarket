@@ -18,44 +18,66 @@ class HomeVC: WKViewController {
             super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
         }
     }
+ 
+    func aaa(urlStr : String) {
+        let vc = Replace()
+        vc.urlStr = urlStr
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        
+
         // Do any additional setup after loading the view.
         
         loadURL(urlStr: WEB_VIEW_HOME_URL)
     }
-    
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        
-        self.urlStr = (navigationAction.request.url?.absoluteString)!
 
-        if navigationAction.navigationType == WKNavigationType.linkActivated && !self.urlStr.contains("#") {
+}
 
-            CCog(message: subWebViewContactURL(urlStr: self.urlStr))
-            
-            aaa(jumpVC: HomeVC(), str: subWebViewContactURL(urlStr: self.urlStr))
-            
-            decisionHandler(.cancel)
-        } else {
-            decisionHandler(.allow)
-        }
-        
+import WebKit
+class Replace: WKViewController {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        _ = HTTPCookieStorage.shared
-        
-        
-        decisionHandler(.allow)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        webView.load(URLRequest.init(url: URL.init(string: self.urlStr)!))
+    }
+}
+
+class ErrorPage : UIViewController {
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.setNavigationBarHidden(false, animated: false)
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        navigationController?.setNavigationBarHidden(true, animated: false)
+//    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "网页消失了"
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        view.backgroundColor = UIColor.white
+        let img = UIImageView.init(frame: self.view.bounds)
+        img.image = UIImage.init(named: "loadError")
+        img.contentMode = .scaleAspectFit
+        view.addSubview(img)
     }
     
     
 }
-

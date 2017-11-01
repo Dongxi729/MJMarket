@@ -30,13 +30,13 @@ class PersonInfo_Two: CommonTableViewCell,UITextFieldDelegate {
         d.placeholder = "请输入姓名"
         d.font = UIFont.systemFont(ofSize: 14)
         d.delegate = self
+        d.addTarget(self, action: #selector(textChanged(sender:)), for: .editingChanged)
         return d
     }()
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        self.personInfo_TwoDelegate?.nameStr(str: textField.text!)
+    @objc func textChanged(sender : UITextField) {
+        self.personInfo_TwoDelegate?.nameStr(str: sender.text!)
     }
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         

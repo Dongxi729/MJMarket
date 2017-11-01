@@ -14,6 +14,9 @@
 
 import Foundation
 
+/// 比较的域名
+var PREFIX = "http://mj.ie1e.com"
+
 /// 通用的请求前缀
 var COMMON_PREFIX = "http://mj.ie1e.com/api/app"
 

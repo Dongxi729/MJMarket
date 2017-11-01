@@ -12,7 +12,7 @@ class PersonInfo_Five: CommonTableViewCell {
     lazy var personInfoFour_IconImg: UIImageView = {
         let d : UIImageView = UIImageView.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: 20, height: 20))
         d.contentMode = .scaleAspectFit
-        d.image = UIImage.init(named: "wechat_friend")
+        d.image = UIImage.init(named: "personal_wechat")
         return d
     }()
     
@@ -45,7 +45,7 @@ class PersonInfo_Five: CommonTableViewCell {
         contentView.addSubview(personInfoF_DisImg)
         contentView.addSubview(personInfoF_isBind)
         
-        if let wxOpenStr = AccountModel.shareAccount()?.openid as? String {
+        if let wxOpenStr = AccountModel.shareAccount()?.unionid as? String {
             if wxOpenStr.characters.count > 0 {
                 self.personInfoF_isBind.text = "已绑定"
                 self.personInfoF_isBind.textColor = UIColor.gray

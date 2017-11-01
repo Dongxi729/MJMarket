@@ -41,37 +41,6 @@ class FeedBackVC: WKViewController {
             
         }
     }
-    
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        self.urlStr = (navigationAction.request.url?.absoluteString)!
-        
-        
-        if navigationAction.navigationType == WKNavigationType.linkActivated {
-            
-            if urlStr.contains("?") {
-                urlStr = urlStr + "&isapp=1"
-            } else {
-                urlStr = urlStr + "?isapp=1"
-            }
 
-            aaa(jumpVC: FeedBackVC(), str: urlStr)
-            
-            decisionHandler(.cancel)
-        } else {
-            decisionHandler(.allow)
-        }
-        
-    }
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        let  cookiejar = HTTPCookieStorage.shared
-        
-        
-        decisionHandler(.allow)
-    }
-    
-    
 }
 

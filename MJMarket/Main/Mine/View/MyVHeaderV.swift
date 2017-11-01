@@ -47,10 +47,13 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
     }()
     
     lazy var tapToSign: UIButton = {
-        let d : UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH * 0.25 , y: 100 * SCREEN_SCALE, width: SCREEN_WIDTH - 2 * COMMON_MARGIN - SCREEN_WIDTH * 0.2, height: 15 * SCREEN_SCALE))
+        let d : UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - 150 - COMMON_MARGIN, y: 80 * SCREEN_SCALE, width: 150, height: 30 * SCREEN_SCALE))
         d.addTarget(self, action: #selector(slideDone), for: .touchUpInside)
         d.setTitle("点击签到", for: .normal)
-        d.setTitleColor(COMMON_COLOR, for: .normal)
+        d.layer.cornerRadius = 5
+        d.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        d.setTitleColor(UIColor.white, for: .normal)
+        d.backgroundColor = UIColor.colorWithHexString("F9A04D")
         return d
     }()
     
@@ -97,7 +100,6 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
         contentView.addSubview(personInfoHeadBgv)
         contentView.addSubview(nameInfoV)
         contentView.addSubview(headerIconImg)
-//        contentView.addSubview(unlockToSign)
         contentView.addSubview(tapToSign)
         
         self.layer.borderColor = UIColor.clear.cgColor
@@ -114,21 +116,11 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
                 self.headerIconImg.image = #imageLiteral(resourceName: "default_thumb")
             }
         }
-        
-        
-//        slideToZero
-        NotificationCenter.default.addObserver(self, selector: #selector(ddd), name: NSNotification.Name(rawValue: "slideToZero"), object: nil)
-        
     }
-    
-    @objc func ddd(){
-        self.unlockToSign.slider.value = 0
-    }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 

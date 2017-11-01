@@ -25,7 +25,7 @@ class MyCellTwo : CommonTableViewCell,UICollectionViewDelegate,UICollectionViewD
     /// 图片名字
     private var imgsName : [String] = ["full_order","wait_payment","wait_receiver","wait_evaluate","refund_after"]
     
-    private var titleSource : [String] = ["全部订单","待付款","待收货","待评价","退货/售后"]
+    private var titleSource : [String] = ["全部订单","待付款","待收货","待评价","退款/售后"]
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -328,10 +328,12 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
         d.layer.cornerRadius = 5
         d.font = UIFont.systemFont(ofSize: 14)
         d.clipsToBounds = true
-        d.keyboardType = .default
+        d.keyboardType = .numberPad
         d.tag = 111
         d.delegate = self
         d.placeholder = "  请输入充值金额"
+        d.clearButtonMode = .always
+        d.addTarget(self, action: #selector(txtChanged(sender:)), for: .editingChanged)
         return d
     }()
     
@@ -346,6 +348,9 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
         d.placeholder = "  请输入验证码"
         d.delegate = self
         d.tag = 666
+        d.clearButtonMode = .always
+        d.addTarget(self, action: #selector(txtChanged(sender:)), for: .editingChanged)
+        
         return d
     }()
     
@@ -362,6 +367,8 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
         d.tag = 112
         d.delegate = self
         d.placeholder = "  请输入支付密码"
+        d.clearButtonMode = .always
+        d.addTarget(self, action: #selector(txtChanged(sender:)), for: .editingChanged)
         return d
     }()
     
@@ -379,16 +386,58 @@ class ChagrgeOneV: UIView,UITextFieldDelegate {
         return d
     }()
     
+    @objc func txtChanged(sender : UITextField) {
+        if sender.tag == 111 {
+            self.chagrgeOneVDelegate?.chargeMoneyStr(str: sender.text!)
+        }
+        
+        if sender.tag == 112 {
+            self.chagrgeOneVDelegate?.payStr(str: sender.text!)
+        }
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField.placeholder?.description == "  请输入支付密码" {
+            if (string == ""  && range.length > 0) {
+                return true;
+            }
+            
+            if (textField.text?.characters.count)! > 5 {
+                return false
+            }
+            return true
+        }
+        
+        if textField.placeholder?.description == "  请输入验证码" {
+            if (string == ""  && range.length > 0) {
+                return true;
+            }
+            
+            if (textField.text?.characters.count)! > 3 {
+                textField.resignFirstResponder()
+                return false
+            }
+            return true
+        }
+        
+//          请输入充值金额
+        
+        if textField.placeholder?.description == "  请输入充值金额" {
+            if (string == ""  && range.length > 0) {
+                return true;
+            }
+            
+            if (textField.text?.characters.count)! > 5 {
+                return false
+            }
+            return true
+        }
+        
+        return true
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        if textField.tag == 111 {
-            self.chagrgeOneVDelegate?.chargeMoneyStr(str: textField.text!)
-        }
-        
-        if textField.tag == 112 {
-            self.chagrgeOneVDelegate?.payStr(str: textField.text!)
-        }
-        
+
         if textField.tag == 666 {
             
             let text1 = textField.text

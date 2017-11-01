@@ -14,6 +14,7 @@ class PaySuccessVC: WKViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_LIST)!))
+//        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_LIST)!))
+        loadURL(urlStr: WEB_VIEW_ORDER_LIST)
     }
 }

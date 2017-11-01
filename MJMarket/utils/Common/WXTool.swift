@@ -121,22 +121,25 @@ class WXTool : UIView,WXApiDelegate,NSURLConnectionDelegate {
         if resp.isKind(of: SendMessageToWXResp.self) {
             switch resp.errCode {
             case 0:
-                let alertController = UIAlertController(title: "提示", message: "分享成功", preferredStyle: UIAlertControllerStyle.alert)
+//                let alertController = UIAlertController(title: "提示", message: "分享成功", preferredStyle: UIAlertControllerStyle.alert)
+//
+//                alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.default, handler: nil))
+//
+//                UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
                 
                 
-                alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.default, handler: nil))
-                
-                UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
-                
+                toast(toast: "分享成功")
                 break
             default:
                 
-                let alertController = UIAlertController(title: "提示", message: "分享失败", preferredStyle: UIAlertControllerStyle.alert)
+//                let alertController = UIAlertController(title: "提示", message: "分享失败", preferredStyle: UIAlertControllerStyle.alert)
+//
+//                alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.default, handler: nil))
+//
+//                UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
                 
+                toast(toast: "分享失败")
                 
-                alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.default, handler: nil))
-                
-                UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
                 break;
             }
         }
@@ -555,10 +558,10 @@ extension WXTool {
     ///
     /// - Parameter msg: 警告信息
     func payBackMsg(msg : String) -> Void {
-        let alertVC = UIAlertController.init(title: "提示信息", message: msg, preferredStyle: .alert)
-        
-        alertVC.addAction(UIAlertAction.init(title: "好的", style: .default, handler: nil))
-        nav?.present(alertVC, animated: true, completion: nil)
+//        let alertVC = UIAlertController.init(title: "提示信息", message: msg, preferredStyle: .alert)
+//
+//        alertVC.addAction(UIAlertAction.init(title: "好的", style: .default, handler: nil))
+//        nav?.present(alertVC, animated: true, completion: nil)
     }
 }
 

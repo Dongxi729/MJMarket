@@ -16,28 +16,6 @@ class GetGoodVC : WKViewController {
         loadURL(urlStr: WEB_VIEW_MY_ADDRESS)
     }
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        CCog(message: navigationAction.request.url?.absoluteString as Any)
-        
-        self.urlStr = (navigationAction.request.url?.absoluteString)!
-        
-        
-        if navigationAction.navigationType == WKNavigationType.linkActivated {
-            
-            aaa(jumpVC: GetGoodVC(), str: subWebViewContactURL(urlStr: self.urlStr))
-            
-            decisionHandler(.cancel)
-        } else {
-            
-            decisionHandler(.allow)
-        }
-        
-    }
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        decisionHandler(.allow)
-    }
     
 }
 

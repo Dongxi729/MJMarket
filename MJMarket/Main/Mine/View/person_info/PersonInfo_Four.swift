@@ -13,7 +13,7 @@ class PersonInfo_Four: CommonTableViewCell {
     lazy var personInfoFour_IconImg: UIImageView = {
         let d : UIImageView = UIImageView.init(frame: CGRect.init(x: COMMON_MARGIN, y: 12.5, width: 20, height: 20))
         d.contentMode = .scaleAspectFit
-        d.image = #imageLiteral(resourceName: "phone")
+        d.image = UIImage.init(named: "personal_phone")
         return d
     }()
     

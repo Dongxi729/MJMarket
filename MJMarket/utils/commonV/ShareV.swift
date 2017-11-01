@@ -53,7 +53,7 @@ class ShareV: UIView,ShareCellDelegate {
         return d
     }()
     
-    @objc private func dismissShare() {
+    @objc func dismissShare() {
         UIView.animate(withDuration: 0.25) {
             self.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT, width: SCREEN_WIDTH, height: 150)
         }
@@ -89,6 +89,9 @@ class ShareV: UIView,ShareCellDelegate {
     }
     
     func shareClickBtn(sender: UIButton) {
+        
+        self.dismissShare()
+        
         if sender.titleLabel?.text == "微信好友" {
             self.shareVDelegate?.shareToWxFriend()
         }

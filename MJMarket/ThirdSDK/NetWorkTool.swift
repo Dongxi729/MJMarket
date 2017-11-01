@@ -11,6 +11,8 @@ import UIKit
 class NetWorkTool: NSObject {
     /// 网络工具类单例
     static let shared = NetWorkTool()
+    
+    static var status : Int?
 }
 
 // MARK: - 普通请求方法

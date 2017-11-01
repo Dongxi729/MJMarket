@@ -147,6 +147,7 @@ class BindPhoneCell: CommonTableViewCell,UITextFieldDelegate {
         d.keyboardType = .numberPad
         d.clearButtonMode = .whileEditing
         d.delegate = self
+        d.addTarget(self, action: #selector(tttChanged(_:)), for: .editingChanged)
         return d
     }()
     
@@ -203,9 +204,14 @@ class BindPhoneCell: CommonTableViewCell,UITextFieldDelegate {
         return true
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    
+    @objc func tttChanged(_ textField : UITextField) {
         self.bindCellDelegate?.cellStr(index: bindIndex!, str: textField.text!)
     }
+    
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        self.bindCellDelegate?.cellStr(index: bindIndex!, str: textField.text!)
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

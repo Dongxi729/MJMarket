@@ -15,7 +15,6 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXA
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
-//        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
 
     }
@@ -25,7 +24,6 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXA
         navigationController?.setNavigationBarHidden(false, animated: true)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "reload"), object: nil)
-//        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 
     override func viewDidLoad() {
@@ -37,8 +35,6 @@ class LoginVC: ZDXBaseViewController,loginClickVDelegate,LoginInputVDelegate,WXA
         view.addSubview(wxLoginBtn)
         view.addSubview(sepateBtn)
         view.backgroundColor = UIColor.white
-        
-        //        NotificationCenter.default.addObserver(self, selector: #selector(wxlogin), name: NSNotification.Name(rawValue: "wxLoginSuccess"), object: nil)
     }
     
     

@@ -34,14 +34,14 @@ class PaymenyModel: NSObject,UIApplicationDelegate {
         AlipaySDK.defaultService().payOrder(orderString, fromScheme: appScheme, callback: {[weak self] resultDic in
             
             if let strongSelf = self {
-                //                 print("result =",resultDic!)
-                
+
                 if let resultStatus = resultDic?["resultStatus"] as? String {
+                    
+                    CCog(message: resultStatus)
 
                     ///执行到此
                     if resultStatus == "9000"{
                         strongSelf.comfun!("网页支付成功")
-                        
 
                     }else if resultStatus == "8000"{
                         

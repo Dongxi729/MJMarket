@@ -105,8 +105,8 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
         }
     }
     
-   
-
+    
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
@@ -168,7 +168,7 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
         self.navigationController?.pushViewController(UserAgrementVC(), animated: true)
     }
     
-     @objc private func changeImg(sender : UIButton) {
+    @objc private func changeImg(sender : UIButton) {
         if sender.backgroundImage(for: .normal) == #imageLiteral(resourceName: "checked") {
             sender.setBackgroundImage(#imageLiteral(resourceName: "binded"), for: .normal)
             FTIndicator.showToastMessage("请同意注册协议")
@@ -245,7 +245,7 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
             
             return cell
         }
-
+        
         
         if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ForgetThurd") as! ForgetThurd
@@ -280,12 +280,15 @@ class ForgetPassVC: ZDXBaseViewController,UITableViewDelegate,UITableViewDataSou
     // MARK: - cell代理
     func getTftext(str: UITextField) {
         
+        CCog(message: str.text)
+        
         if str.placeholder?.description == "请输入您的手机号码" {
             forget_phone = str.text!
         }
         
         if str.placeholder?.description == "请输入短信验证码" {
             auth_str = str.text!
+            CCog(message: auth_str)
         }
         
         if str.placeholder?.description == "请输入密码" {
@@ -438,14 +441,23 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
     lazy var tfInput: UITextField = {
         let d : UITextField = UITextField.init(frame: CGRect.init(x: 45, y: 10, width: SCREEN_WIDTH - 45 - COMMON_MARGIN, height: 25))
         d.delegate = self
+        d.clearButtonMode = .always
+        d.addTarget(self, action: #selector(txtChanged(sender:)), for: .editingChanged)
         return d
     }()
     
     lazy var replaceTfInput: UITextField = {
         let d : UITextField = UITextField.init(frame: CGRect.init(x: 45, y: 10, width: SCREEN_WIDTH * 0.6, height: 25))
         d.delegate = self
+        d.addTarget(self, action: #selector(txtChanged(sender:)), for: .editingChanged)
         return d
     }()
+    
+    func txtChanged(sender : UITextField) {
+        
+        CCog(message: sender.text)
+        self.fotgetSecTwoDelaget?.getTftext(str: sender)
+    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -462,20 +474,32 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        self.fotgetSecTwoDelaget?.getTftext(str: textField)
-    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         
+        CCog(message: textField.text ?? "")
+        
         if textField.placeholder?.description == "请输入您的手机号码" {
             textField.keyboardType = .numberPad
-            let str = (textField.text!)
-            if str.characters.count <= 11 {
-                return true
+            //            let str = (textField.text!)
+            //            if str.characters.count <= 12 {
+            //                return true
+            //            }
+            //            textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 11))
+            //
+            //            self.fotgetSecTwoDelaget?.getTftext(str: textField)
+            
+//            self.fotgetSecTwoDelaget?.getTftext(str: textField)
+            
+            if (string == ""  && range.length > 0) {
+                return true;
             }
-            textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
+            
+            if (textField.text?.characters.count)! > 10 {
+                return false
+            }
+            return true
         }
         
         if textField.placeholder?.description == "请输入短信验证码" {
@@ -484,6 +508,7 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
             let currentString: NSString = (textField.text as NSString?)!
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
+            //            self.fotgetSecTwoDelaget?.getTftext(str: textField)
             return newString.length <= maxLength
         }
         
@@ -494,6 +519,7 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
             let currentString: NSString = (textField.text as NSString?)!
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
+            //            self.fotgetSecTwoDelaget?.getTftext(str: textField)
             return newString.length <= maxLength
         }
         
@@ -504,6 +530,7 @@ class FotgetSecTwo: CommonTableViewCell,UITextFieldDelegate {
             let currentString: NSString = (textField.text as NSString?)!
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
+            //            self.fotgetSecTwoDelaget?.getTftext(str: textField)
             return newString.length <= maxLength
         }
         

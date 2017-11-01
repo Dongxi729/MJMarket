@@ -25,7 +25,7 @@ class ChangeLoginPassVC: UIViewController,UITableViewDelegate,UITableViewDataSou
         let d: PersonFooV = PersonFooV.init(frame:CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 45))
         d.personFooVDelegate = self
         d.personInfo_bottomLabelDesc.isHidden = false
-        d.personInfo_bottomLabelDesc.text = "您当前为这只登录密码,请设置登录密码"
+        d.personInfo_bottomLabelDesc.text = "您当前为设置登录密码,请设置登录密码"
         return d
     }()
     

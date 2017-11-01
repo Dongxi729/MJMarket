@@ -382,9 +382,6 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
         
         if indexPath.section == 0 && indexPath.row == 3 {
             
-       
-            
-//            timeSel()
         }
         
         

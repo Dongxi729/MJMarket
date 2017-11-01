@@ -30,7 +30,6 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         if AccountModel.shareAccount()?.id != nil {
             
-            
             ZDXRequestTool.orderCount(finished: { (str) in
                 
                 self.recArray = str
@@ -61,7 +60,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     func btnCli(sender: IndexPath) {
 
-        
+        /// 全部订单
         if sender.row == 0 {
             
             self.navigationController?.pushViewController(AllCommementVC(), animated: true)
@@ -72,22 +71,25 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             self.navigationController?.pushViewController(WaitReceiveVC(), animated: true)
         }
         
+        //待收货订单
         if sender.row == 2 {
-            
             self.navigationController?.pushViewController(WaitToCommementVC(), animated: true)
         }
         
+        
+        //待付款订单
         if sender.row == 3 {
             
             self.navigationController?.pushViewController(WaitToPay(), animated: true)
         }
         
+        //退款订单
         if sender.row == 4 {
             self.navigationController?.pushViewController(RefundVC(), animated: true)
-            
         }
     }
     
+    /// SIGN_URL
     func sliSucce() {
         self.navigationController?.pushViewController(SignmentVC(), animated: true)
     }
@@ -139,21 +141,16 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     }()
     
     
-    
-    
-    
     /// 右上角按钮
     private lazy var myView_RightBtn: UIButton = {
-        let d : UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - (20 * SCREEN_SCALE) - COMMON_MARGIN, y: UIApplication.shared.statusBarFrame.height, width: 20 * SCREEN_SCALE, height: 20 * SCREEN_SCALE))
+        let d : UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - (20 * SCREEN_SCALE) - COMMON_MARGIN, y: UIApplication.shared.statusBarFrame.height + COMMON_MARGIN, width: 20 * SCREEN_SCALE, height: 20 * SCREEN_SCALE))
         d.addTarget(self, action: #selector(myView_RightBtnSEl), for: .touchUpInside)
         d.setBackgroundImage(#imageLiteral(resourceName: "setting"), for: .normal)
         return d
     }()
     
     func myView_RightBtnSEl() {
-        self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.pushViewController(SettingVC(), animated: true)
-        
     }
     
     var myViewController_CellThreeTitles : [String] = ["收货地址","优惠券","我的评价","我的收藏","登录密码","购买代理商品订单"]
@@ -169,13 +166,20 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
         
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "slideToZero"), object: nil)
+        UIApplication.shared.statusBarStyle = .default
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if navigationController?.viewControllers.count == 1 {
+            UIApplication.shared.statusBarStyle = .lightContent
+        } else {
+            UIApplication.shared.statusBarStyle = .default
+        }
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         ZDXRequestTool.getUserInfo { (result) in
             if result {
@@ -183,10 +187,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             }
         }
         
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "slideToZero"), object: nil)
-        
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
+
         if AccountModel.shareAccount()?.token == nil {
             alertTologin()
         } else {
@@ -211,7 +212,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         
         // Do any additional setup after loading the view.
         
-        
+
         view.addSubview(myTbV)
         
         myTbV.addHeaderViewfun()
@@ -336,6 +337,10 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        if indexPath.section == 3 {
+            UIApplication.shared.statusBarStyle = .default
+            navigationController?.setNavigationBarHidden(false, animated: false)
+        }
         
         /// 收货地址
         if indexPath.section == 3 && indexPath.row == 0 {

@@ -38,29 +38,5 @@ class PlayVC: WKViewController {
     }
 
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        CCog(message: navigationAction.request.url?.absoluteString as Any)
-        
-        self.urlStr = (navigationAction.request.url?.absoluteString)!
-        
-        
-        if navigationAction.navigationType == WKNavigationType.linkActivated && !self.urlStr.contains("#") && self.urlStr != "http://mj.ie1e.com/wx_find/article" {
-            
-            aaa(jumpVC: DiscoverVC(), str: subWebViewContactURL(urlStr: self.urlStr))
-            
-            decisionHandler(.cancel)
-        } else {
-        
-            decisionHandler(.allow)
-            
-        }
-    }
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        decisionHandler(.allow)
-    }
-    
-    
 }
 

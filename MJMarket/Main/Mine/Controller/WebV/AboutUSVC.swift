@@ -13,8 +13,6 @@ class AboutUSVC : WKViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        loadURL(urlStr: ABOUT_US_URL)
-//        webView.load(URLRequest.init(url: URL.init(string:  "http://mj.ie1e.com/weixin/www.baidu.com?isapp=1&token=")!))
         let baseUrl = "http://mj.ie1e.com/weixin/aboutus?id=7b05614d793c4f64958ae694a0c1a67b&title="
 
         let str = "关于我们&it=1"
@@ -26,29 +24,5 @@ class AboutUSVC : WKViewController {
         webView.load(URLRequest.init(url: url!))
         
     }
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        CCog(message: navigationAction.request.url?.absoluteString as Any)
-        
-        self.urlStr = (navigationAction.request.url?.absoluteString)!
-        
-        
-        if navigationAction.navigationType == WKNavigationType.linkActivated {
-            
-            aaa(jumpVC: AboutUSVC(), str: subWebViewContactURL(urlStr: self.urlStr))
-            
-            decisionHandler(.cancel)
-        } else {
-            
-            decisionHandler(.allow)
-        }
-        
-    }
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        decisionHandler(.allow)
-    }
-    
 }
 
