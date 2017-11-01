@@ -169,9 +169,9 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
                     
                     /// 支付宝
                     if paytype == 1 {
-                        
                         ZDXRequestTool.payTypeWithSelect(payType: paytype, passStr: payPassStr, moneyStr: chaegeCount, finished: { (aliPay) in
                             PaymenyModel.shared.alipay(orderString: aliPay, comfun: { (result) in
+                                NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "123"), object: nil)
                                 CCog()
                                 self.dismissV()
                             })
@@ -203,7 +203,6 @@ class ChagrgeV: UIView,ChagrgeOneVDelegate,CYDetailSelectVDelegate {
         
         UIView.animate(withDuration: 0.25) {
             UIApplication.shared.keyWindow?.addSubview(self.topWindown)
-//            self.topWindown.addSubview(self.maskV)
             self.topWindown.alpha = 1
         }
         

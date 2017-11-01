@@ -10,6 +10,37 @@ import Foundation
 import WebKit
 
 extension WKViewController {
+    
+    
+    @objc func commJump(yy : UIViewController) {
+        
+        if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
+            webView.stopLoading()
+            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
+        }
+        
+        
+        if self.urlStr.contains("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("token=") {
+            webView.stopLoading()
+            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
+        }
+        
+        if self.urlStr.contains("scores_detail") && !self.urlStr.contains("token=") {
+            webView.stopLoading()
+            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
+        }
+        if self.urlStr.contains("http://mj.ie1e.com/wx_product/product_detail") && !self.urlStr.contains("token="){
+            webView.stopLoading()
+            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
+        }
+        
+        if self.urlStr.contains("http://mj.ie1e.com/wx_find/video_detail") && !self.urlStr.contains(AccountModel.shareAccount()?.token as? String ?? "") {
+            webView.stopLoading()
+            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
+        }
+        
+    }
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         
@@ -53,24 +84,23 @@ extension WKViewController {
                 decisionHandler(.cancel)
             } else {
                 CCog(message: self.urlStr)
-                if self.urlStr.contains("http://mj.ie1e.com/wx_product/product_detail") && !self.urlStr.contains("token=") {
-                    webView.stopLoading()
-                    aaa(jumpVC: HomeVC(), str: subWebViewContactURL(urlStr: self.urlStr))
-                }
+//                if self.urlStr.contains("http://mj.ie1e.com/wx_product/product_detail") && !self.urlStr.contains("token=") {
+//                    webView.stopLoading()
+//                    aaa(jumpVC: HomeVC(), str: subWebViewContactURL(urlStr: self.urlStr))
+//                }
+//
+//                if self.urlStr.contains("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("token=") {
+//                    webView.stopLoading()
+//                    self.aaa(jumpVC: HomeVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
+//                }
+//
+//                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
+//                    webView.stopLoading()
+//                    self.aaa(jumpVC: HomeVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
+//                }
+//
                 
-                if self.urlStr.contains("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("token=") {
-                    webView.stopLoading()
-                    self.aaa(jumpVC: HomeVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-                }
-                
-                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
-                    webView.stopLoading()
-                    self.aaa(jumpVC: HomeVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-                }
-
-                
-                
-                
+                commJump(yy: HomeVC())
                 decisionHandler(.allow)
             }
         }
@@ -82,7 +112,11 @@ extension WKViewController {
                 if self.urlStr == "http://mj.ie1e.com/wx_find/video" || self.urlStr == "http://mj.ie1e.com/wx_find/article" || self.urlStr == "http://mj.ie1e.com/wx_find/courses" {
                     webView.load(URLRequest.init(url: URL.init(string: self.urlStr)!))
                 } else {
-                    aaa(jumpVC: DiscoverVC(), str: subWebViewContactURL(urlStr: self.urlStr))
+                    if self.urlStr.contains(WEB_VIEW_FIND_URL) {
+                        
+                    } else {
+                        aaa(jumpVC: DiscoverVC(), str: subWebViewContactURL(urlStr: self.urlStr))
+                    }
                 }
                 decisionHandler(.cancel)
             } else {
@@ -92,6 +126,22 @@ extension WKViewController {
                     webView.stopLoading()
                     self.aaa(jumpVC: DiscoverVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
                 }
+                
+                if self.urlStr.contains("http://mj.ie1e.com/wx_product/product_detail") && !self.urlStr.contains("token=") {
+                    webView.stopLoading()
+                    aaa(jumpVC: DiscoverVC(), str: subWebViewContactURL(urlStr: self.urlStr))
+                }
+                
+                if self.urlStr.contains("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("token=") {
+                    webView.stopLoading()
+                    self.aaa(jumpVC: DiscoverVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
+                }
+                
+                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
+                    webView.stopLoading()
+                    self.aaa(jumpVC: DiscoverVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
+                }
+                
                 decisionHandler(.allow)
             }
         }

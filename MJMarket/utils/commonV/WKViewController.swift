@@ -307,10 +307,12 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                             
                             let queue = OperationQueue()
                             queue.addOperation({
-                                self.imgData = try! Data.init(contentsOf: URL.init(string: imgUrl)!)
+                                if NetWorkTool.status != 0 {
+                                    self.imgData = try! Data.init(contentsOf: URL.init(string: imgUrl)!)
+                                } else {
+                                    toast(toast: "网络连接失败")
+                                }
                             })
-                            
-                            
                         }
                         
                         if let hasAfter = try JSON(data: jsonStr)["hasAfter"].int,let productID = try JSON(data: jsonStr)["productid"].string {
