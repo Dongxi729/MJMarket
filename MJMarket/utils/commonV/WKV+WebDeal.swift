@@ -109,27 +109,6 @@ extension WKViewController {
                 }
                 decisionHandler(.cancel)
             } else {
-                CCog(message: self.urlStr)
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") || self.urlStr.contains("http://mj.ie1e.com/wx_find/video_detail") && !self.urlStr.contains(AccountModel.shareAccount()?.token as? String ?? "") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: DiscoverVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_product/product_detail") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    aaa(jumpVC: DiscoverVC(), str: subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: DiscoverVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: DiscoverVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
                 
                 commJump(yy: DiscoverVC())
                 decisionHandler(.allow)
@@ -145,15 +124,6 @@ extension WKViewController {
                 
                 decisionHandler(.cancel)
             } else {
-//                if self.urlStr.contains("scores_detail") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    aaa(jumpVC: PlayVC(), str: subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: PlayVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
                 commJump(yy: PlayVC())
                 decisionHandler(.allow)
             }
@@ -168,17 +138,6 @@ extension WKViewController {
     
                 decisionHandler(.cancel)
             } else {
-//                CCog(message: self.urlStr)
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: ShopCarVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: ShopCarVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
-
                 commJump(yy: ShopCarVC())
                 decisionHandler(.allow)
             }
@@ -206,20 +165,6 @@ extension WKViewController {
                 
                 decisionHandler(.cancel)
             } else {
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: MyJIfenVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("scores_detail") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    aaa(jumpVC: MyJIfenVC(), str: subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: MyJIfenVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
                 commJump(yy: MyJIfenVC())
                 decisionHandler(.allow)
             }
@@ -249,15 +194,6 @@ extension WKViewController {
                 
                 decisionHandler(.cancel)
             } else {
-//                if self.urlStr.contains("scores_detail") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    aaa(jumpVC: MyCoupon(), str: subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: MyCoupon(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
                 commJump(yy: MyCoupon())
                 decisionHandler(.allow)
             }
@@ -272,25 +208,6 @@ extension WKViewController {
                 
                 decisionHandler(.cancel)
             } else {
-//                if self.urlStr.contains("scores_detail") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    aaa(jumpVC: Mycomment(), str: subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_product/product_detail") && !self.urlStr.contains("token="){
-//                    webView.stopLoading()
-//                    aaa(jumpVC: Mycomment(), str: subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: Mycomment(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: Mycomment(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
-                
                 commJump(yy: Mycomment())
                 decisionHandler(.allow)
             }
@@ -305,21 +222,6 @@ extension WKViewController {
                 
                 decisionHandler(.cancel)
             } else {
-                
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_product/product_detail") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    aaa(jumpVC: MyCollectVC(), str: subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: MyCollectVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
-//
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: MyCollectVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
                 commJump(yy: MyCollectVC())
                 decisionHandler(.allow)
             }
@@ -334,10 +236,6 @@ extension WKViewController {
                 
                 decisionHandler(.cancel)
             } else {
-//                if self.urlStr.contains("http://mj.ie1e.com/wx_order/product_orderlist") && !self.urlStr.contains("token=") {
-//                    webView.stopLoading()
-//                    self.aaa(jumpVC: AgentOrderVC(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                }
                 commJump(yy: AgentOrderVC())
                 decisionHandler(.allow)
             }
