@@ -219,12 +219,6 @@ extension WKViewController {
                 self.navigationController?.pushViewController(vvv, animated: true)
             }
             
-            if NSStringFromClass(self.classForCoder).contains("ShopWebReplace") {
-                let vc = ShopWebReplace()
-                let vvv = vc
-                vvv.urlStr = str
-                self.navigationController?.pushViewController(vvv, animated: true)
-            }
             
             if NSStringFromClass(self.classForCoder).contains("PaySuccessVC") {
                 let vc = PaySuccessVC()

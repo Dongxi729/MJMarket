@@ -241,6 +241,11 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         }
         
         if msg == "backApp" {
+            CCog(message: message.body)
+            if self.urlStr.contains(WEB_VIEW_ORDER_LIST) {
+                navigationController?.popToRootViewController(animated: true)
+            }
+
             
             if let viewControllersCount = self.navigationController?.viewControllers.count {
                 if viewControllersCount >= 2 {
@@ -718,7 +723,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        indicator.stopAnimating()
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "reload"), object: nil)
         indicator.stopAnimating()
     }

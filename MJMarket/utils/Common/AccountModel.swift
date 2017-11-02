@@ -84,6 +84,8 @@ class AccountModel: NSObject,NSCoding {
     
     var unionid : Any?
     
+    
+    static var popBack = false
     // KVC 字典转模型
     init(dict: [String: Any]) {
         super.init()

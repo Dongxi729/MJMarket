@@ -14,7 +14,14 @@ class PaySuccessVC: WKViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        self.webView.load(URLRequest.init(url: URL.init(string: WEB_VIEW_ORDER_LIST)!))
         loadURL(urlStr: WEB_VIEW_ORDER_LIST)
+        
+//        let right : UIBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "right"), style: .plain, target: self, action: #selector(popTomain))
+//        self.navigationItem.leftBarButtonItem = right
+        AccountModel.popBack = true
+    }
+    
+    @objc func popTomain() {
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }

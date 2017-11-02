@@ -105,7 +105,6 @@
 		265AFD851F6A26040025F3DE /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265AFD841F6A26040025F3DE /* AccountModel.swift */; };
 		2664F5AC1F8E472000350FD3 /* CountDownBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2664F5AB1F8E472000350FD3 /* CountDownBtn.swift */; };
 		266ECC121F5BCFFC00D033D0 /* RandomCaptchaV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266ECC111F5BCFFC00D033D0 /* RandomCaptchaV.swift */; };
-		2676DC081FA9AA2F00C6998B /* ShopWebReplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2676DC071FA9AA2F00C6998B /* ShopWebReplace.swift */; };
 		267AA8E71F8762CE00646E0F /* UIImage+XLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 267AA8E31F8762A700646E0F /* UIImage+XLExtension.m */; };
 		267AA8E81F8762D400646E0F /* XLPasswordInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267AA8E41F8762A700646E0F /* XLPasswordInputView.m */; };
 		267AA8E91F87637D00646E0F /* UIView+XLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 267AA8E21F8762A700646E0F /* UIView+XLExtension.m */; };
@@ -394,7 +393,6 @@
 		265AFD841F6A26040025F3DE /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		2664F5AB1F8E472000350FD3 /* CountDownBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownBtn.swift; sourceTree = "<group>"; };
 		266ECC111F5BCFFC00D033D0 /* RandomCaptchaV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomCaptchaV.swift; sourceTree = "<group>"; };
-		2676DC071FA9AA2F00C6998B /* ShopWebReplace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopWebReplace.swift; sourceTree = "<group>"; };
 		267AA8E01F8762A700646E0F /* UIImage+XLExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+XLExtension.h"; sourceTree = "<group>"; };
 		267AA8E11F8762A700646E0F /* XLPasswordInputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLPasswordInputView.h; sourceTree = "<group>"; };
 		267AA8E21F8762A700646E0F /* UIView+XLExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+XLExtension.m"; sourceTree = "<group>"; };
@@ -837,7 +835,6 @@
 		264FA6351F54142C00CE405B = {
 			isa = PBXGroup;
 			children = (
-				2676DC071FA9AA2F00C6998B /* ShopWebReplace.swift */,
 				264FA6401F54142D00CE405B /* MJMarket */,
 				264FA63F1F54142D00CE405B /* Products */,
 				264FA6531F54143500CE405B /* MJMarket-Bridging-Header.h */,
@@ -1908,7 +1905,6 @@
 				26AE2B4C1F5503B000AAA36C /* ClickBtn.swift in Sources */,
 				26F73B021F74F8FA00380A03 /* TZVideoPlayerController.m in Sources */,
 				264FA77D1F54229E00CE405B /* IQTitleBarButtonItem.m in Sources */,
-				2676DC081FA9AA2F00C6998B /* ShopWebReplace.swift in Sources */,
 				265A7D6D1F5972A100F0503C /* ChagrgeV.swift in Sources */,
 				26F73AC31F74A01600380A03 /* MD5DataSigner.m in Sources */,
 				264FA6DD1F54144400CE405B /* POPCGUtils.mm in Sources */,
