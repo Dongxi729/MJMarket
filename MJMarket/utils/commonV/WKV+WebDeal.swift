@@ -43,6 +43,11 @@ extension WKViewController {
             webView.stopLoading()
             self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
         }
+        
+        if self.urlStr.contains("courses_child") && !self.urlStr.contains("token=") {
+            webView.stopLoading()
+            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
+        }
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

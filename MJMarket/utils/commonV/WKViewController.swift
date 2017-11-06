@@ -85,7 +85,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         if reloadMark {
             self.navigationController?.setNavigationBarHidden(true, animated: false)
         }
-
+        
         if self.isPrefix {
             self.navigationController?.setNavigationBarHidden(false, animated: false)
         } else {
@@ -177,7 +177,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "afterShareApp")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "shareApp")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "weChatPay")
-
+        
         //添加刷新控件
         webView.scrollView.addHeaderViewfun()
         
@@ -245,7 +245,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             if self.urlStr.contains(WEB_VIEW_ORDER_LIST) {
                 navigationController?.popToRootViewController(animated: true)
             }
-
+            
             
             if let viewControllersCount = self.navigationController?.viewControllers.count {
                 if viewControllersCount >= 2 {
@@ -264,7 +264,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                 if let signStr = dic["content"] as? String {
                     PaymenyModel.shared.alipay(orderString: signStr, comfun: { (result) in
                         DispatchQueue.main.async {
-                        
+                            
                             self.navigationController?.pushViewController(PaySuccessVC(), animated: true)
                         }
                         
@@ -278,11 +278,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         
         /// 分享接口
         if msg == "shareApp" {
-            /// http://mj.ie1e.com
-            
-            //    {"content":"【东东超市】东东超市海直购 TAKARAA 巧克力饼干\r\n【普通价】￥78.00\r\n【会员价】￥18.90\r\n【下单链接】{mj.ie1e.com/wx_product/product_detail?id=P1502760529315}","imgs":["/upload/images/20170815/20170815092346518342.jpg"],"productid":"P1502760529315","hasAfter":1}
-            //            CCog(message: message.body)
-            
+            CCog(message: message.body)
             
             if let jsonData = message.body as? String {
                 if let jsonStr = jsonData.data(using: String.Encoding.utf8, allowLossyConversion: false) {
@@ -304,23 +300,55 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                             self.shareContent = contentStr
                         }
                         
-                        if var imgUrl = try JSON(data: jsonStr)["imgs"][0].string {
-                            imgUrl = "http://mj.ie1e.com/" + imgUrl
-                            CCog(message: imgUrl)
-                            self.shareImgURl = imgUrl
-                            
-                            
-                            let queue = OperationQueue()
-                            queue.addOperation({
-                                if NetWorkTool.status != 0 {
-                                    self.imgData = try! Data.init(contentsOf: URL.init(string: imgUrl)!)
+                        /// 数组链接
+                        var imgsData : [Any] = []
+                        imgsData.removeAll()
+                        
+                        /// 图像数据
+                        var imgs : [String] = []
+                        imgs.removeAll()
+                        
+                        var contacted = false
+                        
+                        if let img = try JSON.init(data: jsonStr)["imgs"].arrayObject,
+                            let productID = try JSON(data: jsonStr)["productid"].string {
+                            CCog(message: img)
+                            CCog(message: productID)
+                            for i in 0 ..< img.count {
+                                
+                                let imgurl = (String(describing: img[i]))
+                                if !imgurl.contains("http:") {
+                                    imgs.append("http://mj.ie1e.com/" + (String(describing: img[i])))
                                 } else {
-                                    toast(toast: "网络连接失败")
+                                    imgs.append(imgurl)
                                 }
-                            })
+                                CCog(message: img[i] as? String ?? "")
+                                
+                                /// 是否包含二维码链接
+                                if !imgurl.contains("http://www.gbtags.com/gb/qrcode?t=") && !contacted {
+                                    imgs.append("http://www.gbtags.com/gb/qrcode?t=http%3A//mj.ie1e.com/wx_product/product_detail%3Fid%3D" + productID)
+                                    contacted = true
+                                }
+                            }
+                            
+                            for i in 0 ..< imgs.count {
+                                
+                                let globalQueue = DispatchQueue.global()
+                                //使用全局队列，开启异步任务。
+                                //use the global queue , run in asynchronous
+                                globalQueue.async {
+                                    imgsData.append(self.xx(urlStr: imgs[i]))
+                                    CCog(message: imgsData.count)
+                                    if imgsData.count == imgs.count {
+                                        self.shareImgsWithSys(imgs: imgsData as! [UIImage])
+                                    }
+                                }
+                            }
                         }
                         
-                        if let hasAfter = try JSON(data: jsonStr)["hasAfter"].int,let productID = try JSON(data: jsonStr)["productid"].string {
+                        
+                        if let hasAfter = try JSON(data: jsonStr)["hasAfter"].int,
+                            let productID = try JSON(data: jsonStr)["productid"].string {
                             CCog(message: hasAfter)
                             CCog(message: productID)
                             let param : [String : String] = ["productid" : productID,
@@ -410,7 +438,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         let imageObject =  WXImageObject()
         
         var image = UIImage.init()
-       
+        
         let message =  WXMediaMessage()
         
         if (self.imgData != nil) {
@@ -545,7 +573,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
+        
         
         view.addSubview(self.webView)
         view.backgroundColor = UIColor.white
@@ -639,7 +667,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
         CCog(message: navigationController?.viewControllers.count)
-
+        
         
         if let nav  = navigationController?.viewControllers.count {
             if nav == 1 {
@@ -647,7 +675,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             } else {
                 CCog()
                 self.webView.frame = CGRect.init(x: 0, y:UIApplication.shared.statusBarFrame.size.height, width: SCREEN_WIDTH, height: SCREEN_HEIGHT  - UIApplication.shared.statusBarFrame.size.height)
-
+                
                 if SCREEN_HEIGHT == 812 {
                     self.webView.frame = CGRect.init(x: 0, y:UIApplication.shared.statusBarFrame.size.height, width: SCREEN_WIDTH, height: SCREEN_HEIGHT  - UIApplication.shared.statusBarFrame.size.height  * 2 - (navigationController?.navigationBar.bounds.size.height)!)
                 }
@@ -692,7 +720,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-
+        
         if NetWorkTool.status == 0 {
             if let webViewTitle = webView.title {
                 

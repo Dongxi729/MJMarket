@@ -14,6 +14,7 @@ class JFNavigationController: UINavigationController, UIGestureRecognizerDelegat
         self.navigationItem.backBarButtonItem = item
         item.tintColor = UIColor.black
         
+        
     }
     
     override func viewDidLoad() {

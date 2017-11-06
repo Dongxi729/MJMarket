@@ -392,6 +392,31 @@ extension WKViewController {
     func loadRefreshControl() {
         
     }
+    
+    @objc func shareImgsWithSys( imgs: [UIImage]) {
+        
+        let activityViewController = UIActivityViewController.init(activityItems: imgs, applicationActivities: nil)
+        
+            activityViewController.completionWithItemsHandler =  { (activityType, completed, returnedItems, activityError) in
+            print(#line,completed)
+        }
+        
+        DispatchQueue.main.async {
+            self.present(activityViewController, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func xx(urlStr : String) -> UIImage {
+        do {
+            
+            let date = try UIImage.init(data: Data.init(contentsOf: URL.init(string: urlStr)!))
+            print(#line,date)
+            return date!
+        } catch {
+            
+        }
+        return UIImage.init()
+    }
 }
 
 

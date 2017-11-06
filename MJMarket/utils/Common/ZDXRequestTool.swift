@@ -528,7 +528,6 @@ class ZDXRequestTool: NSObject {
     class func checkUpdate(_ finished : @escaping (_ dataDic : [String : String]) -> () ) {
         let param : [String : Any] = ["apptype" : "ios"]
         NetWorkTool.shared.postWithPath(path: CHECK_UPDATE_URL, paras: param, success: { (result) in
-            CCog(message: result)
             if let resultData = (result as? NSDictionary)?.object(forKey: "data") as? [String : String] {
                 finished(resultData)
             }
