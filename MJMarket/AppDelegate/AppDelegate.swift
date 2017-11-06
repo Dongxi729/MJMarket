@@ -141,6 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             QQApiInterface.handleOpen(url, delegate: qqTool)
             return TencentOAuth.handleOpen(url)
         } else if url.absoluteString.hasPrefix(wxUrl) {
+            CCog()
             return WXApi.handleOpen(url, delegate: tool)
         }
         

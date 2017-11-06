@@ -402,6 +402,7 @@ extension WKViewController {
         }
         
         DispatchQueue.main.async {
+            FTIndicator.dismissProgress()
             self.present(activityViewController, animated: true, completion: nil)
         }
     }

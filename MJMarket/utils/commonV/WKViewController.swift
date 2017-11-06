@@ -310,6 +310,9 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                         
                         var contacted = false
                         
+                        /// 图片数量
+                        var imgsCount : Int = 0
+                        
                         if let img = try JSON.init(data: jsonStr)["imgs"].arrayObject,
                             let productID = try JSON(data: jsonStr)["productid"].string {
                             CCog(message: img)
@@ -331,17 +334,45 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                                 }
                             }
                             
-                            for i in 0 ..< imgs.count {
+                            if imgs.count > 1 {
+                                FTIndicator.showProgressWithmessage("数据加载中...")
                                 
-                                let globalQueue = DispatchQueue.global()
-                                //使用全局队列，开启异步任务。
-                                //use the global queue , run in asynchronous
-                                globalQueue.async {
-                                    imgsData.append(self.xx(urlStr: imgs[i]))
-                                    CCog(message: imgsData.count)
-                                    if imgsData.count == imgs.count {
-                                        self.shareImgsWithSys(imgs: imgsData as! [UIImage])
+                                
+                                for i in 0 ..< imgs.count {
+                                    
+                                    let globalQueue = DispatchQueue.global()
+                                    //使用全局队列，开启异步任务。
+                                    //use the global queue , run in asynchronous
+                                    globalQueue.async {
+                                        imgsData.append(self.xx(urlStr: imgs[i]))
+                                        CCog(message: imgsData.count)
+                                        
+                                        if imgsData.count == imgs.count {
+                                            
+                                            self.shareImgsWithSys(imgs: imgsData as! [UIImage])
+                                        }
                                     }
+                                }
+                            }
+                            
+                            if imgs.count == 1 {
+                                
+                                self.shareC.shareVDelegate = self
+                                UIView.animate(withDuration: 1.0, animations: {
+                                    self.shareC.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT - 150, width: SCREEN_WIDTH, height: 150)
+                                })
+                                self.shareC.isHidden = false
+                                
+                                if let imgUrl = try JSON(data: jsonStr)["imgs"][0].string {
+ 
+                                    let queue = OperationQueue()
+                                    queue.addOperation({
+                                        if NetWorkTool.status != 0 {
+                                            self.imgData = try! Data.init(contentsOf: URL.init(string: imgUrl)!)
+                                        } else {
+                                            toast(toast: "网络连接失败")
+                                        }
+                                    })
                                 }
                             }
                         }
@@ -369,11 +400,6 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                 }
             }
             
-            
-            self.shareC.shareVDelegate = self
-            UIView.animate(withDuration: 1.0, animations: {
-                self.shareC.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT - 150, width: SCREEN_WIDTH, height: 150)
-            })
         }
         
         
@@ -578,8 +604,10 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         view.addSubview(self.webView)
         view.backgroundColor = UIColor.white
         
-        UIApplication.shared.keyWindow?.addSubview(shareC)
         
+        
+        UIApplication.shared.keyWindow?.addSubview(shareC)
+        shareC.isHidden = true
         
         addWebView()
         
