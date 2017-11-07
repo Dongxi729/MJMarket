@@ -33,6 +33,8 @@ class JFNavigationController: UINavigationController, UIGestureRecognizerDelegat
             NSFontAttributeName : UIFont.systemFont(ofSize: 16 * SCREEN_SCALE)
         ]
         view.backgroundColor = UIColor.white
+        
+
     }
     
     /**

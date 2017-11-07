@@ -322,18 +322,28 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                                 let imgurl = (String(describing: img[i]))
                                 if !imgurl.contains("http:") {
                                     imgs.append("http://mj.ie1e.com/" + (String(describing: img[i])))
+                                    /// 是否包含二维码链接
                                 } else {
-                                    imgs.append(imgurl)
-                                }
-                                CCog(message: img[i] as? String ?? "")
-                                
-                                /// 是否包含二维码链接
-                                if !imgurl.contains("http://www.gbtags.com/gb/qrcode?t=") && !contacted {
-                                    imgs.append("http://www.gbtags.com/gb/qrcode?t=http%3A//mj.ie1e.com/wx_product/product_detail%3Fid%3D" + productID)
-                                    contacted = true
+                                        imgs.append(imgurl)
                                 }
                             }
-                            
+                        
+                            /*
+                             if !imgurl.contains("http://www.gbtags.com/gb/qrcode?t=") && !contacted {
+                             imgs.append("http://www.gbtags.com/gb/qrcode?t=http%3A//mj.ie1e.com/wx_product/product_detail%3Fid%3D" + productID)
+                             contacted = true
+                             }
+                             */
+                            /// 判断最后一个是否是二维码链接。
+                            if img.count > 0 {
+                                
+                                if let sss = img[img.count - 1] as? String {
+                                    if !sss.contains("http://www.gbtags.com/gb/qrcode?t=") {
+                                        imgs.append("http://www.gbtags.com/gb/qrcode?t=http%3A//mj.ie1e.com/wx_product/product_detail%3Fid%3D" + productID)
+                                    }
+                                }
+                            }
+                        
                             if imgs.count > 1 {
                                 FTIndicator.showProgressWithmessage("数据加载中...")
                                 
@@ -694,8 +704,6 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
     // MARK: - 网页代理---完成
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
-        CCog(message: navigationController?.viewControllers.count)
-        
         
         if let nav  = navigationController?.viewControllers.count {
             if nav == 1 {
@@ -716,11 +724,17 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         
         lostNetImg.isHidden = true
         netLostDescLabel.isHidden = true
-        if self.urlStr.contains("https://mp.weixin.qq.com") || self.urlStr.contains("http://mj.ie1e.com/Error") || self.isPrefix {
+        if self.urlStr.contains("https://mp.weixin.qq.com") ||
+            self.urlStr.contains("http://mj.ie1e.com/Error") ||
+            self.isPrefix
+//            self.urlStr.contains("article?search") ||
+//            self.urlStr.contains("video?search") ||
+//            self.urlStr.contains("courses?search")
+        {
             self.isPrefix = false
-            self.navigationController?.setNavigationBarHidden(false, animated: false)
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
         } else {
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
         }
         
         self.navigationItem.title = webView.title

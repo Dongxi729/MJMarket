@@ -168,10 +168,13 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
         super.viewWillDisappear(animated)
         
         UIApplication.shared.statusBarStyle = .default
+        vc.isHidden = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        vc.isHidden = true
         
         if navigationController?.viewControllers.count == 1 {
             UIApplication.shared.statusBarStyle = .lightContent

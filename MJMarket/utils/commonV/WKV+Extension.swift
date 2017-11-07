@@ -329,18 +329,15 @@ extension WKViewController {
             let range = NSRange.init(location: 0, length: 30)
             var cahceNSStr : NSString = cacheStr as NSString
             cahceNSStr = cahceNSStr.substring(with: range) as NSString
-            CCog(message: cahceNSStr)
-            CCog(message: PREFIX)
             
             if !cahceNSStr.contains(PREFIX) {
                 self.isPrefix = true
             }
         }
-        CCog(message: self.isPrefix)
         
         AFNetworkReachabilityManager.shared().startMonitoring()
         AFNetworkReachabilityManager.shared().setReachabilityStatusChange { (sddd) in
-            CCog(message: sddd.rawValue)
+            
             NetWorkTool.status = sddd.rawValue
             if sddd.rawValue == 0 {
                 

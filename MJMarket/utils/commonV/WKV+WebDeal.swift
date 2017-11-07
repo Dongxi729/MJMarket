@@ -48,12 +48,43 @@ extension WKViewController {
             webView.stopLoading()
             self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
         }
+        /// product_list?search
+        if self.urlStr.contains("product_list?search") && !self.urlStr.contains("token=") {
+            webView.stopLoading()
+//            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
+            webView.load(URLRequest.init(url: URL.init(string: self.subWebViewContactURL(urlStr: self.urlStr))!))
+        }
+        
+        /// article?search
+        if self.urlStr.contains("article?search") && !self.urlStr.contains("token=") {
+            webView.stopLoading()
+//            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
+//            webView.reload()
+            webView.load(URLRequest.init(url: URL.init(string: self.subWebViewContactURL(urlStr: self.urlStr))!))
+        }
+      
+        // video?search
+        if self.urlStr.contains("video?search") && !self.urlStr.contains("token=") {
+            webView.stopLoading()
+//            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
+//            webView.reload()
+            webView.load(URLRequest.init(url: URL.init(string: self.subWebViewContactURL(urlStr: self.urlStr))!))
+        }
+        
+        // wx_find/courses?search
+        if self.urlStr.contains("courses?search") && !self.urlStr.contains("token=") {
+            webView.stopLoading()
+//            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
+            webView.reload()
+            
+        }
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         
         self.urlStr = (navigationAction.request.url?.absoluteString)!
+        
         CCog(message: self.urlStr)
         
         // MARK: - 首页
@@ -62,7 +93,6 @@ extension WKViewController {
                 self.urlStr.contains("http://mj.ie1e.com/wx_find/video") &&
                 !self.urlStr.contains(AccountModel.shareAccount()?.token as? String ?? "")  {
                 
-                CCog(message: self.urlStr)
                 
                 if self.urlStr.contains("http://mj.ie1e.com/wx_find/video") {
                     let mainVC = MainTabBarViewController()
@@ -82,7 +112,6 @@ extension WKViewController {
                     aaa(jumpVC: HomeVC(), str:  self.urlStr)
                 } else {
                     if self.urlStr.contains(WEB_VIEW_HOME_URL) {
-                        CCog()
                     } else {
                         
                         /// 正常商品的页面
@@ -92,8 +121,6 @@ extension WKViewController {
                 
                 decisionHandler(.cancel)
             } else {
-                CCog(message: self.urlStr)
-
                 commJump(yy: HomeVC())
                 decisionHandler(.allow)
             }

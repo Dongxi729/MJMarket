@@ -115,7 +115,7 @@ class SetVCellTwo: CommonTableViewCell {
     
     ///清除缓存文本
     lazy var clearCaheLabel : UILabel = {
-        let cacheLable : UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH - 50 - 2 * 10, y: 10 * 1.25, width: 50, height: 20))
+        let cacheLable : UILabel = UILabel.init(frame: CGRect.init(x: SCREEN_WIDTH - 50 - 4 * 10, y: 10 * 1.25, width: 50, height: 20))
         
         cacheLable.font = UIFont.systemFont(ofSize: 14)
         

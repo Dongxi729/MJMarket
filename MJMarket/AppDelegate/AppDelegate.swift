@@ -12,6 +12,8 @@
 
 import UIKit
 
+var vc = UIView()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -28,6 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //设置QQ
         setQQ()
         
+        vc = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 44))
+        CCog(message: vc)
+        vc.backgroundColor = UIColor.white
+        
+        if SCREEN_HEIGHT == 812 {
+            UIApplication.shared.keyWindow?.addSubview(vc)
+        }
         
             
         setWX()

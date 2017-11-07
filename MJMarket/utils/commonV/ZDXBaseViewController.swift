@@ -17,7 +17,7 @@ class ZDXBaseViewController: UIViewController {
         /// 修复返回失效
         navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
         view.backgroundColor = UIColor.white
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
     }
 }
