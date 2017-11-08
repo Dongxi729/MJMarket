@@ -51,8 +51,8 @@ extension WKViewController {
         /// product_list?search
         if self.urlStr.contains("product_list?search") && !self.urlStr.contains("token=") {
             webView.stopLoading()
-//            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
-            webView.load(URLRequest.init(url: URL.init(string: self.subWebViewContactURL(urlStr: self.urlStr))!))
+            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
+            
         }
         
         /// article?search

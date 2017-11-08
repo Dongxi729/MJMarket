@@ -296,8 +296,10 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                             
                             self.shareLinkURL = str
                             
-                            CCog(message: str)
                             self.shareContent = contentStr
+                            
+                            let pasteboard = UIPasteboard.general
+                            pasteboard.string = self.shareContent
                         }
                         
                         /// 数组链接
@@ -308,10 +310,6 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                         var imgs : [String] = []
                         imgs.removeAll()
                         
-                        var contacted = false
-                        
-                        /// 图片数量
-                        var imgsCount : Int = 0
                         
                         if let img = try JSON.init(data: jsonStr)["imgs"].arrayObject,
                             let productID = try JSON(data: jsonStr)["productid"].string {
