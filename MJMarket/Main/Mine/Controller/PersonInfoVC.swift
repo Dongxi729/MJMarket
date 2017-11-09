@@ -351,13 +351,16 @@ class PersonInfoVC: UIViewController,UITableViewDelegate,UITableViewDataSource,P
                     if MineModel.wxOPENID.characters.count == 0 {
                         let tool = WXTool()
                         tool.clickAuto()
+                        
+                        
+                        
                     } else {
                         ZDXRequestTool.wxBind { (result) in
                             if result {
                                 self.person_TBV.reloadData()
-                                toast(toast: "绑定成功")
+//                                toast(toast: "绑定成功")
                             }  else {
-                                toast(toast: "绑定失败")
+//                                toast(toast: "绑定失败")
                             }
                         }
                     }

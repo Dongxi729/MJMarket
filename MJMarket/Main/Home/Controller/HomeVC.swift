@@ -15,7 +15,9 @@ class HomeVC: WKViewController {
         super.viewWillAppear(animated)
         
         ZDXRequestTool.cartCount { (redCount) in
-            super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
+            if Int(redCount) != 0 {
+                super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
+            }
         }
     }
  

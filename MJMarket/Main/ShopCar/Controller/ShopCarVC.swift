@@ -34,28 +34,15 @@ class ShopCarVC: WKViewController {
         }
         
         ZDXRequestTool.cartCount { (redCount) in
-            super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
+            CCog(message: redCount)
+            if Int(redCount) != 0 {
+                super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
+            } else {
+                super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = nil
+            }
         }
     }
-    
-//    override func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-//        self.urlStr = (navigationAction.request.url?.absoluteString)!
-//
-//        if navigationAction.navigationType == WKNavigationType.linkActivated {
-//
-//            aaa(jumpVC: ShopCarVC(), str: subWebViewContactURL(urlStr: self.urlStr))
-//
-//            decisionHandler(.cancel)
-//        } else {
-//            CCog(message: self.urlStr)
-//            if self.urlStr.contains("http://mj.ie1e.com/wx_product/order_sure") && !self.urlStr.contains("token=") {
-//                webView.stopLoading()
-//                self.aaa(jumpVC: ShopReplace(), str: self.subWebViewContactURL(urlStr: self.urlStr))
-//                webView.stopLoading()
-//            }
-//            decisionHandler(.allow)
-//        }
-//    }
+
 }
 
 class ShopReplace : WKViewController {
@@ -81,7 +68,11 @@ class ShopReplace : WKViewController {
         }
         
         ZDXRequestTool.cartCount { (redCount) in
-            super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
+            if Int(redCount) != 0 {
+                super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
+            } else {
+                super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = nil
+            }
         }
     }
     

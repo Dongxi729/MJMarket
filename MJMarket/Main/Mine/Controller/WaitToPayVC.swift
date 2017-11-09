@@ -24,7 +24,9 @@ class WaitToPayVC: WKViewController {
         loadURL(urlStr: WEB_VIEW_SHOPCAR_URL)
         
         ZDXRequestTool.cartCount { (redCount) in
-            super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
+            if Int(redCount) != 0 {
+                super.tabBarController?.viewControllers?[3].tabBarItem.badgeValue = redCount
+            }
         }
     }
 

@@ -636,7 +636,6 @@ class ZDXRequestTool: NSObject {
             
             if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                 if message.intValue == 1 {
-                    //                    getUserInfo()
                     getUserInfo(finished: { (result) in
                         if result {
                             finished(true)
@@ -649,11 +648,35 @@ class ZDXRequestTool: NSObject {
                     finished(false)
                 }
             }
+
+            if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
+                toast(toast: messageStr)
+            }
         }) { (_) in
             
         }
     }
     
+    // MARK: - 验证是否签到
+    class func isAssign(finished: @escaping (_ bindSuccess : Bool) -> ()) {
+        if let userID = AccountModel.shareAccount()?.id as? String {
+            let param : [String : String] = ["uid" : userID]
+            NetWorkTool.shared.postWithPath(path: ISSIGN_URL, paras: param, success: { (result) in
+                CCog(message: result)
+                if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
+                    if message.intValue == 1 {
+                        finished(true)
+                    }
+                    
+                    if message.intValue == 0 {
+                        finished(false)
+                    }
+                }
+            }, failure: { (_) in
+                
+            })
+        }
+    }
 }
 
 
