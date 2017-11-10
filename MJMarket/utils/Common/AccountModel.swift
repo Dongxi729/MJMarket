@@ -92,6 +92,8 @@ class AccountModel: NSObject,NSCoding {
         setValuesForKeys(dict)
     }
     
+    
+    
     /**
      登录保存
      */
@@ -136,6 +138,12 @@ class AccountModel: NSObject,NSCoding {
         return AccountModel.shareAccount() != nil
     }
     
+    /// 校验用户是否签到
+    class func clearUserIsAssign() {
+        UserDefaults.standard.removeObject(forKey: "isAssign")
+        UserDefaults.standard.synchronize()
+    }
+    
     /**
      注销清理
      */
@@ -148,6 +156,8 @@ class AccountModel: NSObject,NSCoding {
         } catch {
             CCog(message: "退出异常")
         }
+        
+        self.clearUserIsAssign()
         
     }
 

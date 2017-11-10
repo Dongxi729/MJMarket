@@ -124,6 +124,9 @@ var ORDERCOUNT_URL = COMMON_PREFIX + "/ordercount"
 /// 佣金接口
 var shareearn_url = COMMON_PREFIX + "/shareearn"
 
+/// 验证短信
+var CHECKYZM_url = COMMON_PREFIX + "/checkyzm"
+
 
 /// 关于我们
 var ABOUT_US_URL = "http://mj.ie1e.com/weixin/aboutus"
@@ -136,7 +139,7 @@ var SCORES_URL = "http://mj.ie1e.com/wx_user/scoresdetail"
 var SIGN_URL = "http://mj.ie1e.com/wx_user/mysign"
 
 /// 是否签到
-var ISSIGN_URL = "http://mj.ie1e.com/wx_user/issign"
+var ISSIGN_URL =   COMMON_PREFIX + "/issign"
 
 //// 注册协议
 var USERAGREEMENT_URL = "http://mj.ie1e.com/weixin/info?id=e6e6afff0d4d410e97b24608a8b60a06&it=1"

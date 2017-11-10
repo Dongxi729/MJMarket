@@ -116,6 +116,20 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
                 self.headerIconImg.image = #imageLiteral(resourceName: "default_thumb")
             }
         }
+        
+        /// 是否签到
+        if let isAssign = UserDefaults.standard.object(forKey: "isAssign") as? Bool {
+            if isAssign {
+                self.tapToSign.setTitle("已签到", for: .normal)
+            }
+        } else {
+            ZDXRequestTool.isAssign { (isAssign) in
+                CCog(message: isAssign)
+                if isAssign {
+                    self.tapToSign.setTitle("已签到", for: .normal)
+                }
+            }
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -140,7 +154,7 @@ class MyHeaderInfoV: UIView {
     lazy var userType: UILabel = {
         let d: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: self.nameLabel.BottomY, width: self.Width, height: SCREEN_WIDTH * 0.2 / 3))
         d.font = UIFont.systemFont(ofSize: 13 * SCREEN_SCALE)
-        d.text = "sss"
+//        d.text = "sss"
         d.textColor = UIColor.white
         return d
     }()
@@ -148,7 +162,7 @@ class MyHeaderInfoV: UIView {
     lazy var userSign: UILabel = {
         let d: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: self.userType.BottomY, width: self.Width, height: SCREEN_WIDTH * 0.2 / 2.5))
         d.font = UIFont.systemFont(ofSize: 10 * SCREEN_SCALE)
-        d.text = "sss"
+//        d.text = "sss"
         d.textColor = UIColor.white
         return d
     }()

@@ -120,6 +120,8 @@
 		268853661F7BCEF2008BD4DE /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2688535F1F7BCDC4008BD4DE /* libWeChatSDK.a */; };
 		268853681F7BCF14008BD4DE /* WXTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268853671F7BCF14008BD4DE /* WXTool.swift */; };
 		26918E211F7C879200887737 /* ZDXBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26918E201F7C879200887737 /* ZDXBaseViewController.swift */; };
+		2698791E1FB54C89004C0309 /* LauchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2698791D1FB54C89004C0309 /* LauchVC.swift */; };
+		269879201FB55150004C0309 /* CountDownBtnTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2698791F1FB55150004C0309 /* CountDownBtnTwo.swift */; };
 		269893381F88901700C150F9 /* headerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269893351F88901600C150F9 /* headerView.swift */; };
 		269893391F88901700C150F9 /* UIScrollView-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269893361F88901600C150F9 /* UIScrollView-extension.swift */; };
 		2698933A1F88901700C150F9 /* footerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269893371F88901600C150F9 /* footerView.swift */; };
@@ -420,6 +422,8 @@
 		268853651F7BCDC4008BD4DE /* WXApiObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		268853671F7BCF14008BD4DE /* WXTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WXTool.swift; sourceTree = "<group>"; };
 		26918E201F7C879200887737 /* ZDXBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDXBaseViewController.swift; sourceTree = "<group>"; };
+		2698791D1FB54C89004C0309 /* LauchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LauchVC.swift; path = Main/Lauch/LauchVC.swift; sourceTree = "<group>"; };
+		2698791F1FB55150004C0309 /* CountDownBtnTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownBtnTwo.swift; sourceTree = "<group>"; };
 		269893351F88901600C150F9 /* headerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = headerView.swift; sourceTree = "<group>"; };
 		269893361F88901600C150F9 /* UIScrollView-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView-extension.swift"; sourceTree = "<group>"; };
 		269893371F88901600C150F9 /* footerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = footerView.swift; sourceTree = "<group>"; };
@@ -861,6 +865,7 @@
 				264FA6451F54142D00CE405B /* Main.storyboard */,
 				264FA6481F54142D00CE405B /* Assets.xcassets */,
 				264FA64A1F54142D00CE405B /* LaunchScreen.storyboard */,
+				2698791D1FB54C89004C0309 /* LauchVC.swift */,
 				26C6FE401F7E24830082011C /* city.plist */,
 				264FA64D1F54142D00CE405B /* Info.plist */,
 			);
@@ -1037,6 +1042,7 @@
 				267BECDC1F8E14CF00CAACC8 /* NSString+XMGExtension.h */,
 				267BECDB1F8E14CF00CAACC8 /* NSString+XMGExtension.m */,
 				2664F5AB1F8E472000350FD3 /* CountDownBtn.swift */,
+				2698791F1FB55150004C0309 /* CountDownBtnTwo.swift */,
 				2698933C1F88902F00C150F9 /* refreshControl */,
 				26C6FE441F7E25760082011C /* PickerV.swift */,
 				26C6FE421F7E24DA0082011C /* ToolBar.swift */,
@@ -1767,6 +1773,7 @@
 				264FA7171F54151700CE405B /* FTProgressIndicator.m in Sources */,
 				264FA6E51F54144400CE405B /* POPVector.mm in Sources */,
 				26F73AFD1F74F8FA00380A03 /* TZImagePickerController.m in Sources */,
+				269879201FB55150004C0309 /* CountDownBtnTwo.swift in Sources */,
 				26F73AC21F74A01600380A03 /* DataVerifier.m in Sources */,
 				264FA6F31F54144400CE405B /* YYImage.m in Sources */,
 				26AE2B2D1F55014000AAA36C /* CommonTableViewCell.swift in Sources */,
@@ -1860,6 +1867,7 @@
 				264FA77F1F54229E00CE405B /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				264FA6F11F54144400CE405B /* YYAnimatedImageView.m in Sources */,
 				264FA6E81F54144400CE405B /* YYDiskCache.m in Sources */,
+				2698791E1FB54C89004C0309 /* LauchVC.swift in Sources */,
 				2688530B1F7B8F24008BD4DE /* SwiftyJSON.swift in Sources */,
 				264FA6DB1F54144400CE405B /* POPAnimator.mm in Sources */,
 				269893391F88901700C150F9 /* UIScrollView-extension.swift in Sources */,

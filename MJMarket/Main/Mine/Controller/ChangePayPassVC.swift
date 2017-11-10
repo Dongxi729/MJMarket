@@ -20,18 +20,35 @@ class ChangePayPassVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
     
     lazy var bindPhone_FoV: PersonFooV = {
         let d: PersonFooV = PersonFooV.init(frame:CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 45))
-        d.personFooVDelegate = self
+//        d.personFooVDelegate = self
         d.personInfo_footerV.setTitle("下一步", for: .normal)
         d.personInfo_footerV.addTarget(self, action: #selector(jumpToSetPayPss), for: .touchUpInside)
         return d
     }()
     
     @objc private func jumpToSetPayPss() {
-        if authInputMark {
-            let vc = PayPassVC()
-            vc.payPassAuth = self.authStr
-            navigationController?.pushViewController(vc, animated: true)
+        
+        if authStr.characters.count == 0 {
+            FTIndicator.showToastMessage("请输入验证码")
+            return
+        } else {
+            authInputMark = true
+            ZDXRequestTool.checkPayPass(yzmString: self.authStr) { (isCheck) in
+                CCog(message: isCheck)
+                if isCheck {
+                    
+                    if self.authInputMark {
+                        let vc = PayPassVC()
+                        vc.payPassAuth = self.authStr
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                } else {
+                    toast(toast: "验证码不正确")
+                }
+            }
         }
+        
+        
     }
     
     override func viewDidLoad() {

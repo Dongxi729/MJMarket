@@ -24,24 +24,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        // 检查用户是否登录
-        checkLogin()
+        UIApplication.shared.setStatusBarHidden(true, with: UIStatusBarAnimation.slide)
         
-        //设置QQ
-        setQQ()
+        let lauchPage = LauchVC()
+        self.window?.rootViewController = lauchPage
         
-        vc = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 44))
-        CCog(message: vc)
-        vc.backgroundColor = UIColor.white
         
-        if SCREEN_HEIGHT == 812 {
-            UIApplication.shared.keyWindow?.addSubview(vc)
-        }
-        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            CCog()
             
-        setWX()
-        
-        checkUpdate()
+            UIApplication.shared.setStatusBarHidden(false, with: UIStatusBarAnimation.slide)
+            // 检查用户是否登录
+            self.checkLogin()
+            
+            //设置QQ
+            self.setQQ()
+            
+            vc = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 44))
+            CCog(message: vc)
+            vc.backgroundColor = UIColor.white
+            
+            if SCREEN_HEIGHT == 812 {
+                UIApplication.shared.keyWindow?.addSubview(vc)
+            }
+            
+            self.setWX()
+            
+            self.checkUpdate()
+        }
         return true
     }
 

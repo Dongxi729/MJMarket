@@ -36,11 +36,6 @@ class ZDXRequestTool: NSObject {
                         FTIndicator.showToastMessage(sendResult)
                     }
                     
-                    if let message = (result as? NSDictionary)?.object(forKey: "message") as? String {
-                        
-                        FTIndicator.showToastMessage(message)
-                    }
-                    
                     if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                         if message.intValue == 1 {
                             getUserInfo(finished: { (_) in
@@ -661,15 +656,18 @@ class ZDXRequestTool: NSObject {
     class func isAssign(finished: @escaping (_ bindSuccess : Bool) -> ()) {
         if let userID = AccountModel.shareAccount()?.id as? String {
             let param : [String : String] = ["uid" : userID]
+            CCog(message: param)
             NetWorkTool.shared.postWithPath(path: ISSIGN_URL, paras: param, success: { (result) in
                 CCog(message: result)
                 if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
                     if message.intValue == 1 {
-                        finished(true)
+                        finished(false)
                     }
                     
                     if message.intValue == 0 {
-                        finished(false)
+                        finished(true)
+                        UserDefaults.standard.set(true, forKey: "isAssign")
+                        UserDefaults.standard.synchronize()
                     }
                 }
             }, failure: { (_) in
@@ -677,6 +675,29 @@ class ZDXRequestTool: NSObject {
             })
         }
     }
+    
+    // MARK: - 校验验证码
+    class func checkPayPass(yzmString : String,finished: @escaping (_ isYzmOK : Bool) -> ()) {
+        if let userId = AccountModel.shareAccount()?.Tel as? String {
+            let param : [String : String] = ["yzm" : yzmString,"tel" : userId]
+            
+            NetWorkTool.shared.postWithPath(path: CHECKYZM_url, paras: param, success: { (response) in
+                CCog(message: response)
+                if let message = (response as? NSDictionary)?.object(forKey: "success") as? NSNumber {
+                    if message.intValue == 0 {
+                        finished(false)
+                    }
+                    
+                    if message.intValue == 1 {
+                        finished(true)
+                    }
+                }
+            }, failure: { (_) in
+                
+            })
+        }
+    }
+
 }
 
 

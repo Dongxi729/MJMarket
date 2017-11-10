@@ -1,23 +1,24 @@
 //
-//  CountDownBtn.swift
-//  DollBuy
+//  CountDownBtnTwo.swift
+//  MJMarket
 //
-//  Created by 郑东喜 on 2016/11/27.
-//  Copyright © 2016年 郑东喜. All rights reserved.
+//  Created by 郑东喜 on 2017/11/10.
+//  Copyright © 2017年 郑东喜. All rights reserved.
 //
 
 import UIKit
+
 //发送几秒
-var  NUMSS = 60
+var  NUMSS2 = 3
 
-class CountDownBtn: UIButton {
+class CountDownBtnTwo: UIButton {
     
-
+    
     //触发倒计时事件
     var countYES = ""
     
     //秒数
-    var  i = NUMSS
+    var  i = NUMSS2
     
     //定时器
     var myTimer:Timer?
@@ -31,7 +32,7 @@ class CountDownBtn: UIButton {
         
         self.currentColor = color
         self.backgroundColor = color
-        self.setTitle("\(NUMSS)秒", for: UIControlState.disabled)
+        self.setTitle("\(NUMSS2)秒", for: UIControlState.disabled)
         self.titleLabel?.adjustsFontSizeToFitWidth = true
         self.isEnabled=false
         self.setTitleColor(titleColor, for: .normal)
@@ -45,7 +46,7 @@ class CountDownBtn: UIButton {
     
     func  tiemrBengin(timer:Timer) {
         
-        let  button = timer.userInfo as! CountDownBtn
+        let  button = timer.userInfo as! CountDownBtnTwo
         button.backgroundColor=self.currentColor
         i -= 1
         button.setTitle("\(i)秒", for: .disabled)
@@ -56,16 +57,17 @@ class CountDownBtn: UIButton {
             button.backgroundColor = self.currentColor
             
             if NSStringFromClass(self.classForCoder).contains("ForgetPassVC") {
-                button.setTitle("获取验证码", for: .normal)
+//                button.setTitle("获取验证码", for: .normal)
             }
             
-            button.setTitle("发送验证码", for: .normal)
-            i = NUMSS
+//            button.setTitle("发送验证码", for: .normal)
+            i = NUMSS2
             
         }
     }
     
-     func removeTimer() {
+    func removeTimer() {
         myTimer?.invalidate()
     }
 }
+
