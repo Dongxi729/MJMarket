@@ -70,7 +70,6 @@ extension WKViewController {
         // wx_find/courses?search
         if self.urlStr.contains("courses?search") && !self.urlStr.contains("token=") {
             webView.stopLoading()
-//            webView.reload()
             webView.load(URLRequest.init(url: URL.init(string: self.subWebViewContactURL(urlStr: self.urlStr))!))
         }
     }

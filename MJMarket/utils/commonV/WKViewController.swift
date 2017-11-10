@@ -178,6 +178,8 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "afterShareApp")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "shareApp")
         userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "weChatPay")
+        /// shareUrlApp
+        userContentController.add(LeakAvoider.init(delegate: self as WKScriptMessageHandler), name: "shareUrlApp")
         
         //添加刷新控件
         webView.scrollView.addHeaderViewfun()
@@ -284,20 +286,19 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             if let jsonData = message.body as? String {
                 if let jsonStr = jsonData.data(using: String.Encoding.utf8, allowLossyConversion: false) {
                     do {
-                        
                         /// 内容
                         if let contentStr = try JSON(data: jsonStr)["content"].string {
                             CCog(message: contentStr)
                             
-                            let startLocation = contentStr.index(of: "{")
-                            let endLocation = contentStr.index(of: "}")
+//                            let startLocation = contentStr.index(of: "{")
+//                            let endLocation = contentStr.index(of: "}")
+//
+//                            var str = contentStr.substring(with: startLocation..<endLocation)
+//                            str = str.replacingOccurrences(of: "{", with: "")
+//
+//                            self.shareLinkURL = strY
                             
-                            var str = contentStr.substring(with: startLocation..<endLocation)
-                            str = str.replacingOccurrences(of: "{", with: "")
-                            
-                            self.shareLinkURL = str
-                            
-                            self.shareContent = contentStr
+                            self.shareContent =  contentStr
                             
                             let pasteboard = UIPasteboard.general
                             pasteboard.string = self.shareContent
@@ -408,15 +409,11 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                     }
                 }
             }
-            
         }
-        
-        
         
         if msg == "weChatPay" {
             if let dic = message.body as? NSDictionary {
                 if let signStr = dic["content"] as? String {
-                    
                     
                     if let jsonStr = signStr.data(using: String.Encoding.utf8, allowLossyConversion: false) {
                         
@@ -426,6 +423,56 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                                 weixinPay(payDic: dicPayDic)
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        if msg == "shareUrlApp" {
+            CCog(message: message.body)
+            
+            if let jsonData = message.body as? String {
+                
+                if let jsonStr = jsonData.data(using: String.Encoding.utf8, allowLossyConversion: false) {
+                    
+                    do {
+                        if let titleStr = try JSON(data: jsonStr)["title"].string,
+                            let desc = try JSON(data: jsonStr)["desc"].string,
+                            let imgUrl = try JSON(data: jsonStr)["imgUrl"].string,
+                            let link = try JSON(data: jsonStr)["link"].string {
+                            CCog(message: titleStr)
+                            CCog(message: desc)
+                            CCog(message: imgUrl)
+                            CCog(message: link)
+                            
+                            self.shareLinkURL = link
+                            self.shareImgURl = imgUrl
+                            self.shareContent = desc
+                            
+                            let pasteboard = UIPasteboard.general
+                            pasteboard.string = desc
+                        
+                            
+                            self.shareC.shareVDelegate = self
+                            UIView.animate(withDuration: 1.0, animations: {
+                                self.shareC.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT - 150, width: SCREEN_WIDTH, height: 150)
+                            })
+                            self.shareC.isHidden = false
+                            
+                            let queue = OperationQueue()
+                            queue.addOperation({
+                                if NetWorkTool.status != 0 {
+                                    self.imgData = try! Data.init(contentsOf: URL.init(string: imgUrl)!)
+                                } else {
+                                    toast(toast: "网络连接失败")
+                                }
+                            })
+
+                            
+                            toast(toast: "您可以粘贴分享内容了")
+                        }
+                    } catch {
+                        
                     }
                 }
             }
@@ -495,8 +542,15 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             req.bText = false
             req.message = message
             req.scene = self._scene
-            let pasteboard = UIPasteboard.general
-            pasteboard.string = self.shareContent
+            
+            message.title = self.shareContent
+            
+            let ext =  WXWebpageObject()
+            ext.webpageUrl = self.shareLinkURL
+            message.mediaObject = ext
+            
+//            let pasteboard = UIPasteboard.general
+//            pasteboard.string = self.shareContent
             
             WXApi.send(req)
         }
@@ -534,6 +588,13 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
                 image.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
                 message.setThumbImage(UIGraphicsGetImageFromCurrentImageContext())
                 UIGraphicsEndImageContext()
+
+                message.title = self.shareContent
+
+                let ext =  WXWebpageObject()
+                ext.webpageUrl = self.shareLinkURL
+                message.mediaObject = ext
+
                 
                 let req =  SendMessageToWXReq()
                 req.bText = false
