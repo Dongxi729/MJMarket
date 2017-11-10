@@ -13,9 +13,7 @@ extension WKViewController {
     func info(notification : NSNotification) -> Void {
         
         let dic = notification.userInfo as! [AnyHashable : NSObject] as NSDictionary
-        
-        
-//        self.navigationController?.pushViewController(PaySuccessVC(), animated: true)
+
         
                 let result = dic["re"] as! String
         
@@ -264,11 +262,8 @@ extension WKViewController {
                 
                 if !tempUrl.contains("token") {
                     tempUrl = tempUrl + "&isapp=1&token=" + contactStr
-                    //                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
                     loadUrlWithCache(cacheStr: tempUrl)
-                    
                 } else {
-                    //                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
                     loadUrlWithCache(cacheStr: tempUrl)
                 }
                 
@@ -280,11 +275,8 @@ extension WKViewController {
                 if !tempUrl.contains("token") {
                     
                     tempUrl = tempUrl + "?isapp=1&token=" + contactStr
-                    //                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
                     loadUrlWithCache(cacheStr: tempUrl)
                 } else {
-                    
-                    //                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0))
                     loadUrlWithCache(cacheStr: tempUrl)
                 }
             }
@@ -298,11 +290,9 @@ extension WKViewController {
                 
                 if !urlStr.contains("token") {
                     tempUrl = urlStr + "&isapp=1&token=" + contactStr
-                    //                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
                     loadUrlWithCache(cacheStr: tempUrl)
                 } else {
                     loadUrlWithCache(cacheStr: tempUrl)
-                    //                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
                 }
             } else {
                 
@@ -311,11 +301,9 @@ extension WKViewController {
                 if !urlStr.contains("token") {
                     
                     tempUrl = urlStr + "?isapp=1&token=" + contactStr
-                    //                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
                     loadUrlWithCache(cacheStr: tempUrl)
                     CCog(message: tempUrl)
                 } else {
-                    //                    self.webView.load(URLRequest.init(url: URL.init(string: tempUrl)!))
                     loadUrlWithCache(cacheStr: tempUrl)
                     CCog(message: tempUrl)
                 }
@@ -408,7 +396,6 @@ extension WKViewController {
         do {
             
             let date = try UIImage.init(data: Data.init(contentsOf: URL.init(string: urlStr)!))
-            print(#line,date)
             return date!
         } catch {
             

@@ -83,6 +83,7 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
             self.navigationController?.setNavigationBarHidden(false, animated: false)
         }
         if reloadMark {
+            
             self.navigationController?.setNavigationBarHidden(true, animated: false)
         }
         
@@ -724,14 +725,18 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         netLostDescLabel.isHidden = true
         if self.urlStr.contains("https://mp.weixin.qq.com") ||
             self.urlStr.contains("http://mj.ie1e.com/Error") ||
-            self.isPrefix
-//            self.urlStr.contains("article?search") ||
-//            self.urlStr.contains("video?search") ||
-//            self.urlStr.contains("courses?search")
-        {
+            self.isPrefix {
             self.isPrefix = false
+            let d: UIBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(backViewController))
+            d.tintColor = UIColor.black
+            self.navigationItem.leftBarButtonItem = d
             self.navigationController?.setNavigationBarHidden(false, animated: true)
         } else {
+            
+            
+            let d: UIBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(backViewController))
+            d.tintColor = UIColor.black
+            self.navigationItem.leftBarButtonItem = d
             self.navigationController?.setNavigationBarHidden(true, animated: true)
         }
         
@@ -756,16 +761,27 @@ class WKViewController: ZDXBaseViewController,WKNavigationDelegate,WKUIDelegate,
         }
     }
     
+    @objc func excute() {}
+    
+    @objc func backViewController() {
+        navigationController?.popViewController(animated: true)
+    }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+        
+        let d = UIBarButtonItem.init(title: "", style: .plain, target: self, action: #selector(excute))
+        self.navigationItem.leftBarButtonItem = d
         
         if NetWorkTool.status == 0 {
             if let webViewTitle = webView.title {
                 
                 CCog(message: webViewTitle.characters.count )
                 if webViewTitle.characters.count == 0 {
+                    let d: UIBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(backViewController))
+                    d.tintColor = UIColor.black
+                    self.navigationItem.leftBarButtonItem = d
                     navigationController?.setNavigationBarHidden(false, animated: false)
                     self.lostNetImg.isHidden = false
                     self.netLostDescLabel.isHidden = false

@@ -58,25 +58,20 @@ extension WKViewController {
         /// article?search
         if self.urlStr.contains("article?search") && !self.urlStr.contains("token=") {
             webView.stopLoading()
-//            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
-//            webView.reload()
             webView.load(URLRequest.init(url: URL.init(string: self.subWebViewContactURL(urlStr: self.urlStr))!))
         }
       
         // video?search
         if self.urlStr.contains("video?search") && !self.urlStr.contains("token=") {
             webView.stopLoading()
-//            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
-//            webView.reload()
             webView.load(URLRequest.init(url: URL.init(string: self.subWebViewContactURL(urlStr: self.urlStr))!))
         }
         
         // wx_find/courses?search
         if self.urlStr.contains("courses?search") && !self.urlStr.contains("token=") {
             webView.stopLoading()
-//            self.aaa(jumpVC: yy, str: self.subWebViewContactURL(urlStr: self.urlStr))
-            webView.reload()
-            
+//            webView.reload()
+            webView.load(URLRequest.init(url: URL.init(string: self.subWebViewContactURL(urlStr: self.urlStr))!))
         }
     }
     

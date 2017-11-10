@@ -59,7 +59,7 @@ class JFNavigationController: UINavigationController, UIGestureRecognizerDelegat
     }
     
     lazy var jfNav_leftBar: UIBarButtonItem = {
-//        let d: UIBarButtonItem = UIBarButtonItem.init(title: "返回", style: .plain, target: self, action: #selector(back))
+
         let d: UIBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(back))
         d.tintColor = UIColor.black
         return d
