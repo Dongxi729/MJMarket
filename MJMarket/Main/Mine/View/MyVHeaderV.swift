@@ -11,40 +11,27 @@ import UIKit
 protocol MyVHeaderVDelegate {
     func sliSucce()
 }
-class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
-
+class MyVHeaderV: CommonTableViewCell {
     
     var myVHeaderVDelegate : MyVHeaderVDelegate?
     
     /// 滑动解锁完毕
-    func slideDone() {
-        CCog()
-        if MineModel.signMent == false {
-            
-            ZDXRequestTool.signment { (result) in
-                if result {
-                    CCog(message: result)
-                    MineModel.signMent = true
-                    self.myVHeaderVDelegate?.sliSucce()
-                }
+    func slideDone(sener : UIButton) {
+        
+        ZDXRequestTool.signment { (result) in
+            if result {
+                CCog(message: result)
+                sener.setTitle("已签到", for: .normal)
+            } else {
+                sener.setTitle("点击签到", for: .normal)
             }
-        } else {
-            self.myVHeaderVDelegate?.sliSucce()
         }
+
     }
     
     func slideToSignSuccess() {
         self.myVHeaderVDelegate?.sliSucce()
     }
-    
-    
-    //// 滑动签到
-    lazy var unlockToSign: SlideToSignV = {
-        let d: SlideToSignV = SlideToSignV.init(rect: CGRect.init(x: SCREEN_WIDTH * 0.25 , y: 100 * SCREEN_SCALE, width: SCREEN_WIDTH - 2 * COMMON_MARGIN - SCREEN_WIDTH * 0.2, height: 15 * SCREEN_SCALE), sliderThumImgName: "youhua", bgImgName: "")
-        d.slider.value = 0
-        d.slideToSignVDelegate = self
-        return d
-    }()
     
     lazy var tapToSign: UIButton = {
         let d : UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - 150 - COMMON_MARGIN, y: 80 * SCREEN_SCALE, width: 150, height: 30 * SCREEN_SCALE))
@@ -94,9 +81,18 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
         return d
     }()
     
+    @objc func changeAssignSel() {
+        CCog()
+        self.tapToSign.setTitle("点击签到", for: .normal)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(changeAssignSel), name: NSNotification.Name(rawValue: "changeAssign"), object: nil)
+
+        
         contentView.addSubview(personInfoHeadBgv)
         contentView.addSubview(nameInfoV)
         contentView.addSubview(headerIconImg)
@@ -117,17 +113,10 @@ class MyVHeaderV: CommonTableViewCell,SlideToSignVDelegate {
             }
         }
         
-        /// 是否签到
-        if let isAssign = UserDefaults.standard.object(forKey: "isAssign") as? Bool {
+        ZDXRequestTool.isAssign { (isAssign) in
+            CCog(message: isAssign)
             if isAssign {
                 self.tapToSign.setTitle("已签到", for: .normal)
-            }
-        } else {
-            ZDXRequestTool.isAssign { (isAssign) in
-                CCog(message: isAssign)
-                if isAssign {
-                    self.tapToSign.setTitle("已签到", for: .normal)
-                }
             }
         }
     }

@@ -544,10 +544,20 @@ class ZDXRequestTool: NSObject {
                 if let messageStr = (result as? NSDictionary)?.object(forKey: "message") as? String {
                     toast(toast: messageStr)
                     if messageStr == "今天已经签到过" {
-                        finished(true)
+                        
                     }
                     if messageStr == "签到成功" {
                         
+                    }
+                }
+                
+                if let message = (result as? NSDictionary)?.object(forKey: "success") as? NSNumber {
+                    if message.intValue == 1 {
+                        finished(true)
+                    }
+                    
+                    if message.intValue == 0 {
+                        finished(false)
                     }
                 }
             }) { (eror) in

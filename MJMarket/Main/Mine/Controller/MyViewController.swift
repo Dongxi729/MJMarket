@@ -174,6 +174,14 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // 创建一个日期格式器
+        let dformatter = DateFormatter()
+        dformatter.dateFormat = "yyyy-MM-dd"
+        let now = Date.init()
+        let nowStr = dformatter.string(from: now)
+        
+        UserDefaults.standard.set(nowStr, forKey: "nowDate")
+        UserDefaults.standard.synchronize()
         
         
         vc.isHidden = true
@@ -237,6 +245,7 @@ class MyViewController: ZDXBaseVC,UITableViewDataSource,UITableViewDelegate,MyCe
             self.myTbV.frame = self.view.bounds
         }
     }
+    
     
     
     // MARK: - 表格代理

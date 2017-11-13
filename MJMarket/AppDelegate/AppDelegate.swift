@@ -24,34 +24,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
         UIApplication.shared.setStatusBarHidden(true, with: UIStatusBarAnimation.slide)
         
-        let lauchPage = LauchVC()
-        self.window?.rootViewController = lauchPage
+        
+        // 得到当前应用的版本号
+        let infoDictionary = Bundle.main.infoDictionary
+        let currentAppVersion = infoDictionary!["CFBundleShortVersionString"] as! String
+        
+        // 取出之前保存的版本号
+        let userDefaults = UserDefaults.standard
+        let appVersion = userDefaults.string(forKey: "appVersion")
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            CCog()
+        // 如果 appVersion 为 nil 说明是第一次启动；如果 appVersion 不等于 currentAppVersion 说明是更新了
+        if appVersion == nil || appVersion != currentAppVersion {
+            // 保存最新的版本号
+            userDefaults.setValue(currentAppVersion, forKey: "appVersion")
             
-            UIApplication.shared.setStatusBarHidden(false, with: UIStatusBarAnimation.slide)
-            // 检查用户是否登录
-            self.checkLogin()
+            let guideViewController = GuideViewController()
+            self.window?.rootViewController = guideViewController
+        } else {
             
-            //设置QQ
-            self.setQQ()
+            let lauchPage = LauchVC()
+            self.window?.rootViewController = lauchPage
             
-            vc = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 44))
-            CCog(message: vc)
-            vc.backgroundColor = UIColor.white
-            
-            if SCREEN_HEIGHT == 812 {
-                UIApplication.shared.keyWindow?.addSubview(vc)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                CCog()
+                
+                UIApplication.shared.setStatusBarHidden(false, with: UIStatusBarAnimation.slide)
+                // 检查用户是否登录
+                self.checkLogin()
+                
+                //设置QQ
+                self.setQQ()
+                
+                vc = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 44))
+                CCog(message: vc)
+                vc.backgroundColor = UIColor.white
+                
+                if SCREEN_HEIGHT == 812 {
+                    UIApplication.shared.keyWindow?.addSubview(vc)
+                }
+                
+                self.setWX()
+                
+                self.checkUpdate()
             }
-            
-            self.setWX()
-            
-            self.checkUpdate()
         }
+        
         return true
     }
 
@@ -184,3 +205,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+extension AppDelegate {
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        CCog()
+        
+        // 创建一个日期格式器
+        let dformatter = DateFormatter()
+        dformatter.dateFormat = "yyyy-MM-dd"
+        let now = Date.init()
+        let nowStr = dformatter.string(from: now)
+        let agoStr =  UserDefaults.standard.object(forKey: "nowDate") as? String ?? ""
+        
+        if nowStr != agoStr {
+            //// 发通知
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeAssign"), object: nil)
+        }
+    }
+}

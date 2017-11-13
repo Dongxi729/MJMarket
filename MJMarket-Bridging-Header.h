@@ -42,6 +42,4 @@
 
 #import "NSString+XMGExtension.h"
 
-
-
 #import "AFNetworking.h"
