@@ -22,15 +22,14 @@ class MyVHeaderV: CommonTableViewCell {
             if result {
                 CCog(message: result)
                 sener.setTitle("已签到", for: .normal)
-            } else {
-                sener.setTitle("点击签到", for: .normal)
+            }  else {
+                self.myVHeaderVDelegate?.sliSucce()
             }
         }
 
     }
     
     func slideToSignSuccess() {
-        self.myVHeaderVDelegate?.sliSucce()
     }
     
     lazy var tapToSign: UIButton = {
